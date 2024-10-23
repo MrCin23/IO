@@ -1,5 +1,5 @@
 # IO
-Projekt z przedmiotu Inżynieria Oprogramowania semestr ziomowy 2024/25
+Projekt z przedmiotu Inżynieria Oprogramowania semestr zimowy 2024/25
 
 Każdy moduł ma własną gałąź odpowiadającą numerowi przydzielonego modułu.
 
