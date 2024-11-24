@@ -1,0 +1,46 @@
+services:
+  postgres:
+    image: postgres:17.2
+    restart: always
+    environment:
+      POSTGRES_USER: ias
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB: skph
+    secrets:
+      - db_password
+    container_name: skph
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./sql/init_testdb.sh:/docker-entrypoint-initdb.d/init_testdb.sh
+      - ./sql/initstructure:/initstructure
+      - ./sql/initdata:/initdata
+  testdb_postgres:
+    image: postgres:17.2
+    restart: always
+    environment:
+      POSTGRES_USER: ias
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_DB: skph_test
+    secrets:
+      - db_password
+    container_name: skph_test
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres-test-data:/tmp
+      - ./sql/init_testdb.sh:/docker-entrypoint-initdb.d/init_testdb.sh
+      - ./sql/initstructure:/initstructure
+      - ./sql/initdata:/initdata
+secrets:
+  db_password:
+    file: sql/db_password.txt
+
+volumes:
+  postgres-data:
+  postgres-test-data:
+    driver: local
+    driver_opts:
+      type: tmpfs
+      device: tmpfs
