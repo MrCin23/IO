@@ -10,6 +10,10 @@ public class Capability {
 
     private String capabilityName;
 
+    public Capability() {}
 
+    public Capability(String capabilityName) {
+        this.capabilityName = capabilityName;
+    }
 }
 

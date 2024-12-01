@@ -1,8 +1,10 @@
 package pl.lodz.p.ias.io.uwierzytelnianie;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Entity
 public class User {
@@ -16,11 +18,25 @@ public class User {
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @Getter
     private Role role;
 
     private String firstName;
     private String lastName;
-    private String lastLogin;
+
+    @Column(nullable = true)
+    @Setter
+    private LocalDateTime lastLogin;
+
+    public User(String username, String passwordHash, Role role, String firstName, String lastName) {
+        this.username = username;
+        this.passwordHash = passwordHash;
+        this.role = role;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
+    public User() {}
 
     public String getUserInfo() {
         return firstName + " " + lastName;
