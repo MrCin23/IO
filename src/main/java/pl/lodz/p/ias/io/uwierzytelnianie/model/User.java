@@ -1,4 +1,4 @@
-package pl.lodz.p.ias.io.uwierzytelnianie;
+package pl.lodz.p.ias.io.uwierzytelnianie.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
