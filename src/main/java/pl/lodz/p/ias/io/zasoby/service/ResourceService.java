@@ -5,26 +5,21 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.zasoby.dto.ResourceDTO;
 import pl.lodz.p.ias.io.zasoby.model.Resource;
 import pl.lodz.p.ias.io.zasoby.repository.ResourceRepository;
+import pl.lodz.p.ias.io.zasoby.utils.ResourceConverter;
 
 @Service
 public class ResourceService {
-    private ResourceRepository resourceRepository;
+    private final ResourceRepository resourceRepository;
+    private final ResourceConverter converter = new ResourceConverter();
 
     @Autowired
     public ResourceService(ResourceRepository resourceRepository) {
         this.resourceRepository = resourceRepository;
     }
 
-
-    //todo: ogarnac pozniej tera mi sie nie chce 🤯
     public ResourceDTO addResource(ResourceDTO resourceDTO) {
-        Resource resource = new Resource(resourceDTO.getResourceName(),
-                resourceDTO.getResourceType(), resourceDTO.getResourceQuantity(),
-                resourceDTO.getWarehouse());
-
+        Resource resource = converter.convertDTOToResource(resourceDTO);
         resourceRepository.create(resource);
-        return new ResourceDTO(resource.getResourceName(), resource.getResourceType(),
-                resource.getResourceQuantity(), resource.getResourceStatus(),
-                resource.getWarehouse(), resource.getVolunteerName(), resource.getAssignedTask());
+        return converter.convertResourceToDTO(resource);
     }
 }
