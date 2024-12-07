@@ -5,8 +5,8 @@
         <!-- Database connection settings -->
         <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
         <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/vmrental</property>  <!-- Update DB name -->
-        <property name="hibernate.connection.username">postgres</property>
-        <property name="hibernate.connection.password">password</property>
+        <property name="hibernate.connection.username">ias</property>
+        <property name="hibernate.connection.password">poteznyIAS</property>
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
         <!-- JDBC connection pool settings -->
@@ -29,6 +29,7 @@
         <!-- Mappings -->
         <!-- Tutaj nalezy dodawac swoje klasy -->
         <!-- TODO -->
+        <mapping class="pl.lodz.p.ias.io.mapy.MapPoint"/>
 
     </session-factory>
 </hibernate-configuration>
