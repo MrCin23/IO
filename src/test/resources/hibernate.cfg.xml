@@ -31,6 +31,7 @@
         <!-- Tutaj nalezy dodawac swoje klasy -->
         <!-- Jako ze testy nie sa wymagane to nie jest utworzona struktura katalogow. Kazdy odpowiada za swoje testy -->
         <!-- TODO -->
+        <mapping class="pl.lodz.p.ias.io.mapy.MapPoint"/>
 
     </session-factory>
 </hibernate-configuration>
