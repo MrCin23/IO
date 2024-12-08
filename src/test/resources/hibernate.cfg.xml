@@ -26,6 +26,16 @@
         <property name="hibernate.show_sql">true</property>
         <property name="hibernate.format_sql">true</property>
         <property name="hibernate.highlight_sql">true</property>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.model.Role"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.model.User"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.model.Capability"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.repositories.CapabilityRepository"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.services.AuthorizationService"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.controllers.AuthenticationController"/>
+        <mapping class="pl.lodz.p.ias.io.uwierzytelnianie.config.PasswordEncoderConfig"/>
 
         <!-- Mappings -->
         <!-- Tutaj nalezy dodawac swoje klasy -->

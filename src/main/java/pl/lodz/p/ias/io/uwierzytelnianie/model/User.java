@@ -12,8 +12,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
+    @Getter
     private String username;
 
+    @Getter
     private String passwordHash;
 
     @ManyToOne
@@ -21,7 +23,10 @@ public class User {
     @Getter
     private Role role;
 
+    @Getter
     private String firstName;
+
+    @Getter
     private String lastName;
 
     @Column(nullable = true)
