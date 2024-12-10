@@ -8,6 +8,7 @@ import pl.lodz.p.ias.io.komunikacja.dto.CreateChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.dto.ChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.mapper.ChatRoomMapper;
 import pl.lodz.p.ias.io.komunikacja.model.ChatRoom;
+import pl.lodz.p.ias.io.komunikacja.model.MockUser;
 import pl.lodz.p.ias.io.komunikacja.service.ChatRoomService;
 
 import java.util.List;
@@ -23,8 +24,8 @@ public class ChatRoomController {
 
     @PostMapping
     public ResponseEntity<ChatRoomDTO> createChatRoom(@RequestBody @Valid CreateChatRoomDTO chatRoomDTO) {
-        List<User> users = userService.getUsersByIds(chatRoomDTO.getUsers());
-
+//        List<User> users = userService.getUsersByIds(chatRoomDTO.getUsers());
+        List<MockUser> users = List.of(new MockUser(123L, "user1"), new MockUser(456L, "user2")); // TODO: replace with actual User objects
         ChatRoom chatRoom = ChatRoomMapper.toEntity(users);
 
         ChatRoomDTO createdChatRoomDTO = ChatRoomMapper.toDTO(chatRoomService.createChatRoom(chatRoom));

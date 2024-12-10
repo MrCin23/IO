@@ -11,6 +11,7 @@ import pl.lodz.p.ias.io.komunikacja.dto.ChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.dto.CreateChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.mapper.ChatRoomMapper;
 import pl.lodz.p.ias.io.komunikacja.model.ChatRoom;
+import pl.lodz.p.ias.io.komunikacja.model.MockUser;
 import pl.lodz.p.ias.io.komunikacja.repository.ChatRoomRepository;
 import pl.lodz.p.ias.io.komunikacja.service.ChatRoomService;
 
@@ -30,8 +31,9 @@ public class ChatRoomTest {
 
     @Test
     public void createChatRoomTest() {
-        List<User> users = List.of("user1", "user2"); // TODO: replace with actual User objects
-        CreateChatRoomDTO createChatRoomDTO = new CreateChatRoomDTO(users);
+        List<MockUser> users = List.of(new MockUser(123L, "jan"), new MockUser(456L, "joe")); // TODO: replace with actual User objects
+        List<String> ids = List.of("123", "456");
+        CreateChatRoomDTO createChatRoomDTO = new CreateChatRoomDTO(ids);
 
         ChatRoom chatRoom = ChatRoomMapper.toEntity(users);
 

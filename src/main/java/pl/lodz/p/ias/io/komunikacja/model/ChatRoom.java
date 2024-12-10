@@ -14,8 +14,8 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @OneToMany
-//    private List<Users> users; // TODO: Change to List<User> users when users will be implemented;
+    @OneToMany
+    private List<MockUser> users; // TODO: Change to List<User> users when users will be implemented;
 
     @OneToMany
     private List<Message> messages;
