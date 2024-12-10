@@ -7,10 +7,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-public class User {
+public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private Long user_id;
 
     @Getter
     private String username;
@@ -33,7 +33,7 @@ public class User {
     @Setter
     private LocalDateTime lastLogin;
 
-    public User(String username, String passwordHash, Role role, String firstName, String lastName) {
+    public Users(String username, String passwordHash, Role role, String firstName, String lastName) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
@@ -41,7 +41,7 @@ public class User {
         this.lastName = lastName;
     }
 
-    public User() {}
+    public Users() {}
 
     public String getUserInfo() {
         return firstName + " " + lastName;

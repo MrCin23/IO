@@ -1,22 +1,24 @@
 package pl.lodz.p.ias.io.uwierzytelnianie.DTO;
 
-import jakarta.validation.constraints.NotBlank;
+//import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 public class RegisterRequest {
-    @NotBlank(message = "Username is required")
+//    @NotBlank(message = "Username is required")
     private String username;
 
-    @NotBlank(message = "Password is required")
+//    @NotBlank(message = "Password is required")
     private String password;
 
-    @NotBlank(message = "First name is required")
+//    @NotBlank(message = "First name is required")
     private String firstName;
 
-    @NotBlank(message = "Last name is required")
+//    @NotBlank(message = "Last name is required")
     private String lastName;
 
-    @NotBlank(message = "Role name is required")
+//    @NotBlank(message = "Role name is required")
     private String roleName;
 }
