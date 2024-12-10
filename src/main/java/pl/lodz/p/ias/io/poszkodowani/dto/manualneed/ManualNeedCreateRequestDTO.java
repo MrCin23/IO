@@ -23,18 +23,22 @@ public class ManualNeedCreateRequestDTO {
 
     private Long mapPointId;
 
-    // Fields from Need class
     @NotNull(message = "Description cannot be null")
     @Size(min = 5, max = 255, message = "Description must be between 5 and 255 characters")
     private String description;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date expirationDate;
+
+    @Min(value = 1, message = "Max volunteers must be at least 1")
+    private int maxVolunteers;
 
     // Logic implemented in service
     //    @PastOrPresent(message = "Creation date cannot be in the future")
     //    @DateTimeFormat(pattern = "yyyy-MM-dd")
     //    private Date creationDate;
     //
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private Date expirationDate;
+
     //
     //    @Size(max = 50, message = "Status cannot exceed 50 characters")
     //    private String status;
@@ -44,7 +48,4 @@ public class ManualNeedCreateRequestDTO {
 
 //    @Min(value = 1, message = "Volunteers must be at least 1")
 //    private int volunteers;
-
-    @Min(value = 1, message = "Max volunteers must be at least 1")
-    private int maxVolunteers;
 }

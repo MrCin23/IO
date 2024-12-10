@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.ManualNeedRepository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,13 @@ public class ManualNeedService {
     }
 
     public ManualNeed createManualNeed(ManualNeed manualNeed) {
+        // TODO: logika odpowiedzialana za sprawdzenie czy użytkownik oraz punkt na mapie istnieje
+
+        manualNeed.setCreationDate(new Date());
+        manualNeed.setPriority(1);
+        manualNeed.setStatus("New");
+        manualNeed.setVolunteers(0);
+
         return manualNeedRepository.save(manualNeed);
     }
 

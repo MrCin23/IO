@@ -18,7 +18,9 @@ import java.util.Date;
 public abstract class Need {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    //@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "need_seq")
+    @SequenceGenerator(name = "need_seq", sequenceName = "need_sequence", allocationSize = 1)
     @EqualsAndHashCode.Include
     @Column(name = "id") // Explicit column name
     private Long id;
