@@ -30,6 +30,10 @@
         <!-- Tutaj nalezy dodawac swoje klasy -->
         <!-- TODO -->
 <!--        <mapping class="pl.lodz.p.ias.io.mapy.MapPoint"/>-->
+        <mapping class="pl.lodz.p.ias.io.poszkodowani.model.Need"/>
+        <mapping class="pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed"/>
+        <mapping class="pl.lodz.p.ias.io.poszkodowani.model.ManualNeed"/>
+        <mapping class="pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed"/>
 
     </session-factory>
 </hibernate-configuration>
