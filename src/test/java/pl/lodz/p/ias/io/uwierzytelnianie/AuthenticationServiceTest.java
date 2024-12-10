@@ -2,18 +2,12 @@ package pl.lodz.p.ias.io.uwierzytelnianie;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
-import pl.lodz.p.ias.io.uwierzytelnianie.config.PasswordEncoderConfig;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.User;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -38,7 +32,7 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testRegisterUser_Success() {
-        User newUser = authenticationService.register("username", "password", "John", "Doe", "WOLONTARIUSZ");
+        Users newUser = authenticationService.register("username", "password", "John", "Doe", "WOLONTARIUSZ");
 
         // Sprawdzenie, czy użytkownik został zapisany w bazie
         assertNotNull(newUser);

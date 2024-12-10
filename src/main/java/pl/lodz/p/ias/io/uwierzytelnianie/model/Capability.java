@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Capability {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long capabilityId;
+    private Long capability_id;
 
     private String capabilityName;
 

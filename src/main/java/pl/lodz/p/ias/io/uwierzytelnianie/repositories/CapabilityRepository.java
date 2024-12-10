@@ -1,4 +1,7 @@
 package pl.lodz.p.ias.io.uwierzytelnianie.repositories;
 
-public class CapabilityRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Capability;
+
+public interface CapabilityRepository extends JpaRepository<Capability, Long> {
 }

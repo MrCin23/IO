@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.User;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 @Service
@@ -22,7 +22,7 @@ public class AuthenticationService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User register(String username, String password, String firstName, String lastName, String roleName) {
+    public Users register(String username, String password, String firstName, String lastName, String roleName) {
         if (userRepository.findByUsername(username) != null) {
             throw new IllegalArgumentException("Username already exists!");
         }
@@ -33,7 +33,8 @@ public class AuthenticationService {
         }
 
         String passwordHash = passwordEncoder.encode(password);
-        User newUser = new User(username, passwordHash, role, firstName, lastName);
+
+        Users newUser = new Users(username, passwordHash, role, firstName, lastName);
         return userRepository.save(newUser);
     }
 }

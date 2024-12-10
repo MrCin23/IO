@@ -1,6 +1,5 @@
 package pl.lodz.p.ias.io.uwierzytelnianie.controllers;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +24,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<String> register(@RequestBody RegisterRequest request) {
         try {
             if (!EnumUtils.isValidEnum(UserRole.class, request.getRoleName().toUpperCase())) {
                 String availableRoles = Arrays.stream(UserRole.values())
@@ -41,6 +40,7 @@ public class AuthenticationController {
                     request.getLastName(),
                     request.getRoleName()
             );
+
             return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
