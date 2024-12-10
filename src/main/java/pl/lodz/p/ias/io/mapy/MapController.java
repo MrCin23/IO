@@ -16,12 +16,12 @@ public class MapController {
 
     @GetMapping
     public ResponseEntity<Object> getMapPoints() {
-//        try {
+        try {
             return ResponseEntity.status(HttpStatus.OK).body(mapService.getPoints());
-//        }
-//        catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Points not found");
-//        }
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Points not found");
+        }
     }
 
     @GetMapping("/{id}")
@@ -37,7 +37,6 @@ public class MapController {
     @PostMapping
     public ResponseEntity<Object> addMapPoint(@RequestBody MapPoint mapPoint) {
         try {
-            MapPoint a = mapPoint;
             return ResponseEntity.status(HttpStatus.CREATED).body(mapService.addPoint(mapPoint));
         }
         catch (Exception e) {
