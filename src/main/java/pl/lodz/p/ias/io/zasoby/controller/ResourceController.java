@@ -12,7 +12,7 @@ import pl.lodz.p.ias.io.zasoby.service.ResourceService;
 @RestController
 @RequestMapping("/api/resources")
 public class ResourceController {
-    private ResourceService resourceService;
+    private final ResourceService resourceService;
 
     @Autowired
     public ResourceController(ResourceService resourceService) {

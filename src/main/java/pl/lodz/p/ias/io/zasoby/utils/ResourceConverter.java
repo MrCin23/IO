@@ -10,7 +10,7 @@ public class ResourceConverter {
                 resource.getResourceType(),
                 resource.getResourceQuantity(),
                 resource.getResourceStatus(),
-                resource.getWarehouse(),
+                resource.getWarehouseId(),
                 resource.getVolunteerName(),
                 resource.getAssignedTask()
         );
@@ -21,7 +21,7 @@ public class ResourceConverter {
                 resourceDTO.getResourceName(),
                 resourceDTO.getResourceType(),
                 resourceDTO.getResourceQuantity(),
-                resourceDTO.getWarehouse()
+                resourceDTO.getWarehouseId()
         );
     }
 }

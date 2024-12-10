@@ -9,7 +9,7 @@ public class WarehouseDTO {
     private String warehouseName;
     private String location;
 
-    public WarehouseDTO(String warehouseName, String location, String organisationName) {
+    public WarehouseDTO(String warehouseName, String location) {
         this.warehouseName = warehouseName;
         this.location = location;
     }

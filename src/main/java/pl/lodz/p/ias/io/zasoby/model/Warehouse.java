@@ -2,10 +2,8 @@ package pl.lodz.p.ias.io.zasoby.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.ArrayList;
-import java.util.List;
 
 //TODO: zamienic location w zaleznosci od odpowiednich modulow
 
@@ -13,15 +11,13 @@ import java.util.List;
 @Setter
 @Entity
 @Table(name = "warehouses")
+@NoArgsConstructor
 public class Warehouse {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private String warehouseName;
     private String location;
-
-    @Getter
-    private List<Resource> resourceList = new ArrayList<>();
 
     public Warehouse(String warehouseName, String location) {
         this.warehouseName = warehouseName;
