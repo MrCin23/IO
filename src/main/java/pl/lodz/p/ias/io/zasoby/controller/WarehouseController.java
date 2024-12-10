@@ -24,7 +24,7 @@ public class WarehouseController {
         this.messageService = messageService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<WarehouseDTO> addWarehouse(@RequestBody WarehouseDTO warehouseDTO) {
         WarehouseDTO warehouse = warehouseService.addWarehouse(warehouseDTO);
         messageService.sendMessage(new Message("Utworzono magazyn", "Boss", "WarehouseMgn", new Date()));
