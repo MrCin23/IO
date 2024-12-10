@@ -2,6 +2,7 @@ package pl.lodz.p.ias.io.wolontariusze.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class Group {
 
     private String name;
     @OneToMany
-    private List<WUser> members;
+    private List<Users> members;
 
-    public void add(WUser user) {
+    public void add(Users user) {
         members.add(user);
     }
 
-    public void remove(WUser user) {
+    public void remove(Users user) {
         members.remove(user);
     }
 }
