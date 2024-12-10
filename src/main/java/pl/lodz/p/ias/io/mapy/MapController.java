@@ -38,6 +38,7 @@ public class MapController {
     @PostMapping
     public ResponseEntity<Object> addMapPoint(@RequestBody MapPoint mapPoint) {
         try {
+            MapPoint a = mapPoint;
             return ResponseEntity.status(HttpStatus.CREATED).body(mapService.addPoint(mapPoint));
         }
         catch (Exception e) {

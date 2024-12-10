@@ -64,7 +64,12 @@ public class MapPointRepository {
     }
 
     public MapPoint findById(long id) {
+//        Transaction transaction = null;
         try (Session session = sessionFactory.openSession()) {
+//            transaction = session.beginTransaction();
+            MapPoint mapPoint = (MapPoint) session.get(MapPoint.class, id);
+//            return mapPoint;
+//            transaction.en;
             return session.get(MapPoint.class, id);
         } catch (Exception e) {
             e.printStackTrace();
