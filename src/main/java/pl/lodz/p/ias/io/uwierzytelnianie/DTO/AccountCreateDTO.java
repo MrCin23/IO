@@ -3,11 +3,10 @@ package pl.lodz.p.ias.io.uwierzytelnianie.DTO;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 
 @Getter
 @Setter
-public class UserCreateDTO {
+public class AccountCreateDTO {
     @NotBlank(message = "Username is required")
     private String username;
 

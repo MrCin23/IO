@@ -5,12 +5,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.ias.io.uwierzytelnianie.DTO.UserCreateDTO;
+import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountCreateDTO;
 import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
+import pl.lodz.p.ias.io.uwierzytelnianie.mappers.AccountMapper;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.uwierzytelnianie.utils.EnumUtils;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -18,6 +21,7 @@ import java.util.stream.Collectors;
 public class AuthenticationController {
 
     private final AuthenticationService authenticationService;
+//    private final AccountMapper userMapper = new AccountMapper();
 
     @Autowired
     public AuthenticationController(AuthenticationService authenticationService) {
@@ -25,7 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid UserCreateDTO request) {
+    public ResponseEntity<String> register(@RequestBody @Valid AccountCreateDTO request) {
         try {
             if (!EnumUtils.isValidEnum(UserRole.class, request.getRoleName().toUpperCase())) {
                 String availableRoles = Arrays.stream(UserRole.values())
@@ -46,5 +50,14 @@ public class AuthenticationController {
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(null);
         }
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Account>> getAccounts() {
+        List<Account> accounts = authenticationService.getAccounts();
+       /* List<Account> accountGetDTOs =  accounts.stream()
+                .map(accountMapper::userToUserGetDTO)
+                .toList();*/
+        return ResponseEntity.ok(accounts);
     }
 }

@@ -8,6 +8,9 @@ import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AuthenticationService {
 
@@ -33,4 +36,25 @@ public class AuthenticationService {
         Account newUser = new Account(username, passwordHash, role, firstName, lastName);
         return userRepository.save(newUser);
     }
+
+    public List<Account> getAccounts() {
+        return userRepository.findAll();
+    }
+
+    public Optional<Account> getAccountById(Long id) {
+        return userRepository.findById(id);
+    }
+
+    public Account getAccountByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+    public List<Account> getAccountsByRole(Role role) {
+        return userRepository.findByRole(role);
+    }
+
+    public List<Account> getAccountsById(List<Long> ids) {
+        return userRepository.findAllById(ids);
+    }
+
 }
