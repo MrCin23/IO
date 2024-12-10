@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.lodz.p.ias.io.powiadomienia.mock.MockUser;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 
 @Getter
 @Setter
@@ -17,8 +17,7 @@ public class UserAnnouncement {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private MockUser user;
+    private Users user;
 
     @ManyToOne
     private Announcement announcement;

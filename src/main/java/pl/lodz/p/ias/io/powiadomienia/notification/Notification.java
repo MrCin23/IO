@@ -5,7 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.lodz.p.ias.io.powiadomienia.mock.MockUser;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 
 @Getter
 @Setter
@@ -20,7 +20,7 @@ public class Notification {
     private NotificationType type;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private MockUser user;
+    private Users user;
     private boolean read;
 
 }

@@ -2,8 +2,8 @@ package pl.lodz.p.ias.io.powiadomienia.announcement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.ias.io.powiadomienia.mock.MockUser;
-import pl.lodz.p.ias.io.powiadomienia.mock.MockUserRepo;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,16 +15,16 @@ public class AnnouncementService {
 
     private AnnouncementRepository announcementRepository;
     private UserAnnouncementRepository userAnnouncementRepository;
-    private MockUserRepo mockUserRepo;
+    private UserRepository userRepository;
 
     public Announcement createAnnouncement(Announcement announcement) {
         Announcement savedAnnouncement = announcementRepository.save(announcement);
 
-        List<MockUser> users = mockUserRepo.findAll();
+        List<Users> users = userRepository.findAll();
 
-        for (MockUser mockUser : users) {
+        for (Users user : users) {
             UserAnnouncement userAnnouncement = new UserAnnouncement();
-            userAnnouncement.setUser(mockUser);
+            userAnnouncement.setUser(user);
             userAnnouncement.setAnnouncement(announcement);
             userAnnouncementRepository.save(userAnnouncement);
         }
@@ -33,7 +33,7 @@ public class AnnouncementService {
     }
 
     public List<Announcement> getUsersAnnouncements(Long userId) {
-        List<UserAnnouncement> userAnnouncementList = userAnnouncementRepository.findAllByUser_Id(userId);
+        List<UserAnnouncement> userAnnouncementList = userAnnouncementRepository.findAllByUser(userRepository.findById(userId).get());
         List<Announcement> announcementList = new ArrayList<>();
         for (UserAnnouncement userAnnouncement : userAnnouncementList) {
             announcementList.add(userAnnouncement.getAnnouncement());

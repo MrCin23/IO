@@ -1,4 +1,16 @@
 ###
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "Powiadomienia",
+  "password": "ZAQ!2wsx",
+  "firstName": "Mateusz",
+  "lastName": "Jakub",
+  "roleName": "WOLONTARIUSZ"
+}
+
+###
 POST http://localhost:8080/announcements
 Content-Type: application/json
 
@@ -41,5 +53,3 @@ GET http://localhost:8080/notifications/user/1
 ###
 POST http://localhost:8080/notifications/1/hide
 
-###
-GET http://localhost:8080/powiadomienia/mockUsers
