@@ -27,7 +27,7 @@ public class Account extends AbstractEntity {
     private LocalDateTime lastLogin;
 
     @ManyToOne
-    @JoinColumn(name = "roleId")
+    @JoinColumn(name = "role_id")
     @Getter
     private Role role;
 

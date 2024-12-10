@@ -14,9 +14,9 @@ public class Role extends AbstractEntity {
     @Getter
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "roleCapability",
-            joinColumns = @JoinColumn(name = "roleId"),
-            inverseJoinColumns = @JoinColumn(name = "capabilityId"))
+            name = "role_capability",
+            joinColumns = @JoinColumn(name = "role_id"),
+            inverseJoinColumns = @JoinColumn(name = "capability_id"))
     private Set<Capability> capabilities;
 
     public Role() {}
