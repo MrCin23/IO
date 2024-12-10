@@ -5,15 +5,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 @AllArgsConstructor
+@Service
 public class MapService implements IMapService {
 
     private MapPointRepository mapPointRepository;
 
     @Override
     public MapPoint addPoint(MapPoint point) {
-        mapPointRepository.add(point);
+        mapPointRepository.save(point);
         return point;
     }
 
@@ -24,22 +24,22 @@ public class MapService implements IMapService {
 
     @Override
     public MapPoint getPoint(long id) {
-        return mapPointRepository.findById(id);
+        return mapPointRepository.findById(id).get();
     }
 
     @Override
     public List<MapPoint> getPoints() {
-        return mapPointRepository.getClients();
+        List<MapPoint> a = mapPointRepository.findAll();
+        return mapPointRepository.findAll();
     }
 
     @Override
     public void removePoint(long id) {
-        mapPointRepository.remove(mapPointRepository.findById(id));
+        mapPointRepository.delete(mapPointRepository.findById(id).get());
     }
 
     @Override
     public void changeStatus(long id, boolean status) {
-        mapPointRepository.changeStatus(mapPointRepository.findById(id), status
-        );
+//        mapPointRepository.changeStatus(mapPointRepository.findById(id), status);
     }
 }
