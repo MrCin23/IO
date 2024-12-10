@@ -1,7 +1,9 @@
-package pl.lodz.p.ias.io.mapy;
+package pl.lodz.p.ias.io.mapy.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
 
 import java.util.List;
 
@@ -17,10 +19,10 @@ public class MapService implements IMapService {
         return point;
     }
 
-    @Override
-    public MapPoint getPoint(double x, double y) {
-        throw new UnsupportedOperationException("Not implemented yet");
-    }
+//    @Override
+//    public MapPoint getPoint(double x, double y) {
+//        throw new UnsupportedOperationException("Not implemented yet");
+//    }
 
     @Override
     public MapPoint getPoint(long id) {

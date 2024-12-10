@@ -1,12 +1,11 @@
-package pl.lodz.p.ias.io.mapy;
+package pl.lodz.p.ias.io.mapy.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.service.MapService;
 
 @RestController
 @RequestMapping("/map")

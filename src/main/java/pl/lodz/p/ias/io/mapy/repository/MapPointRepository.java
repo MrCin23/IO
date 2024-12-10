@@ -1,10 +1,9 @@
-package pl.lodz.p.ias.io.mapy;
+package pl.lodz.p.ias.io.mapy.repository;
 
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
+import pl.lodz.p.ias.io.mapy.model.MapPoint;
 
 
 @Repository

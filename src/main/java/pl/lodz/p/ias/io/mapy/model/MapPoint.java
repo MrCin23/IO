@@ -1,4 +1,4 @@
-package pl.lodz.p.ias.io.mapy;
+package pl.lodz.p.ias.io.mapy.model;
 
 import com.google.maps.model.LatLng;
 import jakarta.persistence.Entity;
