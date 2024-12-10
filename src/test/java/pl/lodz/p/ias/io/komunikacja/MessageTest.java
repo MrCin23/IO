@@ -29,9 +29,9 @@ public class MessageTest {
                 .then()
                 .statusCode(201)
                 .contentType(ContentType.JSON)
-                .body("content", equalTo("Witam"))
+                .body("content", equalTo("Wojtek"))
                 .body("receiver", equalTo("Bartek"))
-                .body("sender", equalTo("Wojtek"));
+                .body("sender", equalTo("Witam"));
 
     }
 }
