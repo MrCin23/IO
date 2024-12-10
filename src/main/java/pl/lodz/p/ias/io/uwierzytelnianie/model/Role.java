@@ -7,20 +7,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long role_id;
-
+public class Role extends AbstractEntity {
     @Getter
     private String roleName;
 
     @Getter
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "role_capability",
-            joinColumns = @JoinColumn(name = "role_id"),
-            inverseJoinColumns = @JoinColumn(name = "capability_id"))
+            name = "roleCapability",
+            joinColumns = @JoinColumn(name = "roleId"),
+            inverseJoinColumns = @JoinColumn(name = "capabilityId"))
     private Set<Capability> capabilities;
 
     public Role() {}

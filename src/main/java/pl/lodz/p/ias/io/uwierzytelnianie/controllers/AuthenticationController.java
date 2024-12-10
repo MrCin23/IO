@@ -5,10 +5,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.ias.io.uwierzytelnianie.DTO.RegisterRequest;
-import pl.lodz.p.ias.io.uwierzytelnianie.utils.EnumUtils;
-import pl.lodz.p.ias.io.uwierzytelnianie.utils.UserRole;
+import pl.lodz.p.ias.io.uwierzytelnianie.DTO.UserCreateDTO;
+import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
+import pl.lodz.p.ias.io.uwierzytelnianie.utils.EnumUtils;
 
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -25,7 +25,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> register(@RequestBody @Valid RegisterRequest request) {
+    public ResponseEntity<String> register(@RequestBody @Valid UserCreateDTO request) {
         try {
             if (!EnumUtils.isValidEnum(UserRole.class, request.getRoleName().toUpperCase())) {
                 String availableRoles = Arrays.stream(UserRole.values())
