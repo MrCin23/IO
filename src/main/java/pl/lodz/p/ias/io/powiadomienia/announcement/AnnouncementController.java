@@ -11,7 +11,7 @@ public class AnnouncementController {
 
     private AnnouncementService announcementService;
 
-    @GetMapping("/announcements/{user_id}")
+    @GetMapping("/announcements/user/{user_id}")
     public List<Announcement> getAnnouncements(@PathVariable Long user_id) {
         return announcementService.getUsersAnnouncements(user_id);
     }
