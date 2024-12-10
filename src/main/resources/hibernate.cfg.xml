@@ -29,7 +29,7 @@
         <!-- Mappings -->
         <!-- Tutaj nalezy dodawac swoje klasy -->
         <!-- TODO -->
-        <mapping class="pl.lodz.p.ias.io.mapy.MapPoint"/>
+<!--        <mapping class="pl.lodz.p.ias.io.mapy.MapPoint"/>-->
 
     </session-factory>
 </hibernate-configuration>
