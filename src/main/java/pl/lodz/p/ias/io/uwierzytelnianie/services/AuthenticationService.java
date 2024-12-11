@@ -49,12 +49,20 @@ public class AuthenticationService {
         return userRepository.findByUsername(username);
     }
 
-    public List<Account> getAccountsByRole(Role role) {
+    public List<Account> getAccountsByRole(String roleName) {
+        Role role = roleRepository.findByRoleName(roleName);
+
         return userRepository.findByRole(role);
+    }
+
+    public Account resetPassword(String username, String password) {
+        Account account = userRepository.findByUsername(username);
+        account.setPasswordHash(passwordEncoder.encode(password));
+
+        return userRepository.save(account);
     }
 
     public List<Account> getAccountsById(List<Long> ids) {
         return userRepository.findAllById(ids);
     }
-
 }
