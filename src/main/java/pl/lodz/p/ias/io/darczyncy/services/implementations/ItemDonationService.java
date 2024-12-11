@@ -12,6 +12,8 @@ import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.zasoby.model.Warehouse;
+import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +23,8 @@ public class ItemDonationService implements IItemDonationService {
 
     private final MaterialNeedRepository materialNeedRepository;
 
+    private final WarehouseRepository warehouseRepository;
+
     private final UserRepository userRepository;
 
     @Override
@@ -28,13 +32,13 @@ public class ItemDonationService implements IItemDonationService {
 
         Account donor = userRepository.findById(dto.donorId()).orElse(null);
         MaterialNeed need = materialNeedRepository.findById(dto.needId()).orElse(null);
-
+        Warehouse warehouse = warehouseRepository.findById(dto.warehouseId()).orElse(null);
         ItemDonation itemDonation = new ItemDonation(
                 donor,
                 need,
                 dto.itemName(),
                 dto.resourceQuantity(),
-                dto.warehouseId(),
+                warehouse.getId(),
                 ItemDonation.ItemCategory.valueOf(dto.category()),
                 dto.description()
         );

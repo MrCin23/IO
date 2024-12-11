@@ -6,17 +6,17 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
-import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
-import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
-import pl.lodz.p.ias.io.darczyncy.services.implementations.FinancialDonationService;
-
-import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
-import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
+import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
+import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
+import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
+import pl.lodz.p.ias.io.darczyncy.services.implementations.ItemDonationService;
+import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -26,16 +26,16 @@ import java.util.Date;
 
 @SpringBootTest
 @ComponentScan(basePackages = "pl.lodz.p.ias.io.uwierzytelnianie.repositories")
-public class FinancialDonationTest {
+public class ItemDonationTest {
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private FinancialDonationService financialDonationService;
+    private ItemDonationService itemDonationService;
 
     @Autowired
-    private FinancialDonationRepository financialDonationRepository;
+    private ItemDonationRepository itemDonationRepository;
 
     @Autowired
     RoleRepository roleRepository;
@@ -44,16 +44,16 @@ public class FinancialDonationTest {
     WarehouseRepository warehouseRepository;
 
     @Autowired
-    FinancialNeedRepository financialNeedRepository;
+    MaterialNeedRepository materialNeedRepository;
 
     @BeforeEach
     public void setUp() {
-        financialDonationRepository.deleteAll();
+        itemDonationRepository.deleteAll();
         userRepository.deleteAll();
     }
 
     @Test
-    public void createFinancialDonation() {
+    public void createItemDonation() {
 
         Role role = new Role("DARCZYNCA");
         roleRepository.save(role);
@@ -64,37 +64,36 @@ public class FinancialDonationTest {
                 "Jan",
                 "Nowak"
         ));
-
-        FinancialNeed financialNeed = FinancialNeed.builder()
-                .collectionGoal(200)
-                .collectionStatus(2)
-                .description("aa")
+        MaterialNeed materialNeed = MaterialNeed.builder()
+                .product("czajnik")
+                .amount(1)
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
                 .status("Test")
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
+                .description("zasób materialny")
                 .userId(newUser.getId())
         .build();
-        financialNeedRepository.save(financialNeed);
+        materialNeedRepository.save(materialNeed);
 
         Warehouse warehouse = new Warehouse("magazyn", "WDupie");
         warehouseRepository.save(warehouse);
 
-        FinancialDonationCreateDTO createDTO = new FinancialDonationCreateDTO(
+        ItemDonationCreateDTO createDTO = new ItemDonationCreateDTO(
                 newUser.getId(),
-                financialNeed.getId(),
-                warehouse.getId(),
-                200.0,
-                34.88,
-                FinancialDonation.Currency.PLN.toString()
+                materialNeed.getId(),
+                "czajnik",
+                ItemDonation.ItemCategory.HOUSEHOLD.toString(),
+                "bardzo dobry teapot",
+                418,
+                warehouse.getId()
         );
 
-        FinancialDonation money = financialDonationService.createFinancialDonation(createDTO);
-        FinancialDonation foundMoney = financialDonationRepository.findById(money.getId()).orElse(null);
-        Assertions.assertNotNull(foundMoney);
+        ItemDonation item = itemDonationService.createItemDonation(createDTO);
+        ItemDonation foundDonation = itemDonationRepository.findById(item.getId()).orElse(null);
+        Assertions.assertNotNull(foundDonation);
+
     }
-
-
 
 }

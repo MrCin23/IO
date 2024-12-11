@@ -5,6 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 
 @Repository
-public interface WarehouseRepository extends JpaRepository<Warehouse, Integer> {
-    Warehouse findById(long id);
+public interface WarehouseRepository extends JpaRepository<Warehouse, Long> {
 }
