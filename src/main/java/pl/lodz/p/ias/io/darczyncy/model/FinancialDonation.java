@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -20,7 +20,7 @@ public class FinancialDonation extends Donation {
     private double calculatedVAT;
     private Currency currency;
 
-    public FinancialDonation(Users donor, Need need,
+    public FinancialDonation(Account donor, Need need,
                              long warehouseId,
                              double amount, double calculatedVAT, Currency currency) {
         super(donor, need, "financial Donation", "money", 1, warehouseId);

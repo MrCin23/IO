@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.implementations.FinancialDonationService;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 

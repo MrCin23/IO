@@ -6,7 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.zasoby.model.Resource;
 
 @Getter @Setter
@@ -20,10 +21,10 @@ public class Donation extends Resource {
     @ManyToOne
     @JoinColumn(
             name = "donor_id",
-            referencedColumnName = "userId",
+            referencedColumnName = "id",
             foreignKey = @ForeignKey(name = "donation_user_id_fk")
     )
-    private Users donor;
+    private Account donor;
 
     @ManyToOne
     @JoinColumn(
@@ -36,7 +37,7 @@ public class Donation extends Resource {
     @Enumerated(EnumType.STRING)
     private AcceptanceStatus acceptanceStatus;
 
-    public Donation (Users donor, Need need, String resourceName, String resourceType,
+    public Donation (Account donor, Need need, String resourceName, String resourceType,
                      int resourceQuantity, long warehouseId) {
         super(resourceName, resourceType, resourceQuantity, warehouseId);
         this.donor = donor;

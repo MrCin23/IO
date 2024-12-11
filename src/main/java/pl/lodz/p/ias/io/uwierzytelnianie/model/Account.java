@@ -7,22 +7,14 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
-public class Users {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class Account extends AbstractEntity {
     @Getter
-    private Long userId;
-
-    @Getter
+    @Column(unique = true)
     private String username;
 
     @Getter
+    @Setter
     private String passwordHash;
-
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    @Getter
-    private Role role;
 
     @Getter
     private String firstName;
@@ -34,7 +26,12 @@ public class Users {
     @Setter
     private LocalDateTime lastLogin;
 
-    public Users(String username, String passwordHash, Role role, String firstName, String lastName) {
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    @Getter
+    private Role role;
+
+    public Account(String username, String passwordHash, Role role, String firstName, String lastName) {
         this.username = username;
         this.passwordHash = passwordHash;
         this.role = role;
@@ -42,13 +39,9 @@ public class Users {
         this.lastName = lastName;
     }
 
-    public Users() {}
+    public Account() {}
 
     public String getUserInfo() {
         return firstName + " " + lastName;
-    }
-
-    public Role getUserRole() {
-        return this.role;
     }
 }

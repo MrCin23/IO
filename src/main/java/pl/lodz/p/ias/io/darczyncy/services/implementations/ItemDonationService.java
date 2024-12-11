@@ -9,7 +9,8 @@ import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.interfaces.IItemDonationService;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 @RequiredArgsConstructor
@@ -25,7 +26,7 @@ public class ItemDonationService implements IItemDonationService {
     @Override
     public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
 
-        Users donor = userRepository.findById(dto.donorId()).orElse(null);
+        Account donor = userRepository.findById(dto.donorId()).orElse(null);
         MaterialNeed need = materialNeedRepository.findById(dto.needId()).orElse(null);
 
         ItemDonation itemDonation = new ItemDonation(

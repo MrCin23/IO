@@ -11,7 +11,7 @@ import pl.lodz.p.ias.io.darczyncy.services.interfaces.IFinancialDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.PaymentProvider;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 @RequiredArgsConstructor
@@ -25,7 +25,7 @@ public class FinancialDonationService implements IFinancialDonationService {
     @Override
     public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
 
-        Users donor = userRepository.findById(dto.donorId()).orElse(null);
+        Account donor = userRepository.findById(dto.donorId()).orElse(null);
         FinancialNeed need = financialNeedRepository.findById(dto.needId()).orElse(null);
 
         FinancialDonation financialDonation = new FinancialDonation(

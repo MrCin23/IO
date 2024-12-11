@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -17,7 +17,7 @@ public class ItemDonation extends Donation{
 
     private String description;
 
-    public ItemDonation(Users donor, Need need, String itemName,
+    public ItemDonation(Account donor, Need need, String itemName,
                         int resourceQuantity, long warehouseId,
                         ItemCategory category, String description) {
         super(donor, need, itemName, category.toString(), resourceQuantity, warehouseId);
