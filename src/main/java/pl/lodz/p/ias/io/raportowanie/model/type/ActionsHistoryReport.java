@@ -2,11 +2,11 @@ package pl.lodz.p.ias.io.raportowanie.model.type;
 
 import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 
-public class AcionsHistoryReport extends Report {
+public class ActionsHistoryReport extends Report {
 
     private String content;
 
-    public AcionsHistoryReport(Long userId) {
+    public ActionsHistoryReport(Long userId) {
         super(userId);
     }
 

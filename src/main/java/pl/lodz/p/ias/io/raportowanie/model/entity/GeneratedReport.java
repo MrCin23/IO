@@ -12,6 +12,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -108,8 +109,35 @@ public class GeneratedReport {
     }
 
     private String makeContent() {
-        return userName + " " + userSurname + "\n" + table+ "\n";
+        StringBuilder content = new StringBuilder();
+        String fullName = userName + " " + userSurname;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateFormat.format(generationTime);
 
+        try {
+            PDType1Font font = PDType1Font.COURIER;
+            int fontSize = 11;
+            float pageWidth = PDRectangle.A4.getWidth() - 100; // Uwzględnij marginesy
+
+            float fullTextWidth = (font.getStringWidth(fullName + " " + formattedDate) / 1000) * fontSize;
+            float availableWidth = pageWidth - fullTextWidth;
+
+            float spaceWidth = (font.getStringWidth(" ") / 1000) * fontSize;
+            int spacesCount = Math.max(0, (int) (availableWidth / spaceWidth));
+
+            float lineWidth = (font.getStringWidth("-") / 1000) * fontSize;
+            int lineCount = Math.max(0, (int) (pageWidth / lineWidth));
+
+            String spaces = " ".repeat(spacesCount);
+            String line = "-".repeat(lineCount);
+            content.append(fullName).append(spaces).append(formattedDate).append("\n");
+            content.append(line).append("\n");
+            content.append(table).append("\n");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return content.toString();
     }
 
     private List<String> wrapText(String text, PDType1Font font, float fontSize, float maxWidth) throws IOException {
