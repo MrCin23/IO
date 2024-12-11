@@ -1,4 +1,3 @@
-/*
 package pl.lodz.p.ias.io.uwierzytelnianie;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -6,14 +5,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.ComponentScan;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest(classes = {AuthenticationService.class})
-@ComponentScan(basePackages = "pl.lodz.p.ias.io.uwierzytelnianie.repositories")
+@SpringBootTest
 public class AuthenticationServiceTest {
 
     @Autowired
@@ -22,8 +21,8 @@ public class AuthenticationServiceTest {
     @Autowired
     private UserRepository userRepository;
 
-    //@Autowired
-    //private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @BeforeEach
     public void setUp() {
@@ -33,14 +32,14 @@ public class AuthenticationServiceTest {
 
     @Test
     public void testRegisterUser_Success() {
-        Users newUser = authenticationService.register("username", "password", "John", "Doe", "WOLONTARIUSZ");
+        Account newUser = authenticationService.register("username", "password", "John", "Doe", "ROLE_WOLONTARIUSZ");
 
         // Sprawdzenie, czy użytkownik został zapisany w bazie
         assertNotNull(newUser);
         assertEquals("username", newUser.getUsername());
         assertEquals("John", newUser.getFirstName());
         assertEquals("Doe", newUser.getLastName());
-        assertEquals("WOLONTARIUSZ", newUser.getRole().getRoleName());
+        assertEquals("ROLE_WOLONTARIUSZ", newUser.getRole().getRoleName());
 
         // Sprawdzenie, czy hasło zostało zahashowane
         assertNotEquals("password", newUser.getPasswordHash());
@@ -49,11 +48,11 @@ public class AuthenticationServiceTest {
     @Test
     public void testRegisterUser_UsernameAlreadyExists() {
         // Rejestracja pierwszego użytkownika
-        authenticationService.register("username", "password", "John", "Doe", "WOLONTARIUSZ");
+        authenticationService.register("username", "password", "John", "Doe", "ROLE_WOLONTARIUSZ");
 
         // Próba rejestracji z tym samym użytkownikiem
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () ->
-                authenticationService.register("username", "password", "Jane", "Doe", "WOLONTARIUSZ")
+                authenticationService.register("username", "password", "Jane", "Doe", "ROLE_WOLONTARIUSZ")
         );
         assertEquals("Username already exists!", exception.getMessage());
     }
@@ -65,4 +64,4 @@ public class AuthenticationServiceTest {
         );
         assertEquals("Invalid role name!", exception.getMessage());
     }
-}*/
+}
