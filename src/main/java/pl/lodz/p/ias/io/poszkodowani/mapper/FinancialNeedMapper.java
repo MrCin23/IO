@@ -13,7 +13,6 @@ public class FinancialNeedMapper {
 
     public FinancialNeed toFinancialNeed(FinancialNeedCreateRequestDTO dto) {
         return FinancialNeed.builder()
-                .userId(dto.getUserId())
                 .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
                 .collectionGoal(dto.getCollectionGoal())
@@ -23,6 +22,7 @@ public class FinancialNeedMapper {
     public FinancialNeedResponseDTO toFinancialNeedResponseDTO(FinancialNeed financialNeed) {
         return FinancialNeedResponseDTO.builder()
                 .id(financialNeed.getId())
+                .userId(financialNeed.getUser().getId())
                 .description(financialNeed.getDescription())
                 .creationDate(financialNeed.getCreationDate())
                 .expirationDate(financialNeed.getExpirationDate())

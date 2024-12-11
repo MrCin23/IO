@@ -11,8 +11,11 @@ import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponseDTO;
 import pl.lodz.p.ias.io.poszkodowani.mapper.MaterialNeedMapper;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/material-needs")
@@ -21,16 +24,23 @@ public class MaterialNeedController {
 
     private final MaterialNeedService materialNeedService;
     private final MaterialNeedMapper materialNeedMapper;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public MaterialNeedController(MaterialNeedService materialNeedService, MaterialNeedMapper materialNeedMapper) {
+    public MaterialNeedController(MaterialNeedService materialNeedService, MaterialNeedMapper materialNeedMapper, AuthenticationService authenticationService) {
         this.materialNeedService = materialNeedService;
         this.materialNeedMapper = materialNeedMapper;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping
     public ResponseEntity<MaterialNeedResponseDTO> createMaterialNeed(@Valid @RequestBody MaterialNeedCreateRequestDTO dto) {
         MaterialNeed materialNeed = materialNeedMapper.toMaterialNeed(dto);
+        Optional<Account> user = authenticationService.getAccountById(dto.getUserId());
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        materialNeed.setUser(user.get());
         MaterialNeed savedMaterialNeed = materialNeedService.createMaterialNeed(materialNeed);
         MaterialNeedResponseDTO responseDTO = materialNeedMapper.toMaterialNeedResponseDTO(savedMaterialNeed);
         return ResponseEntity.ok(responseDTO);

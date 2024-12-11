@@ -15,11 +15,8 @@ import java.util.Date;
 public class FinancialNeedResponseDTO {
 
     private Long id;
-    // TODO
-    //private Long userId;
-
-    // TODO
-    //private Long mapPointId;
+    private Long userId;
+    private Long mapPointId;
     private String description;
     private Date creationDate;
     private Date expirationDate;

@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.poszkodowani.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.Date;
 
@@ -25,8 +26,9 @@ public abstract class Need {
     @Column(name = "id") // Explicit column name
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Account user;
 
     @Column(name = "map_point_id", nullable = false)
     private Long mapPointId;
