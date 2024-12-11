@@ -8,7 +8,6 @@ import pl.lodz.p.ias.io.komunikacja.dto.CreateChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.dto.ChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.mapper.ChatRoomMapper;
 import pl.lodz.p.ias.io.komunikacja.model.ChatRoom;
-import pl.lodz.p.ias.io.komunikacja.model.MockUser;
 import pl.lodz.p.ias.io.komunikacja.service.ChatRoomService;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;

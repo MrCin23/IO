@@ -2,7 +2,6 @@ package pl.lodz.p.ias.io.komunikacja.mapper;
 
 import pl.lodz.p.ias.io.komunikacja.dto.ChatRoomDTO;
 import pl.lodz.p.ias.io.komunikacja.model.ChatRoom;
-import pl.lodz.p.ias.io.komunikacja.model.MockUser;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.List;
