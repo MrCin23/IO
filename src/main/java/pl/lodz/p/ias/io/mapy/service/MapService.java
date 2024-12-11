@@ -1,6 +1,7 @@
 package pl.lodz.p.ias.io.mapy.service;
 
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.mapy.model.MapPoint;
 import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
