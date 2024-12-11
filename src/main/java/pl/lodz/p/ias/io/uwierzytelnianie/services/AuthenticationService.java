@@ -9,6 +9,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,7 +46,14 @@ public class AuthenticationService {
 
     public Boolean login(String username, String password) {
         Account account = userRepository.findByUsername(username);
-        return passwordEncoder.matches(password, account.getPasswordHash());
+        Boolean isCorrect = passwordEncoder.matches(password, account.getPasswordHash());
+
+        if (isCorrect) {
+            account.setLastLogin(LocalDateTime.now());
+            userRepository.save(account);
+        }
+
+        return isCorrect;
     }
 
     public List<Account> getAccounts() {

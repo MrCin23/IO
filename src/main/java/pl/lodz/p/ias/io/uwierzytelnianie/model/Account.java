@@ -24,6 +24,7 @@ public class Account extends AbstractEntity {
 
     @Column(nullable = true)
     @Setter
+    @Getter
     private LocalDateTime lastLogin;
 
     @ManyToOne
