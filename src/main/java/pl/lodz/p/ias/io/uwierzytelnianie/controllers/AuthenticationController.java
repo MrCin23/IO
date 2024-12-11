@@ -52,6 +52,15 @@ public class AuthenticationController {
         }
     }
 
+    @PostMapping("/login")
+    public ResponseEntity<Boolean> login(@RequestBody @Valid AccountNamePassDTO request) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(authenticationService.login(request.getUsername(), request.getPassword()));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(null);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<Account>> getAccounts() {
         List<Account> accounts = authenticationService.getAccounts();
