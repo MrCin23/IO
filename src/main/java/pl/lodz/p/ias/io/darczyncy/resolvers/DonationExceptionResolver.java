@@ -11,8 +11,9 @@ import pl.lodz.p.ias.io.darczyncy.exceptions.FinancialDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.PaymentFailedException;
 
-@Order(2)
+
 @ControllerAdvice
+@Order(2)
 public class DonationExceptionResolver {
 
     @ExceptionHandler(value = {FinancialDonationNotFoundException.class,

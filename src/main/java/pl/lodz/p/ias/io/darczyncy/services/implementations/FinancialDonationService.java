@@ -1,4 +1,4 @@
-package pl.lodz.p.ias.io.darczyncy.service.implementations;
+package pl.lodz.p.ias.io.darczyncy.services.implementations;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -6,25 +6,35 @@ import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
 import pl.lodz.p.ias.io.darczyncy.exceptions.FinancialDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.PaymentFailedException;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
-import pl.lodz.p.ias.io.darczyncy.repository.FinancialDonationRepository;
-import pl.lodz.p.ias.io.darczyncy.service.interfaces.IFinancialDonationService;
+import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
+import pl.lodz.p.ias.io.darczyncy.services.interfaces.IFinancialDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.PaymentProvider;
+import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
+import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 @RequiredArgsConstructor
 @Service
 public class FinancialDonationService implements IFinancialDonationService {
 
     private final FinancialDonationRepository financialDonationRepository;
+    private final UserRepository userRepository;
+    private final FinancialNeedRepository financialNeedRepository;
 
     @Override
     public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
+
+        Users donor = userRepository.findById(dto.donorId()).orElse(null);
+        FinancialNeed need = financialNeedRepository.findById(dto.needId()).orElse(null);
+
         FinancialDonation financialDonation = new FinancialDonation(
-                dto.donor(),
-                dto.need(),
+                donor,
+                need,
                 dto.warehouseId(),
                 dto.amount(),
                 dto.calculatedVAT(),
-                dto.currency()
+                FinancialDonation.Currency.valueOf(dto.currency())
         );
         PaymentProvider paymentProvider = new PaymentProvider();
         boolean isPaymentSucceed = paymentProvider.processPayment();
@@ -37,7 +47,7 @@ public class FinancialDonationService implements IFinancialDonationService {
 
     @Override
     public FinancialDonation findFinancialDonationById(long id) {
-        FinancialDonation financialDonation = financialDonationRepository.findById(id);
+        FinancialDonation financialDonation = financialDonationRepository.findById(id).orElse(null);
         if (financialDonation == null) {
             throw new FinancialDonationNotFoundException();
         }

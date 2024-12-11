@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
+
 import pl.lodz.p.ias.io.darczyncy.controller.interfaces.IDonationController;
 import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
 import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
@@ -14,8 +15,8 @@ import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.PaymentFailedException;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
-import pl.lodz.p.ias.io.darczyncy.service.interfaces.IFinancialDonationService;
-import pl.lodz.p.ias.io.darczyncy.service.interfaces.IItemDonationService;
+import pl.lodz.p.ias.io.darczyncy.services.interfaces.IFinancialDonationService;
+import pl.lodz.p.ias.io.darczyncy.services.interfaces.IItemDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.DonationMapper;
 
 import java.net.URI;

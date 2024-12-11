@@ -10,20 +10,20 @@ public class DonationMapper {
     public static FinancialDonationOutputDTO toFinancialDonationOutputDTO(FinancialDonation financialDonation) {
         return new FinancialDonationOutputDTO(
                 financialDonation.getId(),
-                financialDonation.getDonor(),
-                financialDonation.getNeed(),
+                financialDonation.getDonor().getUserId(),
+                financialDonation.getNeed().getId(),
                 financialDonation.getWarehouseId(),
                 financialDonation.getAmount(),
                 financialDonation.getCalculatedVAT(),
-                financialDonation.getCurrency()
+                financialDonation.getCurrency().toString()
         );
     }
 
     public static ItemDonationOutputDTO toItemDonationOutputDTO(ItemDonation itemDonation) {
         return new ItemDonationOutputDTO(
                 itemDonation.getId(),
-                itemDonation.getDonor(),
-                itemDonation.getNeed(),
+                itemDonation.getDonor().getUserId(),
+                itemDonation.getNeed().getId(),
                 itemDonation.getResourceName(),
                 itemDonation.getResourceType(),
                 itemDonation.getDescription(),

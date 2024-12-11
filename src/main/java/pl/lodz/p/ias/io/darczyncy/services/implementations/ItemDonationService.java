@@ -1,12 +1,16 @@
-package pl.lodz.p.ias.io.darczyncy.service.implementations;
+package pl.lodz.p.ias.io.darczyncy.services.implementations;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
-import pl.lodz.p.ias.io.darczyncy.repository.ItemDonationRepository;
-import pl.lodz.p.ias.io.darczyncy.service.interfaces.IItemDonationService;
+import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
+import pl.lodz.p.ias.io.darczyncy.services.interfaces.IItemDonationService;
+import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 @RequiredArgsConstructor
 @Service
@@ -14,15 +18,23 @@ public class ItemDonationService implements IItemDonationService {
 
     private final ItemDonationRepository itemDonationRepository;
 
+    private final MaterialNeedRepository materialNeedRepository;
+
+    private final UserRepository userRepository;
+
     @Override
     public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
+
+        Users donor = userRepository.findById(dto.donorId()).orElse(null);
+        MaterialNeed need = materialNeedRepository.findById(dto.needId()).orElse(null);
+
         ItemDonation itemDonation = new ItemDonation(
-                dto.donor(),
-                dto.need(),
+                donor,
+                need,
                 dto.itemName(),
                 dto.resourceQuantity(),
                 dto.warehouseId(),
-                dto.category(),
+                ItemDonation.ItemCategory.valueOf(dto.category()),
                 dto.description()
         );
         return itemDonationRepository.save(itemDonation);
@@ -30,7 +42,7 @@ public class ItemDonationService implements IItemDonationService {
 
     @Override
     public ItemDonation findItemDonationById(long id) {
-        ItemDonation itemDonation = itemDonationRepository.findById(id);
+        ItemDonation itemDonation = itemDonationRepository.findById(id).orElse(null);
         if (itemDonation == null) {
             throw new ItemDonationNotFoundException();
         }

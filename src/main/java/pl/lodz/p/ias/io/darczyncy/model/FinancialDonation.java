@@ -1,11 +1,15 @@
 package pl.lodz.p.ias.io.darczyncy.model;
 
+import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 
 @Getter @Setter
 @NoArgsConstructor
+@Entity
 public class FinancialDonation extends Donation {
 
     public enum Currency {
@@ -16,7 +20,7 @@ public class FinancialDonation extends Donation {
     private double calculatedVAT;
     private Currency currency;
 
-    public FinancialDonation(User donor, Need need,
+    public FinancialDonation(Users donor, Need need,
                              long warehouseId,
                              double amount, double calculatedVAT, Currency currency) {
         super(donor, need, "financial Donation", "money", 1, warehouseId);

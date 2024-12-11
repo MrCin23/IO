@@ -19,7 +19,7 @@ public class WarehouseController {
         this.warehouseService = warehouseService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<WarehouseDTO> addWarehouse(@RequestBody WarehouseDTO warehouseDTO) {
         WarehouseDTO warehouse = warehouseService.addWarehouse(warehouseDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(warehouse);
@@ -31,10 +31,10 @@ public class WarehouseController {
         return ResponseEntity.status(HttpStatus.OK).body(warehouseDTOs);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<WarehouseDTO> getWarehouseById(@PathVariable("id") String id) {
-        long warehouseId = Long.parseLong(id);
-        WarehouseDTO warehouseDTO = warehouseService.findById(warehouseId);
-        return ResponseEntity.status(HttpStatus.OK).body(warehouseDTO);
-    }
+    //@GetMapping("/{id}")
+    //public ResponseEntity<WarehouseDTO> getWarehouseById(@PathVariable("id") String id) {
+    //    long warehouseId = Long.parseLong(id);
+    //    WarehouseDTO warehouseDTO = warehouseService.findById(warehouseId);
+    //    return ResponseEntity.status(HttpStatus.OK).body(warehouseDTO);
+    //}
 }

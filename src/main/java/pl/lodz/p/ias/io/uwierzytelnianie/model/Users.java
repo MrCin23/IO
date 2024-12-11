@@ -10,7 +10,8 @@ import java.time.LocalDateTime;
 public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    @Getter
+    private Long userId;
 
     @Getter
     private String username;

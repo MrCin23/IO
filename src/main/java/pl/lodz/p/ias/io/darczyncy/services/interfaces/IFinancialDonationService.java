@@ -1,4 +1,4 @@
-package pl.lodz.p.ias.io.darczyncy.service.interfaces;
+package pl.lodz.p.ias.io.darczyncy.services.interfaces;
 
 import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;

@@ -2,15 +2,14 @@ package pl.lodz.p.ias.io.darczyncy.dto.create;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import pl.lodz.p.ias.io.darczyncy.model.Donation;
-import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
+
 
 public record FinancialDonationCreateDTO (
         @NotNull
-        Donation.User donor,
+        Long donorId,
 
         @NotNull
-        Donation.Need need,
+        Long needId,
 
         @NotNull
         long warehouseId,
@@ -22,5 +21,5 @@ public record FinancialDonationCreateDTO (
         double calculatedVAT,
 
         @NotNull
-        FinancialDonation.Currency currency
+        String currency
 ){}

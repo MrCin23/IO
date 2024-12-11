@@ -19,7 +19,7 @@ public class ResourceController {
         this.resourceService = resourceService;
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<ResourceDTO> addResource(@RequestBody ResourceDTO resourceDTO) {
         ResourceDTO resource = resourceService.addResource(resourceDTO);
         return ResponseEntity.ok(resource);
