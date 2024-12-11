@@ -10,6 +10,8 @@ import pl.lodz.p.ias.io.komunikacja.mapper.ChatRoomMapper;
 import pl.lodz.p.ias.io.komunikacja.model.ChatRoom;
 import pl.lodz.p.ias.io.komunikacja.model.MockUser;
 import pl.lodz.p.ias.io.komunikacja.service.ChatRoomService;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 
 import java.util.List;
 
@@ -17,15 +19,16 @@ import java.util.List;
 @RequestMapping("/api/chatrooms")
 public class ChatRoomController {
     private final ChatRoomService chatRoomService;
+    private final AuthenticationService authenticationService;
 
-    public ChatRoomController(ChatRoomService chatRoomService) {
+    public ChatRoomController(ChatRoomService chatRoomService, AuthenticationService authenticationService) {
         this.chatRoomService = chatRoomService;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping
     public ResponseEntity<ChatRoomDTO> createChatRoom(@RequestBody @Valid CreateChatRoomDTO chatRoomDTO) {
-//        List<User> users = userService.getUsersByIds(chatRoomDTO.getUsers());
-        List<MockUser> users = List.of(new MockUser(123L, "user1"), new MockUser(456L, "user2")); // TODO: replace with actual User objects
+        List<Account> users = authenticationService.getAccountsById(chatRoomDTO.getUsers());
         ChatRoom chatRoom = ChatRoomMapper.toEntity(users);
 
         ChatRoomDTO createdChatRoomDTO = ChatRoomMapper.toDTO(chatRoomService.createChatRoom(chatRoom));

@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.komunikacja.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.List;
 
@@ -15,7 +16,7 @@ public class ChatRoom {
     private Long id;
 
     @OneToMany
-    private List<MockUser> users; // TODO: Change to List<User> users when users will be implemented;
+    private List<Account> users;
 
     @OneToMany
     private List<Message> messages;

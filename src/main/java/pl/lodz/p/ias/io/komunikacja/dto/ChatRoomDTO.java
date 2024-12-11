@@ -13,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 public class ChatRoomDTO {
     private Long id;
-    private List<String> users;
+    private List<Long> users;
 }
