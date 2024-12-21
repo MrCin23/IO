@@ -7,7 +7,7 @@ Content-Type: application/json
   "password": "ZAQ!2wsx",
   "firstName": "Mateusz",
   "lastName": "Jakub",
-  "roleName": "WOLONTARIUSZ"
+  "roleName": "ROLE_WOLONTARIUSZ"
 }
 
 ###

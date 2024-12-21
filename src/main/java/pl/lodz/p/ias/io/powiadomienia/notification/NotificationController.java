@@ -1,5 +1,6 @@
 package pl.lodz.p.ias.io.powiadomienia.notification;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class NotificationController {
     }
 
     @PostMapping("/notifications")
-    public Notification addNotification(@RequestBody NotificationDto notification) {
+    public Notification addNotification(@RequestBody @Valid NotificationDto notification) {
         return notificationService.saveFromDto(notification);
     }
 

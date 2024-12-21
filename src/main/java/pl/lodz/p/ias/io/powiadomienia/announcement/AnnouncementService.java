@@ -2,7 +2,7 @@ package pl.lodz.p.ias.io.powiadomienia.announcement;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ public class AnnouncementService {
     public Announcement createAnnouncement(Announcement announcement) {
         Announcement savedAnnouncement = announcementRepository.save(announcement);
 
-        List<Users> users = userRepository.findAll();
+        List<Account> users = userRepository.findAll();
 
-        for (Users user : users) {
+        for (Account user : users) {
             UserAnnouncement userAnnouncement = new UserAnnouncement();
             userAnnouncement.setUser(user);
             userAnnouncement.setAnnouncement(announcement);

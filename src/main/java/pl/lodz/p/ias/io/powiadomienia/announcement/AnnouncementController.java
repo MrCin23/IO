@@ -1,5 +1,6 @@
 package pl.lodz.p.ias.io.powiadomienia.announcement;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,7 +23,7 @@ public class AnnouncementController {
     }
 
     @PostMapping("/announcements")
-    public Announcement createAnnouncement(@RequestBody Announcement announcement) {
+    public Announcement createAnnouncement(@RequestBody @Valid Announcement announcement) {
         return announcementService.createAnnouncement(announcement);
     }
 }

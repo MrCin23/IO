@@ -3,7 +3,7 @@ package pl.lodz.p.ias.io.powiadomienia.notification;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 import java.util.List;
@@ -35,7 +35,7 @@ public class NotificationService implements INotificationService {
     }
 
     @Override
-    public Notification notify(String message, NotificationType type, Users user) {
+    public Notification notify(String message, NotificationType type, Account user) {
         Notification notification = new Notification();
         notification.setMessage(message);
         notification.setType(type);

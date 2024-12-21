@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import org.hibernate.validator.constraints.Length;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 @Getter
 @Setter
@@ -20,7 +21,7 @@ public class Notification {
     private NotificationType type;
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private Users user;
+    private Account user;
     private boolean read;
 
 }

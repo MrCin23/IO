@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 @Getter
 @Setter
@@ -18,7 +19,10 @@ public class Announcement {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+
+    @Length(min = 1, max = 1024)
     private String message;
+    @Length(min = 1, max = 64)
     private String title;
     private AnnouncementType type;
 }
