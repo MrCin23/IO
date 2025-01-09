@@ -4,8 +4,9 @@ import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
+import pl.lodz.p.ias.io.wolontariusze.constants.VolunteerConstants;
 import pl.lodz.p.ias.io.wolontariusze.dto.CreateVolunteerDTO;
 import pl.lodz.p.ias.io.wolontariusze.services.VolunteerService;
 
@@ -19,7 +20,6 @@ import java.util.Map;
 public class VolunteerController {
     private final AuthenticationService authenticationService;
     private final VolunteerService volunteerService;
-    private final String WOLONTARIUSZ = "WOLONTARIUSZ";
 
     public VolunteerController(AuthenticationService authenticationService, VolunteerService volunteerService) {
         this.authenticationService = authenticationService;
@@ -28,21 +28,31 @@ public class VolunteerController {
 
     @PostMapping
     ResponseEntity<Map<String, String>> createVolunteer(@RequestBody @Valid CreateVolunteerDTO createVolunteerDTO) {
-        Users volunteer = authenticationService.register(
+        Account volunteer = authenticationService.register(
                 createVolunteerDTO.getUsername(),
                 createVolunteerDTO.getPassword(),
                 createVolunteerDTO.getFirstName(),
                 createVolunteerDTO.getLastName(),
-                WOLONTARIUSZ
-        );
+                VolunteerConstants.ROLE);
         Map<String, String> response = new HashMap<>();
-        response.put("id", volunteer.getUserId().toString());
+        response.put("id", volunteer.getId().toString());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    ResponseEntity<List<Users>> getVolunteers() {
+    ResponseEntity<List<Account>> getVolunteers() {
         return new ResponseEntity<>(volunteerService.getAllVolunteers(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    ResponseEntity<Account> getVolunteer(@PathVariable("id") Long id) {
+        return new ResponseEntity<>(volunteerService.getVolunteerById(id), HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}")
+    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {
+        volunteerService.deleteVolunteer(id);
+        return new ResponseEntity<>("dupa", HttpStatus.OK);
     }
 
 

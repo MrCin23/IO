@@ -3,6 +3,8 @@ package pl.lodz.p.ias.io;
 import io.swagger.v3.oas.models.OpenAPI;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
+
 @SpringBootApplication
 public class SkphApplication {
 

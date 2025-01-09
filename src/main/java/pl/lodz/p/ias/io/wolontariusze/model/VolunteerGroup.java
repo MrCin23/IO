@@ -3,7 +3,7 @@ package pl.lodz.p.ias.io.wolontariusze.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.Set;
 
@@ -24,22 +24,22 @@ public class VolunteerGroup {
             joinColumns = @JoinColumn(name = "group_id"),
             inverseJoinColumns = @JoinColumn(name = "user_id")
     )
-    private Set<Users> members;
+    private Set<Account> members;
 
-    public VolunteerGroup(String name, Set<Users> members) {
+    public VolunteerGroup(String name, Set<Account> members) {
         this.name = name;
         this.members = members;
     }
 
-    public void add(Users user) {
+    public void add(Account user) {
         members.add(user);
     }
 
-    public void addMembers(Set<Users> members) {
+    public void addMembers(Set<Account> members) {
         this.members.addAll(members);
     }
 
-    public void remove(Users user) {
-        members.remove(user);
+    public void removeMembers(Set<Account> members) {
+        this.members.removeAll(members);
     }
 }

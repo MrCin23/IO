@@ -2,9 +2,10 @@ package pl.lodz.p.ias.io.wolontariusze.services;
 
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
+import pl.lodz.p.ias.io.wolontariusze.constants.VolunteerConstants;
 import pl.lodz.p.ias.io.wolontariusze.model.VolunteerGroup;
 import pl.lodz.p.ias.io.wolontariusze.model.VolunteerGroupRepository;
 import pl.lodz.p.ias.io.wolontariusze.model.VolunteerRepository;
@@ -25,6 +26,14 @@ public class VolunteerGroupService {
         this.roleRepository = roleRepository;
     }
 
+    public List<VolunteerGroup> getAllGroups() {
+        return volunteerGroupRepository.findAll();
+    }
+
+    public VolunteerGroup getGroupById(Long id) {
+        return volunteerGroupRepository.findById(id).orElse(null);
+    }
+
     public VolunteerGroup createGroup(String name) {
         if (volunteerGroupRepository.existsByName(name)) {
             throw new IllegalArgumentException("Group name already exists");
@@ -33,29 +42,35 @@ public class VolunteerGroupService {
         return volunteerGroupRepository.save(group);
     }
 
-    @Transactional
-    public VolunteerGroup addMembersToGroup(Long groupId, Set<Long> userIds) {
-        // Fetch the group by id
-        VolunteerGroup group = volunteerGroupRepository.findById(groupId)
-                .orElseThrow(() -> new IllegalArgumentException("Group not found"));
-
-        // Fetch all users by userIds
-        Role role = roleRepository.findByRoleName("WOLONTARIUSZ");
-        Set<Users> users = volunteerRepository.findAllByUserIdInAndRole(userIds, role);
-
+    private Set<Account> getVolunteerAccounts(Set<Long> userIds) {
+        Role role = roleRepository.findByRoleName(VolunteerConstants.ROLE);
+        Set<Account> users = volunteerRepository.findAllByIdInAndRole(userIds, role);
         if (users.size() != userIds.size()) {
             throw new IllegalArgumentException("Some users not found");
         }
+        return users;
+    }
 
-        // Add the users to the group
-        group.addMembers(users);
+    @Transactional
+    public VolunteerGroup addMembersToGroup(Long groupId, Set<Long> userIds) {
+        VolunteerGroup group = volunteerGroupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException("Group not found"));
 
-        // Save the group with updated members
+        group.addMembers(getVolunteerAccounts(userIds));
         return volunteerGroupRepository.save(group);
     }
 
-    public List<VolunteerGroup> getAllGroups() {
-        return volunteerGroupRepository.findAll();
+    @Transactional
+    public VolunteerGroup removeMembersFromGroup(Long groupId, Set<Long> userIds) {
+        VolunteerGroup group = volunteerGroupRepository.findById(groupId)
+                .orElseThrow(() -> new IllegalArgumentException("Group not found"));
+
+        group.removeMembers(getVolunteerAccounts(userIds));
+        return volunteerGroupRepository.save(group);
+    }
+
+    public void deleteGroupById(Long groupId) {
+        volunteerGroupRepository.deleteById(groupId);
     }
 }
 

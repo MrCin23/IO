@@ -22,7 +22,6 @@ public class VolunteerGroupController {
         this.volunteerGroupService = volunteerGroupService;
     }
 
-    // POST: Create a new group
     @PostMapping
     public ResponseEntity<VolunteerGroup> createGroup(@RequestBody @Valid CreateVolunteerGroupDTO createVolunteerGroupDTO) {
         try {
@@ -43,9 +42,29 @@ public class VolunteerGroupController {
         }
     }
 
-    // GET: Retrieve all groups
+    @PostMapping("/{groupId}/removeMembers")
+    public ResponseEntity<VolunteerGroup> removeMembersFromGroup(@PathVariable Long groupId, @RequestBody AddVolunteersDTO addVolunteersDTO) {
+        try {
+            VolunteerGroup updatedGroup = volunteerGroupService.removeMembersFromGroup(groupId, addVolunteersDTO.getMembers());
+            return ResponseEntity.ok(updatedGroup);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }
+    }
+
     @GetMapping
     public ResponseEntity<List<VolunteerGroup>> getAllGroups() {
         return ResponseEntity.ok(volunteerGroupService.getAllGroups());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<VolunteerGroup> getGroupById(@PathVariable Long id) {
+        return ResponseEntity.ok(volunteerGroupService.getGroupById(id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteGroup(@PathVariable Long id) {
+        volunteerGroupService.deleteGroupById(id);
+        return ResponseEntity.ok("dupa");
     }
 }
