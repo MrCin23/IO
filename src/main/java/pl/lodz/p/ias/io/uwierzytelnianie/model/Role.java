@@ -7,11 +7,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long role_id;
-
+public class Role extends AbstractEntity {
     @Getter
     private String roleName;
 
