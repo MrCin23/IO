@@ -5,17 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Users;
 
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Data
 @NoArgsConstructor
-public class Group {
+public class VolunteerGroup {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     @OneToMany
@@ -26,12 +26,17 @@ public class Group {
     )
     private Set<Users> members;
 
-    public Group(Set<Users> members) {
+    public VolunteerGroup(String name, Set<Users> members) {
+        this.name = name;
         this.members = members;
     }
 
     public void add(Users user) {
         members.add(user);
+    }
+
+    public void addMembers(Set<Users> members) {
+        this.members.addAll(members);
     }
 
     public void remove(Users user) {
