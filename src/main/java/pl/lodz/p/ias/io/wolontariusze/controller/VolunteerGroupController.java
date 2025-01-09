@@ -1,10 +1,12 @@
 package pl.lodz.p.ias.io.wolontariusze.controller;
 
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.wolontariusze.dto.AddVolunteersDTO;
+import pl.lodz.p.ias.io.wolontariusze.dto.CreateVolunteerGroupDTO;
 import pl.lodz.p.ias.io.wolontariusze.model.VolunteerGroup;
 import pl.lodz.p.ias.io.wolontariusze.services.VolunteerGroupService;
 
@@ -22,9 +24,9 @@ public class VolunteerGroupController {
 
     // POST: Create a new group
     @PostMapping
-    public ResponseEntity<VolunteerGroup> createGroup(@RequestBody @NotEmpty String groupName) {
+    public ResponseEntity<VolunteerGroup> createGroup(@RequestBody @Valid CreateVolunteerGroupDTO createVolunteerGroupDTO) {
         try {
-            VolunteerGroup newGroup = volunteerGroupService.createGroup(groupName);
+            VolunteerGroup newGroup = volunteerGroupService.createGroup(createVolunteerGroupDTO.getGroupName());
             return ResponseEntity.status(HttpStatus.CREATED).body(newGroup);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
