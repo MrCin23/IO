@@ -17,14 +17,16 @@ public class Message {
     private Long id;
 
     private Long senderId;
+    private String senderName;
     private Long chatId;
     private String content;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
 
-    public Message(String content, long senderId, long chatId, Date date) {
+    public Message(String content, String senderName, long senderId, long chatId, Date date) {
         this.content = content;
+        this.senderName = senderName;
         this.senderId = senderId;
         this.chatId = chatId;
         this.timestamp = date;
