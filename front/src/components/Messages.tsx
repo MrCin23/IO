@@ -5,8 +5,9 @@ import { Message } from "../types";
 const Messages = () => {
   // TODO get groupId and userId from context
 
-  const groupId = window.localStorage.getItem("groupId") ?? "1";
-  const userId = "1";
+  // const groupId = window.localStorage.getItem("groupId") ?? "1";
+  const groupId = 1;
+  const userId = 1;
 
   const { messages, sendMessage, isConnected, isLoading } =
     useWebSocket(groupId);
@@ -15,8 +16,8 @@ const Messages = () => {
   const handleSendMessage = () => {
     if (content.trim()) {
       const message: Message = {
-        sender: userId,
-        receiver: groupId,
+        senderId: userId,
+        chatId: groupId,
         content,
         timestamp: new Date(),
       };
@@ -36,7 +37,7 @@ const Messages = () => {
             {messages.map((message, index) => (
               // zrobic key
               <div key={`${index}`}>
-                <div>{message.sender}</div>
+                <div>{message.senderId}</div>
                 <div>{message.content}</div>
               </div>
             ))}

@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Client } from "@stomp/stompjs";
 import { Message } from "../types";
 
-export const useWebSocket = (groupId: string) => {
+export const useWebSocket = (groupId: number) => {
   const clientRef = useRef<Client | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
   const [isConnected, setIsConnected] = useState<boolean>(false);
@@ -11,7 +11,7 @@ export const useWebSocket = (groupId: string) => {
   const fetchInitialMessages = async () => {
     try {
       setIsLoading(true);
-      const response = await fetch(`/api/groups/${groupId}/messages`); // TODO point to the correct endpoint when implemented
+      const response = await fetch(`/api/chatrooms/${groupId}/history`);
       if (!response.ok) {
         throw new Error("Failed to fetch messages");
       }
@@ -25,7 +25,7 @@ export const useWebSocket = (groupId: string) => {
   };
 
   useEffect(() => {
-    // fetchInitialMessages();
+    fetchInitialMessages();
 
     const client = new Client({
       brokerURL: "ws://localhost:8080/ws",

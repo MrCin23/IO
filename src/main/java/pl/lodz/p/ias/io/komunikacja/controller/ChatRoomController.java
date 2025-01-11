@@ -20,7 +20,9 @@ import pl.lodz.p.ias.io.komunikacja.service.MessageService;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/chatrooms")
@@ -54,9 +56,47 @@ public class ChatRoomController {
         //return ResponseEntity.status(HttpStatus.CREATED).body(createdChatRoomDTO);
     }
 
+    @GetMapping("/{chatRoomId}/history")
+    public ResponseEntity<List<MessageDTO>> getChatRoomHistory(@PathVariable Long chatRoomId) {
+//        List<Message> messages = chatRoomService.getChatHistory(chatRoomId);
+        List<Message> messages = messageService.getMessagesForReceiver(chatRoomId);
+        List<MessageDTO> messageDTOList = new ArrayList<>();
+
+        for (Message m : messages)
+            messageDTOList.add(MessageMapper.messageToDTO(m));
+
+        return ResponseEntity.ok(messageDTOList);
+    }
+
+    @PostMapping("/{chatRoomId}/addUser/{userId}")
+    public void addUserToChatRoom(@PathVariable Long chatRoomId, @PathVariable Long userId) {
+        ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
+        Optional<Account> user = authenticationService.getAccountById(userId);
+
+        if (chatRoom == null || user.isEmpty()) {
+            return;
+        }
+
+        chatRoom.getUsers().add(user.get());
+        chatRoomService.createChatRoom(chatRoom);
+    }
+
+    @PostMapping("/{chatRoomId}/deleteUser/{userId}")
+    public void deleteUserFromChatRoom(@PathVariable Long chatRoomId, @PathVariable Long userId) {
+        ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
+        Optional<Account> user = authenticationService.getAccountById(userId);
+
+        if (chatRoom == null || user.isEmpty()) {
+            return;
+        }
+
+        chatRoom.getUsers().remove(user.get());
+        chatRoomService.createChatRoom(chatRoom);
+    }
+
     @MessageMapping("/group/{chatRoomId}")
     @SendTo("/topic/group/{chatRoomId}")
-            public Message sendMessage(@DestinationVariable Long chatRoomId, @RequestBody @Valid MessageDTO message) {
+    public Message sendMessage(@DestinationVariable Long chatRoomId, @RequestBody @Valid MessageDTO message) {
         ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
         if (chatRoom == null) {
             System.out.println("Chat room not found");
