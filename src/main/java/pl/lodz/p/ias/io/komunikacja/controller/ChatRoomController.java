@@ -3,7 +3,9 @@ package pl.lodz.p.ias.io.komunikacja.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.komunikacja.dto.CreateChatRoomDTO;
@@ -52,21 +54,18 @@ public class ChatRoomController {
         //return ResponseEntity.status(HttpStatus.CREATED).body(createdChatRoomDTO);
     }
 
-    @MessageMapping("/chatrooms/{chatRoomId}")
-            public void sendMessage(@PathVariable Long chatRoomId, @RequestBody @Valid MessageDTO message) {
+    @MessageMapping("/group/{chatRoomId}")
+    @SendTo("/topic/group/{chatRoomId}")
+            public Message sendMessage(@DestinationVariable Long chatRoomId, @RequestBody @Valid MessageDTO message) {
         ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
         if (chatRoom == null) {
             System.out.println("Chat room not found");
-            return;
+            return null;
         }
         Message message1 = MessageMapper.DTOToMessage(message);
         messageService.sendMessage(message1);
 
-        for (Account user : chatRoom.getUsers()) {
-            String userDestination = "/user/" + user.getUsername() + "/queue/messages";
-            simpMessagingTemplate.convertAndSend(userDestination, message);
-        }
-
+        return message1;
     }
     //public ResponseEntity<List<ChatRoomDTO>> getChatRooms() {
 //        List<ChatRoom> chatRooms = chatRoomService.getChatRooms();

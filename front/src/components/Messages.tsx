@@ -5,7 +5,7 @@ import { Message } from "../types";
 const Messages = () => {
   // TODO get groupId and userId from context
 
-  const groupId = "1";
+  const groupId = window.localStorage.getItem("groupId") ?? "1";
   const userId = "1";
 
   const { messages, sendMessage, isConnected, isLoading } =
@@ -15,9 +15,10 @@ const Messages = () => {
   const handleSendMessage = () => {
     if (content.trim()) {
       const message: Message = {
-        senderId: userId,
-        groupId,
+        sender: userId,
+        receiver: groupId,
         content,
+        timestamp: new Date(),
       };
       sendMessage(message);
       setContent("");
@@ -33,8 +34,9 @@ const Messages = () => {
         ) : (
           <div>
             {messages.map((message, index) => (
-              <div key={`${message.timestamp?.getTime() ?? index}`}>
-                <div>{message.senderId}</div>
+              // zrobic key
+              <div key={`${index}`}>
+                <div>{message.sender}</div>
                 <div>{message.content}</div>
               </div>
             ))}

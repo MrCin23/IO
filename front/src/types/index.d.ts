@@ -1,6 +1,6 @@
 export interface Message {
-    senderId: string;
-    groupId: string;
+    sender: string;
+    receiver: string;
     content: string;
     timestamp?: Date;
 }

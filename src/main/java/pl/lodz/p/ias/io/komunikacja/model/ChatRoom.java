@@ -15,7 +15,7 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "chat_room_users",
             joinColumns = @JoinColumn(name = "chat_room_id"),
@@ -23,6 +23,6 @@ public class ChatRoom {
     )
     private List<Account> users;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Message> messages;
 }
