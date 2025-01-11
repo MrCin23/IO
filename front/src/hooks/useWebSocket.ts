@@ -25,7 +25,7 @@ export const useWebSocket = (groupId: string) => {
   };
 
   useEffect(() => {
-    fetchInitialMessages();
+    // fetchInitialMessages();
 
     const client = new Client({
       brokerURL: "ws://localhost:8080/ws",

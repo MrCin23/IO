@@ -15,7 +15,12 @@ public class ChatRoom {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToMany
+    @ManyToMany
+    @JoinTable(
+            name = "chat_room_users",
+            joinColumns = @JoinColumn(name = "chat_room_id"),
+            inverseJoinColumns = @JoinColumn(name = "users_id")
+    )
     private List<Account> users;
 
     @OneToMany

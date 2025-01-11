@@ -21,4 +21,8 @@ public class ChatRoomService {
     public List<ChatRoom> getChatRooms() {
         return chatRoomRepository.findAll();
     }
+
+    public ChatRoom getChatRoom(Long id) {
+        return chatRoomRepository.findById(id).orElse(null);
+    }
 }
