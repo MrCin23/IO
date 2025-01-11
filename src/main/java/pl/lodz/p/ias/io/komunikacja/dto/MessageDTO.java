@@ -12,10 +12,10 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 public class MessageDTO {
-    @NotEmpty(message = "Sender cannot be empty")
-    private String sender;
-    @NotEmpty(message = "Receiver cannot be empty")
-    private String receiver;
+    @NotNull(message = "Sender cannot be empty")
+    private long senderId;
+    @NotNull(message = "Receiver cannot be empty")
+    private long chatId;
     @NotEmpty(message = "Content cannot be empty")
     private String content;
     @NotNull(message = "Timestamp cannot be null")

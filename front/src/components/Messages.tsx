@@ -5,7 +5,7 @@ import { Message } from "../types";
 const Messages = ({selectedChat}: any) => {
 
   // const groupId = window.localStorage.getItem("groupId") ?? "1";
-  const userId = "1";
+  const userId = 1;
 
   const { messages, sendMessage, isConnected, isLoading } =
     useWebSocket(selectedChat);
@@ -14,8 +14,8 @@ const Messages = ({selectedChat}: any) => {
   const handleSendMessage = () => {
     if (content.trim()) {
       const message: Message = {
-        sender: userId,
-        receiver: selectedChat,
+        senderId: userId,
+        chatId: selectedChat,
         content,
         timestamp: new Date(),
       };
@@ -35,7 +35,7 @@ const Messages = ({selectedChat}: any) => {
             {messages.map((message, index) => (
               // zrobic key
               <div key={`${index}`}>
-                <div>{message.sender}</div>
+                <div>{message.senderId}</div>
                 <div>{message.content}</div>
               </div>
             ))}

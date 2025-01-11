@@ -6,10 +6,10 @@ import pl.lodz.p.ias.io.komunikacja.model.Message;
 public class MessageMapper {
 
     public static Message DTOToMessage(MessageDTO messageDTO) {
-        return new Message(messageDTO.getContent(), messageDTO.getReceiver(), messageDTO.getSender(), messageDTO.getTimestamp());
+        return new Message(messageDTO.getContent(), messageDTO.getChatId(), messageDTO.getSenderId(), messageDTO.getTimestamp());
     }
 
     public static MessageDTO messageToDTO(Message message) {
-        return new MessageDTO(message.getSender(), message.getReceiver(), message.getContent(), message.getTimestamp());
+        return new MessageDTO(message.getSenderId(), message.getChatId(), message.getContent(), message.getTimestamp());
     }
 }
