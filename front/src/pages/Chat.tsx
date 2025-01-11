@@ -26,7 +26,7 @@ const Chat = () => {
 
   return (
     <div className="flex w-screen h-screen">
-      <GroupChats chats={chats} selectChat={setSelectedChat} />
+      <GroupChats chats={chats} selectChat={setSelectedChat} setChats={setChats} />
       <Messages selectedChat={selectedChat} />
     </div>
   );
