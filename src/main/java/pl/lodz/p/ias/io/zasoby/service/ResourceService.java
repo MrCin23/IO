@@ -43,7 +43,7 @@ public class ResourceService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
+//    @Transactional
     public void updateResource(long id, @Valid ResourceDTO resourceDTO) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Resource with id " + id + " not found"));

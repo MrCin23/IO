@@ -6,6 +6,7 @@ import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 public class WarehouseConverter {
     public WarehouseDTO convertWarehouseToDTO(Warehouse warehouse) {
         return new WarehouseDTO(
+                warehouse.getId(),
                 warehouse.getWarehouseName(),
                 warehouse.getLocation()
         );

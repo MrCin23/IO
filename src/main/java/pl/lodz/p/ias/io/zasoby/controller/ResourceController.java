@@ -45,7 +45,7 @@ public class ResourceController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateResource(@PathVariable long id, @RequestBody @Valid ResourceDTO resourceDTO) {
+    public void updateResource(@PathVariable long id, @RequestBody ResourceDTO resourceDTO) {
         resourceService.updateResource(id, resourceDTO);
     }
 
