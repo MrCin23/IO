@@ -47,7 +47,7 @@ public class WarehouseTest {
 
         Mockito.when(warehouseRepository.findAll()).thenReturn(List.of(warehouse));
 
-        List<WarehouseDTO> result = warehouseService.findAll();
+        List<WarehouseDTO> result = warehouseService.getAllWarehouses();
 
         Assertions.assertEquals(1, result.size());
         Assertions.assertEquals("Warehouse 1", result.get(0).getWarehouseName());
