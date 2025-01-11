@@ -4,3 +4,9 @@ export interface Message {
     content: string;
     timestamp?: Date;
 }
+
+export interface ChatDB {
+    id: string;
+    users: string[];
+    name: string;
+}

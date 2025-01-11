@@ -40,7 +40,7 @@ public class ChatRoomController {
     @PostMapping("/create")
     public ChatRoomDTO createChatRoom(@RequestBody @Valid CreateChatRoomDTO chatRoomDTO) {
         List<Account> users = authenticationService.getAccountsById(chatRoomDTO.getUsers());
-        ChatRoom chatRoom = ChatRoomMapper.toEntity(users);
+        ChatRoom chatRoom = ChatRoomMapper.toEntity(users, chatRoomDTO.getName());
 
         ChatRoomDTO createdChatRoomDTO = ChatRoomMapper.toDTO(chatRoomService.createChatRoom(chatRoom));
 
@@ -56,7 +56,7 @@ public class ChatRoomController {
 
     @MessageMapping("/group/{chatRoomId}")
     @SendTo("/topic/group/{chatRoomId}")
-            public Message sendMessage(@DestinationVariable Long chatRoomId, @RequestBody @Valid MessageDTO message) {
+    public Message sendMessage(@DestinationVariable Long chatRoomId, @RequestBody @Valid MessageDTO message) {
         ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
         if (chatRoom == null) {
             System.out.println("Chat room not found");
@@ -66,6 +66,12 @@ public class ChatRoomController {
         messageService.sendMessage(message1);
 
         return message1;
+    }
+
+    @GetMapping("/user/{userId}")
+    public List<ChatRoomDTO> getChatRoomsByUser(@PathVariable Long userId) {
+        List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(userId);
+        return ChatRoomMapper.toDTOList(chatRooms);
     }
     //public ResponseEntity<List<ChatRoomDTO>> getChatRooms() {
 //        List<ChatRoom> chatRooms = chatRoomService.getChatRooms();

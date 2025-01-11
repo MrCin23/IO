@@ -11,4 +11,5 @@ import java.util.List;
 @AllArgsConstructor
 public class CreateChatRoomDTO {
     private List<Long> users;
+    private String name;
 }

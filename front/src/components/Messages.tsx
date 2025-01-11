@@ -2,21 +2,20 @@ import { useState } from "react";
 import { useWebSocket } from "../hooks/useWebSocket";
 import { Message } from "../types";
 
-const Messages = () => {
-  // TODO get groupId and userId from context
+const Messages = ({selectedChat}: any) => {
 
-  const groupId = window.localStorage.getItem("groupId") ?? "1";
+  // const groupId = window.localStorage.getItem("groupId") ?? "1";
   const userId = "1";
 
   const { messages, sendMessage, isConnected, isLoading } =
-    useWebSocket(groupId);
+    useWebSocket(selectedChat);
   const [content, setContent] = useState<string>("");
 
   const handleSendMessage = () => {
     if (content.trim()) {
       const message: Message = {
         sender: userId,
-        receiver: groupId,
+        receiver: selectedChat,
         content,
         timestamp: new Date(),
       };
@@ -27,7 +26,7 @@ const Messages = () => {
   return (
     <div>
       <div>
-        <h2>Group Chat (Group ID: {groupId})</h2>
+        <h2>Group Chat (Group ID: {selectedChat})</h2>
         <div>Status: {isConnected ? "Connected" : "Disconnected"}</div>
         {isLoading ? (
           <div>Loading messages...</div>
