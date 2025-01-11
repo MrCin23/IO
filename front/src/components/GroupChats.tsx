@@ -1,3 +1,5 @@
+import { Button } from "./ui/button";
+
 const GroupChats = ({ chats }: any) => {
   // TODO: Add type for chats
   const handleCreateChat = async () => {
@@ -26,7 +28,7 @@ const GroupChats = ({ chats }: any) => {
           <div>{chat.content}</div>
         </div>
       ))}
-        <button onClick={handleCreateChat}>Create Chat</button>
+        <Button onClick={handleCreateChat}>Create Chat</Button>
     </div>
   );
 };
