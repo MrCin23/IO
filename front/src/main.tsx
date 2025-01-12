@@ -1,21 +1,18 @@
-// import { StrictMode } from 'react'
-// import { createRoot } from 'react-dom/client'
-// import './index.css'
-// // import App from './App.tsx'
-// import MapView from './components/MapView';
-//
-// createRoot(document.getElementById('root')!).render(
-//   <StrictMode>
-//     <MapView />
-//   </StrictMode>,
-// )
+
+import './index.css'
 import { StrictMode } from "react";
-import MapView from "./components/MapView";
 import { createRoot } from 'react-dom/client'
+import Notifications from "./powiadomienia/components/notifications";
+import Announcement from './powiadomienia/types/announcement';
+import Announcements from './powiadomienia/components/announcements';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <MapView />
+        <div>
+            <Notifications/>
+            <Announcements/>
+        </div>
+    
     </StrictMode>
 );
-export default MapView;
+
