@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
@@ -13,7 +12,6 @@ export interface Resource {
 }
 
 const ResourceForm = () => {
-    const { toast } = useToast();
     const navigate = useNavigate();
     const [warehouses, setWarehouses] = useState<{ warehouseId: number; warehouseName: string; location: string }[]>([]);
     const form = useForm<Resource>({
@@ -37,16 +35,12 @@ const ResourceForm = () => {
                 setWarehouses(data);
             } catch (error) {
                 console.error(error);
-                toast({
-                    title: "Error",
-                    description: "Failed to load warehouses.",
-                    variant: "destructive",
-                });
+
             }
         };
 
         fetchWarehouses();
-    }, [toast]);
+    }, []);
 
     const onSubmit = async (values: Resource) => {
         try {
@@ -60,27 +54,12 @@ const ResourceForm = () => {
 
             const result = await response.json();
             if (!response.ok) {
-                toast({
-                    title: "Error",
-                    description: result.message || "Failed to add resource",
-                    variant: "destructive",
-                });
-                return;
+                console.log(result);
             }
-
-            toast({
-                title: "Success",
-                description: "Resource added successfully",
-            });
 
             navigate("/resources");
         } catch (error) {
             console.error(error);
-            toast({
-                title: "Error",
-                description: "An unexpected error occurred.",
-                variant: "destructive",
-            });
         }
     };
 

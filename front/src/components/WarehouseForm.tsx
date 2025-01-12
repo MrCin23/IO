@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
 
 export interface Warehouse {
@@ -9,7 +8,6 @@ export interface Warehouse {
 }
 
 const WarehouseForm = () => {
-    const { toast } = useToast();
     const navigate = useNavigate();
     const form = useForm<Warehouse>({
         defaultValues: {
@@ -29,18 +27,8 @@ const WarehouseForm = () => {
 
         const result = await response.json();
         if (!response.ok) {
-            toast({
-                title: "Error",
-                description: result.message || "Failed to add warehouse",
-                variant: "destructive",
-            });
-            return;
+            console.log(result);
         }
-
-        toast({
-            title: "Success",
-            description: "Warehouse added successfully",
-        });
 
         navigate("/warehouses");
     };

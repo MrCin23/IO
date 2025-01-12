@@ -1,7 +1,6 @@
 import { Route, Routes } from "react-router";
 // import App from "./App";
 // import Navbar from "./components/Navbar";
-import { Toaster } from "./components/ui/toaster";
 // import { Login, Register, User, Users, Rents } from "./pages";
 import Resources from "@/pages/Resources.tsx";
 import Warehouses from "@/pages/Warehouses.tsx";
@@ -18,7 +17,6 @@ const Layout = () => {
                 <Route path="/resources/create" element={<CreateResource />} />
                 <Route path="/warehouses/create" element={<CreateWarehouse />} />
             </Routes>
-            <Toaster />
         </>
     );
 };
