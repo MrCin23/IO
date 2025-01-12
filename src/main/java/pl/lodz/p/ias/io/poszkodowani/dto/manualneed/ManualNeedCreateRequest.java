@@ -1,14 +1,12 @@
-package pl.lodz.p.ias.io.poszkodowani.dto.financialneed;
+package pl.lodz.p.ias.io.poszkodowani.dto.manualneed;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
@@ -17,7 +15,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class FinancialNeedCreateRequestDTO {
+public class ManualNeedCreateRequest {
 
     private Long userId;
 
@@ -30,11 +28,8 @@ public class FinancialNeedCreateRequestDTO {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date expirationDate;
 
-    @Min(value = 1, message = "Collection goal must be at least 1")
-    private double collectionGoal;
-
-    //    @Min(value = 0, message = "Collection status must be non-negative")
-//    private double collectionStatus;
+    @Min(value = 1, message = "Max volunteers must be at least 1")
+    private int maxVolunteers;
 
     // Logic implemented in service
     //    @PastOrPresent(message = "Creation date cannot be in the future")
@@ -45,7 +40,10 @@ public class FinancialNeedCreateRequestDTO {
     //
     //    @Size(max = 50, message = "Status cannot exceed 50 characters")
     //    private String status;
-    //
-    //    @Min(value = 1, message = "Priority must be at least 1")
-    //    private int priority;
+
+//    @Min(value = 1, message = "Priority must be at least 1")
+//    private int priority;
+
+//    @Min(value = 1, message = "Volunteers must be at least 1")
+//    private int volunteers;
 }

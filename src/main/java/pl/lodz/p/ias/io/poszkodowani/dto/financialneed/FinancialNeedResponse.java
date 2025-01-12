@@ -1,10 +1,10 @@
-package pl.lodz.p.ias.io.poszkodowani.dto.manualneed;
+package pl.lodz.p.ias.io.poszkodowani.dto.financialneed;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 
 import java.util.Date;
 
@@ -12,7 +12,7 @@ import java.util.Date;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ManualNeedResponseDTO {
+public class FinancialNeedResponse {
 
     private Long id;
     private Long userId;
@@ -20,9 +20,8 @@ public class ManualNeedResponseDTO {
     private String description;
     private Date creationDate;
     private Date expirationDate;
-    private String status;
+    private Need.Status status;
     private int priority;
-    private int volunteers;
-    private int maxVolunteers;
-
+    private double collectionStatus;
+    private double collectionGoal;
 }

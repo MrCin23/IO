@@ -1,28 +1,26 @@
 package pl.lodz.p.ias.io.poszkodowani.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequestDTO;
-import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponseDTO;
+import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequest;
+import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component
 public class MaterialNeedMapper {
-    public MaterialNeed toMaterialNeed(MaterialNeedCreateRequestDTO dto) {
+    public MaterialNeed toMaterialNeed(MaterialNeedCreateRequest dto) {
         return MaterialNeed.builder()
                 .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
                 .expirationDate(dto.getExpirationDate())
-                .product(dto.getProduct())
-                .amount(dto.getAmount())
+                .itemCategory(dto.getItemCategory())
                 .build();
     }
 
-    public MaterialNeedResponseDTO toMaterialNeedResponseDTO(MaterialNeed materialNeed) {
-        return MaterialNeedResponseDTO.builder()
+    public MaterialNeedResponse toMaterialNeedResponse(MaterialNeed materialNeed) {
+        return MaterialNeedResponse.builder()
                 .id(materialNeed.getId())
                 .userId(materialNeed.getUser().getId())
                 .mapPointId(materialNeed.getMapPointId())
@@ -31,14 +29,13 @@ public class MaterialNeedMapper {
                 .expirationDate(materialNeed.getExpirationDate())
                 .status(materialNeed.getStatus())
                 .priority(materialNeed.getPriority())
-                .product(materialNeed.getProduct())
-                .amount(materialNeed.getAmount())
+                .itemCategory(materialNeed.getItemCategory())
                 .build();
     }
 
-    public List<MaterialNeedResponseDTO> toMaterialNeedResponseDTOList(List<MaterialNeed> materialNeeds) {
+    public List<MaterialNeedResponse> toMaterialNeedResponseList(List<MaterialNeed> materialNeeds) {
         return materialNeeds.stream()
-                .map(this::toMaterialNeedResponseDTO)
+                .map(this::toMaterialNeedResponse)
                 .collect(Collectors.toList());
     }
 }

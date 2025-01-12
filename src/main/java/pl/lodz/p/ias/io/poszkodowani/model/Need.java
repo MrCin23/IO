@@ -17,6 +17,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name = "need")
 public abstract class Need {
+    public enum Status {
+        CANCELLED, PENDING, IN_PROGRESS, COMPLETED
+    }
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,7 +48,7 @@ public abstract class Need {
     private Date expirationDate;
 
     @Column(name = "status", length = 50)
-    private String status;
+    private Status status;
 
     @Column(name = "priority", nullable = false)
     private int priority;

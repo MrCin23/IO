@@ -1,9 +1,8 @@
 package pl.lodz.p.ias.io.poszkodowani.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedCreateRequestDTO;
-import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedResponseDTO;
-import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponseDTO;
+import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedCreateRequest;
+import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 
 import java.util.List;
@@ -11,7 +10,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class ManualNeedMapper {
-    public ManualNeed toManualNeed(ManualNeedCreateRequestDTO dto) {
+    public ManualNeed toManualNeed(ManualNeedCreateRequest dto) {
         return ManualNeed.builder()
                 .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
@@ -20,8 +19,8 @@ public class ManualNeedMapper {
                 .build();
     }
 
-    public ManualNeedResponseDTO toManualNeedResponseDTO(ManualNeed manualNeed) {
-        return ManualNeedResponseDTO.builder()
+    public ManualNeedResponse toManualNeedResponse(ManualNeed manualNeed) {
+        return ManualNeedResponse.builder()
                 .id(manualNeed.getId())
                 .userId(manualNeed.getUser().getId())
                 .mapPointId(manualNeed.getMapPointId())
@@ -35,9 +34,9 @@ public class ManualNeedMapper {
                 .build();
     }
 
-    public List<ManualNeedResponseDTO> toManualNeedResponseDTOList(List<ManualNeed> manualNeeds) {
+    public List<ManualNeedResponse> toManualNeedResponseList(List<ManualNeed> manualNeeds) {
         return manualNeeds.stream()
-                .map(this::toManualNeedResponseDTO)
+                .map(this::toManualNeedResponse)
                 .collect(Collectors.toList());
     }
 }
