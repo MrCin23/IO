@@ -4,4 +4,6 @@ public class DonationBaseException extends ApplicationBaseException {
     public DonationBaseException(String message) {
         super(message);
     }
+
+
 }

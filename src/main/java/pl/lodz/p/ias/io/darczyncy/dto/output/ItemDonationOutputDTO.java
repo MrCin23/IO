@@ -1,5 +1,7 @@
 package pl.lodz.p.ias.io.darczyncy.dto.output;
 
+import pl.lodz.p.ias.io.darczyncy.model.Donation;
+
 public record ItemDonationOutputDTO(
         long id,
         Long donorId,
@@ -8,5 +10,6 @@ public record ItemDonationOutputDTO(
         String category,
         String description,
         int resourceQuantity,
-        long warehouseId
+        long warehouseId,
+        Donation.AcceptanceStatus acceptanceStatus
 ) { }
