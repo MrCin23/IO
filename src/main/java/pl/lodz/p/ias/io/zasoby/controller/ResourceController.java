@@ -3,11 +3,7 @@ package pl.lodz.p.ias.io.zasoby.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
-import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.dto.ResourceDTO;
 import pl.lodz.p.ias.io.zasoby.service.ResourceService;
 
@@ -19,7 +15,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ResourceController {
     private final ResourceService resourceService;
-    private final AuthenticationService authenticationService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
