@@ -8,6 +8,9 @@ import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
+/**
+ * Klasa modelowa powiadomienia.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-
+/**
+ * Klasa DTO służąca do tworzenia powiadomień.
+ */
 @Getter
 @Setter
 @AllArgsConstructor

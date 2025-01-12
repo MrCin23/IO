@@ -7,6 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
+/**
+ * Modelowa klasa ogłoszeń użytkownika.
+ */
 @Getter
 @Setter
 @NoArgsConstructor
