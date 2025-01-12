@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.darczyncy.services.implementations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
+import pl.lodz.p.ias.io.darczyncy.exceptions.DonationBaseException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
@@ -14,6 +15,11 @@ import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -32,7 +38,23 @@ public class ItemDonationService implements IItemDonationService {
 
         Account donor = userRepository.findById(dto.donorId()).orElse(null);
         MaterialNeed need = materialNeedRepository.findById(dto.needId()).orElse(null);
-        Warehouse warehouse = warehouseRepository.findById(dto.warehouseId()).orElse(null);
+        Warehouse warehouse = warehouseRepository.findById(dto.warehouseId()).orElseThrow(null);
+        if(donor == null) {
+            throw new DonationBaseException("Donor not found");
+        }
+        else if(need == null) {
+            throw new DonationBaseException("Need not found");
+        }
+        else if(warehouse == null) {
+            throw new DonationBaseException("Warehouse not found");
+        }
+
+        try {
+            ItemDonation.ItemCategory.valueOf(dto.category());
+        } catch (IllegalArgumentException e) {
+            throw new DonationBaseException("Invalid category value");
+        }
+
         ItemDonation itemDonation = new ItemDonation(
                 donor,
                 need,
@@ -52,5 +74,61 @@ public class ItemDonationService implements IItemDonationService {
             throw new ItemDonationNotFoundException();
         }
         return itemDonation;
+    }
+
+    @Override
+    public List<ItemDonation> findAllItemDonations() {
+        return itemDonationRepository.findAll();
+    }
+
+    @Override
+    public List<ItemDonation> findItemDonationsByDonorId(long donorId) {
+        return itemDonationRepository.findAllByDonor_Id(donorId);
+    }
+
+    private static void getAllFields(List<Field> fields, Class<?> type) {
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
+
+        if (type.getSuperclass() != null) {
+            getAllFields(fields, type.getSuperclass());
+        }
+    }
+
+    @Override
+    public ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation) {
+        ItemDonation foundDonation = itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
+
+        List<Field> fields = new ArrayList<>();
+
+        getAllFields(fields, foundDonation.getClass());
+
+        fields = fields.stream().filter( (field) ->
+        {
+            try {
+                field.setAccessible(true);
+                return field.get(updatedItemDonation) != null && !field.getName().equals("id");
+            } catch (IllegalAccessException e) {
+                // todo change exception
+                throw new RuntimeException(e);
+            }
+        }).toList();
+
+        for (Field field : fields) {
+            field.setAccessible(true);
+            try {
+                field.set(foundDonation, field.get(updatedItemDonation));
+                field.setAccessible(false);
+            } catch (IllegalAccessException e) {
+                // todo change exception
+                throw new RuntimeException(e);
+            }
+        }
+        return itemDonationRepository.save(foundDonation);
+    }
+
+    @Override
+    public void deleteItemDonationById(Long id) {
+        ItemDonation itemDonation = itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
+        itemDonationRepository.delete(itemDonation);
     }
 }

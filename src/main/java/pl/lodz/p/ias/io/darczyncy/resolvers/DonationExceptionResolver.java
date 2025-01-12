@@ -23,12 +23,12 @@ public class DonationExceptionResolver {
     }
 
     @ExceptionHandler(value = {DonationBaseException.class})
-    public ResponseEntity<?> handleDataIntegrityExceptions(DonationBaseException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ExceptionOutputDTO(e.getMessage()));
+    public ResponseEntity<?> handleDonationExceptions(DonationBaseException e) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionOutputDTO(e.getMessage()));
     }
 
     @ExceptionHandler(value = {PaymentFailedException.class})
-    public ResponseEntity<?> handleDataIntegrityExceptions(PaymentFailedException e) {
+    public ResponseEntity<?> handleDonationExceptions(PaymentFailedException e) {
         return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).body(new ExceptionOutputDTO(e.getMessage()));
     }
 }

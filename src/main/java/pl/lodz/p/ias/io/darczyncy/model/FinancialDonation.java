@@ -23,7 +23,7 @@ public class FinancialDonation extends Donation {
     public FinancialDonation(Account donor, Need need,
                              long warehouseId,
                              double amount, double calculatedVAT, Currency currency) {
-        super(donor, need, "financial Donation", "money", 1, warehouseId);
+        super(donor, need, "money", "financial Donation", 1, warehouseId);
         this.amount = amount;
         this.calculatedVAT = calculatedVAT;
         this.currency = currency;

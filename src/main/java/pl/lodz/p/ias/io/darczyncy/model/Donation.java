@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -13,6 +14,7 @@ import pl.lodz.p.ias.io.zasoby.model.Resource;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
+@SuperBuilder(toBuilder = true)
 public class Donation extends Resource {
     public enum AcceptanceStatus {
         ACCEPTED, REJECTED, PENDING

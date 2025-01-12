@@ -4,12 +4,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "resources")
+@SuperBuilder(toBuilder = true)
 @NoArgsConstructor
 public class Resource {
     @Id
