@@ -7,6 +7,7 @@ import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 @Getter
 @Setter
 public class ResourceDTO {
+    private long resourceId;
     private String resourceName;
     private String resourceType;
     private int resourceQuantity;
@@ -15,9 +16,10 @@ public class ResourceDTO {
     private String volunteerName;
     private String assignedTask;
 
-    public ResourceDTO(String resourceName, String resourceType,
+    public ResourceDTO(long resourceId, String resourceName, String resourceType,
                        int resourceQuantity, ResourceStatus resourceStatus,
                        long warehouseId, String volunteerName, String assignedTask) {
+        this.resourceId = resourceId;
         this.resourceName = resourceName;
         this.resourceType = resourceType;
         this.resourceQuantity = resourceQuantity;

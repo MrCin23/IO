@@ -10,12 +10,15 @@
 //   </StrictMode>,
 // )
 import { StrictMode } from "react";
-//import MapView from "./components/MapView";
 import { createRoot } from 'react-dom/client'
-import App from "./App.tsx";
+import { BrowserRouter } from "react-router";
+import Layout from "./layout.tsx";
+import './index.css';
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <App />
+        <BrowserRouter>
+            <Layout />
+        </BrowserRouter>
     </StrictMode>
 );
