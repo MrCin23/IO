@@ -55,6 +55,8 @@ public class ResourceService {
         resource.setWarehouseId(resourceDTO.getWarehouseId());
         resource.setVolunteerName(resourceDTO.getVolunteerName());
         resource.setAssignedTask(resourceDTO.getAssignedTask());
+
+        resourceRepository.save(resource);
     }
 
     public void deleteResource(long id) {
