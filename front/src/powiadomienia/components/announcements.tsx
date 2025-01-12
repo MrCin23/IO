@@ -2,16 +2,26 @@ import React, { useState } from 'react';
 import Modal from './modal';
 import getDefaultRequest from '../lookup/backend-lookup';
 import useAnnouncments from '../hooks/use-announcement';
-import Announcement, { AnnouncementType } from '../types/announcement';
+import { AnnouncementType } from '../types/announcement';
 import Speaker from '../icons/Speaker';
 import AnnouncementForm from './announcement-form';
 
 
+/**
+ * Komponent wyświetlający listę ogłoszeń z możliwością ich ukrywania oraz dodawania nowych ogłoszeń.
+ *
+ * @returns {JSX.Element} Interfejs ogłoszeń.
+ */
 const Announcements: React.FC = () => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
-    const [announcements, setAnnouncements, isLoading] = useAnnouncments(1)
+    const [announcements, setAnnouncements] = useAnnouncments(1)
     const [isForm, setForm] = useState<boolean>(false)
 
+     /**
+     * Obsługuje ukrywanie ogłoszenia przez jego usunięcie z listy oraz wysłanie żądania do API.
+     *
+     * @param {number} id - ID ogłoszenia, które ma zostać ukryte.
+     */
     const handleHideAnnouncement = (id: number) => {
         setAnnouncements(
             announcements.filter((value) => {
@@ -32,7 +42,7 @@ const Announcements: React.FC = () => {
 
         <React.Fragment>
             <div>
-                <button type="button" onClick={(e) => { setModalOpen(true); setForm(false) }} className="relative inline-flex items-center p-3 text-sm font-medium
+                <button type="button" onClick={(_) => { setModalOpen(true); setForm(false) }} className="relative inline-flex items-center p-3 text-sm font-medium
              text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none
               focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <Speaker />
@@ -45,12 +55,12 @@ const Announcements: React.FC = () => {
                 title='Announcement'
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false); setForm(false) }}>
-                {isForm ? (<AnnouncementForm onComplete={(e) => { setForm(false) }} />) : 
+                {isForm ? (<AnnouncementForm onComplete={(_) => { setForm(false) }} />) : 
                 <div>
                 <div className='flex flex-row-reverse w-full mb-2'>
                     <button className="bg-blue-500 text-white rounded-full w-8 h-8 hover:bg-blue-600 focus:outline-none 
                     text-xl flex items-center justify-center mr-2"
-                    onClick={(e) => { setForm(true) }}>
+                    onClick={(_) => { setForm(true) }}>
                         <span className='mb-1'>+</span>
                     </button>
                 </div>
@@ -64,7 +74,7 @@ const Announcements: React.FC = () => {
                             <div className='flex'>
                                 <span className="font-semibold text-lg">{announcement.title}</span>
                                 <button className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 focus:outline-none"
-                                    onClick={(e) => { handleHideAnnouncement(announcement.id) }}>
+                                    onClick={(_) => { handleHideAnnouncement(announcement.id) }}>
                                     <span className="text-xl mb-1">&times;</span>
                                 </button>
                             </div>

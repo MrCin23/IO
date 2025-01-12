@@ -10,6 +10,13 @@ type FetchData = {
     body?: string;
 };
 
+/**
+ * Generuje domyślną konfigurację dla zapytań `fetch`.
+ *
+ * @param {string} method - Metoda HTTP (GET, POST, PUT, DELETE).
+ * @param {any} [data] - Opcjonalne dane do wysłania w treści żądania.
+ * @returns {FetchData} Obiekt konfiguracji dla zapytania `fetch`.
+ */
 const getDefaultRequest = (method:string,data?:any)=>{
     const fetchData : FetchData = {
     method: method,

@@ -7,6 +7,14 @@ type AnnouncementFormProps = {
     onComplete: (announcement: Announcement) => void;
   };
 
+
+/**
+ * Komponent formularza służący do tworzenia nowych ogłoszeń.
+ *
+ * @function AnnouncementForm
+ * @param {AnnouncementFormProps} props - Właściwości komponentu.
+ * @returns {JSX.Element} Formularz do tworzenia ogłoszeń.
+ */
 const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
 
     const [announcement, setAnnouncement] = useState<createAnnouncement>({
@@ -15,6 +23,12 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
         type: AnnouncementType.INFORMATION
     });
 
+
+   /**
+   * Obsługuje zmiany w polach formularza i aktualizuje stan komponentu.
+   *
+   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>} event - Zdarzenie zmiany wartości pola.
+   */
     const handleChange = (event: any) => {
         const { name, value } = event.target;
         setAnnouncement((prev) => ({
@@ -24,6 +38,11 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
         }))
     };
 
+   /**
+   * Obsługuje wysyłanie formularza i wysyła dane ogłoszenia do API.
+   *
+   * @param {React.FormEvent<HTMLFormElement>} event - Zdarzenie wysłania formularza.
+   */
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const uri = "http://localhost:8080/announcements"
@@ -85,7 +104,7 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     >
                         {Object.values(AnnouncementType).map((value)=>(
-                            <option value={value}>{value}</option>
+                            <option key={value} value={value}>{value}</option>
                         ))}
                     
                     </select>

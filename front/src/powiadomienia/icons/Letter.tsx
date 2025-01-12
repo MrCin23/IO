@@ -1,3 +1,10 @@
+
+/**
+ * Komponent renderujący ikonę listu w formacie SVG.
+ *
+ * @component
+ * @returns {JSX.Element} Ikona SVG reprezentująca list (kopertę).
+ */
 const Letter = ()=>{
     return (
         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">

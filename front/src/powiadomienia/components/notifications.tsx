@@ -5,11 +5,22 @@ import { NotificationType } from '../types/notification';
 import getDefaultRequest from '../lookup/backend-lookup';
 import Letter from '../icons/Letter';
 
-
+/**
+ * Komponent wyświetlający listę powiadomień z możliwością ich ukrywania.
+ *
+ * @returns {JSX.Element} Interfejs powiadomień.
+ */
 const Notifications: React.FC = () => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
-    const [notifications, setNotifications, isLoading] = useNotifications(1)
+    const [notifications, setNotifications] = useNotifications(1)
 
+
+    /**
+     * Ukrywa powiadomienie na podstawie jego identyfikatora.
+     * Jeśli było to ostatnie powiadomienie, zamyka modal.
+     *
+     * @param {number} id - Identyfikator powiadomienia do ukrycia.
+     */
     const handleHideNotification = (id: number) => {
         if (notifications.length === 1) {
             setModalOpen(false)
@@ -34,7 +45,7 @@ const Notifications: React.FC = () => {
 
         <React.Fragment>
             <div>
-                <button type="button" onClick={(e) => { setModalOpen(true) }}
+                <button type="button" onClick={(_) => { setModalOpen(true) }}
                     className="relative inline-flex items-center p-3 text-sm font-medium text-center
              text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none
               focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -56,7 +67,7 @@ const Notifications: React.FC = () => {
                         >
                             <span className="ml-2">{notification.message}</span>
                             <button className="ml-2 bg-red-500 text-white rounded-full w-6 h-6 flex items-center justify-center hover:bg-red-600 focus:outline-none"
-                                onClick={(e) => { handleHideNotification(notification.id) }}>
+                                onClick={(_) => { handleHideNotification(notification.id) }}>
                                 <span className="text-xl mb-1">&times;</span>
                             </button>
                         </li>

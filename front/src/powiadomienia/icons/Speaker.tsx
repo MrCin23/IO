@@ -1,3 +1,9 @@
+/**
+ * Komponent renderujący ikonę megafonu w formacie SVG.
+ *
+ * @component
+ * @returns {JSX.Element} Ikona SVG reprezentująca megafon.
+ */
 const Speaker = ()=>{
     return (
         <svg className="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="20 0 120 220">

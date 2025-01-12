@@ -4,12 +4,29 @@ import { useEffect, useState } from "react";
 import Notification from "../types/notification";
 import getDefaultRequest from "../lookup/backend-lookup";
 
+
+/**
+ * Hook odpowiedzialny za pobranie listy powiadomień przypisanych do określonego użytkownika.
+ *
+ * @param userId id użytkownika dla którego pobrane zostaną powiadomienia.
+ * @returns zwraca listę zawierający listę powiadomień, funkcję pozwalającą na ustawienie wartości powiadomień oraz zmienną
+ *  określającą czy powiadomienia zostały załodowane.
+ */
 const useNotifications = (userId: number) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [isLoading,setIsLoading] = useState<boolean>(false) 
     
     
-
+    /**
+     * Pobiera powiadomienia dla bieżącego użytkownika z serwera.
+     *
+     * Metoda konstruuje URI z identyfikatorem użytkownika, wysyła żądanie GET do serwera
+     * i aktualizuje stan powiadomień przy użyciu pobranych danych. Obsługuje również stan ładowania.
+     *
+     * @function
+     * @returns {void} Funkcja nie zwraca wartości; aktualizuje stan komponentu.
+     *
+    */
     const fetchNotifications = ()=>{
         const uri=`http://localhost:8080/notifications/user/${userId}`
         setIsLoading(true)
