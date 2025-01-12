@@ -2,7 +2,7 @@ import WarehouseTable from '@/components/WarehousesTable.tsx';
 import { Warehouse } from '@/types';
 import { useState, useEffect } from 'react';
 
-const Resources = () => {
+const Warehouses = () => {
     const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
 
     useEffect(() => {
@@ -22,4 +22,4 @@ const Resources = () => {
     );
 };
 
-export default Resources;
+export default Warehouses;

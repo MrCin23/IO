@@ -1,41 +1,35 @@
-import {
-    Table,
-    TableBody, TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table";
-import {Warehouse} from "@/types";
+import { Warehouse } from "@/types";
 
-const WarehousesTable = ({warehouses}:{warehouses: Warehouse[]}) => {
+const WarehousesTable = ({ warehouses }: { warehouses: Warehouse[] }) => {
     return (
-        <Table>
-            <TableCaption>A list of warehouses.</TableCaption>
-            <TableHeader>
-                <TableRow>
-                    <TableHead className="w-[100px]">Warehouse ID</TableHead>
-                    <TableHead>Name</TableHead>
-                    <TableHead>Location</TableHead>
-                </TableRow>
-            </TableHeader>
-            <TableBody>
+        <div className="overflow-x-auto">
+            <table className="min-w-full table-auto border-collapse">
+                <caption className="text-xl font-semibold text-center py-4">A list of warehouses.</caption>
+                <thead>
+                <tr className="bg-gray-100">
+                    <th className="px-4 py-2 text-left border">Warehouse ID</th>
+                    <th className="px-4 py-2 text-left border">Name</th>
+                    <th className="px-4 py-2 text-left border">Location</th>
+                </tr>
+                </thead>
+                <tbody>
                 {warehouses.length > 0 ? (
                     warehouses.map((warehouse) => (
-                        <TableRow key={warehouse.warehouseId}>
-                            <TableCell>{warehouse.warehouseId}</TableCell>
-                            <TableCell>{warehouse.warehouseName}</TableCell>
-                            <TableCell>{warehouse.location}</TableCell>
-                        </TableRow>
+                        <tr key={warehouse.warehouseId} className="border-b">
+                            <td className="px-4 py-2">{warehouse.warehouseId}</td>
+                            <td className="px-4 py-2">{warehouse.warehouseName}</td>
+                            <td className="px-4 py-2">{warehouse.location}</td>
+                        </tr>
                     ))
                 ) : (
-                    <TableRow>
-                        <TableCell colSpan={6}>No warehouses found.</TableCell>
-                    </TableRow>
+                    <tr>
+                        <td colSpan={3} className="px-4 py-2 text-center">No warehouses found.</td>
+                    </tr>
                 )}
-            </TableBody>
-        </Table>
+                </tbody>
+            </table>
+        </div>
     );
-}
+};
 
 export default WarehousesTable;

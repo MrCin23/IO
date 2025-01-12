@@ -12,14 +12,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
+import java.util.UUID;
+
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 public class Resource {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
 
     @NotBlank(message = "Resource name cannot be blank")
     private String resourceName;
