@@ -15,19 +15,15 @@ public class ResourceDTO {
     private int resourceQuantity;
     private ResourceStatus resourceStatus;
     private long warehouseId;
-    private String volunteerName;
-    private String assignedTask;
 
     public ResourceDTO(UUID resourceId, String resourceName, String resourceType,
                        int resourceQuantity, ResourceStatus resourceStatus,
-                       long warehouseId, String volunteerName, String assignedTask) {
+                       long warehouseId) {
         this.resourceId = resourceId;
         this.resourceName = resourceName;
         this.resourceType = resourceType;
         this.resourceQuantity = resourceQuantity;
         this.resourceStatus = resourceStatus;
         this.warehouseId = warehouseId;
-        this.volunteerName = volunteerName;
-        this.assignedTask = assignedTask;
     }
 }

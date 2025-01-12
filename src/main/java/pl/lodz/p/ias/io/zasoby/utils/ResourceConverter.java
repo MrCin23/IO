@@ -11,9 +11,7 @@ public class ResourceConverter {
                 resource.getResourceType(),
                 resource.getResourceQuantity(),
                 resource.getResourceStatus(),
-                resource.getWarehouseId(),
-                resource.getVolunteerName(),
-                resource.getAssignedTask()
+                resource.getWarehouseId()
         );
     }
 

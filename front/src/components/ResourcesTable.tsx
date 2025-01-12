@@ -31,9 +31,7 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                     resourceType: resourceToUpdate.resourceType,
                     resourceQuantity: resourceToUpdate.resourceQuantity,
                     resourceStatus,
-                    warehouseId: resourceToUpdate.warehouseId,
-                    volunteerName: null,
-                    assignedTask: null,
+                    warehouseId: resourceToUpdate.warehouseId
                 }),
             });
 
