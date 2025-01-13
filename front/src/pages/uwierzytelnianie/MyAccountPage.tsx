@@ -29,7 +29,7 @@ const MyAccountPage = () => {
         try {
             await axios.post('/auth/reset', { password });
             setSuccessMessage('Hasło zostało zmienione pomyślnie.');
-            setPassword(''); // Clear the password input after successful change
+            setPassword('');
         } catch (err) {
             console.error('Błąd podczas zmiany hasła:', err);
             setMessage('Nie udało się zmienić hasła.');
@@ -39,7 +39,7 @@ const MyAccountPage = () => {
     const formatDate = (dateString: string | null) => {
         if (!dateString) return 'Brak logowania';
         const date = new Date(dateString);
-        return date.toLocaleString(); // Adjust formatting as needed
+        return date.toLocaleString();
     };
 
     if (error) {
@@ -66,28 +66,28 @@ const MyAccountPage = () => {
                 </div>
             )}
 
-            <form>
+            <form onSubmit={handleChangePassword}>
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>ID:</strong> {user.id}
+                        <strong>ID:</strong> {user.id} enter
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Nazwa użytkownika:</strong> {user.username}
+                        <strong>Nazwa użytkownika:</strong> {user.username} enter
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Imię:</strong> {user.firstName}
+                        <strong>Imię:</strong> {user.firstName} enter
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Nazwisko:</strong> {user.lastName}
+                        <strong>Nazwisko:</strong> {user.lastName} enter
                     </label>
                 </div>
 
@@ -95,45 +95,42 @@ const MyAccountPage = () => {
                     <label className="form-label">
                         <strong>Status:</strong>
                         <span className={`badge ${user.active ? 'bg-success' : 'bg-danger'} ms-2`}>
-                            {user.active ? 'Aktywny' : 'Nieaktywny'}
+                            {user.active ? 'Aktywny' : 'Nieaktywny'} enter
                         </span>
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Ostatnie logowanie:</strong> {formatDate(user.lastLogin)}
+                        <strong>Ostatnie logowanie:</strong> {formatDate(user.lastLogin)} enter
                     </label>
                 </div>
 
                 <h4 className="text-center mb-3">Zmień hasło</h4>
-                <div>
-                    <div className="mb-4 input-group">
-                        <label htmlFor="password" className="form-label w-100">Nowe hasło</label>
-                        <input
-                            type={passwordVisible ? 'text' : 'password'}
-                            className="form-control"
-                            id="password"
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Wprowadź nowe hasło"
-                            required
-                        />
-                        <button
-                            type="button"
-                            className="btn btn-link input-group-text border"
-                            onClick={() => setPasswordVisible(!passwordVisible)}
-                        >
-                            <i className={`bi ${passwordVisible ? 'bi-eye-slash' : 'bi-eye'}`}></i>
-                        </button>
-                    </div>
-                    <button type="submit" className="btn btn-primary w-100">
-                        Zmień hasło
+                <div className="mb-4 input-group">
+                    <label htmlFor="password" className="form-label w-100">Nowe hasło</label>
+                    <input
+                        type={passwordVisible ? 'text' : 'password'}
+                        className="form-control"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="Wprowadź nowe hasło"
+                        required
+                    />
+                    <button
+                        type="button"
+                        className="btn btn-link input-group-text border"
+                        onClick={() => setPasswordVisible(!passwordVisible)}
+                    >
+                        <i className={`bi ${passwordVisible ? 'bi-eye-slash' : 'bi-eye'}`}></i>
                     </button>
                 </div>
+                <button type="submit" className="btn btn-primary w-100">
+                    Zmień hasło
+                </button>
             </form>
         </div>
-
     );
 };
 
