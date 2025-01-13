@@ -3,17 +3,23 @@ package pl.lodz.p.ias.io.poszkodowani.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequestDTO;
-import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponseDTO;
+import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedResponse;
+import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequest;
+import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.mapper.MaterialNeedMapper;
+import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 
 import java.util.List;
+import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/material-needs")
 @Validated
@@ -21,33 +27,55 @@ public class MaterialNeedController {
 
     private final MaterialNeedService materialNeedService;
     private final MaterialNeedMapper materialNeedMapper;
+    private final AuthenticationService authenticationService;
 
     @Autowired
-    public MaterialNeedController(MaterialNeedService materialNeedService, MaterialNeedMapper materialNeedMapper) {
+    public MaterialNeedController(MaterialNeedService materialNeedService, MaterialNeedMapper materialNeedMapper, AuthenticationService authenticationService) {
         this.materialNeedService = materialNeedService;
         this.materialNeedMapper = materialNeedMapper;
+        this.authenticationService = authenticationService;
     }
 
     @PostMapping
-    public ResponseEntity<MaterialNeedResponseDTO> createMaterialNeed(@Valid @RequestBody MaterialNeedCreateRequestDTO dto) {
+    public ResponseEntity<MaterialNeedResponse> createMaterialNeed(@Valid @RequestBody MaterialNeedCreateRequest dto) {
         MaterialNeed materialNeed = materialNeedMapper.toMaterialNeed(dto);
+        Optional<Account> user = authenticationService.getAccountById(dto.getUserId());
+        if (user.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        materialNeed.setUser(user.get());
         MaterialNeed savedMaterialNeed = materialNeedService.createMaterialNeed(materialNeed);
-        MaterialNeedResponseDTO responseDTO = materialNeedMapper.toMaterialNeedResponseDTO(savedMaterialNeed);
+        MaterialNeedResponse responseDTO = materialNeedMapper.toMaterialNeedResponse(savedMaterialNeed);
         return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<MaterialNeedResponseDTO> getMaterialNeedById(@PathVariable Long id) {
+    public ResponseEntity<MaterialNeedResponse> getMaterialNeedById(@PathVariable Long id) {
         return materialNeedService.getMaterialNeedById(id)
-                .map(materialNeed -> ResponseEntity.ok(materialNeedMapper.toMaterialNeedResponseDTO(materialNeed)))
+                .map(materialNeed -> ResponseEntity.ok(materialNeedMapper.toMaterialNeedResponse(materialNeed)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
-    public ResponseEntity<List<MaterialNeedResponseDTO>> getAllMaterialNeeds() {
+    public ResponseEntity<List<MaterialNeedResponse>> getAllMaterialNeeds() {
         List<MaterialNeed> materialNeeds = materialNeedService.getAllMaterialNeeds();
-        List<MaterialNeedResponseDTO> responseDTOs = materialNeedMapper.toMaterialNeedResponseDTOList(materialNeeds);
+        List<MaterialNeedResponse> responseDTOs = materialNeedMapper.toMaterialNeedResponseList(materialNeeds);
         return ResponseEntity.ok(responseDTOs);
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<MaterialNeedResponse>> getMaterialNeedsByUserId(@PathVariable Long userId) {
+        List<MaterialNeed> materialNeeds = materialNeedService.getMaterialNeedsByUserId(userId);
+        List<MaterialNeedResponse> responseDTOs = materialNeedMapper.toMaterialNeedResponseList(materialNeeds);
+        return ResponseEntity.ok(responseDTOs);
+    }
+
+    @PatchMapping("/status/{id}")
+    public ResponseEntity<MaterialNeedResponse> changeStatus(@PathVariable Long id, @RequestParam Need.Status status) {
+        Optional<MaterialNeed> materialNeed = materialNeedService.changeStatus(id, status);
+        return materialNeed
+                .map(value -> ResponseEntity.ok(materialNeedMapper.toMaterialNeedResponse(value)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
 

@@ -10,6 +10,7 @@ import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -54,25 +55,24 @@ public class InitData implements CommandLineRunner {
                 .description("aa")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .userId(newUser.getId())
+                .user(newUser)
                 .build();
         financialNeedRepository.save(financialNeed);
         Warehouse warehouse = new Warehouse("magazyn", "WDupie");
         warehouseRepository.save(warehouse);
 
         MaterialNeed materialNeed = MaterialNeed.builder()
-                .product("czajnik")
-                .amount(1)
+                .itemCategory(MaterialNeed.ItemCategory.HOUSEHOLD)
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .description("zasób materialny")
-                .userId(newUser.getId())
+                .description("czajnik")
+                .user(newUser)
                 .build();
         materialNeedRepository.save(materialNeed);
 

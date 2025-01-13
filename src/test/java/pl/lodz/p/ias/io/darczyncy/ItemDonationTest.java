@@ -11,6 +11,7 @@ import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.implementations.ItemDonationService;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
@@ -65,15 +66,14 @@ public class ItemDonationTest {
                 "Nowak"
         ));
         MaterialNeed materialNeed = MaterialNeed.builder()
-                .product("czajnik")
-                .amount(1)
+                .itemCategory(MaterialNeed.ItemCategory.HOUSEHOLD)
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .description("zasób materialny")
-                .userId(newUser.getId())
+                .description("czajnik")
+                .user(newUser)
         .build();
         materialNeedRepository.save(materialNeed);
 

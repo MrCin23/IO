@@ -9,6 +9,7 @@ import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.providers.CertificateProvider;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
@@ -48,25 +49,24 @@ public class PdfBuilderTest {
                 .description("pomoc dla powodzian z Poznania")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .userId(account.getId())
+                .user(account)
                 .build();
 
         warehouse = new Warehouse("magazyn", "WDupie");
 
 
         materialNeed = MaterialNeed.builder()
-                .product("czajnik")
-                .amount(1)
+                .itemCategory(MaterialNeed.ItemCategory.HOUSEHOLD)
+                .description("czajnik")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .description("zasób materialny")
-                .userId(account.getId())
+                .user(account)
                 .build();
 
         itemDonation = new ItemDonation(

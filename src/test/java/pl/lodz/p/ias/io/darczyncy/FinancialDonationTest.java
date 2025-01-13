@@ -12,6 +12,7 @@ import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.implementations.FinancialDonationService;
 
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
@@ -71,10 +72,10 @@ public class FinancialDonationTest {
                 .description("aa")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .userId(newUser.getId())
+                .user(newUser)
         .build();
         financialNeedRepository.save(financialNeed);
 

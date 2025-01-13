@@ -1,8 +1,8 @@
 package pl.lodz.p.ias.io.poszkodowani.mapper;
 
 import org.springframework.stereotype.Component;
-import pl.lodz.p.ias.io.poszkodowani.dto.financialneed.FinancialNeedCreateRequestDTO;
-import pl.lodz.p.ias.io.poszkodowani.dto.financialneed.FinancialNeedResponseDTO;
+import pl.lodz.p.ias.io.poszkodowani.dto.financialneed.FinancialNeedCreateRequest;
+import pl.lodz.p.ias.io.poszkodowani.dto.financialneed.FinancialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 
 import java.util.List;
@@ -11,18 +11,18 @@ import java.util.stream.Collectors;
 @Component
 public class FinancialNeedMapper {
 
-    public FinancialNeed toFinancialNeed(FinancialNeedCreateRequestDTO dto) {
+    public FinancialNeed toFinancialNeed(FinancialNeedCreateRequest dto) {
         return FinancialNeed.builder()
-                .userId(dto.getUserId())
                 .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
                 .collectionGoal(dto.getCollectionGoal())
                 .build();
     }
 
-    public FinancialNeedResponseDTO toFinancialNeedResponseDTO(FinancialNeed financialNeed) {
-        return FinancialNeedResponseDTO.builder()
+    public FinancialNeedResponse toFinancialNeedResponse(FinancialNeed financialNeed) {
+        return FinancialNeedResponse.builder()
                 .id(financialNeed.getId())
+                .userId(financialNeed.getUser().getId())
                 .description(financialNeed.getDescription())
                 .creationDate(financialNeed.getCreationDate())
                 .expirationDate(financialNeed.getExpirationDate())
@@ -33,9 +33,9 @@ public class FinancialNeedMapper {
                 .build();
     }
 
-    public List<FinancialNeedResponseDTO> toFinancialNeedResponseDTOList(List<FinancialNeed> financialNeeds) {
+    public List<FinancialNeedResponse> toFinancialNeedResponseList(List<FinancialNeed> financialNeeds) {
         return financialNeeds.stream()
-                .map(this::toFinancialNeedResponseDTO)
+                .map(this::toFinancialNeedResponse)
                 .collect(Collectors.toList());
     }
 }

@@ -13,10 +13,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaterialNeed extends Need {
+    public enum ItemCategory {
+        CLOTHING, HOUSEHOLD, FOOD, TOYS, BOOKS
+    }
 
-    @Column(name = "product", nullable = false)
-    private String product;
-
-    @Column(name = "amount", nullable = false)
-    private int amount;
+    @Column(name = "item_category", nullable = false)
+    private ItemCategory itemCategory;
 }

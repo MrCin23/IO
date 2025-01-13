@@ -16,6 +16,7 @@ import com.itextpdf.layout.properties.VerticalAlignment;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
+import org.jetbrains.annotations.NotNull;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -51,14 +52,7 @@ public class CertificateProvider {
 
             // Dodanie treści dokumentu
             String title = "PODZIĘKOWANIA";
-            String goal = donation.getNeed().getProduct();
-            String date = donation.getDonationDate().toString();
-            String firstName = account.getFirstName();
-            String lastName = account.getLastName();
-            String itemDescription = donation.getResourceName();
-            String message = ("Dziękujemy za przekazanie przedmiotu \"%s\" na cel \"%s\".\nDarowizna została przekazana w dniu %s \n " +
-                    "przez %s %s.\n")
-                    .formatted(itemDescription, goal, date, firstName, lastName);
+            String message = getString(account, donation);
 
             // Ustawienia kolorów i stylów tekstu
             Color titleColor = new DeviceRgb(0, 51, 102);
@@ -96,6 +90,18 @@ public class CertificateProvider {
             e.printStackTrace();
         }
         return stream.toByteArray();
+    }
+
+    private static @NotNull String getString(Account account, ItemDonation donation) {
+        String goal = donation.getNeed().getDescription();
+        String date = donation.getDonationDate().toString();
+        String firstName = account.getFirstName();
+        String lastName = account.getLastName();
+        String itemDescription = donation.getResourceName();
+        String message = ("Dziękujemy za przekazanie przedmiotu \"%s\" na cel \"%s\".\nDarowizna została przekazana w dniu %s \n " +
+                "przez %s %s.\n")
+                .formatted(itemDescription, goal, date, firstName, lastName);
+        return message;
     }
 
     public byte[] generateFinancialCertificate(Account account, FinancialDonation donation) {
