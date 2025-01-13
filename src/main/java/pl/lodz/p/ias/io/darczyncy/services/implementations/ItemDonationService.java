@@ -6,8 +6,10 @@ import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
 import pl.lodz.p.ias.io.darczyncy.exceptions.DonationBaseException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
+import pl.lodz.p.ias.io.darczyncy.providers.CertificateProvider;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.interfaces.IItemDonationService;
+import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 
@@ -17,6 +19,7 @@ import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
 import java.lang.reflect.Field;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,21 +36,16 @@ public class ItemDonationService implements IItemDonationService {
 
     private final UserRepository userRepository;
 
+    private final CertificateProvider certificateProvider = new CertificateProvider();
+
     @Override
     public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
-
-        Account donor = userRepository.findById(dto.donorId()).orElse(null);
-        MaterialNeed need = materialNeedRepository.findById(dto.needId()).orElse(null);
-        Warehouse warehouse = warehouseRepository.findById(dto.warehouseId()).orElseThrow(null);
-        if(donor == null) {
-            throw new DonationBaseException("Donor not found");
-        }
-        else if(need == null) {
-            throw new DonationBaseException("Need not found");
-        }
-        else if(warehouse == null) {
-            throw new DonationBaseException("Warehouse not found");
-        }
+        Account donor = userRepository.findById(dto.donorId())
+                .orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
+        MaterialNeed need = materialNeedRepository.findById(dto.needId())
+                .orElseThrow(() -> new DonationBaseException(I18n.MATERIAL_NEED_NOT_FOUND_EXCEPTION));
+        Warehouse warehouse = warehouseRepository.findById(dto.warehouseId())
+                .orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
 
         try {
             ItemDonation.ItemCategory.valueOf(dto.category());
@@ -62,7 +60,8 @@ public class ItemDonationService implements IItemDonationService {
                 dto.resourceQuantity(),
                 warehouse.getId(),
                 ItemDonation.ItemCategory.valueOf(dto.category()),
-                dto.description()
+                dto.description(),
+                LocalDate.now()
         );
         return itemDonationRepository.save(itemDonation);
     }
@@ -83,6 +82,7 @@ public class ItemDonationService implements IItemDonationService {
 
     @Override
     public List<ItemDonation> findItemDonationsByDonorId(long donorId) {
+        userRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return itemDonationRepository.findAllByDonor_Id(donorId);
     }
 
@@ -92,6 +92,13 @@ public class ItemDonationService implements IItemDonationService {
         if (type.getSuperclass() != null) {
             getAllFields(fields, type.getSuperclass());
         }
+    }
+
+    @Override
+    public byte[] createConfirmationPdf(long donationId) {
+        ItemDonation itemDonation = itemDonationRepository.findById(donationId)
+                .orElseThrow( ItemDonationNotFoundException::new);
+        return certificateProvider.generateItemCertificate(itemDonation.getDonor(), itemDonation);
     }
 
     @Override

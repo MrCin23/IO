@@ -1,12 +1,18 @@
 package pl.lodz.p.ias.io.darczyncy.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.ForeignKey;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import pl.lodz.p.ias.io.poszkodowani.model.Need;
+import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+
+import java.time.LocalDate;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -21,10 +27,19 @@ public class ItemDonation extends Donation{
 
     private ItemCategory category;
 
-    public ItemDonation(Account donor, Need need, String itemName,
+    @ManyToOne
+    @JoinColumn(
+            name = "material_need_id",
+            referencedColumnName = "id",
+            foreignKey = @ForeignKey(name = "donation_need_id_fk")
+    )
+    private MaterialNeed need;
+
+    public ItemDonation(Account donor, MaterialNeed need, String itemName,
                         int resourceQuantity, long warehouseId,
-                        ItemCategory category, String description) {
-        super(donor, need, itemName, "Item donation", resourceQuantity, warehouseId);
+                        ItemCategory category, String description, LocalDate localDate) {
+        super(donor, itemName, "Item donation", localDate, resourceQuantity, warehouseId);
+        this.need = need;
         this.description = description;
         this.category = category;
     }

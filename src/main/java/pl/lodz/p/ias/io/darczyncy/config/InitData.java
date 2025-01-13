@@ -4,7 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
+import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
+import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
@@ -18,6 +20,7 @@ import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
 import java.time.Instant;
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
@@ -31,6 +34,7 @@ public class InitData implements CommandLineRunner {
     private final UserRepository userRepository;
     private final MaterialNeedRepository materialNeedRepository;
     private final ItemDonationRepository itemDonationRepository;
+    private final FinancialDonationRepository financialDonationRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -79,8 +83,19 @@ public class InitData implements CommandLineRunner {
                 418,
                 warehouse.getId(),
                 ItemDonation.ItemCategory.HOUSEHOLD,
-                "bardzo dobry teapot"
+                "bardzo dobry teapot",
+                LocalDate.now()
         );
         itemDonationRepository.save(itemDonation);
+
+        FinancialDonation financialDonation = new FinancialDonation(
+                newUser,
+                financialNeed,
+                warehouse.getId(),
+                100,
+                FinancialDonation.Currency.PLN,
+                LocalDate.now()
+        );
+        financialDonationRepository.save(financialDonation);
     }
 }

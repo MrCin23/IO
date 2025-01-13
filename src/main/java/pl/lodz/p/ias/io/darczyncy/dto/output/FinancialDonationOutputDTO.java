@@ -9,6 +9,5 @@ public record FinancialDonationOutputDTO(
         Long needId,
         long warehouseId,
         double amount,
-        double calculatedVAT,
         String currency
 ) { }

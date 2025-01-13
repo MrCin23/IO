@@ -12,7 +12,6 @@ public class FinancialDonationMapper {
                 financialDonation.getNeed().getId(),
                 financialDonation.getWarehouseId(),
                 financialDonation.getAmount(),
-                financialDonation.getCalculatedVAT(),
                 financialDonation.getCurrency().toString()
         );
     }

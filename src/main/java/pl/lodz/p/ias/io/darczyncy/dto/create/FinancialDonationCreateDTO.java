@@ -18,8 +18,6 @@ public record FinancialDonationCreateDTO (
         @Min(1)
         double amount,
 
-        double calculatedVAT,
-
         @NotNull
         String currency
 ){}

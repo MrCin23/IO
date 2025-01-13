@@ -1,6 +1,8 @@
 package pl.lodz.p.ias.io.darczyncy.controller.implementations;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.ias.io.darczyncy.controller.interfaces.IItemDonationController;
@@ -48,6 +50,17 @@ public class ItemDonationController implements IItemDonationController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok().body(foundItemDonations.stream().map(ItemDonationMapper::toOutputDTO).toList());
+    }
+
+    @Override
+    public ResponseEntity<?> getConfirmationDonationById(long id) {
+        byte[] pdfBytes = itemDonationService.createConfirmationPdf(id);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentLength(pdfBytes.length);
+        ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
+                .filename("confirmation.pdf").build();
+        headers.setContentDisposition(contentDisposition);
+        return ResponseEntity.ok().headers(headers).body(pdfBytes);
     }
 
     @Override

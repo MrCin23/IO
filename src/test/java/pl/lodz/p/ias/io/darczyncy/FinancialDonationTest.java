@@ -86,7 +86,6 @@ public class FinancialDonationTest {
                 financialNeed.getId(),
                 warehouse.getId(),
                 200.0,
-                34.88,
                 FinancialDonation.Currency.PLN.toString()
         );
 
