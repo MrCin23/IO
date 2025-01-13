@@ -22,6 +22,10 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
         if (!resourceToUpdate) return;
 
         try {
+            if (selectedQuantity <= 10) {
+                alert("Warning: Low resource quantity!");
+            }
+
             const response = await fetch(`/api/resources/${selectedResourceId}`, {
                 method: "PUT",
                 headers: {
@@ -73,7 +77,9 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                     .slice()
                     .sort((a, b) => a.resourceId - b.resourceId)
                     .map((resource) => (
-                        <tr key={resource.resourceId} className="border-b border-gray-300">
+                        <tr key={resource.resourceId} className={`border-b border-gray-300 ${
+                            resource.resourceQuantity <= 10 ? "bg-red-100" : ""
+                        }`}>
                             <td className="px-4 py-2">{resource.resourceId}</td>
                             <td className="px-4 py-2">{resource.resourceName}</td>
                             <td className="px-4 py-2">{resource.resourceType}</td>
