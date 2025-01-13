@@ -1,0 +1,1 @@
+# Tutaj umieszczamy komponenty, które są "gotowymi stronami"
