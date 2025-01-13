@@ -18,15 +18,18 @@ interface Point {
     description: string;
 }
 
-const MapView = () => {
-    const [points, setPoints] = useState<Point[]>([]); // Punkty mapy
-    const [newPoint, setNewPoint] = useState<Point | null>(null); // Nowy punkt
+interface MapViewProps {
+    pointType: string; // Typ punktu przekazywany jako argument
+}
+
+const MapView: React.FC<MapViewProps> = ({ pointType }) => {
+    const [points, setPoints] = useState<Point[]>([]);
+    const [newPoint, setNewPoint] = useState<Point | null>(null);
     const [formData, setFormData] = useState({
         title: "",
         description: "",
-    }); // Dane formularza
+    });
 
-    // Obsługa kliknięcia na mapę
     const MapClickHandler = () => {
         useMapEvents({
             click: (e) => {
@@ -40,17 +43,15 @@ const MapView = () => {
         return null;
     };
 
-    // Pobieranie danych punktów z backendu
     const fetchPoints = async () => {
         try {
-            const response = await axios.get('api/map'); // Adres backendu
+            const response = await axios.get('api/map');
             setPoints(response.data);
         } catch (error) {
             console.error("Błąd podczas pobierania punktów mapy:", error);
         }
     };
 
-    // Obsługa wysyłania punktu
     const savePoint = async () => {
         if (!formData.title || !formData.description || !newPoint) {
             alert("Wypełnij wszystkie pola!");
@@ -61,7 +62,7 @@ const MapView = () => {
                 coordinates: newPoint.coordinates,
                 title: formData.title,
                 description: formData.description,
-                type: "VOLUNTEER", // Typ można zmieniać według potrzeb
+                type: pointType,
                 active: true,
             });
             alert("Punkt zapisany!");
@@ -151,3 +152,4 @@ const MapView = () => {
 };
 
 export default MapView;
+

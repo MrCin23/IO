@@ -8,7 +8,7 @@ import pl.lodz.p.ias.io.mapy.model.MapPoint;
 import pl.lodz.p.ias.io.mapy.service.MapService;
 
 @RestController
-@RequestMapping("/map")
+@RequestMapping("/api/map")
 @AllArgsConstructor
 public class MapController {
     private MapService mapService;
