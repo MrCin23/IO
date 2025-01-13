@@ -4,14 +4,16 @@ import { Resource } from "@/types";
 const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const [selectedResourceId, setSelectedResourceId] = useState<number | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
+    const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
 
-    const handleStatusChange = (resourceId: number, status: string) => {
+    const handleEditClick = (resourceId: number, status: string, quantity: number) => {
         setSelectedResourceId(resourceId);
         setSelectedStatus(status);
+        setSelectedQuantity(quantity);
     };
 
-    const handleStatusUpdate = async () => {
-        if (!selectedResourceId || !selectedStatus) return;
+    const handleUpdate = async () => {
+        if (!selectedResourceId || !selectedStatus || selectedQuantity === null) return;
 
         const resourceStatus = selectedStatus === "PRZYDZIELONY" ? "PRZYDZIELONY" : "NIEPRZYDZIELONY";
 
@@ -29,18 +31,20 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                     resourceId: resourceToUpdate.resourceId,
                     resourceName: resourceToUpdate.resourceName,
                     resourceType: resourceToUpdate.resourceType,
-                    resourceQuantity: resourceToUpdate.resourceQuantity,
+                    resourceQuantity: selectedQuantity,
                     resourceStatus,
                     warehouseId: resourceToUpdate.warehouseId
                 }),
             });
 
             if (!response.ok) {
-                alert("Failed to update resource status");
+                alert("Failed to update resource");
                 return;
             }
 
-            alert("Resource status updated successfully");
+            alert("Resource updated successfully");
+
+            window.location.reload();
         } catch (error) {
             console.error(error);
             alert("An unexpected error occurred.");
@@ -65,8 +69,10 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 </tr>
                 </thead>
                 <tbody>
-                {resources.length > 0 ? (
-                    resources.map((resource) => (
+                {resources
+                    .slice()
+                    .sort((a, b) => a.resourceId - b.resourceId)
+                    .map((resource) => (
                         <tr key={resource.resourceId} className="border-b border-gray-300">
                             <td className="px-4 py-2">{resource.resourceId}</td>
                             <td className="px-4 py-2">{resource.resourceName}</td>
@@ -77,25 +83,41 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             <td className="px-4 py-2">
                                 <button
                                     className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                                    onClick={() => handleStatusChange(resource.resourceId, resource.resourceStatus)}
+                                    onClick={() => handleEditClick(resource.resourceId, resource.resourceStatus, resource.resourceQuantity)}
                                 >
-                                    Edit Status
+                                    Edit
                                 </button>
 
                                 {selectedResourceId === resource.resourceId && (
                                     <div className="mt-2">
-                                        <select
-                                            className="border border-gray-300 rounded px-2 py-1"
-                                            value={selectedStatus}
-                                            onChange={(e) => setSelectedStatus(e.target.value)}
-                                        >
-                                            <option value="PRZYDZIELONY">PRZYDZIELONY</option>
-                                            <option value="NIEPRZYDZIELONY">NIEPRZYDZIELONY</option>
-                                        </select>
+                                        <div>
+                                            <label>
+                                                Status:
+                                                <select
+                                                    className="border border-gray-300 rounded px-2 py-1 ml-2"
+                                                    value={selectedStatus}
+                                                    onChange={(e) => setSelectedStatus(e.target.value)}
+                                                >
+                                                    <option value="PRZYDZIELONY">PRZYDZIELONY</option>
+                                                    <option value="NIEPRZYDZIELONY">NIEPRZYDZIELONY</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                        <div className="mt-2">
+                                            <label>
+                                                Quantity:
+                                                <input
+                                                    type="number"
+                                                    className="border border-gray-300 rounded px-2 py-1 ml-2"
+                                                    value={selectedQuantity ?? ''}
+                                                    onChange={(e) => setSelectedQuantity(parseInt(e.target.value, 10))}
+                                                />
+                                            </label>
+                                        </div>
                                         <button
-                                            className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                                            onClick={handleStatusUpdate}
-                                            disabled={!selectedStatus}
+                                            className="ml-2 mt-2 bg-blue-500 text-white px-3 py-1 rounded"
+                                            onClick={handleUpdate}
+                                            disabled={!selectedStatus || selectedQuantity === null}
                                         >
                                             Update
                                         </button>
@@ -103,14 +125,7 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                 )}
                             </td>
                         </tr>
-                    ))
-                ) : (
-                    <tr>
-                        <td colSpan={7} className="px-4 py-2 text-center text-gray-500">
-                            No resources found.
-                        </td>
-                    </tr>
-                )}
+                    ))}
                 </tbody>
             </table>
         </div>
