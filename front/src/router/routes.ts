@@ -1,6 +1,10 @@
 import { Pathnames } from './pathnames'
 
 import {HomePage} from "../pages/HomePage";
+import LoginPage from '../pages/uwierzytelnianie/LoginPage';
+import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
+import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
+import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -14,6 +18,14 @@ export const defaultRoutes: RouteType[] = [
     {
         path: Pathnames.default.homePage,
         Component: HomePage,
+    },
+    {
+        path: Pathnames.default.loginPage,
+        Component: LoginPage,
+    },
+    {
+        path: Pathnames.default.registerPage,
+        Component: RegisterPage,
     }
 ]
 
@@ -36,6 +48,14 @@ export const donorRoutes: RouteType[] = [
     {
         path: Pathnames.donor.homePage,
         Component: HomePage,
+    },
+    {
+        path: Pathnames.donor.accountPage,
+        Component: MyAccountPage,
+    },
+    {
+        path: Pathnames.donor.accountsListPage,
+        Component: AccountsListPage,
     }
 ]
 
