@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface FinancialDonationRepository extends JpaRepository<FinancialDonation, Long> {
 
     List<FinancialDonation> findAllByDonor_Id(Long id);
+
+    List<FinancialDonation> findAllByWarehouseId(Long id);
 }

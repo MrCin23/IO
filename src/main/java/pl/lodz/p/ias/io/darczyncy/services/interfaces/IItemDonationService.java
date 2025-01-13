@@ -14,6 +14,8 @@ public interface IItemDonationService {
 
     List<ItemDonation> findItemDonationsByDonorId(long donorId);
 
+    List<ItemDonation> findItemDonationsByWarehouseId(long warehouseId);
+
     byte[] createConfirmationPdf(long donationId);
 
     ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation);

@@ -1,12 +1,11 @@
 package pl.lodz.p.ias.io.darczyncy.controller.implementations;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ContentDisposition;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.ias.io.darczyncy.controller.interfaces.IItemDonationController;
 import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
+import pl.lodz.p.ias.io.darczyncy.dto.exception.ExceptionOutputDTO;
 import pl.lodz.p.ias.io.darczyncy.dto.output.ItemDonationOutputDTO;
 import pl.lodz.p.ias.io.darczyncy.dto.update.ItemDonationUpdateDTO;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
@@ -46,17 +45,24 @@ public class ItemDonationController implements IItemDonationController {
     @Override
     public ResponseEntity<?> findAllItemDonations() {
         List<ItemDonation> foundItemDonations = itemDonationService.findAllItemDonations();
-        if (foundItemDonations.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok().body(foundItemDonations.stream().map(ItemDonationMapper::toOutputDTO).toList());
+        if (foundItemDonations.isEmpty()) return ResponseEntity.noContent().build();
+        List<ItemDonationOutputDTO> outputDTOS = foundItemDonations.stream().map(ItemDonationMapper::toOutputDTO).toList();
+        return ResponseEntity.ok().body(outputDTOS);
     }
 
     @Override
     public ResponseEntity<?> getConfirmationDonationById(long id) {
-        byte[] pdfBytes = itemDonationService.createConfirmationPdf(id);
+        byte[] pdfBytes;
+        try {
+            pdfBytes = itemDonationService.createConfirmationPdf(id);
+        } catch (ItemDonationNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(new ExceptionOutputDTO(e.getMessage()));
+        }
         HttpHeaders headers = new HttpHeaders();
         headers.setContentLength(pdfBytes.length);
+        headers.setContentType(MediaType.APPLICATION_PDF);
         ContentDisposition contentDisposition = ContentDisposition.builder("attachment")
                 .filename("confirmation.pdf").build();
         headers.setContentDisposition(contentDisposition);
@@ -66,10 +72,17 @@ public class ItemDonationController implements IItemDonationController {
     @Override
     public ResponseEntity<?> findAllItemDonationsByDonorId(long donorId) {
         List<ItemDonation> foundItemDonations = itemDonationService.findItemDonationsByDonorId(donorId);
-        if (foundItemDonations.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
-        return ResponseEntity.ok().body(foundItemDonations.stream().map(ItemDonationMapper::toOutputDTO).toList());
+        if (foundItemDonations.isEmpty()) return ResponseEntity.noContent().build();
+        List<ItemDonationOutputDTO> outputDTOS = foundItemDonations.stream().map(ItemDonationMapper::toOutputDTO).toList();
+        return ResponseEntity.ok().body(outputDTOS);
+    }
+
+    @Override
+    public ResponseEntity<?> findAllItemDonationsWarehouseId(long warehouseId) {
+        List<ItemDonation> foundItemDonations = itemDonationService.findItemDonationsByWarehouseId(warehouseId);
+        if (foundItemDonations.isEmpty()) return ResponseEntity.noContent().build();
+        List<ItemDonationOutputDTO> outputDTOS = foundItemDonations.stream().map(ItemDonationMapper::toOutputDTO).toList();
+        return ResponseEntity.ok().body(outputDTOS);
     }
 
     @Override

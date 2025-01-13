@@ -17,7 +17,7 @@ public class GeneralResolver {
 
     @ExceptionHandler(value = {ApplicationBaseException.class})
     public ResponseEntity<?> handleDatabaseException(ApplicationBaseException e) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ExceptionOutputDTO("database exception occured"));
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ExceptionOutputDTO("database exception occurred"));
     }
 
 }

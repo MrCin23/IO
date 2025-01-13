@@ -10,4 +10,6 @@ import java.util.List;
 public interface ItemDonationRepository extends JpaRepository<ItemDonation, Long> {
 
     List<ItemDonation> findAllByDonor_Id(Long donorId);
+
+    List<ItemDonation> findAllByWarehouseId(Long warehouseId);
 }

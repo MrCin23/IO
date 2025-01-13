@@ -10,7 +10,9 @@ public interface IFinancialDonationService {
 
     FinancialDonation findFinancialDonationById(long id);
 
-    List<FinancialDonation> findFinancialDonationByDonorId(long donorId);
+    List<FinancialDonation> findAllFinancialDonationByDonorId(long donorId);
+
+    List<FinancialDonation> findAllFinancialDonationByWarehouseId(long warehouseId);
 
     byte[] createConfirmationPdf(long donationId);
 

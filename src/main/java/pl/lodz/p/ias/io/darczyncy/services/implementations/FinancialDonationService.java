@@ -16,6 +16,7 @@ import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -27,6 +28,7 @@ public class FinancialDonationService implements IFinancialDonationService {
     private final FinancialDonationRepository financialDonationRepository;
     private final UserRepository userRepository;
     private final FinancialNeedRepository financialNeedRepository;
+    private final WarehouseRepository warehouseRepository;
 
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
@@ -67,9 +69,15 @@ public class FinancialDonationService implements IFinancialDonationService {
     }
 
     @Override
-    public List<FinancialDonation> findFinancialDonationByDonorId(long donorId) {
+    public List<FinancialDonation> findAllFinancialDonationByDonorId(long donorId) {
         userRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return financialDonationRepository.findAllByDonor_Id(donorId);
+    }
+
+    @Override
+    public List<FinancialDonation> findAllFinancialDonationByWarehouseId(long warehouseId) {
+        warehouseRepository.findById(warehouseId).orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
+        return financialDonationRepository.findAllByWarehouseId(warehouseId);
     }
 
     @Override

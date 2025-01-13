@@ -20,9 +20,12 @@ public interface IFinancialDonationController {
     @GetMapping(value = "/donor/{id}/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findAllFinancialDonationsByDonorId(@PathVariable long id);
 
+    @GetMapping(value = "/warehouse/{id}/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    ResponseEntity<?> findAllFinancialDonationsByWarehouseId(@PathVariable("id") long id);
+
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findAll();
 
-    @GetMapping(value = "/{id}/confirmation", produces = MediaType.APPLICATION_PDF_VALUE)
+    @GetMapping(value = "/{id}/confirmation", produces = {MediaType.APPLICATION_PDF_VALUE, MediaType.APPLICATION_JSON_VALUE})
     ResponseEntity<?> getConfirmationDonationById(@PathVariable("id") long id);
 }

@@ -86,6 +86,12 @@ public class ItemDonationService implements IItemDonationService {
         return itemDonationRepository.findAllByDonor_Id(donorId);
     }
 
+    @Override
+    public List<ItemDonation> findItemDonationsByWarehouseId(long warehouseId) {
+        warehouseRepository.findById(warehouseId).orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
+        return itemDonationRepository.findAllByWarehouseId(warehouseId);
+    }
+
     private static void getAllFields(List<Field> fields, Class<?> type) {
         fields.addAll(Arrays.asList(type.getDeclaredFields()));
 
@@ -97,7 +103,7 @@ public class ItemDonationService implements IItemDonationService {
     @Override
     public byte[] createConfirmationPdf(long donationId) {
         ItemDonation itemDonation = itemDonationRepository.findById(donationId)
-                .orElseThrow( ItemDonationNotFoundException::new);
+                .orElseThrow(ItemDonationNotFoundException::new);
         return certificateProvider.generateItemCertificate(itemDonation.getDonor(), itemDonation);
     }
 
