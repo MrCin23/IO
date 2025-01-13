@@ -5,9 +5,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountCreateDTO;
 import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountLoginDTO;
+import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountResetPassDTO;
 import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
 import pl.lodz.p.ias.io.uwierzytelnianie.exceptions.BadRequestException;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -49,7 +52,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.login(request.getUsername(), request.getPassword()));
     }
 
-    @PreAuthorize("hasRole('DARCZYŃCA')")
+//    @PreAuthorize("hasAnyRole('DARCZYŃCA', 'WOLONTARIUSZ')")
     @GetMapping
     public ResponseEntity<List<Account>> getAccounts() {
         return ResponseEntity.ok(authenticationService.getAccounts());
@@ -76,9 +79,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(accounts);
     }
 
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/reset")
-    public ResponseEntity<Account> resetPassword(@RequestBody @Valid AccountLoginDTO request) {
-        return ResponseEntity.ok(authenticationService.resetPassword(request.getUsername(), request.getPassword()));
+    public ResponseEntity<Account> resetPassword(@RequestBody @Valid AccountResetPassDTO request) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return ResponseEntity.ok(authenticationService.resetPassword(username, request.getPassword()));
     }
 
     @PostMapping("/{id}/activate")
