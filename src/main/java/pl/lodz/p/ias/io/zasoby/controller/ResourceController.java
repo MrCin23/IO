@@ -8,7 +8,6 @@ import pl.lodz.p.ias.io.zasoby.dto.ResourceDTO;
 import pl.lodz.p.ias.io.zasoby.service.ResourceService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/resources")
@@ -24,7 +23,7 @@ public class ResourceController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResourceDTO getResource(@PathVariable UUID id) {
+    public ResourceDTO getResource(@PathVariable long id) {
         return resourceService.getResourceById(id);
     }
 
@@ -36,13 +35,13 @@ public class ResourceController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateResource(@PathVariable UUID id, @RequestBody ResourceDTO resourceDTO) {
+    public void updateResource(@PathVariable long id, @RequestBody ResourceDTO resourceDTO) {
         resourceService.updateResource(id, resourceDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteResource(@PathVariable UUID id) {
+    public void deleteResource(@PathVariable long id) {
         resourceService.deleteResource(id);
     }
 }

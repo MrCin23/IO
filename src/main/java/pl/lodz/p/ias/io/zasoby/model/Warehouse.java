@@ -8,16 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 public class Warehouse {
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue(generator = "long")
+    private long id;
 
     @NotBlank(message = "Warehouse name cannot be blank")
     private String warehouseName;

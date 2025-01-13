@@ -9,7 +9,6 @@ import pl.lodz.p.ias.io.zasoby.repository.ResourceRepository;
 import pl.lodz.p.ias.io.zasoby.utils.ResourceConverter;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +23,7 @@ public class ResourceService {
         return converter.convertResourceToDTO(resource);
     }
 
-    public ResourceDTO getResourceById(UUID id) {
+    public ResourceDTO getResourceById(long id) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Resource with id " + id + " not found"));
         return converter.convertResourceToDTO(resource);
@@ -38,7 +37,7 @@ public class ResourceService {
     }
 
 //    @Transactional
-    public void updateResource(UUID id, @Valid ResourceDTO resourceDTO) {
+    public void updateResource(long id, @Valid ResourceDTO resourceDTO) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Resource with id " + id + " not found"));
 
@@ -51,7 +50,7 @@ public class ResourceService {
         resourceRepository.save(resource);
     }
 
-    public void deleteResource(UUID id) {
+    public void deleteResource(long id) {
         if (resourceRepository.existsById(id)) {
             resourceRepository.deleteById(id);
         } else {

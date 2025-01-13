@@ -2,6 +2,7 @@ package pl.lodz.p.ias.io.zasoby.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
@@ -11,16 +12,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
-import java.util.UUID;
-
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 public class Resource {
     @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
     @NotBlank(message = "Resource name cannot be blank")
     private String resourceName;

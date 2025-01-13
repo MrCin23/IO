@@ -9,7 +9,6 @@ import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 import pl.lodz.p.ias.io.zasoby.utils.WarehouseConverter;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,7 +23,7 @@ public class WarehouseService {
         return warehouseConverter.convertWarehouseToDTO(warehouse);
     }
 
-    public WarehouseDTO getWarehouseById(UUID id) {
+    public WarehouseDTO getWarehouseById(long id) {
         Warehouse warehouse = warehouseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse with id " + id + " not found"));
         return warehouseConverter.convertWarehouseToDTO(warehouse);
@@ -38,7 +37,7 @@ public class WarehouseService {
     }
 
     @Transactional
-    public void updateWarehouse(UUID id, WarehouseDTO warehouseDTO) {
+    public void updateWarehouse(long id, WarehouseDTO warehouseDTO) {
         Warehouse warehouse = warehouseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse with id " + id + " not found"));
 

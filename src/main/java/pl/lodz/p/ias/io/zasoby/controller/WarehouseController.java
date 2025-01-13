@@ -8,7 +8,6 @@ import pl.lodz.p.ias.io.zasoby.dto.WarehouseDTO;
 import pl.lodz.p.ias.io.zasoby.service.WarehouseService;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/warehouses")
@@ -28,7 +27,7 @@ public class WarehouseController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public WarehouseDTO getWarehouse(@PathVariable UUID id) {
+    public WarehouseDTO getWarehouse(@PathVariable long id) {
         return warehouseService.getWarehouseById(id);
     }
 
@@ -40,7 +39,7 @@ public class WarehouseController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateWarehouse(@PathVariable UUID id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
+    public void updateWarehouse(@PathVariable long id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
         warehouseService.updateWarehouse(id, warehouseDTO);
     }
 }

@@ -4,8 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import pl.lodz.p.ias.io.zasoby.model.Resource;
 
-import java.util.UUID;
-
 @Repository
-public interface ResourceRepository extends JpaRepository<Resource, UUID> {
+public interface ResourceRepository extends JpaRepository<Resource, Long> {
 }
