@@ -2,6 +2,7 @@ package pl.lodz.p.ias.io.uwierzytelnianie.config;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
 
@@ -16,11 +17,10 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        roleRepository.save(new Role("ROLE_DARCZYŃCA"));
-        roleRepository.save(new Role("ROLE_POSZKODOWANY"));
-        roleRepository.save(new Role("ROLE_ORGANIZACJA_POMOCOWA"));
-        roleRepository.save(new Role("ROLE_WOLONTARIUSZ"));
-        roleRepository.save(new Role("ROLE_PRZEDSTAWICIEL_WŁADZ"));
+        for (UserRole role : UserRole.values()) {
+            roleRepository.save(new Role(role.name()));
+        }
     }
 }
+
 
