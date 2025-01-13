@@ -1,33 +1,25 @@
 import ResourceForm from "@/components/ResourceForm";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Link } from "react-router";
 
 const CreateResource = () => {
   return (
-      <div className="min-h-screen flex items-center justify-center">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-center">Create a New Resource</CardTitle>
-            <CardDescription>
-              Enter the resource name, type, quantity, status, warehouseId to add a new resource to the system.
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="max-w-lg w-full bg-white shadow-md rounded p-6">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl font-semibold">Create a New Resource</h1>
+            <p className="text-sm text-gray-600">
+              Enter the resource name, type, quantity, and warehouse to add a new resource to the system.
+            </p>
+          </div>
+          <div className="mb-6">
             <ResourceForm />
-          </CardContent>
-          <CardFooter className="justify-center">
-            <Link to="/resources">
-              <span className="text-blue-700">Back to Resource List</span>
+          </div>
+          <div className="text-center">
+            <Link to="/resources" className="text-blue-700 hover:underline">
+              Back to Resource List
             </Link>
-          </CardFooter>
-        </Card>
+          </div>
+        </div>
       </div>
   );
 };

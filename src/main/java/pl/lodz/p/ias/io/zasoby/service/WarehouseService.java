@@ -1,11 +1,8 @@
 package pl.lodz.p.ias.io.zasoby.service;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.lodz.p.ias.io.zasoby.dto.ResourceDTO;
 import pl.lodz.p.ias.io.zasoby.dto.WarehouseDTO;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
@@ -19,11 +16,6 @@ import java.util.stream.Collectors;
 public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
     private final WarehouseConverter warehouseConverter = new WarehouseConverter();
-
-//    @Autowired
-//    public WarehouseService(WarehouseRepository warehouseRepository) {
-//        this.warehouseRepository = warehouseRepository;
-//    }
 
     public WarehouseDTO addWarehouse(WarehouseDTO warehouseDTO) {
         Warehouse warehouse = warehouseConverter.convertDTOToWarehouse(warehouseDTO);
@@ -52,10 +44,4 @@ public class WarehouseService {
         warehouse.setWarehouseName(warehouseDTO.getWarehouseName());
         warehouse.setLocation(warehouseDTO.getLocation());
     }
-
-//    public WarehouseDTO findById(Long id) {
-//        Warehouse warehouse = warehouseRepository.findById(id);
-//        return new WarehouseDTO(warehouse.getWarehouseName(),
-//                warehouse.getLocation());
-//    }
 }

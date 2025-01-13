@@ -1,15 +1,4 @@
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
 
 export interface Warehouse {
@@ -19,7 +8,6 @@ export interface Warehouse {
 }
 
 const WarehouseForm = () => {
-    const { toast } = useToast();
     const navigate = useNavigate();
     const form = useForm<Warehouse>({
         defaultValues: {
@@ -39,57 +27,46 @@ const WarehouseForm = () => {
 
         const result = await response.json();
         if (!response.ok) {
-            toast({
-                title: "Error",
-                description: result.message || "Failed to add warehouse",
-                variant: "destructive",
-            });
-            return;
+            console.log(result);
         }
 
-        toast({
-            title: "Success",
-            description: "Warehouse added successfully",
-        });
-
-        // Redirect to the warehouse list or another page
         navigate("/warehouses");
     };
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                    control={form.control}
-                    name="warehouseName"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Warehouse Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Enter warehouse name" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 max-w-lg mx-auto">
+            <div className="flex flex-col">
+                <label htmlFor="warehouseName" className="text-lg font-semibold text-gray-700">Warehouse Name</label>
+                <input
+                    id="warehouseName"
+                    {...form.register("warehouseName", { required: "Warehouse name is required" })}
+                    className="mt-2 p-3 border border-gray-300 rounded-md"
+                    placeholder="Enter warehouse name"
                 />
-                <FormField
-                    control={form.control}
-                    name="location"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Location</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Enter warehouse location" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
+                {form.formState.errors.warehouseName && (
+                    <span className="text-red-600 text-sm mt-1">{form.formState.errors.warehouseName.message}</span>
+                )}
+            </div>
+
+            <div className="flex flex-col">
+                <label htmlFor="location" className="text-lg font-semibold text-gray-700">Location</label>
+                <input
+                    id="location"
+                    {...form.register("location", { required: "Location is required" })}
+                    className="mt-2 p-3 border border-gray-300 rounded-md"
+                    placeholder="Enter warehouse location"
                 />
-                <div className="flex justify-center">
-                    <Button type="submit">Add Warehouse</Button>
-                </div>
-            </form>
-        </Form>
+                {form.formState.errors.location && (
+                    <span className="text-red-600 text-sm mt-1">{form.formState.errors.location.message}</span>
+                )}
+            </div>
+
+            <div className="flex justify-center">
+                <button type="submit" className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 focus:outline-none">
+                    Add Warehouse
+                </button>
+            </div>
+        </form>
     );
 };
 

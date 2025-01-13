@@ -1,16 +1,4 @@
 import { useForm } from "react-hook-form";
-import { Button } from "@/components/ui/button";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
@@ -24,7 +12,6 @@ export interface Resource {
 }
 
 const ResourceForm = () => {
-    const { toast } = useToast();
     const navigate = useNavigate();
     const [warehouses, setWarehouses] = useState<{ warehouseId: number; warehouseName: string; location: string }[]>([]);
     const form = useForm<Resource>({
@@ -48,16 +35,12 @@ const ResourceForm = () => {
                 setWarehouses(data);
             } catch (error) {
                 console.error(error);
-                toast({
-                    title: "Error",
-                    description: "Failed to load warehouses.",
-                    variant: "destructive",
-                });
+
             }
         };
 
         fetchWarehouses();
-    }, [toast]);
+    }, []);
 
     const onSubmit = async (values: Resource) => {
         try {
@@ -71,120 +54,101 @@ const ResourceForm = () => {
 
             const result = await response.json();
             if (!response.ok) {
-                toast({
-                    title: "Error",
-                    description: result.message || "Failed to add resource",
-                    variant: "destructive",
-                });
-                return;
+                console.log(result);
             }
-
-            toast({
-                title: "Success",
-                description: "Resource added successfully",
-            });
 
             navigate("/resources");
         } catch (error) {
             console.error(error);
-            toast({
-                title: "Error",
-                description: "An unexpected error occurred.",
-                variant: "destructive",
-            });
         }
     };
 
     return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <FormField
-                    control={form.control}
-                    name="resourceName"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Resource Name</FormLabel>
-                            <FormControl>
-                                <Input placeholder="Enter resource name" {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+        <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded">
+            <h2 className="text-xl font-semibold text-center mb-4">Add Resource</h2>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                <div>
+                    <label htmlFor="resourceName" className="block text-sm font-medium text-gray-700">
+                        Resource Name
+                    </label>
+                    <input
+                        id="resourceName"
+                        {...form.register("resourceName", { required: "Resource name is required" })}
+                        placeholder="Enter resource name"
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+                    />
+                    {form.formState.errors.resourceName && (
+                        <p className="text-sm text-red-600 mt-1">{form.formState.errors.resourceName.message}</p>
                     )}
-                />
-                <FormField
-                    control={form.control}
-                    name="resourceType"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Resource Type</FormLabel>
-                            <FormControl>
-                                <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={field.value}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select resource type" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="Food">Food</SelectItem>
-                                        <SelectItem value="Toys">Toys</SelectItem>
-                                        <SelectItem value="Items">Items</SelectItem>
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                </div>
+
+                <div>
+                    <label htmlFor="resourceType" className="block text-sm font-medium text-gray-700">
+                        Resource Type
+                    </label>
+                    <select
+                        id="resourceType"
+                        {...form.register("resourceType", { required: "Resource type is required" })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+                    >
+                        <option value="" disabled>
+                            Select resource type
+                        </option>
+                        <option value="Food">Food</option>
+                        <option value="Toys">Toys</option>
+                        <option value="Items">Items</option>
+                    </select>
+                    {form.formState.errors.resourceType && (
+                        <p className="text-sm text-red-600 mt-1">{form.formState.errors.resourceType.message}</p>
                     )}
-                />
-                <FormField
-                    control={form.control}
-                    name="resourceQuantity"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Quantity</FormLabel>
-                            <FormControl>
-                                <Input
-                                    type="number"
-                                    placeholder="Enter quantity"
-                                    {...field}
-                                />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                </div>
+
+                <div>
+                    <label htmlFor="resourceQuantity" className="block text-sm font-medium text-gray-700">
+                        Quantity
+                    </label>
+                    <input
+                        id="resourceQuantity"
+                        type="number"
+                        {...form.register("resourceQuantity", { required: "Quantity is required" })}
+                        placeholder="Enter quantity"
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+                    />
+                    {form.formState.errors.resourceQuantity && (
+                        <p className="text-sm text-red-600 mt-1">{form.formState.errors.resourceQuantity.message}</p>
                     )}
-                />
-                <FormField
-                    control={form.control}
-                    name="warehouseId"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel>Warehouse</FormLabel>
-                            <FormControl>
-                                <Select
-                                    onValueChange={field.onChange}
-                                    defaultValue={String(field.value)}
-                                >
-                                    <SelectTrigger>
-                                        <SelectValue placeholder="Select warehouse" />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        {warehouses.map((warehouse) => (
-                                            <SelectItem key={warehouse.warehouseId} value={String(warehouse.warehouseId)}>
-                                                {warehouse.warehouseName} ({warehouse.location})
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
+                </div>
+
+                <div>
+                    <label htmlFor="warehouseId" className="block text-sm font-medium text-gray-700">
+                        Warehouse
+                    </label>
+                    <select
+                        id="warehouseId"
+                        {...form.register("warehouseId", { required: "Warehouse is required" })}
+                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
+                    >
+                        {warehouses.map((warehouse) => (
+                            <option key={warehouse.warehouseId} value={warehouse.warehouseId}>
+                                {warehouse.warehouseName} ({warehouse.location})
+                            </option>
+                        ))}
+                    </select>
+                    {form.formState.errors.warehouseId && (
+                        <p className="text-sm text-red-600 mt-1">{form.formState.errors.warehouseId.message}</p>
                     )}
-                />
+                </div>
+
                 <div className="flex justify-center">
-                    <Button type="submit">Add Resource</Button>
+                    <button
+                        type="submit"
+                        className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
+                    >
+                        Add Resource
+                    </button>
                 </div>
             </form>
-        </Form>
+        </div>
     );
 };
 
