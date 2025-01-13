@@ -8,13 +8,16 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import pl.lodz.p.ias.io.raportowanie.query.GeneralReportQuery;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @NoArgsConstructor
@@ -35,10 +38,19 @@ public class GeneratedReport {
     @Column(name = "data_table")
     private String table;
 
-    public GeneratedReport(Long userId, String userName, String userSurname, String table) {
+    public GeneratedReport(Long userId, String table) {
         this.userId = userId;
-        this.userName = userName;
-        this.userSurname = userSurname;
+        GeneralReportQuery grq = new GeneralReportQuery();
+        Set<String> result = grq.nameSurnameQuery(userId);
+        Iterator<String> iterator = result.iterator();
+        if (!result.isEmpty()) {
+            this.userName = iterator.next();
+            this.userSurname = iterator.next();
+        }
+        else {
+            this.userName = "Unknown";
+            this.userSurname = "Unknown";
+        }
         this.generationTime = new Timestamp(System.currentTimeMillis());
         this.table = table;
     }

@@ -26,6 +26,6 @@ public class SummaryReport extends GeneralReport {
         //kod odpowiedzialny za generowanie teści raportu w oparciu o baze danych
         content = "Przedzial czasowy: "+startTime+" - " + endTime + "\n" + "Raport podsumowujacy" + "\n" + "Ilosc akcji: 10";
 
-        return new GeneratedReport(getUserId(), "Jan", "Kowalskii", content);
+        return new GeneratedReport(getUserId(), content);
     }
 }
