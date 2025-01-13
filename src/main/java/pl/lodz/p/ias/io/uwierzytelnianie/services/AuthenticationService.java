@@ -99,10 +99,6 @@ public class AuthenticationService {
     public Account getAccountById(Long id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new NotFoundException("Account not found!"));
 
-        if (account == null) {
-            throw new NotFoundException("Account not found!");
-        }
-
         return account;
     }
 
@@ -141,10 +137,6 @@ public class AuthenticationService {
     public Account activateAccount(Long id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new NotFoundException("Account not found!"));
 
-        if (account == null) {
-            throw new NotFoundException("Account not found!");
-        }
-
         account.setActive(true);
 
         return accountRepository.save(account);
@@ -153,11 +145,20 @@ public class AuthenticationService {
     public Account deactivateAccount(Long id) {
         Account account = accountRepository.findById(id).orElseThrow(() -> new NotFoundException("Account not found!"));
 
-        if (account == null) {
-            throw new NotFoundException("Account not found!");
+        account.setActive(false);
+
+        return accountRepository.save(account);
+    }
+
+    public Account changeRole(Long id, String roleName) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new NotFoundException("Account not found!"));
+
+        Role role = roleRepository.findByRoleName(roleName);
+        if (role == null) {
+            throw new NotFoundException("Invalid role name!");
         }
 
-        account.setActive(false);
+        account.setRole(role);
 
         return accountRepository.save(account);
     }
