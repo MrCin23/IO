@@ -2,6 +2,7 @@ package pl.lodz.p.ias.io.darczyncy.config;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
@@ -12,10 +13,12 @@ import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -26,32 +29,29 @@ import java.util.Date;
 
 @Component
 @RequiredArgsConstructor
+@Order(10)
 public class InitData implements CommandLineRunner {
 
     private final WarehouseRepository warehouseRepository;
     private final FinancialNeedRepository financialNeedRepository;
     private final RoleRepository roleRepository;
-    private final AccountRepository accountRepository;
+    private final AuthenticationService authenticationService;
     private final MaterialNeedRepository materialNeedRepository;
     private final ItemDonationRepository itemDonationRepository;
     private final FinancialDonationRepository financialDonationRepository;
 
     @Override
     public void run(String... args) throws Exception {
-        Role role = new Role("DARCZYNCA");
-        roleRepository.save(role);
-        Account newUser = accountRepository.save(new Account(
-                "User",
+        Account newUser = authenticationService.register("User",
                 "Password",
-                role,
                 "Jan",
-                "Nowak"
-        ));
+                "Nowak",
+                "DARCZYŃCA");
 
         FinancialNeed financialNeed = FinancialNeed.builder()
                 .collectionGoal(200)
                 .collectionStatus(2)
-                .description("aa")
+                .description("na chorom curkę")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
                 .status(Need.Status.PENDING)
@@ -60,7 +60,7 @@ public class InitData implements CommandLineRunner {
                 .user(newUser)
                 .build();
         financialNeedRepository.save(financialNeed);
-        Warehouse warehouse = new Warehouse("magazyn", "WDupie");
+        Warehouse warehouse = new Warehouse("magazyn", "Kędzierzyn-Koźle");
         warehouseRepository.save(warehouse);
 
         MaterialNeed materialNeed = MaterialNeed.builder()

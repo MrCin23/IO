@@ -13,9 +13,9 @@ import java.time.LocalDate;
 
 @Getter @Setter
 @NoArgsConstructor
-@Entity
 @SuperBuilder(toBuilder = true)
-public class Donation extends Resource {
+@MappedSuperclass
+public abstract class Donation extends Resource {
     public enum AcceptanceStatus {
         ACCEPTED, REJECTED, PENDING
     }

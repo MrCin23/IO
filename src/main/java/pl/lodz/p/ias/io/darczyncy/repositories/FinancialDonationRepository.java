@@ -14,4 +14,6 @@ public interface FinancialDonationRepository extends JpaRepository<FinancialDona
     List<FinancialDonation> findAllByDonor_Id(Long id);
 
     List<FinancialDonation> findAllByWarehouseId(Long id);
+
+    Optional<FinancialDonation> findByIdAndDonor_Username(long id, String donorUsername);
 }

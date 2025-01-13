@@ -1,9 +1,6 @@
 package pl.lodz.p.ias.io.darczyncy.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.ForeignKey;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,6 +15,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Entity
 @SuperBuilder(toBuilder = true)
+@Table(name = "item_donations")
 public class ItemDonation extends Donation{
     public enum ItemCategory {
         CLOTHING, HOUSEHOLD, FOOD, TOYS, BOOKS

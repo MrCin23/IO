@@ -14,6 +14,8 @@ public interface IFinancialDonationService {
 
     List<FinancialDonation> findAllFinancialDonationByWarehouseId(long warehouseId);
 
+    List<FinancialDonation> findAllFinancialDonationForCurrentUser();
+
     byte[] createConfirmationPdf(long donationId);
 
     List<FinancialDonation> findAll();

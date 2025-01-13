@@ -29,6 +29,9 @@ public interface IItemDonationController {
     @GetMapping(value = "/warehouse/{id}/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findAllItemDonationsWarehouseId(@PathVariable("id") long donorId);
 
+    @GetMapping(value = "/account/all")
+    ResponseEntity<?> findAllItemDonationsByCurrentUser();
+
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> updateItemDonation(@PathVariable("id") long id, @RequestBody ItemDonationUpdateDTO itemDonationUpdateDTO);
 

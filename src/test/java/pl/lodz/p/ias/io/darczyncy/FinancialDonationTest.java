@@ -18,6 +18,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -37,6 +38,9 @@ public class FinancialDonationTest {
 
     @Autowired
     private FinancialDonationRepository financialDonationRepository;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -65,6 +69,7 @@ public class FinancialDonationTest {
                 "Jan",
                 "Nowak"
         ));
+        authenticationService.login("User", "Password");
 
         FinancialNeed financialNeed = FinancialNeed.builder()
                 .collectionGoal(200)
@@ -83,9 +88,7 @@ public class FinancialDonationTest {
         warehouseRepository.save(warehouse);
 
         FinancialDonationCreateDTO createDTO = new FinancialDonationCreateDTO(
-                newUser.getId(),
                 financialNeed.getId(),
-                warehouse.getId(),
                 200.0,
                 FinancialDonation.Currency.PLN.toString()
         );

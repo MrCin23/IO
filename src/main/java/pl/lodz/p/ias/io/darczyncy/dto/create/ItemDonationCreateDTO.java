@@ -5,14 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 
 public record ItemDonationCreateDTO (
-        @NotNull
-        Long donorId,
-
-        @NotNull
-        Long needId,
 
         @NotNull
         String itemName,
+
+        @NotNull
+        Long needId,
 
         @NotNull
         String category,
@@ -21,8 +19,5 @@ public record ItemDonationCreateDTO (
 
         @NotNull
         @Min(1)
-        int resourceQuantity,
-
-        @NotNull
-        long warehouseId
+        int resourceQuantity
 ){}

@@ -23,6 +23,9 @@ public interface IFinancialDonationController {
     @GetMapping(value = "/warehouse/{id}/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findAllFinancialDonationsByWarehouseId(@PathVariable("id") long id);
 
+    @GetMapping(value = "/account/all")
+    ResponseEntity<?> findAllFinancialDonationsForCurrentUser();
+
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> findAll();
 
