@@ -5,9 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequest;
 import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.mapper.MaterialNeedMapper;
+import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
@@ -17,6 +19,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/material-needs")
 @Validated
@@ -74,4 +77,6 @@ public class MaterialNeedController {
                 .map(value -> ResponseEntity.ok(materialNeedMapper.toMaterialNeedResponse(value)))
                 .orElse(ResponseEntity.notFound().build());
     }
+
+
 }

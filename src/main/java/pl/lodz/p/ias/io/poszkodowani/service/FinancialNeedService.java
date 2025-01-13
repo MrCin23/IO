@@ -24,8 +24,8 @@ public class FinancialNeedService {
 
     private boolean canTransition(Need.Status current, Need.Status target) {
         return ALLOWED_TRANSITIONS
-            .getOrDefault(current, Collections.emptySet())
-            .contains(target);
+                .getOrDefault(current, Collections.emptySet())
+                .contains(target);
     }
 
     @Autowired

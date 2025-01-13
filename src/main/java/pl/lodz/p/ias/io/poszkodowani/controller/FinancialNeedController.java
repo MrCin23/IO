@@ -17,6 +17,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/financial-needs")
 @Validated
@@ -68,8 +69,8 @@ public class FinancialNeedController {
     }
 
     @PatchMapping("/status/{id}")
-    public ResponseEntity<FinancialNeedResponse> changeStatus(@PathVariable Long id, @RequestParam Need.Status newStatus) {
-        Optional<FinancialNeed> optionalFinancialNeed = financialNeedService.changeStatus(id, newStatus);
+    public ResponseEntity<FinancialNeedResponse> changeStatus(@PathVariable Long id, @RequestParam Need.Status status) {
+        Optional<FinancialNeed> optionalFinancialNeed = financialNeedService.changeStatus(id, status);
         return optionalFinancialNeed
                 .map(financialNeed -> ResponseEntity.ok(financialNeedMapper.toFinancialNeedResponse(financialNeed)))
                 .orElse(ResponseEntity.notFound().build());

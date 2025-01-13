@@ -17,61 +17,62 @@ import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/manual-needs")
 @Validated
 public class ManualNeedController {
 
-    private final ManualNeedService materialNeedService;
-    private final ManualNeedMapper materialNeedMapper;
+    private final ManualNeedService manualNeedService;
+    private final ManualNeedMapper manualNeedMapper;
     private final AuthenticationService authenticationService;
 
     @Autowired
-    public ManualNeedController(ManualNeedService materialNeedService, ManualNeedMapper materialNeedMapper, AuthenticationService authenticationService) {
-        this.materialNeedService = materialNeedService;
-        this.materialNeedMapper = materialNeedMapper;
+    public ManualNeedController(ManualNeedService manualNeedService, ManualNeedMapper manualNeedMapper, AuthenticationService authenticationService) {
+        this.manualNeedService = manualNeedService;
+        this.manualNeedMapper = manualNeedMapper;
         this.authenticationService = authenticationService;
     }
 
     @PostMapping
     public ResponseEntity<ManualNeedResponse> createManualNeed(@Valid @RequestBody ManualNeedCreateRequest dto) {
-        ManualNeed manualNeed = materialNeedMapper.toManualNeed(dto);
+        ManualNeed manualNeed = manualNeedMapper.toManualNeed(dto);
         Optional<Account> user = authenticationService.getAccountById(dto.getUserId());
         if (user.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         manualNeed.setUser(user.get());
-        ManualNeed savedManualNeed = materialNeedService.createManualNeed(manualNeed);
-        ManualNeedResponse responseDTO = materialNeedMapper.toManualNeedResponse(savedManualNeed);
+        ManualNeed savedManualNeed = manualNeedService.createManualNeed(manualNeed);
+        ManualNeedResponse responseDTO = manualNeedMapper.toManualNeedResponse(savedManualNeed);
         return ResponseEntity.ok(responseDTO);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ManualNeedResponse> getManualNeedById(@PathVariable Long id) {
-        return materialNeedService.getManualNeedById(id)
-                .map(manualNeed -> ResponseEntity.ok(materialNeedMapper.toManualNeedResponse(manualNeed)))
+        return manualNeedService.getManualNeedById(id)
+                .map(manualNeed -> ResponseEntity.ok(manualNeedMapper.toManualNeedResponse(manualNeed)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping
     public ResponseEntity<List<ManualNeedResponse>> getAllManualNeeds() {
-        List<ManualNeed> manualNeeds = materialNeedService.getAllManualNeeds();
-        List<ManualNeedResponse> responseDTOs = materialNeedMapper.toManualNeedResponseList(manualNeeds);
+        List<ManualNeed> manualNeeds = manualNeedService.getAllManualNeeds();
+        List<ManualNeedResponse> responseDTOs = manualNeedMapper.toManualNeedResponseList(manualNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ManualNeedResponse>> getManualNeedsByUserId(@PathVariable Long userId) {
-        List<ManualNeed> manualNeeds = materialNeedService.getManualNeedsByUserId(userId);
-        List<ManualNeedResponse> responseDTOs = materialNeedMapper.toManualNeedResponseList(manualNeeds);
+        List<ManualNeed> manualNeeds = manualNeedService.getManualNeedsByUserId(userId);
+        List<ManualNeedResponse> responseDTOs = manualNeedMapper.toManualNeedResponseList(manualNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
 
     @PatchMapping("/status/{id}")
-    public ResponseEntity<ManualNeedResponse> changeStatus(@PathVariable Long id, @RequestParam Need.Status newStatus) {
-        Optional<ManualNeed> manualNeed = materialNeedService.changeStatus(id, newStatus);
+    public ResponseEntity<ManualNeedResponse> changeStatus(@PathVariable Long id, @RequestParam Need.Status status) {
+        Optional<ManualNeed> manualNeed = manualNeedService.changeStatus(id, status);
         return manualNeed
-                .map(value -> ResponseEntity.ok(materialNeedMapper.toManualNeedResponse(value)))
+                .map(value -> ResponseEntity.ok(manualNeedMapper.toManualNeedResponse(value)))
                 .orElse(ResponseEntity.notFound().build());
     }
 
