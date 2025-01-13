@@ -15,9 +15,8 @@ import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -30,7 +29,7 @@ import java.util.Date;
 public class ItemDonationTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private ItemDonationService itemDonationService;
@@ -50,7 +49,7 @@ public class ItemDonationTest {
     @BeforeEach
     public void setUp() {
         itemDonationRepository.deleteAll();
-        userRepository.deleteAll();
+        accountRepository.deleteAll();
     }
 
     @Test
@@ -58,7 +57,7 @@ public class ItemDonationTest {
 
         Role role = new Role("DARCZYNCA");
         roleRepository.save(role);
-        Account newUser = userRepository.save(new Account(
+        Account newUser = accountRepository.save(new Account(
                 "User",
                 "Password",
                 role,

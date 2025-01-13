@@ -37,11 +37,8 @@ public class ManualNeedController {
     @PostMapping
     public ResponseEntity<ManualNeedResponse> createManualNeed(@Valid @RequestBody ManualNeedCreateRequest dto) {
         ManualNeed manualNeed = manualNeedMapper.toManualNeed(dto);
-        Optional<Account> user = authenticationService.getAccountById(dto.getUserId());
-        if (user.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        manualNeed.setUser(user.get());
+        Account user = authenticationService.getAccountById(dto.getUserId());
+        manualNeed.setUser(user);
         ManualNeed savedManualNeed = manualNeedService.createManualNeed(manualNeed);
         ManualNeedResponse responseDTO = manualNeedMapper.toManualNeedResponse(savedManualNeed);
         return ResponseEntity.ok(responseDTO);

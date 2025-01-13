@@ -3,7 +3,6 @@ package pl.lodz.p.ias.io.darczyncy.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import pl.lodz.p.ias.io.darczyncy.dto.create.ItemDonationCreateDTO;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
@@ -15,8 +14,8 @@ import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -32,7 +31,7 @@ public class InitData implements CommandLineRunner {
     private final WarehouseRepository warehouseRepository;
     private final FinancialNeedRepository financialNeedRepository;
     private final RoleRepository roleRepository;
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     private final MaterialNeedRepository materialNeedRepository;
     private final ItemDonationRepository itemDonationRepository;
     private final FinancialDonationRepository financialDonationRepository;
@@ -41,7 +40,7 @@ public class InitData implements CommandLineRunner {
     public void run(String... args) throws Exception {
         Role role = new Role("DARCZYNCA");
         roleRepository.save(role);
-        Account newUser = userRepository.save(new Account(
+        Account newUser = accountRepository.save(new Account(
                 "User",
                 "Password",
                 role,

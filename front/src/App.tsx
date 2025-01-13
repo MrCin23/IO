@@ -1,14 +1,14 @@
 import './App.css'
-import DonationPanel from "./components/DonationPanel.tsx";
 
-function App() {
+import {BrowserRouter as Router} from 'react-router-dom'
+import {RoutesComponent} from "./router";
 
-  return (
-      <div className="App">
-          {/* Tutaj możesz umieścić inne komponenty */}
-          <DonationPanel/>
-      </div>
-  )
-}
+export const App = () => (
+    // TODO jeśli mamy jakiś komponent który musi być dostępny w całej aplikacji i być "niezmiennym", czyli np sesja użytkownika lub alerty, należy opakować nimi znacznik <Router>
+
+    <Router>
+        <RoutesComponent/>
+    </Router>
+)
 
 export default App

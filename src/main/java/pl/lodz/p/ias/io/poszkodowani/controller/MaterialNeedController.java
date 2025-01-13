@@ -39,11 +39,8 @@ public class MaterialNeedController {
     @PostMapping
     public ResponseEntity<MaterialNeedResponse> createMaterialNeed(@Valid @RequestBody MaterialNeedCreateRequest dto) {
         MaterialNeed materialNeed = materialNeedMapper.toMaterialNeed(dto);
-        Optional<Account> user = authenticationService.getAccountById(dto.getUserId());
-        if (user.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        materialNeed.setUser(user.get());
+        Account user = authenticationService.getAccountById(dto.getUserId());
+        materialNeed.setUser(user);
         MaterialNeed savedMaterialNeed = materialNeedService.createMaterialNeed(materialNeed);
         MaterialNeedResponse responseDTO = materialNeedMapper.toMaterialNeedResponse(savedMaterialNeed);
         return ResponseEntity.ok(responseDTO);

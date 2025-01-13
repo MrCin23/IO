@@ -14,7 +14,7 @@ import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -34,13 +34,13 @@ public class ItemDonationService implements IItemDonationService {
 
     private final WarehouseRepository warehouseRepository;
 
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
 
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
     @Override
     public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
-        Account donor = userRepository.findById(dto.donorId())
+        Account donor = accountRepository.findById(dto.donorId())
                 .orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         MaterialNeed need = materialNeedRepository.findById(dto.needId())
                 .orElseThrow(() -> new DonationBaseException(I18n.MATERIAL_NEED_NOT_FOUND_EXCEPTION));
@@ -82,7 +82,7 @@ public class ItemDonationService implements IItemDonationService {
 
     @Override
     public List<ItemDonation> findItemDonationsByDonorId(long donorId) {
-        userRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
+        accountRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return itemDonationRepository.findAllByDonor_Id(donorId);
     }
 

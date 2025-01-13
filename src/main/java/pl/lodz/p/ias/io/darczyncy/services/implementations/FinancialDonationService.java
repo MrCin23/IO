@@ -15,7 +15,7 @@ import pl.lodz.p.ias.io.darczyncy.utils.PaymentProvider;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
 import java.time.LocalDate;
@@ -26,7 +26,7 @@ import java.util.List;
 public class FinancialDonationService implements IFinancialDonationService {
 
     private final FinancialDonationRepository financialDonationRepository;
-    private final UserRepository userRepository;
+    private final AccountRepository accountRepository;
     private final FinancialNeedRepository financialNeedRepository;
     private final WarehouseRepository warehouseRepository;
 
@@ -35,7 +35,7 @@ public class FinancialDonationService implements IFinancialDonationService {
     @Override
     public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
 
-        Account donor = userRepository.findById(dto.donorId())
+        Account donor = accountRepository.findById(dto.donorId())
                 .orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         FinancialNeed need = financialNeedRepository.findById(dto.needId())
                 .orElseThrow(() -> new DonationBaseException(I18n.FINANCIAL_NEED_NOT_FOUND_EXCEPTION));
@@ -70,7 +70,7 @@ public class FinancialDonationService implements IFinancialDonationService {
 
     @Override
     public List<FinancialDonation> findAllFinancialDonationByDonorId(long donorId) {
-        userRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
+        accountRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return financialDonationRepository.findAllByDonor_Id(donorId);
     }
 

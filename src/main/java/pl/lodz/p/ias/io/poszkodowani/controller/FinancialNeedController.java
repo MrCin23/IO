@@ -37,11 +37,8 @@ public class FinancialNeedController {
     @PostMapping
     public ResponseEntity<FinancialNeedResponse> createFinancialNeed(@Valid @RequestBody FinancialNeedCreateRequest dto) {
         FinancialNeed financialNeed = financialNeedMapper.toFinancialNeed(dto);
-        Optional<Account> user = authenticationService.getAccountById(dto.getUserId());
-        if (user.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-        financialNeed.setUser(user.get());
+        Account user = authenticationService.getAccountById(dto.getUserId());
+        financialNeed.setUser(user);
         FinancialNeed savedFinancialNeed = financialNeedService.createFinancialNeed(financialNeed);
         FinancialNeedResponse responseDTO = financialNeedMapper.toFinancialNeedResponse(savedFinancialNeed);
         return ResponseEntity.ok(responseDTO);

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400">
+    <!-- Tło koła symbolizujące globalny zasięg -->
+    <circle cx="200" cy="200" r="180" fill="url(#gradient-bg)" stroke="#0056b3" stroke-width="6" />
+
+    <!-- Gradient tła -->
+    <defs>
+        <linearGradient id="gradient-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#e6f7ff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#cceeff;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Kula ziemska za sercem -->
+    <circle cx="200" cy="200" r="100" fill="url(#earth-gradient)" />
+    <defs>
+        <radialGradient id="earth-gradient" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" style="stop-color:#8cc3ff;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#6baed6;stop-opacity:1" />
+        </radialGradient>
+    </defs>
+    <path d="M150 200 q50 -50 100 0 q50 50 0 100 q-50 50 -100 0 q-50 -50 0 -100z" fill="#4a90e2" />
+    <path d="M200 150 q-30 50 -80 50 q50 30 80 80 q30 -50 80 -80 q-50 -30 -80 -50z" fill="#357abf" />
+
+    <!-- Symbol serca symbolizujący empatię -->
+    <path d="M200 200
+           q-40 -40 -80 0
+           q-40 40 0 80
+           l80 80
+           l80 -80
+           q40 -40 0 -80
+           q-40 -40 -80 0z"
+          fill="url(#heart-gradient)" />
+    <defs>
+        <linearGradient id="heart-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#ff5252;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#ff1744;stop-opacity:1" />
+        </linearGradient>
+    </defs>
+
+    <!-- Tekst skrótowy SKPH -->
+    <text x="200" y="370" font-family="Arial, sans-serif" font-size="48" fill="#0056b3" text-anchor="middle" font-weight="bold" style="text-shadow: 2px 2px 4px #cceeff;">
+        SKPH
+    </text>
+</svg>
