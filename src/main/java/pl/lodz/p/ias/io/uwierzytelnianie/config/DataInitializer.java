@@ -16,30 +16,11 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        if (roleRepository.findByRoleName("DARCZYŃCA") == null) {
-            Role adminRole = new Role("DARCZYŃCA");
-            roleRepository.save(adminRole);
-        }
-
-        if (roleRepository.findByRoleName("POSZKODOWANY") == null) {
-            Role userRole = new Role("POSZKODOWANY");
-            roleRepository.save(userRole);
-        }
-
-        if (roleRepository.findByRoleName("ORGANIZACJA_POMOCOWA") == null) {
-            Role userRole = new Role("ORGANIZACJA_POMOCOWA");
-            roleRepository.save(userRole);
-        }
-
-        if (roleRepository.findByRoleName("WOLONTARIUSZ") == null) {
-            Role userRole = new Role("WOLONTARIUSZ");
-            roleRepository.save(userRole);
-        }
-
-        if (roleRepository.findByRoleName("PRZEDSTAWICIEL_WŁADZ") == null) {
-            Role userRole = new Role("PRZEDSTAWICIEL_WŁADZ");
-            roleRepository.save(userRole);
-        }
+        roleRepository.save(new Role("ROLE_DARCZYŃCA"));
+        roleRepository.save(new Role("ROLE_POSZKODOWANY"));
+        roleRepository.save(new Role("ROLE_ORGANIZACJA_POMOCOWA"));
+        roleRepository.save(new Role("ROLE_WOLONTARIUSZ"));
+        roleRepository.save(new Role("ROLE_PRZEDSTAWICIEL_WŁADZ"));
     }
 }
 
