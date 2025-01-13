@@ -13,6 +13,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class MessageDTO {
     @NotNull(message = "Sender cannot be empty")
+    @NotEmpty(message = "Sender user name cannot be empty")
+    private String senderName;
     private long senderId;
     @NotNull(message = "Receiver cannot be empty")
     private long chatId;
