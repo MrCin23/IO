@@ -3,11 +3,7 @@ package pl.lodz.p.ias.io.uwierzytelnianie.model;
 import jakarta.persistence.*;
 
 @Entity
-public class Capability {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long capability_id;
-
+public class Capability extends AbstractEntity {
     private String capabilityName;
 
     public Capability() {}
