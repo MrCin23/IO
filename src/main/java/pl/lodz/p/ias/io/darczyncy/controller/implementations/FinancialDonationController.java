@@ -101,10 +101,10 @@ public class FinancialDonationController implements IFinancialDonationController
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
     public ResponseEntity<?> getConfirmationDonationById(String language, long id) {
-        System.out.println("Language: " + language.substring(0,2));
         byte[] pdfBytes;
+        String lang = language.substring(0,2);
         try {
-            pdfBytes = financialDonationService.createConfirmationPdf(language, id);
+            pdfBytes = financialDonationService.createConfirmationPdf(lang, id);
         } catch (FinancialDonationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.APPLICATION_JSON)
