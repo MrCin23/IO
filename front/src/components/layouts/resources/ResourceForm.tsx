@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
-//import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import api from "../../../api/Axios.tsx";
 
 export interface Resource {
     resourceId?: number;
@@ -12,7 +13,6 @@ export interface Resource {
 }
 
 const ResourceForm = () => {
-    //const navigate = useNavigate();
     const [warehouses, setWarehouses] = useState<{ warehouseId: number; warehouseName: string; location: string }[]>([]);
     const form = useForm<Resource>({
         defaultValues: {
@@ -24,18 +24,16 @@ const ResourceForm = () => {
         },
     });
 
+    const navigate = useNavigate();
+    const location = useLocation();
+
     useEffect(() => {
         const fetchWarehouses = async () => {
             try {
-                const response = await fetch("/api/warehouses");
-                if (!response.ok) {
-                    throw new Error("Failed to fetch warehouses");
-                }
-                const data = await response.json();
-                setWarehouses(data);
+                const response = await api.get("/warehouses");
+                setWarehouses(response.data);
             } catch (error) {
-                console.error(error);
-
+                console.error("Failed to fetch warehouses:", error);
             }
         };
 
@@ -44,20 +42,20 @@ const ResourceForm = () => {
 
     const onSubmit = async (values: Resource) => {
         try {
-            const response = await fetch("/api/resources", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values),
-            });
+            const response = await api.post("/resources", values);
+            console.log("Resource added:", response.data);
 
-            const result = await response.json();
-            if (!response.ok) {
-                console.log(result);
+            if (location.pathname.includes('/organization/resources/create')) {
+                navigate('/organization/resources');
+            } else if (location.pathname.includes('/donor/resources/create')) {
+                navigate('/donor');
+            } else if (location.pathname.includes('/authority/resources/create')) {
+                navigate('/authority/resources');
+            } else {
+                navigate('/');
             }
         } catch (error) {
-            console.error(error);
+            console.error("Failed to add resource:", error);
         }
     };
 
