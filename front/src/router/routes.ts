@@ -1,5 +1,9 @@
 import { Pathnames } from './pathnames'
 
+
+import {Pom} from "../pages/mapExamples/Pom.tsx";
+import {ExternalFormPage} from "../pages/mapExamples/ExternalFormPage.tsx";
+
 import {HomePage} from "../pages/HomePage";
 import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
@@ -27,7 +31,16 @@ export const defaultRoutes: RouteType[] = [
     {
         path: Pathnames.default.registerPage,
         Component: RegisterPage,
-    }
+    },
+
+    {
+        path: Pathnames.default.pomPage,
+        Component: Pom,
+    }, //todo do wywalenia
+    {
+        path: Pathnames.default.externalForm,
+        Component: ExternalFormPage,
+    } //todo do wywalenia
 ]
 
 export const aid_organizationRoutes: RouteType[] = [

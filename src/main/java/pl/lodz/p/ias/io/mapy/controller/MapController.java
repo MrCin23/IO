@@ -5,10 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.model.PointType;
 import pl.lodz.p.ias.io.mapy.service.MapService;
 
 @RestController
-@RequestMapping("/map")
+@RequestMapping("/api/map")
 @AllArgsConstructor
 public class MapController {
     private MapService mapService;
@@ -30,6 +31,16 @@ public class MapController {
         }
         catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Point not found");
+        }
+    }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<Object> getMapPoints(@PathVariable("type") PointType pointType) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.getPointsByType(pointType));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Points not found for type " + pointType);
         }
     }
 
@@ -64,4 +75,5 @@ public class MapController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Map Point not found");
         }
     }
+
 }

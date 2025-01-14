@@ -28,6 +28,14 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.default.registerPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Register
                     </Button>
+                    <Button onClick={() => navigate(Pathnames.default.pomPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Pom
+                    </Button>
+                    {/*//todo do wywalenia*/}
+                    <Button onClick={() => navigate(Pathnames.default.externalForm)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Form
+                    </Button>
+                    {/*//todo do wywalenia*/}
                 </Toolbar>
             </AppBar>
             <Container sx={{ p: 2 }}>
