@@ -14,13 +14,19 @@ export const Pathnames = {
         createResource: '/organization/resources/create',
     },
     authority_representative: {
-        homePage: '/authority'
+        homePage: '/authority',
+        resources: '/authority/resources',
+        warehouses: '/authority/warehouses',
+        createWarehouse: '/authority/warehouses/create',
+        createResource: '/authority/resources/create',
     },
     donor: {
-        homePage: '/donor'
+        homePage: '/donor',
+        createResource: '/donor/resources/create'
     },
     victim: {
-        homePage: '/victim'
+        homePage: '/victim',
+        resources: '/victim/resources'
     },
     volunteer: {
         homePage: '/volunteer'

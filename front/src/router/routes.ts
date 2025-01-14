@@ -74,4 +74,28 @@ export const resourceRoutes: RouteType[] = [
         path: Pathnames.aid_organization.createResource,
         Component: CreateResource,
     },
+    {
+        path: Pathnames.victim.resources,
+        Component: Resources,
+    },
+    {
+        path: Pathnames.donor.createResource,
+        Component: CreateResource,
+    },
+    {
+        path: Pathnames.authority_representative.resources,
+        Component: Resources,
+    },
+    {
+        path: Pathnames.authority_representative.warehouses,
+        Component: Warehouses,
+    },
+    {
+        path: Pathnames.authority_representative.createWarehouse,
+        Component: CreateWarehouse,
+    },
+    {
+        path: Pathnames.authority_representative.createResource,
+        Component: CreateResource,
+    },
 ]

@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+//import { useNavigate } from "react-router";
 
 export interface Warehouse {
     warehouseId?: number;
@@ -8,7 +8,7 @@ export interface Warehouse {
 }
 
 const WarehouseForm = () => {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const form = useForm<Warehouse>({
         defaultValues: {
             warehouseName: "",
@@ -30,7 +30,7 @@ const WarehouseForm = () => {
             console.log(result);
         }
 
-        navigate("/organization/warehouses");
+        //navigate("/organization/warehouses");
     };
 
     return (

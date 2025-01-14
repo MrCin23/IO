@@ -1,5 +1,5 @@
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+//import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 
 export interface Resource {
@@ -12,7 +12,7 @@ export interface Resource {
 }
 
 const ResourceForm = () => {
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
     const [warehouses, setWarehouses] = useState<{ warehouseId: number; warehouseName: string; location: string }[]>([]);
     const form = useForm<Resource>({
         defaultValues: {
@@ -56,8 +56,6 @@ const ResourceForm = () => {
             if (!response.ok) {
                 console.log(result);
             }
-
-            navigate("/organization/resources");
         } catch (error) {
             console.error(error);
         }
