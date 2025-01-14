@@ -1,0 +1,94 @@
+.donation-list-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centruje kontener */
+    background-color: #2b2323;
+    border: 2px solid rgba(255, 225, 216, 0.8);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 70vh;
+    width: 80%; /* Zmniejszono szerokość, aby był bardziej elastyczny */
+    box-sizing: border-box;
+    display: flex; /* Dodane do wycentrowania zawartości */
+    align-items: center; /* Centruje w poziomie */
+}
+
+.donation-list-wrapper {
+    width: 100%; /* Dopasowuje szerokość do kontenera */
+    max-height: 100%; /* Maksymalna wysokość zgodna z kontenerem */
+    overflow-y: auto; /* Włącza przewijanie w pionie */
+    margin-top: 20px; /* Dystans od nagłówków w kontenerze */
+}
+
+
+.donation-list {
+    width: 100%; /* Dopasowuje szerokość do kontenera */
+    margin: 0 auto; /* Automatyczne marginesy, aby centrować listę */
+    text-align: center;
+    background-color: #2b2323;
+    border-collapse: collapse;
+    border: 1px solid red;
+}
+
+
+.donation-list th, .donation-list td {
+    padding: 10px 15px;
+    border: 1px solid red;
+}
+
+.donation-list th {
+    background-color: #333;
+    color: #fff;
+    text-transform: uppercase;
+}
+
+.donation-list tr:nth-child(even) {
+    background-color: rgba(156, 132, 129, 0.8);
+}
+
+.donation-list tr:hover {
+    background-color: #000000;
+}
+
+.generate-button {
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.generate-button:hover:not(:disabled) {
+    background-color: #45a049;
+}
+
+.generate-button:disabled {
+    background-color: #a5a5a5; /* Szary kolor dla nieaktywnego przycisku */
+    cursor: not-allowed; /* Zmiana kursora na "zakaz" */
+    opacity: 0.6; /* Lekka przezroczystość dla efektu */
+}
+
+.back-button {
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 15px;
+    cursor: pointer;
+    margin-bottom: 20px;
+    transition: background-color 0.3s;
+}
+
+.back-button:hover {
+    background-color: #555;
+}
+

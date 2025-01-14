@@ -13,7 +13,9 @@ export const Pathnames = {
         homePage: '/authority'
     },
     donor: {
-        homePage: '/donor'
+        homePage: '/donor',
+        financialDonations: '/financial-donations',
+        itemDonations: '/item-donations'
     },
     victim: {
         homePage: '/victim'

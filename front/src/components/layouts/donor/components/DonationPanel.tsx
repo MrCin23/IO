@@ -1,17 +1,16 @@
-import React, {useState} from "react";
+import {useState} from "react";
 import { useTranslation } from "react-i18next";
-import "../styles/DonationPanel.css";
-import FinancialDonationPanel from "./FinancialDonationPanel";
-import ItemDonationPanel from "./ItemDonationPanel";
+import "../../../../styles/DonationPanel.css";
+import FinancialDonationPanel from "./FinancialDonationPanel.tsx";
+import ItemDonationPanel from "./ItemDonationPanel.tsx";
 
-const DonationPanel: React.FC = () => {
+function DonationPanel() {
     const { t } = useTranslation();
     const [selectedTab, setSelectedTab] = useState<"financial" | "item">("financial");
 
     const [selectedAmount, setSelectedAmount] = useState<number | "other">(60);
     const [currency, setCurrency] = useState<"PLN" | "EUR">("PLN");
 
-    const [selectedGoal, setSelectedGoal] = useState<number | "">("");
 
     // States for item donation
     const [itemName, setItemName] = useState<string>("");
@@ -54,7 +53,6 @@ const DonationPanel: React.FC = () => {
                     currency={currency}
                     onAmountChange={setSelectedAmount}
                     onCurrencyChange={setCurrency}
-                    onNeedChange={setSelectedGoal}
                 />
             ) : (
                 <ItemDonationPanel
@@ -66,7 +64,6 @@ const DonationPanel: React.FC = () => {
                     onCategoryChange={setItemCategory}
                     onDescriptionChange={setItemDescription}
                     onQuantityChange={setItemQuantity}
-                    onNeedChange={setSelectedGoal}
                 />
             )}
 
@@ -75,6 +72,6 @@ const DonationPanel: React.FC = () => {
             </p>
         </div>
     );
-};
+}
 
 export default DonationPanel;

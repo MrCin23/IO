@@ -1,15 +1,14 @@
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
-import "../styles/DonationPanel.css";
+import "../../../../styles/DonationPanel.css";
 import axios from "axios";
-import properties from "../properties/properties.ts";
+import properties from "../../../../properties/properties.ts";
 
 interface FinancialDonationPanelProps {
     selectedAmount: number | "other";
     currency: "PLN" | "EUR";
     onAmountChange: (amount: number | "other") => void;
     onCurrencyChange: (currency: "PLN" | "EUR") => void;
-    onNeedChange: (goalId: number | "") => void;
 }
 
 const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
@@ -17,7 +16,6 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
     currency,
     onAmountChange,
     onCurrencyChange,
-    onNeedChange,
 
 }) => {
     const { t } = useTranslation();
@@ -44,7 +42,6 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
     const handleNeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const needId = Number(e.target.value);
         setSelectedNeed(needId);
-        onNeedChange(needId); // Przekaż wybrane id do głównego widoku
     };
 
 

@@ -1,8 +1,8 @@
 import {useTranslation} from "react-i18next";
 import React, {useState} from "react";
-import "../styles/DonationPanel.css";
+import "../../../../styles/DonationPanel.css";
 import axios from "axios";
-import properties from "../properties/properties.ts";
+import properties from "../../../../properties/properties.ts";
 
 interface ItemDonationPanelProps {
     itemName: string;
@@ -13,7 +13,6 @@ interface ItemDonationPanelProps {
     onCategoryChange: (category: string) => void;
     onDescriptionChange: (description: string) => void;
     onQuantityChange: (quantity: number | "") => void;
-    onNeedChange: (goalId: number | "") => void;
 }
 
 const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
@@ -25,7 +24,6 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
     onCategoryChange,
     onDescriptionChange,
     onQuantityChange,
-    onNeedChange
 }) => {
     const { t } = useTranslation();
 
@@ -47,7 +45,6 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
     const handleNeedChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const needId = Number(e.target.value);
         setSelectedNeed(needId);
-        onNeedChange(needId); // Przekaż wybrane id do głównego widoku
     };
 
     const handleSubmit = async () => {

@@ -1,26 +1,41 @@
-import React, {useEffect} from "react";
-import "../styles/DonationList.css";
+import {useEffect, useState} from "react";
+import "../../../../styles/DonationList.css";
 
-import { FinancialDonation } from "../model/FinancialDonation";
-import properties from "../properties/properties.ts";
+import { FinancialDonation } from "../../../../model/FinancialDonation.ts";
+import properties from "../../../../properties/properties.ts";
 import axios from "axios";
 
-interface FinancialDonationListProps {
-    donations: FinancialDonation[];
-    onFetchDonations: () => void;
-    isLoading: boolean;
-    error: string | null;
-}
 
-const FinancialDonationList: React.FC<FinancialDonationListProps> = ({
-                                                                         donations = [],
-                                                                         onFetchDonations,
-                                                                         isLoading,
-                                                                         error,
-                                                                     }) => {
-        useEffect(() => {
-        onFetchDonations();
-    }, [onFetchDonations]);
+function FinancialDonationList()
+{
+
+    const [financialDonations, setFinancialDonations] = useState<FinancialDonation[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchFinancialDonations = async () => {
+        setIsLoading(true);
+        setError(null);
+        try {
+            const response = await axios.get<FinancialDonation[]>(
+                `${properties.serverAddress}/api/donations/financial/account/all`);
+            setFinancialDonations(response.data);
+        } catch (err) {
+            setError("Nie udało się pobrać listy darowizn finansowych. Spróbuj ponownie później.");
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
+    useEffect(() => {
+        fetchFinancialDonations()
+    }, [fetchFinancialDonations]);
+
+
+
+
     const generateConfirmation = async (donation: FinancialDonation) => {
         try {
             const response = await axios.get(
@@ -53,8 +68,8 @@ const FinancialDonationList: React.FC<FinancialDonationListProps> = ({
             <h2>Lista darowizn finansowych</h2>
             {isLoading && <p>Ładowanie danych...</p>}
             {error && <p className="error-message">{error}</p>}
-            {!isLoading && !error && donations.length === 0 && <p>Brak darowizn finansowych</p>}
-            {!isLoading && donations.length > 0 && (
+            {!isLoading && !error && financialDonations.length === 0 && <p>Brak darowizn finansowych</p>}
+            {!isLoading && financialDonations.length > 0 && (
                 <div className="donation-list-wrapper">
                     <table className="donation-list">
                         <thead>
@@ -68,7 +83,7 @@ const FinancialDonationList: React.FC<FinancialDonationListProps> = ({
                         </tr>
                         </thead>
                         <tbody>
-                        {donations.map((donation) => (
+                        {financialDonations.map((donation) => (
                             <tr key={donation.id}>
                                 <td>{donation.needName}</td>
                                 <td>{donation.date.toString()}</td>

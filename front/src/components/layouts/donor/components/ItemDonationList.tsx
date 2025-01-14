@@ -1,25 +1,38 @@
-import React, {useEffect} from "react";
-import "../styles/DonationList.css";
+import {useEffect, useState} from "react";
+import "../../../../styles/DonationList.css";
 
-import { ItemDonation } from "../model/ItemDonation";
+import { ItemDonation } from "../../../../model/ItemDonation.ts";
 import axios from "axios";
-import properties from "../properties/properties.ts";
+import properties from "../../../../properties/properties.ts";
 
-interface ItemDonationListProps {
-    donations: ItemDonation[];
-    onFetchDonations: () => void;
-    isLoading: boolean;
-    error: string | null;
-}
 
-const ItemDonationList: React.FC<ItemDonationListProps> = ({   donations = [],
-                                                               onFetchDonations,
-                                                               isLoading,
-                                                               error,
-                                                           }) => {
+function ItemDonationList() {
+
+    const [itemDonations, setItemDonations] = useState<ItemDonation[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const fetchItemDonations = async () => {
+        setIsLoading(true);
+        setError(null);
+
+        try {
+            const response = await axios.get<ItemDonation[]>(
+                `${properties.serverAddress}/api/donations/item/account/all`);
+            setItemDonations(response.data);
+        } catch (err) {
+            setError("Nie udało się pobrać listy darowizn rzeczowych. Spróbuj ponownie później.");
+            console.error(err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        onFetchDonations();
-    }, [onFetchDonations]);
+        fetchItemDonations();
+    }, [fetchItemDonations]);
+
+
     const generateConfirmation = async (donation: ItemDonation) => {
         try {
             const response = await axios.get(
@@ -53,8 +66,8 @@ const ItemDonationList: React.FC<ItemDonationListProps> = ({   donations = [],
             <h2>Lista darowizn rzeczowych</h2>
             {isLoading && <p>Ładowanie danych...</p>}
             {error && <p className="error-message">{error}</p>}
-            {!isLoading && !error && donations.length === 0 && <p>Brak darowizn finansowych</p>}
-            {!isLoading && donations.length > 0 && (
+            {!isLoading && !error && itemDonations.length === 0 && <p>Brak darowizn finansowych</p>}
+            {!isLoading && itemDonations.length > 0 && (
                 <table className="donation-list">
                     <thead>
                     <tr>
@@ -69,7 +82,7 @@ const ItemDonationList: React.FC<ItemDonationListProps> = ({   donations = [],
                     </tr>
                     </thead>
                     <tbody>
-                    {donations.map((donation) => (
+                    {itemDonations.map((donation) => (
                         <tr key={donation.id}>
                             <td>{donation.needName}</td>
                             <td>{donation.date.toString()}</td>

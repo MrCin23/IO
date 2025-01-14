@@ -19,6 +19,9 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.default.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Home
                     </Button>
+                    <Button onClick={() => navigate(Pathnames.donor.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Donor
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Container sx={{ p: 2 }}>
