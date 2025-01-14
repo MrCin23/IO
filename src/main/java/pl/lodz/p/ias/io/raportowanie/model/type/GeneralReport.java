@@ -2,7 +2,7 @@ package pl.lodz.p.ias.io.raportowanie.model.type;
 
 import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 import pl.lodz.p.ias.io.raportowanie.query.GeneralReportQuery;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+//import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
