@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 public class NotificationService implements INotificationService {
     NotificationRepository notificationRepository;
-    UserRepository userRepository;
+    AccountRepository accountRepository;
 
     /**
      * Pobiera listę powiadomień przypisanych do użytkownika o podanym ID.
@@ -24,7 +24,7 @@ public class NotificationService implements INotificationService {
      * @return lista obiektów {@link Notification} przypisanych do użytkownika
      */
     public List<Notification> getNotifications(Long userId) {
-        return notificationRepository.findAllByUser(userRepository.findById(userId).get());
+        return notificationRepository.findAllByUser(accountRepository.findById(userId).get());
     }
 
     /**
@@ -47,7 +47,7 @@ public class NotificationService implements INotificationService {
         Notification notificationFromDto = new Notification();
         notificationFromDto.setMessage(notification.getMessage());
         notificationFromDto.setType(notification.getType());
-        notificationFromDto.setUser(userRepository.findById(notification.getUserId()).get());
+        notificationFromDto.setUser(accountRepository.findById(notification.getUserId()).get());
         return notificationRepository.save(notificationFromDto);
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Kontroler REST do zarządzania powiadomieniami.
  */
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:5173")
 @RestController
 @AllArgsConstructor
 public class NotificationController {

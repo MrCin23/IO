@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Kontroler ogłoszeń.
  */
-@CrossOrigin("*")
+@CrossOrigin("http://localhost:5173")
 @RestController
 @AllArgsConstructor
 public class AnnouncementController {

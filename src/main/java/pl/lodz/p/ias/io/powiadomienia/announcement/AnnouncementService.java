@@ -3,7 +3,7 @@ package pl.lodz.p.ias.io.powiadomienia.announcement;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +17,7 @@ public class AnnouncementService {
 
     private AnnouncementRepository announcementRepository;
     private UserAnnouncementRepository userAnnouncementRepository;
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     /**
      * Tworzy nowe ogłoszenie i przypisuje je do każdego użytkownika.
@@ -28,7 +28,7 @@ public class AnnouncementService {
     public Announcement createAnnouncement(Announcement announcement) {
         Announcement savedAnnouncement = announcementRepository.save(announcement);
 
-        List<Account> users = userRepository.findAll();
+        List<Account> users = accountRepository.findAll();
 
         for (Account user : users) {
             UserAnnouncement userAnnouncement = new UserAnnouncement();
@@ -47,7 +47,7 @@ public class AnnouncementService {
      * @return lista {@link Announcement} danego użytkownika
      */
     public List<Announcement> getUsersAnnouncements(Long userId) {
-        List<UserAnnouncement> userAnnouncementList = userAnnouncementRepository.findAllByUser(userRepository.findById(userId).get());
+        List<UserAnnouncement> userAnnouncementList = userAnnouncementRepository.findAllByUser(accountRepository.findById(userId).get());
         List<Announcement> announcementList = new ArrayList<>();
         for (UserAnnouncement userAnnouncement : userAnnouncementList) {
             announcementList.add(userAnnouncement.getAnnouncement());
