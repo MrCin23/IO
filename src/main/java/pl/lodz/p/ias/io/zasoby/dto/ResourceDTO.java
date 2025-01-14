@@ -9,16 +9,16 @@ import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 @Getter
 @Setter
 public class ResourceDTO {
-    private long resourceId;
+    private Long resourceId;
     private String resourceName;
     private String resourceType;
     private int resourceQuantity;
     private ResourceStatus resourceStatus;
-    private long warehouseId;
+    private Long warehouseId;
 
-    public ResourceDTO(long resourceId, String resourceName, String resourceType,
+    public ResourceDTO(Long resourceId, String resourceName, String resourceType,
                        int resourceQuantity, ResourceStatus resourceStatus,
-                       long warehouseId) {
+                       Long warehouseId) {
         this.resourceId = resourceId;
         this.resourceName = resourceName;
         this.resourceType = resourceType;
