@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.darczyncy.services.implementations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
+import pl.lodz.p.ias.io.darczyncy.exceptions.DonationBaseException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.FinancialDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.PaymentFailedException;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
@@ -25,8 +26,9 @@ public class FinancialDonationService implements IFinancialDonationService {
     @Override
     public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
 
-        Account donor = userRepository.findById(dto.donorId()).orElse(null);
-        FinancialNeed need = financialNeedRepository.findById(dto.needId()).orElse(null);
+        Account donor = userRepository.findById(dto.donorId()).orElseThrow( () -> new DonationBaseException("user not found"));
+
+        FinancialNeed need = financialNeedRepository.findById(dto.needId()).orElseThrow( () -> new DonationBaseException("need not found"));;
 
         FinancialDonation financialDonation = new FinancialDonation(
                 donor,

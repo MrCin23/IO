@@ -1,43 +1,33 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
+import { useTranslation } from "react-i18next";
 import "../styles/DonationPanel.css";
+import FinancialDonationPanel from "./FinancialDonationPanel";
+import ItemDonationPanel from "./ItemDonationPanel";
 
 const DonationPanel: React.FC = () => {
-    const [selectedTab, setSelectedTab] = useState<"financial" | "item">(
-        "financial"
-    );
-    const [selectedAmount, setSelectedAmount] = useState<number | "other">(60);
-    const [selectedGoal, setSelectedGoal] = useState<string>("Wybierz cel ...");
+    const { t } = useTranslation();
+    const [selectedTab, setSelectedTab] = useState<"financial" | "item">("financial");
 
-    const handleAmountClick = (amount: number | "other") => {
-        setSelectedAmount(amount);
-    };
+    const [selectedAmount, setSelectedAmount] = useState<number | "other">(60);
+    const [currency, setCurrency] = useState<"PLN" | "EUR">("PLN");
+
+    const [selectedGoal, setSelectedGoal] = useState<number | "">("");
+
+    // States for item donation
+    const [itemName, setItemName] = useState<string>("");
+    const [itemDescription, setItemDescription] = useState<string>("");
+    const [itemQuantity, setItemQuantity] = useState<number | "">(1);
+    const [itemCategory, setItemCategory] = useState<string>("");
 
     const handleTabClick = (tab: "financial" | "item") => {
         setSelectedTab(tab);
     };
 
-    const handleGoalChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedGoal(e.target.value);
-    };
-
-    const handleSubmit = () => {
-        const amount =
-            selectedAmount === "other"
-                ? prompt("Podaj inną kwotę wpłaty:", "50") || 0
-                : selectedAmount;
-
-        alert(
-            `Dziękujemy! Wybrano wpłatę: ${
-                selectedTab === "financial" ? "Jednorazową" : "Miesięczną"
-            }, Kwota: ${amount} zł, Cel: ${selectedGoal}`
-        );
-    };
-
     return (
         <div className="donation-panel">
             <div className="donation-header">
-                <h2>Potrzebujący czekają na twoją pomoc</h2>
-                <p>Wspierając SKPH pomagasz ubogim rodzinom, seniorom, chorym i osobom dotkniętym klęską żywiołową.</p>
+                <h2>{t("header")}</h2>
+                <p>{t("motivation_message")}</p>
             </div>
 
             <div className="donation-tabs">
@@ -47,7 +37,7 @@ const DonationPanel: React.FC = () => {
                     }`}
                     onClick={() => handleTabClick("financial")}
                 >
-                    Darowizna finansowa
+                    {t("financialDonation")}
                 </button>
                 <button
                     className={`donation-tab ${
@@ -55,57 +45,33 @@ const DonationPanel: React.FC = () => {
                     }`}
                     onClick={() => handleTabClick("item")}
                 >
-                    Darowizna rzeczowa
+                    {t("itemDonation")}
                 </button>
             </div>
-
-            <div className="donation-amounts">
-                <h3>Wybieram kwotę wpłaty:</h3>
-                <div className="amount-options">
-                    {[60, 110, 220].map((amount) => (
-                        <button
-                            key={amount}
-                            className={`amount-button ${
-                                selectedAmount === amount ? "selected" : ""
-                            }`}
-                            onClick={() => handleAmountClick(amount)}
-                        >
-                            {amount} zł
-                        </button>
-                    ))}
-                    <button
-                        className={`amount-button ${
-                            selectedAmount === "other" ? "selected" : ""
-                        }`}
-                        onClick={() => handleAmountClick("other")}
-                    >
-                        inna kwota
-                    </button>
-                </div>
-            </div>
-
-            <div className="donation-goal">
-                <h3>Wybieram cel wpłaty:</h3>
-                <div className="donation-goal-list">
-                    <select
-                        className="goal-select"
-                        value={selectedGoal}
-                        onChange={handleGoalChange}
-                    >
-                        <option value="">Wybierz cel ...</option>
-                        <option value="Pomoc seniorom">Pomoc seniorom</option>
-                        <option value="Pomoc dla powodzian">Pomoc dla powodzian</option>
-
-                    </select>
-                </div>
-            </div>
-
-            <button className="donation-submit" onClick={handleSubmit}>
-                Przechodzę dalej
-            </button>
+            {selectedTab === "financial" ? (
+                <FinancialDonationPanel
+                    selectedAmount={selectedAmount}
+                    currency={currency}
+                    onAmountChange={setSelectedAmount}
+                    onCurrencyChange={setCurrency}
+                    onNeedChange={setSelectedGoal}
+                />
+            ) : (
+                <ItemDonationPanel
+                    itemName={itemName}
+                    itemCategory={itemCategory}
+                    itemDescription={itemDescription}
+                    itemQuantity={itemQuantity}
+                    onNameChange={setItemName}
+                    onCategoryChange={setItemCategory}
+                    onDescriptionChange={setItemDescription}
+                    onQuantityChange={setItemQuantity}
+                    onNeedChange={setSelectedGoal}
+                />
+            )}
 
             <p className="donation-footer">
-                Wpłata darowizny jest dobrowolna. Wszystkie prawa zastrzeżone.
+                {t("footer")}
             </p>
         </div>
     );
