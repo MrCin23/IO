@@ -38,6 +38,8 @@ public class FinancialDonationController implements IFinancialDonationController
         FinancialDonation financialDonation;
         try {
             financialDonation = financialDonationService.createFinancialDonation(financialDonationCreateDTO);
+            financialNeedService.updateFinancialNeedCollectionStatus(financialDonation.getNeed().getId(),
+                    financialDonation.getAmount());
         }
         catch (PaymentFailedException e) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();

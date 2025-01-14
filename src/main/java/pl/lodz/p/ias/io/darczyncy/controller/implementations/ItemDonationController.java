@@ -13,6 +13,7 @@ import pl.lodz.p.ias.io.darczyncy.exceptions.DonationBaseException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.mappers.ItemDonationMapper;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
+import pl.lodz.p.ias.io.darczyncy.services.implementations.ItemDonationService;
 import pl.lodz.p.ias.io.darczyncy.services.interfaces.IItemDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
@@ -32,6 +33,7 @@ public class ItemDonationController implements IItemDonationController {
     @Override
     public ResponseEntity<?> createItemDonation(ItemDonationCreateDTO itemDonationCreateDTO) {
         ItemDonation itemDonation = itemDonationService.createItemDonation(itemDonationCreateDTO);
+        materialNeedService.completeMaterialNeed(itemDonation.getNeed().getId());
         return ResponseEntity.created(URI.create("/donations/%s".formatted(itemDonation.getId()))).build();
     }
 
