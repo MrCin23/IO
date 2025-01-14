@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { Resource } from "@/types";
 import api from "../../../api/Axios.tsx";
+import {useLocation} from "react-router-dom";
 
 export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const [selectedResourceId, setSelectedResourceId] = useState<number | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
     const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
+
+    const location = useLocation();
+    const isVictimPath = location.pathname.includes('/victim/resources');
 
     const handleEditClick = (resourceId: number, status: string, quantity: number) => {
         setSelectedResourceId(resourceId);
@@ -79,20 +83,22 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             <td className="px-4 py-2">{resource.resourceStatus}</td>
                             <td className="px-4 py-2">{resource.warehouseId}</td>
                             <td className="px-4 py-2">
-                                <button
-                                    className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                                    onClick={() =>
-                                        handleEditClick(
-                                            resource.resourceId,
-                                            resource.resourceStatus,
-                                            resource.resourceQuantity
-                                        )
-                                    }
-                                >
-                                    Edit
-                                </button>
+                                {!isVictimPath && (
+                                    <button
+                                        className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
+                                        onClick={() =>
+                                            handleEditClick(
+                                                resource.resourceId,
+                                                resource.resourceStatus,
+                                                resource.resourceQuantity
+                                            )
+                                        }
+                                    >
+                                        Edit
+                                    </button>
+                                )}
 
-                                {selectedResourceId === resource.resourceId && (
+                                {selectedResourceId === resource.resourceId && !isVictimPath && (
                                     <div className="mt-2">
                                         <div>
                                             <label>
