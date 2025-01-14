@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountChangeRoleDTO;
 import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountCreateDTO;
 import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountLoginDTO;
 import pl.lodz.p.ias.io.uwierzytelnianie.DTO.AccountResetPassDTO;
@@ -96,5 +97,23 @@ public class AuthenticationController {
     @PostMapping("/{id}/deactivate")
     public ResponseEntity<Account> deactivateAccount(@PathVariable Long id) {
         return ResponseEntity.ok(authenticationService.deactivateAccount(id));
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/me")
+    public ResponseEntity<Account> getMe() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return ResponseEntity.ok(authenticationService.getAccountByUsername(username));
+    }
+
+    @PostMapping("/change/{id}")
+    public ResponseEntity<Account> changeRole(@PathVariable Long id, @RequestBody @Valid AccountChangeRoleDTO request) {
+        if (!EnumUtils.isValidEnum(UserRole.class, request.getRoleName().toUpperCase())) {
+            throw new BadRequestException("Invalid role name! Available roles are: " + EnumUtils.availableRoles());
+        }
+
+        return ResponseEntity.ok(authenticationService.changeRole(id, request.getRoleName()));
     }
 }

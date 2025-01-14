@@ -40,6 +40,7 @@ public class Account extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "role_id")
     @Getter
+    @Setter
     private Role role;
 
     public Account(String username, String passwordHash, Role role, String firstName, String lastName) {
