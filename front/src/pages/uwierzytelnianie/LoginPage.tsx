@@ -12,11 +12,11 @@ const LoginPage = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (account) {
-            navigate('/');
-        }
-    }, [account, navigate]);
+    // useEffect(() => {
+    //     if (account) {
+    //         navigate('/');
+    //     }
+    // }, [account, navigate]);
 
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
