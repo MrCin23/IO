@@ -1,7 +1,7 @@
-import ResourceForm from "@/components/ResourceForm";
+import ResourceForm from "../components/layouts/resources/ResourceForm.tsx";
 import { Link } from "react-router";
 
-const CreateResource = () => {
+export const CreateResource = () => {
   return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="max-w-lg w-full bg-white shadow-md rounded p-6">
@@ -23,5 +23,3 @@ const CreateResource = () => {
       </div>
   );
 };
-
-export default CreateResource;

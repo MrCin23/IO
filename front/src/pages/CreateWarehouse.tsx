@@ -1,7 +1,7 @@
-import WarehouseForm from "@/components/WarehouseForm";
+import WarehouseForm from "../components/layouts/resources/WarehouseForm.tsx";
 import { Link } from "react-router-dom";
 
-const CreateWarehouse = () => {
+export const CreateWarehouse = () => {
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">

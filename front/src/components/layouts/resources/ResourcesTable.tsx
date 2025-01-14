@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Resource } from "@/types";
 
-const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
+export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const [selectedResourceId, setSelectedResourceId] = useState<number | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
     const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
@@ -138,4 +138,3 @@ const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     );
 };
 
-export default ResourcesTable;

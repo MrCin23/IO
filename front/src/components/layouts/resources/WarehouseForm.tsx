@@ -30,7 +30,7 @@ const WarehouseForm = () => {
             console.log(result);
         }
 
-        navigate("/warehouses");
+        navigate("/organization/warehouses");
     };
 
     return (

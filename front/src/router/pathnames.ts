@@ -8,6 +8,10 @@ export const Pathnames = {
     },
     aid_organization: {
         homePage: '/organization',
+        resources: '/organization/resources',
+        warehouses: '/organization/warehouses',
+        createWarehouse: '/organization/warehouses/create',
+        createResource: '/organization/resources/create',
     },
     authority_representative: {
         homePage: '/authority'

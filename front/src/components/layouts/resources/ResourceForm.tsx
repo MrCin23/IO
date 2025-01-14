@@ -57,7 +57,7 @@ const ResourceForm = () => {
                 console.log(result);
             }
 
-            navigate("/resources");
+            navigate("/organization/resources");
         } catch (error) {
             console.error(error);
         }

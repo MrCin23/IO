@@ -1,8 +1,8 @@
-import WarehouseTable from '@/components/WarehousesTable.tsx';
-import { Warehouse } from '@/types';
+import WarehouseTable from '../components/layouts/resources/WarehousesTable.tsx';
+import { Warehouse } from '../types/index';
 import { useState, useEffect } from 'react';
 
-const Warehouses = () => {
+export const Warehouses = () => {
     const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
 
     useEffect(() => {
@@ -21,5 +21,3 @@ const Warehouses = () => {
         </div>
     );
 };
-
-export default Warehouses;

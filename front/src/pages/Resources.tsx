@@ -1,8 +1,8 @@
-import ResourcesTable from '@/components/ResourcesTable';
-import { Resource } from '@/types';
+import {ResourcesTable} from '../components/layouts/resources/ResourcesTable.tsx';
+import { Resource } from '../types/index';
 import { useState, useEffect } from 'react';
 
-const Resources = () => {
+export const Resources = () => {
     const [resources, setResources] = useState<Resource[]>([]);
 
     useEffect(() => {
@@ -21,5 +21,3 @@ const Resources = () => {
       </div>
   );
 };
-
-export default Resources;
