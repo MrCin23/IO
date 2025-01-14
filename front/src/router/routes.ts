@@ -5,6 +5,7 @@ import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
 import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
 import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
+import VictimPage from '../pages/VictimPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -62,7 +63,7 @@ export const donorRoutes: RouteType[] = [
 export const victimRoutes: RouteType[] = [
     {
         path: Pathnames.victim.homePage,
-        Component: HomePage,
+        Component: VictimPage,
     }
 ]
 

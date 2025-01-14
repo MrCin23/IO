@@ -1,4 +1,6 @@
 import React from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 type Status = "IN_PROGRESS" | "PENDING" | "COMPLETED" | "CANCELLED";
 
@@ -31,16 +33,22 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
 
     const handleStatusChange = async (newStatus: Status) => {
         try {
-            const response = await fetch(
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('No authentication token found');
+            }
+    
+            const response = await axios.patch(
                 `http://localhost:8080/api/${needType}-needs/status/${needId}?status=${newStatus}`,
-                { method: 'PATCH' }
+                {}, // empty body for PATCH request
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
             );
             
-            if (!response.ok) {
-                throw new Error('Failed to update status');
+            if (response.status === 200) {
+                onStatusChange();
             }
-            
-            onStatusChange();
         } catch (error) {
             console.error('Error updating status:', error);
         }

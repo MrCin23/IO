@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication(scanBasePackages = {
-		"pl.lodz.p.ias.io.poszkodowani",
-		"pl.lodz.p.ias.io.uwierzytelnianie"
+//		"pl.lodz.p.ias.io.poszkodowani",
+//		"pl.lodz.p.ias.io.uwierzytelnianie"
 })
 public class SkphApplication {
 

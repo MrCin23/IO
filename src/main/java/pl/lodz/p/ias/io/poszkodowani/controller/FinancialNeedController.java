@@ -17,6 +17,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("localhost:5173")
 @RestController
 @RequestMapping("/api/financial-needs")
 @Validated
@@ -42,6 +43,7 @@ public class FinancialNeedController {
         FinancialNeedResponse responseDTO = financialNeedMapper.toFinancialNeedResponse(savedFinancialNeed);
         return ResponseEntity.ok(responseDTO);
     }
+
 
     @GetMapping("/{id}")
     public ResponseEntity<FinancialNeedResponse> getFinancialNeedById(@PathVariable Long id) {

@@ -17,6 +17,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import java.util.List;
 import java.util.Optional;
 
+@CrossOrigin("localhost:5173")
 @RestController
 @RequestMapping("/api/manual-needs")
 @Validated

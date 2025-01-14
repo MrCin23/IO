@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialNeed } from './type';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 import { StatusChangeButton } from './components/StatusChangeButton';
 
 export const MaterialNeedsList: React.FC = () => {
@@ -9,12 +11,17 @@ export const MaterialNeedsList: React.FC = () => {
 
     const fetchNeeds = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/material-needs');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('No authentication token found');
             }
-            const data: MaterialNeed[] = await response.json();
-            setNeeds(data);
+
+            const response = await axios.get<MaterialNeed[]>('http://localhost:8080/api/material-needs', {
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
+            });
+      setNeeds(response.data);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -36,12 +43,16 @@ export const MaterialNeedsList: React.FC = () => {
         return <div>Error: {error}</div>;
     }
 
+    if (needs.length === 0) {
+        return <div className="text-center p-4 rounded-lg">No material needs found</div>;
+    }
+
     return (
         <div className="space-y-4">
             {needs
                 .sort((a, b) => a.id - b.id)
                 .map((need) => (
-                <div key={need.id} className="p-4 border rounded-lg shadow-sm">
+                <div key={need.id} className="p-4 border rounded-xl shadow-sm text-left bg-gray-100 text-black">
                     <p className="mb-1">ID: {need.id}</p>
                     <p className="mb-1">Description: {need.description}</p>
                     <p className="mb-1">Category: {need.itemCategory}</p>

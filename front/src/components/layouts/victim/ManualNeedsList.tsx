@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { ManualNeed } from './type';
 import { StatusChangeButton } from './components/StatusChangeButton';
+import axios from 'axios';
+import Cookies from 'js-cookie';
 
 export const ManualNeedsList: React.FC = () => {
     const [needs, setNeeds] = useState<ManualNeed[]>([]);
@@ -9,12 +11,17 @@ export const ManualNeedsList: React.FC = () => {
 
     const fetchNeeds = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/manual-needs');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('No authentication token found');
             }
-            const data: ManualNeed[] = await response.json();
-            setNeeds(data);
+
+            const response = await axios.get<ManualNeed[]>('http://localhost:8080/api/manual-needs', {
+                headers: {
+                Authorization: `Bearer ${token}`
+                }
+            });
+            setNeeds(response.data);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
@@ -36,12 +43,16 @@ export const ManualNeedsList: React.FC = () => {
         return <div>Error: {error}</div>;
     }
 
+    if (needs.length === 0) {
+        return <div className="text-center p-4 rounded-xl">No manual needs found</div>;
+    }
+
     return (
         <div className="space-y-4">
             {needs
                 .sort((a, b) => a.id - b.id)
                 .map((need) => (
-                    <div key={need.id} className="p-4 border rounded-lg shadow-sm">
+                    <div key={need.id} className="p-4 border rounded-lg shadow-sm text-left bg-gray-100 text-black">
                         <p className="mb-1">ID: {need.id}</p>
                         <p className="mb-1">Description: {need.description}</p>
                         <p className="mb-1">Volunteers: {need.volunteers}/{need.maxVolunteers}</p>
