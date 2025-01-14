@@ -1,5 +1,6 @@
 package pl.lodz.p.ias.io.uwierzytelnianie.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,8 +13,13 @@ public class Account extends AbstractEntity {
     @Column(unique = true)
     private String username;
 
+    /*@Getter
+    @Column(unique = true)
+    private String email;*/
+
     @Getter
     @Setter
+    @JsonIgnore
     private String passwordHash;
 
     @Getter
@@ -21,6 +27,10 @@ public class Account extends AbstractEntity {
 
     @Getter
     private String lastName;
+
+    @Getter
+    @Setter
+    private boolean active;
 
     @Column(nullable = true)
     @Setter
@@ -30,6 +40,7 @@ public class Account extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "role_id")
     @Getter
+    @Setter
     private Role role;
 
     public Account(String username, String passwordHash, Role role, String firstName, String lastName) {
@@ -38,6 +49,7 @@ public class Account extends AbstractEntity {
         this.role = role;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.active = true;
     }
 
     public Account() {}
