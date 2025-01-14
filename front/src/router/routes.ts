@@ -1,8 +1,8 @@
 import { Pathnames } from './pathnames'
 
-import {HomePage} from "../pages/HomePage";
-import {Pom} from "../pages/Pom.tsx";
-import {ExternalFormPage} from "../pages/ExternalFormPage.tsx";
+import {HomePage} from "../pages/mapExamples/HomePage.tsx";
+import {Pom} from "../pages/mapExamples/Pom.tsx";
+import {ExternalFormPage} from "../pages/mapExamples/ExternalFormPage.tsx";
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname

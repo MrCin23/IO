@@ -21,11 +21,28 @@ interface Point {
 interface MapViewProps {
     pointType: string;
     canAddPoints?: boolean;
-    canShowPoints?: boolean; // Parametr do kontrolowania widoczności punktów
+    canShowPoints?: boolean;
+    externalForm?: boolean;
+    setCoordinates?: (coordinates: { lat: number; lng: number }) => void;
 }
 
-const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false }) => {
+/**
+ * Komponent odpowiedzialny za widzialną warstwę map. Umożliwia zapis i odczyt punktu/ów.
+ * Dla większej uniwersalności, komponent został wyposażony w kilka parametrów.
+ * @param pointType wymagany - jest to łańcuch znaków odpowiadający typowi Punktu. Dostępne typy to:
+ *     VOLUNTEER,
+ *     VICTIM,
+ *     AID_ORGANIZATION,
+ *     AUTHORITY_REPRESENTATIVE
+ * @param canAddPoints opcjonalny (default: false) - definiuje, czy możliwe jest dodawanie punktów na mapie (dodany zostanie punkt typu @param canAddpoints)
+ * @param canShowPoints opcjonalny (default: false) - definiuje, czy możliwe jest odczytywanie punktów z mapy (podane zostaną punkty typu @param canAddpoints)
+ * @param externalForm opcjonalny (default: false) - jeśli jest ustawiony na true, można korzystać z map z użyciem zewnętrznego formularza. W przeciwnym wypadku używany będzie formularz wyświetlający się w <MapView>
+ * @param setCoordinates opcjonalny - jeśli externalForm ustawione jest na true, zezwala na korzystanie z koordynatów poza <MapView>. Patrz: https://github.com/MrCin23/IO/blob/1b64a3034b4e450451923b48bda0d765f4a1d94e/front/src/pages/ExternalFormPage.tsx
+ * @constructor
+ */
+const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false, externalForm = false, setCoordinates }) => {
     const [points, setPoints] = useState<Point[]>([]);
+
     const [newPoint, setNewPoint] = useState<Point | null>(null);
     const [formData, setFormData] = useState({
         title: "",
@@ -41,6 +58,10 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         title: "",
                         description: "",
                     });
+
+                    if (externalForm && setCoordinates) {
+                        setCoordinates({ lat: e.latlng.lat, lng: e.latlng.lng });
+                    }
                 }
             },
         });
@@ -118,7 +139,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 )}
                 <MapClickHandler />
             </MapContainer>
-            {newPoint && canAddPoints && (
+            {newPoint && canAddPoints && !externalForm && (
                 <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
                     <h3>Dodaj nowy punkt</h3>
                     <form
@@ -154,8 +175,4 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
     );
 };
 
-
-
-
 export default MapView;
-
