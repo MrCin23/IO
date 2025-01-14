@@ -26,7 +26,7 @@ public class VolunteerController {
         this.volunteerService = volunteerService;
     }
 
-    @PostMapping
+    /*@PostMapping
     ResponseEntity<Map<String, String>> createVolunteer(@RequestBody @Valid CreateVolunteerDTO createVolunteerDTO) {
         Account volunteer = authenticationService.register(
                 createVolunteerDTO.getUsername(),
@@ -37,7 +37,7 @@ public class VolunteerController {
         Map<String, String> response = new HashMap<>();
         response.put("id", volunteer.getId().toString());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
-    }
+    }*/
 
     @GetMapping
     ResponseEntity<List<Account>> getVolunteers() {
