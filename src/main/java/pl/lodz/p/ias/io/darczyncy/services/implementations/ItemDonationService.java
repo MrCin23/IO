@@ -63,7 +63,7 @@ public class ItemDonationService implements IItemDonationService {
         ItemDonation itemDonation = new ItemDonation(
                 donor,
                 need,
-                dto.itemName(),
+                dto.name(),
                 dto.resourceQuantity(),
                 selectedWarehouse.getId(),
                 ItemDonation.ItemCategory.valueOf(dto.category()),
@@ -115,11 +115,11 @@ public class ItemDonationService implements IItemDonationService {
     }
 
     @Override
-    public byte[] createConfirmationPdf(long donationId) {
+    public byte[] createConfirmationPdf(String language, long donationId) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         ItemDonation itemDonation = itemDonationRepository.findByIdAndDonor_Username(donationId, currentUserName)
                 .orElseThrow(ItemDonationNotFoundException::new);
-        return certificateProvider.generateItemCertificate(itemDonation.getDonor(), itemDonation);
+        return certificateProvider.generateItemCertificate(itemDonation.getDonor(), itemDonation, language);
     }
 
     @Override

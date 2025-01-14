@@ -1,14 +1,13 @@
 import {useTranslation} from "react-i18next";
 import React, {useState} from "react";
 import "../../../../styles/DonationPanel.css";
-import axios from "axios";
-import properties from "../../../../properties/properties.ts";
+import api from "@/api/Axios.tsx";
 
 interface ItemDonationPanelProps {
-    itemName: string;
-    itemCategory: string;
-    itemDescription: string;
-    itemQuantity: number | "";
+    name: string;
+    category: string;
+    description: string;
+    resourceQuantity: number | "";
     onNameChange: (name: string) => void;
     onCategoryChange: (category: string) => void;
     onDescriptionChange: (description: string) => void;
@@ -16,10 +15,10 @@ interface ItemDonationPanelProps {
 }
 
 const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
-    itemName,
-    itemCategory,
-    itemDescription,
-    itemQuantity,
+    name,
+    category,
+    description,
+    resourceQuantity,
     onNameChange,
     onCategoryChange,
     onDescriptionChange,
@@ -32,7 +31,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
 
     const fetchNeeds = async () => {
         try {
-            const response = await axios.get(`${properties.serverAddress}/api/material-needs`);
+            const response = await api.get(`/material-needs`);
             const data = response.data;
             const formattedNeeds = data.map((need: any) => [need.id, need.description]);
             setNeeds(formattedNeeds);
@@ -50,23 +49,23 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
     const handleSubmit = async () => {
         try{
             const payload = {
-                itemName,
-                itemCategory,
-                itemDescription,
-                itemQuantity,
+                name,
+                category,
+                description,
+                resourceQuantity,
                 needId: selectedNeed,
             };
-            await axios.post(`${properties.serverAddress}/api/donations/item`, JSON.stringify(payload), {
+            await api.post(`/donations/item`, JSON.stringify(payload), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
             alert(
                 `${t("alertDonationProceed")}: ${t("itemDonation")}, ${t(
-                    "itemName"
-                )}: ${itemName}, ${t("itemCategory")}: ${itemCategory}, ${t(
-                    "itemDescription"
-                )}: ${itemDescription}, ${t("itemQuantity")}: ${itemQuantity}`
+                    "name"
+                )}: ${name}, ${t("category")}: ${category}, ${t(
+                    "description"
+                )}: ${description}, ${t("resourceQuantity")}: ${resourceQuantity}`
             );
         } catch (error) {
             console.error(error);
@@ -79,17 +78,17 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             <div className="item-donation-fields">
                 <div className="row">
                     <div className="column">
-                        <h3>{t("itemName")}</h3>
+                        <h3>{t("name")}</h3>
                         <input
                             type="text"
-                            value={itemName}
+                            value={name}
                             onChange={(e) => onNameChange(e.target.value)}
                         />
                     </div>
                     <div className="column">
-                        <h3>{t("itemCategory")}</h3>
+                        <h3>{t("category")}</h3>
                         <select
-                            value={itemCategory}
+                            value={category}
                             onChange={(e) => onCategoryChange(e.target.value)}
                         >
                             <option value="" disabled>
@@ -116,18 +115,18 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
 
                 <div className="row">
                     <div className="column-wide">
-                        <h3>{t("itemDescription")}</h3>
+                        <h3>{t("description")}</h3>
                         <textarea
-                            value={itemDescription}
+                            value={description}
                             onChange={(e) => onDescriptionChange(e.target.value)}
                         />
                     </div>
                     <div className="column-narrow">
-                        <h3>{t("itemQuantity")}</h3>
+                        <h3>{t("resourceQuantity")}</h3>
                         <input
                             type="number"
                             min="1"
-                            value={itemQuantity}
+                            value={resourceQuantity}
                             onChange={(e) =>
                                 onQuantityChange(
                                     e.target.value === "" ? "" : parseInt(e.target.value)

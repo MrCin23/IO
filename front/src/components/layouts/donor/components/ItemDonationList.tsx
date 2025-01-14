@@ -1,42 +1,41 @@
 import {useEffect, useState} from "react";
 import "../../../../styles/DonationList.css";
 
-import { ItemDonation } from "../../../../model/ItemDonation.ts";
-import axios from "axios";
-import properties from "../../../../properties/properties.ts";
+import { ItemDonation } from "@/components/layouts/donor/model/ItemDonation.ts";
+import api from "@/api/Axios.tsx";
+import {useTranslation} from "react-i18next";
 
 
 function ItemDonationList() {
 
     const [itemDonations, setItemDonations] = useState<ItemDonation[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const { t } = useTranslation();
 
     const fetchItemDonations = async () => {
         setIsLoading(true);
-        setError(null);
-
         try {
-            const response = await axios.get<ItemDonation[]>(
-                `${properties.serverAddress}/api/donations/item/account/all`);
+            const response = await api.get<ItemDonation[]>(
+                `/donations/item/account/all`);
             setItemDonations(response.data);
+            console.log(response.data);
+            if(response.status === 204 || response.status === 200) {
+                setIsLoading(false);
+            }
         } catch (err) {
-            setError("Nie udało się pobrać listy darowizn rzeczowych. Spróbuj ponownie później.");
             console.error(err);
-        } finally {
-            setIsLoading(false);
         }
     };
 
     useEffect(() => {
         fetchItemDonations();
-    }, [fetchItemDonations]);
+    }, []);
 
 
     const generateConfirmation = async (donation: ItemDonation) => {
         try {
-            const response = await axios.get(
-                `${properties.serverAddress}/api/donations/item/${donation.id}/confirmation`,
+            const response = await api.get(
+                `/donations/item/${donation.id}/confirmation`,
                 {
                     responseType: "blob", // Oczekujemy odpowiedzi w postaci blob (np. PDF)
                 }
@@ -56,57 +55,57 @@ function ItemDonationList() {
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.error("Error generating confirmation:", error);
-            alert("Nie udało się wygenerować potwierdzenia. Spróbuj ponownie później.");
+            alert(t("confirmationFailedAlert"));
         }
     };
 
     return (
         <div className="donation-list-container">
-            <h2>Lista darowizn rzeczowych</h2>
-            {isLoading && <p>Ładowanie danych...</p>}
-            {error && <p className="error-message">{error}</p>}
-            {!isLoading && !error && itemDonations.length === 0 && <p>Brak darowizn finansowych</p>}
+            <h2>{t("itemDonationsList")}</h2>
+            {isLoading && <p>{t("loading")}</p>}
+            {!isLoading && itemDonations.length === 0 && <p>{t("noItemDonations")}</p>}
             {!isLoading && itemDonations.length > 0 && (
-                <table className="donation-list">
-                    <thead>
-                    <tr>
-                        <th>Cel</th>
-                        <th>Data</th>
-                        <th>Przedmiot</th>
-                        <th>Opis</th>
-                        <th>Ilość</th>
-                        <th>Kategoria</th>
-                        <th>Status</th>
-                        <th>Akcje</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {itemDonations.map((donation) => (
-                        <tr key={donation.id}>
-                            <td>{donation.needName}</td>
-                            <td>{donation.date.toString()}</td>
-                            <td>{donation.itemName}</td>
-                            <td>{donation.description}</td>
-                            <td>{donation.quantity}</td>
-                            <td>{donation.category}</td>
-                            <td>{donation.status}</td>
-                            <td>
-                                <button
-                                    className="generate-button"
-                                    onClick={() => generateConfirmation(donation)}
-                                    disabled={donation.status !== "ACCEPTED"}
-                                >
-                                    Wygeneruj potwierdzenie
-                                </button>
-                            </td>
+                <div className="donation-list-wrapper">
+                    <table className="donation-list">
+                        <thead>
+                        <tr>
+                            <th>{t("listGoal")}</th>
+                            <th>{t("listDate")}</th>
+                            <th>{t("listItem")}</th>
+                            <th>{t("listDescription")}</th>
+                            <th>{t("listQuantity")}</th>
+                            <th>{t("listCategory")}</th>
+                            <th>{t("listStatus")}</th>
+                            <th>{t("listConfirmation")}</th>
                         </tr>
-                    ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        {itemDonations.map((donation) => (
+                            <tr key={donation.id}>
+                                <td>{donation.needDescription}</td>
+                                <td>{donation.donationDate.toString()}</td>
+                                <td>{donation.itemName}</td>
+                                <td>{donation.description}</td>
+                                <td>{donation.resourceQuantity}</td>
+                                <td>{donation.category}</td>
+                                <td>{donation.acceptanceStatus}</td>
+                                <td>
+                                    <button
+                                        className="generate-button"
+                                        onClick={() => generateConfirmation(donation)}
+                                        disabled={donation.acceptanceStatus !== "ACCEPTED"}
+                                    >
+                                        {t("generateConfirmation")}
+                                    </button>
+                                </td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                </div>
             )}
         </div>
     );
-};
+}
 
 export default ItemDonationList;

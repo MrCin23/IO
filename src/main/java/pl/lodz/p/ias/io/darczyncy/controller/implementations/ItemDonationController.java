@@ -65,10 +65,11 @@ public class ItemDonationController implements IItemDonationController {
 
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
-    public ResponseEntity<?> getConfirmationDonationById(long id) {
+    public ResponseEntity<?> getConfirmationDonationById(String language, long id) {
+        String lang = language.substring(0, 2);
         byte[] pdfBytes;
         try {
-            pdfBytes = itemDonationService.createConfirmationPdf(id);
+            pdfBytes = itemDonationService.createConfirmationPdf(lang, id);
         } catch (ItemDonationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.APPLICATION_JSON)

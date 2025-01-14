@@ -16,7 +16,7 @@ public interface IFinancialDonationService {
 
     List<FinancialDonation> findAllFinancialDonationForCurrentUser();
 
-    byte[] createConfirmationPdf(long donationId);
+    byte[] createConfirmationPdf(String language, long donationId);
 
     List<FinancialDonation> findAll();
 }

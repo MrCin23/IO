@@ -7,7 +7,7 @@ import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 public record ItemDonationCreateDTO (
 
         @NotNull
-        String itemName,
+        String name,
 
         @NotNull
         Long needId,

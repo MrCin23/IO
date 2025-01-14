@@ -2,35 +2,35 @@ export class ItemDonation{
     id: number;
     donorId: number;
     needId: number;
-    needName: string;
-    date: Date;
+    needDescription: string;
+    donationDate: Date;
     itemName: string;
     category: string;
     description: string;
-    quantity: number;
-    status: string;
+    resourceQuantity: number;
+    acceptanceStatus: string;
 
     constructor(
         id: number,
         donorId: number,
         needId: number,
-        needName: string,
-        date: Date,
+        needDescription: string,
+        donationDate: Date,
         itemName: string,
         category: string,
         description: string,
-        quantity: number,
-        status: string) {
+        resourceQuantity: number,
+        acceptanceStatus: string) {
 
         this.id = id
         this.donorId = donorId
         this.needId = needId
-        this.needName = needName
-        this.date = date
+        this.needDescription = needDescription
+        this.donationDate = donationDate
         this.itemName = itemName
         this.category = category
         this.description = description
-        this.quantity = quantity
-        this.status = status
+        this.resourceQuantity = resourceQuantity
+        this.acceptanceStatus = acceptanceStatus
     }
 }

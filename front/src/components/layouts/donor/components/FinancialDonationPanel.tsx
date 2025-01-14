@@ -1,8 +1,7 @@
 import React, {useState} from "react";
 import {useTranslation} from "react-i18next";
 import "../../../../styles/DonationPanel.css";
-import axios from "axios";
-import properties from "../../../../properties/properties.ts";
+import api from "@/api/Axios.tsx";
 
 interface FinancialDonationPanelProps {
     selectedAmount: number | "other";
@@ -29,7 +28,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
 
     const fetchNeeds = async () => {
         try {
-            const response = await axios.get(`${properties.serverAddress}/api/financial-needs`);
+            const response = await api.get(`/financial-needs`);
             const data = response.data;
             const formattedNeeds = data.map((need: any) => [need.id, need.description]);
             setNeeds(formattedNeeds);
@@ -93,15 +92,17 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
                 currency,
                 needId: selectedNeed,
             };
-            await axios.post(`${properties.serverAddress}/api/donations/financial`, JSON.stringify(payload), {
+            await api.post(`/donations/financial`, JSON.stringify(payload), {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
+
+            const [id, description] = needs.find( ([id]) => id===selectedNeed);
             alert(
                 `${t("alertDonationProceed")}: ${t("financialDonation")}, ${t(
                     "alertAmount"
-                )}: ${amount} ${currency}, ${t("alertGoal")}: ${selectedNeed}`
+                )}: ${amount} ${currency}, ${t("alertGoal")}: ${description}`
             );
         } catch (error) {
             console.error(error);

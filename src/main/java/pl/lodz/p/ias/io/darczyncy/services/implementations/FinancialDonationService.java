@@ -1,6 +1,7 @@
 package pl.lodz.p.ias.io.darczyncy.services.implementations;
 
 import lombok.RequiredArgsConstructor;
+import org.intellij.lang.annotations.Language;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -99,12 +100,12 @@ public class FinancialDonationService implements IFinancialDonationService {
     }
 
     @Override
-    public byte[] createConfirmationPdf(long donationId) {
+    public byte[] createConfirmationPdf(String language, long donationId) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         FinancialDonation financialDonation = financialDonationRepository.findByIdAndDonor_Username(
                 donationId, currentUserName)
                 .orElseThrow(FinancialDonationNotFoundException::new);
-        return certificateProvider.generateFinancialCertificate(financialDonation.getDonor(), financialDonation);
+        return certificateProvider.generateFinancialCertificate(financialDonation.getDonor(), financialDonation, language);
     }
 
     @Override

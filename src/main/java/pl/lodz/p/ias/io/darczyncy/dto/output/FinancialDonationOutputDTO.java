@@ -11,7 +11,7 @@ public record FinancialDonationOutputDTO(
         long warehouseId,
         double amount,
         String currency,
-        LocalDate date,
+        LocalDate donationDate,
         Donation.AcceptanceStatus acceptanceStatus,
         String needDescription
 ) { }

@@ -1,6 +1,7 @@
 package pl.lodz.p.ias.io.darczyncy.controller.interfaces;
 
 import jakarta.validation.Valid;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,7 @@ import pl.lodz.p.ias.io.darczyncy.utils.DonationConstants;
 @RequestMapping(DonationConstants.APPLICATION_CONTEXT + "/donations/financial")
 public interface IFinancialDonationController {
 
-    @PostMapping(value = "/create", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<?> createFinancialDonation(@Valid @RequestBody FinancialDonationCreateDTO financialDonationCreateDTO);
 
 
@@ -30,5 +31,5 @@ public interface IFinancialDonationController {
     ResponseEntity<?> findAll();
 
     @GetMapping(value = "/{id}/confirmation", produces = {MediaType.APPLICATION_PDF_VALUE, MediaType.APPLICATION_JSON_VALUE})
-    ResponseEntity<?> getConfirmationDonationById(@PathVariable("id") long id);
+    ResponseEntity<?> getConfirmationDonationById(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String language, @PathVariable("id") long id);
 }

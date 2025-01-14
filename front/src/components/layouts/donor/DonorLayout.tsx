@@ -7,6 +7,7 @@ import "./DonorLayout.css"
 import {useTranslation} from "react-i18next";
 
 import "./i18n";
+import {useAccount} from "@/contexts/uwierzytelnianie/AccountContext.tsx";
 
 interface LayoutProps {
     children: ReactNode
@@ -14,8 +15,10 @@ interface LayoutProps {
 
 export const DonorLayout = ({ children }: LayoutProps) => {
     const navigate = useNavigate()
+    const { logout } = useAccount();
 
     const { i18n } = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         const handleLanguageChange = () => {
@@ -39,18 +42,26 @@ export const DonorLayout = ({ children }: LayoutProps) => {
     return (
         <div className="donor-body">
             <nav className="top-menu">
-                <button className="menu-button" onClick={() => navigate(Pathnames.default.homePage)}>Strona główna
+                <button className="menu-button" onClick={() => navigate(Pathnames.default.homePage)}>
+                    {t("home")}
                 </button>
-                <button className="menu-button" onClick={() => navigate(Pathnames.donor.homePage)}>Przekaż darowiznę
+                <button className="menu-button" onClick={() => navigate(Pathnames.donor.homePage)}>
+                    {t("donate")}
                 </button>
-                <button className="menu-button" onClick={() => navigate(Pathnames.donor.financialDonations)}>Wyświetl
-                    Darowizny Finansowe
+                <button className="menu-button" onClick={() => navigate(Pathnames.donor.financialDonations)}>
+                    {t("showFinancialDonations")}
                 </button>
-                <button className="menu-button" onClick={() => navigate(Pathnames.donor.itemDonations)}>Wyświetl
-                    Darowizny Rzeczowe
+                <button className="menu-button" onClick={() => navigate(Pathnames.donor.itemDonations)}>
+                    {t("showItemDonations")}
+                </button>
+                <button className="menu-button" onClick={() => navigate(Pathnames.donor.accountPage)}>
+                    {t("myAccount")}
+                </button>
+                <button className="menu-button" onClick={() => { logout(); navigate('/')}}>
+                    {t("logOut")}
                 </button>
             </nav>
-            <Container sx={{p: 2}}>
+            <Container sx={{p: 2, marginTop: 10}}>
                 {children}
             </Container>
         </div>

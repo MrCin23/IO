@@ -1,45 +1,44 @@
 import {useEffect, useState} from "react";
 import "../../../../styles/DonationList.css";
 
-import { FinancialDonation } from "../../../../model/FinancialDonation.ts";
-import properties from "../../../../properties/properties.ts";
-import axios from "axios";
+import { FinancialDonation } from "@/components/layouts/donor/model/FinancialDonation.ts";
+import api from "@/api/Axios.tsx";
+import {useTranslation} from "react-i18next";
 
 
 function FinancialDonationList()
 {
 
+    const {t} = useTranslation();
+
     const [financialDonations, setFinancialDonations] = useState<FinancialDonation[]>([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
 
     const fetchFinancialDonations = async () => {
         setIsLoading(true);
-        setError(null);
         try {
-            const response = await axios.get<FinancialDonation[]>(
-                `${properties.serverAddress}/api/donations/financial/account/all`);
+            const response = await api.get<FinancialDonation[]>(
+                `/donations/financial/account/all`);
+            console.log(response);
             setFinancialDonations(response.data);
+            if(response.status === 204 || response.status === 200) {
+                setIsLoading(false);
+            }
         } catch (err) {
-            setError("Nie udało się pobrać listy darowizn finansowych. Spróbuj ponownie później.");
             console.error(err);
-        } finally {
-            setIsLoading(false);
         }
     };
 
 
     useEffect(() => {
-        fetchFinancialDonations()
-    }, [fetchFinancialDonations]);
-
-
+        fetchFinancialDonations().then(r => console.log(r))
+    }, []);
 
 
     const generateConfirmation = async (donation: FinancialDonation) => {
         try {
-            const response = await axios.get(
-                `${properties.serverAddress}/api/donations/financial/${donation.id}/confirmation`,
+            const response = await api.get(
+                `/donations/financial/${donation.id}/confirmation`,
                 {
                     responseType: "blob", // Oczekujemy odpowiedzi w postaci blob (np. PDF)
                 }
@@ -47,7 +46,7 @@ function FinancialDonationList()
 
             // Sprawdzenie odpowiedzi
             if (response.status !== 200) {
-                throw new Error("Failed to generate confirmation");
+                throw new Error(t("Failed to generate confirmation"));
             }
             // Tworzenie URL z blobem i pobranie pliku
             const blob = new Blob([response.data], { type: "application/pdf" });
@@ -58,45 +57,43 @@ function FinancialDonationList()
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            console.error("Error generating confirmation:", error);
-            alert("Nie udało się wygenerować potwierdzenia. Spróbuj ponownie później.");
+            alert(t("confirmationFailedAlert"));
         }
     };
 
     return (
         <div className="donation-list-container">
-            <h2>Lista darowizn finansowych</h2>
-            {isLoading && <p>Ładowanie danych...</p>}
-            {error && <p className="error-message">{error}</p>}
-            {!isLoading && !error && financialDonations.length === 0 && <p>Brak darowizn finansowych</p>}
+            <h2>{t("financialDonationsList")}</h2>
+            {isLoading && <p>{t("loading")}</p>}
+            {!isLoading && financialDonations.length === 0 && <p>{t("noFinancialDonations")}</p>}
             {!isLoading && financialDonations.length > 0 && (
                 <div className="donation-list-wrapper">
                     <table className="donation-list">
                         <thead>
                         <tr>
-                            <th>Cel</th>
-                            <th>Data</th>
-                            <th>Kwota</th>
-                            <th>Waluta</th>
-                            <th>Status</th>
-                            <th>Akcje</th>
+                            <th>{t("listGoal")}</th>
+                            <th>{t("listDate")}</th>
+                            <th>{t("listAmount")}</th>
+                            <th>{t("listCurrency")}</th>
+                            <th>{t("listStatus")}</th>
+                            <th>{t("listConfirmation")}</th>
                         </tr>
                         </thead>
                         <tbody>
                         {financialDonations.map((donation) => (
                             <tr key={donation.id}>
-                                <td>{donation.needName}</td>
-                                <td>{donation.date.toString()}</td>
+                                <td>{donation.needDescription}</td>
+                                <td>{donation.donationDate.toString()}</td>
                                 <td>{donation.amount}</td>
                                 <td>{donation.currency}</td>
-                                <td>{donation.status}</td>
+                                <td>{donation.acceptanceStatus}</td>
                                 <td>
                                     <button
                                         className="generate-button"
                                         onClick={() => generateConfirmation(donation)}
-                                        disabled={donation.status !== "ACCEPTED"}
+                                        disabled={donation.acceptanceStatus !== "ACCEPTED"}
                                     >
-                                        Wygeneruj potwierdzenie
+                                        {t("generateConfirmation")}
                                     </button>
                                 </td>
                             </tr>
@@ -106,6 +103,7 @@ function FinancialDonationList()
                 </div>
             )}
         </div>
-        )};
+    );
+}
 
 export default FinancialDonationList;

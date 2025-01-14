@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.darczyncy.controller.implementations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.ias.io.darczyncy.controller.interfaces.IFinancialDonationController;
 import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
@@ -97,10 +98,11 @@ public class FinancialDonationController implements IFinancialDonationController
 
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
-    public ResponseEntity<?> getConfirmationDonationById(long id) {
+    public ResponseEntity<?> getConfirmationDonationById(String language, long id) {
+        System.out.println("Language: " + language.substring(0,2));
         byte[] pdfBytes;
         try {
-            pdfBytes = financialDonationService.createConfirmationPdf(id);
+            pdfBytes = financialDonationService.createConfirmationPdf(language, id);
         } catch (FinancialDonationNotFoundException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .contentType(MediaType.APPLICATION_JSON)

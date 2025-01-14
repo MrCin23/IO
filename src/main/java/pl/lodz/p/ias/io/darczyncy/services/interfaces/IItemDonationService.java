@@ -18,7 +18,7 @@ public interface IItemDonationService {
 
     List<ItemDonation> findAllByCurrentUser();
 
-    byte[] createConfirmationPdf(long donationId);
+    byte[] createConfirmationPdf(String language, long donationId);
 
     ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation);
 

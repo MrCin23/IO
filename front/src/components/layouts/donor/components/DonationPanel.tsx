@@ -13,10 +13,10 @@ function DonationPanel() {
 
 
     // States for item donation
-    const [itemName, setItemName] = useState<string>("");
-    const [itemDescription, setItemDescription] = useState<string>("");
-    const [itemQuantity, setItemQuantity] = useState<number | "">(1);
-    const [itemCategory, setItemCategory] = useState<string>("");
+    const [name, setname] = useState<string>("");
+    const [description, setdescription] = useState<string>("");
+    const [resourceQuantity, setresourceQuantity] = useState<number | "">(1);
+    const [category, setcategory] = useState<string>("");
 
     const handleTabClick = (tab: "financial" | "item") => {
         setSelectedTab(tab);
@@ -56,14 +56,14 @@ function DonationPanel() {
                 />
             ) : (
                 <ItemDonationPanel
-                    itemName={itemName}
-                    itemCategory={itemCategory}
-                    itemDescription={itemDescription}
-                    itemQuantity={itemQuantity}
-                    onNameChange={setItemName}
-                    onCategoryChange={setItemCategory}
-                    onDescriptionChange={setItemDescription}
-                    onQuantityChange={setItemQuantity}
+                    name={name}
+                    category={category}
+                    description={description}
+                    resourceQuantity={resourceQuantity}
+                    onNameChange={setname}
+                    onCategoryChange={setcategory}
+                    onDescriptionChange={setdescription}
+                    onQuantityChange={setresourceQuantity}
                 />
             )}
 

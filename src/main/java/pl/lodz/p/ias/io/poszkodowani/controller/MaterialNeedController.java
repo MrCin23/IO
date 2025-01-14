@@ -19,7 +19,6 @@ import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import java.util.List;
 import java.util.Optional;
 
-@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/material-needs")
 @Validated

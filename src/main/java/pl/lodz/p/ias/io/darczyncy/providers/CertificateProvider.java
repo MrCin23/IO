@@ -26,7 +26,7 @@ import java.io.IOException;
 
 public class CertificateProvider {
 
-    public byte[] generateItemCertificate(Account account, ItemDonation donation) {
+    public byte[] generateItemCertificate(Account account, ItemDonation donation, String language) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
 
@@ -50,9 +50,25 @@ public class CertificateProvider {
             background.setHeight(pdfDoc.getDefaultPageSize().getHeight());
             document.add(background);
 
+            String title;
+            String message;
             // Dodanie treści dokumentu
-            String title = "PODZIĘKOWANIA";
-            String message = getString(account, donation);
+            if (language.equals("pl")) {
+                title = "PODZIĘKOWANIA";
+                message = ("Dziękujemy za przekazanie przedmiotu \"%s\" na cel \"%s\".\nDarowizna została przekazana w dniu %s \n " +
+                        "przez %s %s.\n");
+            } else {
+                title = "THANK YOU";
+                message = ("Thank you for donating item \"%s\" for the purpose of \"%s\".\nDonation was made on %s \n " +
+                        "by %s %s.\n");
+            }
+
+            String goal = donation.getNeed().getDescription();
+            String date = donation.getDonationDate().toString();
+            String firstName = account.getFirstName();
+            String lastName = account.getLastName();
+            String itemDescription = donation.getResourceName();
+            message = message.formatted(itemDescription, goal, date, firstName, lastName);
 
             // Ustawienia kolorów i stylów tekstu
             Color titleColor = new DeviceRgb(0, 51, 102);
@@ -92,19 +108,7 @@ public class CertificateProvider {
         return stream.toByteArray();
     }
 
-    private static @NotNull String getString(Account account, ItemDonation donation) {
-        String goal = donation.getNeed().getDescription();
-        String date = donation.getDonationDate().toString();
-        String firstName = account.getFirstName();
-        String lastName = account.getLastName();
-        String itemDescription = donation.getResourceName();
-        String message = ("Dziękujemy za przekazanie przedmiotu \"%s\" na cel \"%s\".\nDarowizna została przekazana w dniu %s \n " +
-                "przez %s %s.\n")
-                .formatted(itemDescription, goal, date, firstName, lastName);
-        return message;
-    }
-
-    public byte[] generateFinancialCertificate(Account account, FinancialDonation donation) {
+    public byte[] generateFinancialCertificate(Account account, FinancialDonation donation, String language) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
 
@@ -128,15 +132,28 @@ public class CertificateProvider {
             document.add(background);
 
             // Dodanie treści dokumentu
-            String title = "PODZIĘKOWANIA";
+
+            String title;
+            String message;
+
+            if (language.equals("pl")) {
+                title = "PODZIĘKOWANIA";
+                message = ("Dziękujemy za wpłacenie darowizny o wartości %s %s na cel \"%s\".\nDarowizna została wpłacona w dniu %s \n " +
+                        "przez %s %s.\n");
+            } else {
+                title = "THANK YOU";
+                message = ("Thank you for donating an amount of %s %s for the purpose of \"%s\".\n" +
+                        "The donation was made on %s \n" +
+                        "by %s %s.\n");
+            }
             String goal = donation.getNeed().getDescription();
             String date = donation.getDonationDate().toString();
+            String currency = String.valueOf(donation.getCurrency());
             String firstName = account.getFirstName();
             String lastName = account.getLastName();
             double ammount = donation.getAmount();
-            String message = ("Dziękujemy za wpłacenie darowizny o wartości %s na cel \"%s\".\nDarowizna została wpłacona w dniu %s \n " +
-                    "przez %s %s.\n")
-                    .formatted(Double.toString(ammount), goal, date, firstName, lastName);
+            message = message.formatted(Double.toString(ammount), currency , goal, date, firstName, lastName);
+
 
             // Ustawienia kolorów i stylów tekstu
             Color titleColor = new DeviceRgb(0, 51, 102);

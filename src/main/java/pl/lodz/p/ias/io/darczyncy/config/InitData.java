@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import pl.lodz.p.ias.io.darczyncy.model.Donation;
 import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
@@ -85,6 +86,8 @@ public class InitData implements CommandLineRunner {
                 "bardzo dobry teapot",
                 LocalDate.now()
         );
+
+        itemDonation.setAcceptanceStatus(Donation.AcceptanceStatus.ACCEPTED);
         itemDonationRepository.save(itemDonation);
 
         FinancialDonation financialDonation = new FinancialDonation(
@@ -95,6 +98,7 @@ public class InitData implements CommandLineRunner {
                 FinancialDonation.Currency.PLN,
                 LocalDate.now()
         );
+        financialDonation.setAcceptanceStatus(Donation.AcceptanceStatus.ACCEPTED);
         financialDonationRepository.save(financialDonation);
     }
 }
