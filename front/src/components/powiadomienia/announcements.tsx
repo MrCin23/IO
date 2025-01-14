@@ -1,25 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from './modal';
 import getDefaultRequest from '../../lib/powiadomienia/backend-lookup';
-import useAnnouncments from './hooks/use-announcement';
 import Announcement, { AnnouncementType } from '../../models/powiadomienia/announcement';
 import Speaker from './icons/Speaker';
 import AnnouncementForm from './announcement-form';
-import { useAccount } from '../../contexts/uwierzytelnianie/AccountContext';
+
+
+
+
+interface AnnouncementProps{
+    announcementsList:Announcement[],
+    canCreate:boolean
+}
 
 /**
  * Komponent wyświetlający listę ogłoszeń z możliwością ich ukrywania oraz dodawania nowych ogłoszeń.
  *
  * @returns {JSX.Element} Interfejs ogłoszeń.
  */
-const Announcements: React.FC = () => {
-    const {account} = useAccount()
-    if(!account){
-        return null
-    }
+const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate}) => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
-
-    const [announcements, setAnnouncements] = useAnnouncments(account.id)
+    const [announcements, setAnnouncements] = useState<Announcement[]>(announcementsList)
     const [isForm, setForm] = useState<boolean>(false)
   
 
@@ -53,6 +54,11 @@ const Announcements: React.FC = () => {
     };
 
 
+    useEffect(()=>{
+        setAnnouncements(announcementsList)
+    },[announcementsList])
+
+
     return (
 
         <React.Fragment>
@@ -62,23 +68,23 @@ const Announcements: React.FC = () => {
               focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <Speaker />
                     <span className="sr-only">Announcements</span>
-                    <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold
-                 text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{announcements.length}</div>
+                    <div className="absolute  inline-flex items-center justify-center w-6 h-6 text-xs font-bold
+                 text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">{announcements.length}</div>
                 </button>
             </div>
             <Modal
                 title='Announcement'
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false); setForm(false) }}>
-                {(isForm&&["ORGANIZACJA_POMOCOWA","PRZEDSTAWICIEL_WŁADZ"].includes(account.role.roleName)) ? (<AnnouncementForm onComplete={handleAddAnnouncement} />) : 
+                {(isForm&&canCreate) ? (<AnnouncementForm onComplete={handleAddAnnouncement} />) : 
                 <div>
-                <div className='flex flex-row-reverse w-full mb-2'>
+                {canCreate && <div className='flex flex-row-reverse w-full mb-2'>
                     <button className="bg-blue-500 text-white rounded-full w-8 h-8 hover:bg-blue-600 focus:outline-none 
                     text-xl flex items-center justify-center mr-2"
                     onClick={(_) => { setForm(true) }}>
                         <span className='mb-1'>+</span>
                     </button>
-                </div>
+                </div>}
                      <ul className="space-y-2">
                     {announcements.map((announcement) => (
                 

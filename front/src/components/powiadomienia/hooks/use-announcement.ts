@@ -13,7 +13,7 @@ import getDefaultRequest from "../../../lib/powiadomienia/backend-lookup";
  * @param userId id użytkownika dla którego pobrane zostaną ogłoszenia.
  * @returns zwraca listę zawierający listę ogłoszeń, funkcję pozwalającą na ustawienie wartości ogłoszeń, oraz zmienną określającą czy ogłoszenia są ładowane.
  */
-const useAnnouncments = (userId: string) => {
+const useAnnouncments = (userId?: string|null) => {
     const [announcement, setAnnouncements] = useState<Announcement[]>([]);
     const [isLoading,setIsLoading] = useState<boolean>(false) 
     
@@ -45,6 +45,9 @@ const useAnnouncments = (userId: string) => {
 
 
     useEffect(()=>{
+        if(!userId){
+            return
+        }
         fetchAnnouncements()
         const interval = 20 * 1000
         const timerId = setInterval(() => {
@@ -58,7 +61,7 @@ const useAnnouncments = (userId: string) => {
 
 
 
-    return [announcement,setAnnouncements,isLoading] as const
+    return [announcement,isLoading] as const
 }
 
 export default useAnnouncments;

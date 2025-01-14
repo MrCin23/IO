@@ -12,7 +12,7 @@ import getDefaultRequest from "../../../lib/powiadomienia/backend-lookup";
  * @returns zwraca listę zawierający listę powiadomień, funkcję pozwalającą na ustawienie wartości powiadomień oraz zmienną
  *  określającą czy powiadomienia zostały załodowane.
  */
-const useNotifications = (userId: string) => {
+const useNotifications = (userId?: string|null) => {
     const [notifications, setNotifications] = useState<Notification[]>([]);
     const [isLoading,setIsLoading] = useState<boolean>(false) 
     
@@ -43,6 +43,9 @@ const useNotifications = (userId: string) => {
 
 
     useEffect(()=>{
+        if(!userId){
+            return
+        }
         fetchNotifications()
         const interval = 10 * 1000
         const timerId = setInterval(() => {
@@ -56,7 +59,7 @@ const useNotifications = (userId: string) => {
 
 
 
-    return [notifications,setNotifications,isLoading] as const
+    return [notifications,isLoading] as const
 }
 
 export default useNotifications;

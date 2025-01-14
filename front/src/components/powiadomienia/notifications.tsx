@@ -1,30 +1,33 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from './modal';
-import useNotifications from './hooks/use-notifications';
-import { NotificationType } from '../../models/powiadomienia/notification';
+import Notification, { NotificationType } from '../../models/powiadomienia/notification';
 import getDefaultRequest from '../../lib/powiadomienia/backend-lookup';
 import Letter from './icons/Letter';
-import { useAccount } from '../../contexts/uwierzytelnianie/AccountContext';
+
+
+
+
+
+interface NotificationsProps {
+    notificationList: Notification[],
+    onNewNotification: (alert: Notification) => void
+}
 
 /**
  * Komponent wyświetlający listę powiadomień z możliwością ich ukrywania.
  *
  * @returns {JSX.Element} Interfejs powiadomień.
  */
-const Notifications: React.FC = () => {
-    const {account} = useAccount()
-    if(!account){
-        return null
-    }
+const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNotification }) => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
-    const [notifications, setNotifications] = useNotifications(account.id)
+    const [notifications, setNotifications] = useState<Notification[]>(notificationList)
 
     /**
      * Ukrywa powiadomienie na podstawie jego identyfikatora.
      * Jeśli było to ostatnie powiadomienie, zamyka modal.
      *
      * @param {number} id - Identyfikator powiadomienia do ukrycia.
-     */ 
+     */
     const handleHideNotification = (id: number) => {
         if (notifications.length === 1) {
             setModalOpen(false)
@@ -45,6 +48,21 @@ const Notifications: React.FC = () => {
         [NotificationType.WARNING]: "bg-yellow-100 text-yellow-800",
     };
 
+
+    useEffect(() => {
+        if (notifications.length !== 0) {
+            const newNotifications = notificationList.filter((element) => {
+                return !notifications.some((value) => {
+                    return value.id === element.id
+                })
+            })
+            if (newNotifications.length > 0) {
+                onNewNotification(newNotifications[0])
+            }
+        }
+        setNotifications(notificationList)
+    }, [notificationList])
+
     return (
 
         <React.Fragment>
@@ -56,7 +74,8 @@ const Notifications: React.FC = () => {
                     <Letter />
                     <span className="sr-only">Notifications</span>
                     <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs
-                     font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2 dark:border-gray-900">{notifications.length}</div>
+                     font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2
+                    ">{notifications.length}</div>
                 </button>
             </div>
             <Modal
