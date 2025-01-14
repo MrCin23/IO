@@ -9,9 +9,12 @@ import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 import pl.lodz.p.ias.io.raportowanie.service.SummaryReportService;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/summary-report")
 public class SummaryReportController {
@@ -28,8 +31,42 @@ public class SummaryReportController {
     }
 
     @PostMapping("/generate-pdf")
-    public ResponseEntity<byte[]> generateReportPdf(@RequestParam Long userId, @RequestParam Timestamp startDate, @RequestParam Timestamp endDate, @RequestParam Set<String> fields) {
-        byte[] pdfData = summaryReportService.generateReportPdf(userId, startDate, endDate, fields);
+    public ResponseEntity<byte[]> generateReportPdf(@RequestParam Long userId,
+                                                    @RequestParam(required = false) String startTime,
+                                                    @RequestParam(required = false) String endTime, @RequestParam Set<String> fields) {
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
+        // Konwersja startTime i endTime na Timestamp
+        Timestamp startTimestamp = null;
+        Timestamp endTimestamp = null;
+
+        byte[] error = "Error".getBytes();
+
+        if (startTime != null) {
+            try {
+                startTimestamp = new Timestamp(dateFormat.parse(startTime).getTime());
+            } catch (ParseException e) {
+                return ResponseEntity.badRequest().body(error);
+            }
+        } else {
+            startTimestamp = new Timestamp(0); // Ustaw domyślną datę
+        }
+
+        if (endTime != null) {
+            try {
+                endTimestamp = new Timestamp(dateFormat.parse(endTime).getTime());
+            } catch (ParseException e) {
+                return ResponseEntity.badRequest().body(error);
+            }
+        } else {
+            endTimestamp = new Timestamp(System.currentTimeMillis()); // Ustaw bieżącą datę
+        }
+
+        if (fields == null) {
+            fields = Set.of("All"); // Domyślny zestaw pól
+        }
+        byte[] pdfData = summaryReportService.generateReportPdf(userId, startTimestamp, endTimestamp, fields);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)

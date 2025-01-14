@@ -9,9 +9,12 @@ import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 import pl.lodz.p.ias.io.raportowanie.service.ModularReportService;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
+@CrossOrigin("*")
 @RestController
 @RequestMapping("/api/modular-report")
 public class ModularReportController {
@@ -35,21 +38,53 @@ public class ModularReportController {
     }
 
     @PostMapping("/generate-pdf")
-    public ResponseEntity<byte[]> generateReportPdf(@RequestParam Long userId, @RequestParam int moduleId, @RequestParam(required = false) Timestamp startTime, @RequestParam(required = false) Timestamp endTime, @RequestParam(required = false) Set<String> fields) {
+    public ResponseEntity<byte[]> generateReportPdf(@RequestParam Long userId,
+                                                    @RequestParam int moduleId,
+                                                    @RequestParam(required = false) String startTime,
+                                                    @RequestParam(required = false) String endTime,
+                                                    @RequestParam(required = false) Set<String> fields) {
+        // Format daty ISO 8601
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
-        if(startTime == null || endTime == null || fields == null) {
-            startTime = new Timestamp(0);
-            endTime = new Timestamp(System.currentTimeMillis());
-            fields = Set.of("All");
+        // Konwersja startTime i endTime na Timestamp
+        Timestamp startTimestamp = null;
+        Timestamp endTimestamp = null;
+
+        byte[] error = "Error".getBytes();
+
+        if (startTime != null) {
+            try {
+                startTimestamp = new Timestamp(dateFormat.parse(startTime).getTime());
+            } catch (ParseException e) {
+                return ResponseEntity.badRequest().body(error);
+            }
+        } else {
+            startTimestamp = new Timestamp(0); // Ustaw domyślną datę
         }
 
-        byte[] pdfData = generalReportService.generateReportPdf(userId, moduleId, startTime, endTime, fields);
+        if (endTime != null) {
+            try {
+                endTimestamp = new Timestamp(dateFormat.parse(endTime).getTime());
+            } catch (ParseException e) {
+                return ResponseEntity.badRequest().body(error);
+            }
+        } else {
+            endTimestamp = new Timestamp(System.currentTimeMillis()); // Ustaw bieżącą datę
+        }
+
+        if (fields == null) {
+            fields = Set.of("All"); // Domyślny zestaw pól
+        }
+
+        byte[] pdfData = generalReportService.generateReportPdf(userId, moduleId, startTimestamp, endTimestamp, fields);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"modular-report.pdf\"")
                 .body(pdfData);
     }
+
+
 
     @GetMapping("/{reportId}")
     public ResponseEntity<GeneratedReport> getReport(@PathVariable Long reportId) {

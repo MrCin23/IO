@@ -1,6 +1,7 @@
 import { Pathnames } from './pathnames'
 
 import {HomePage} from "../pages/HomePage";
+import {HomeReportPage} from "../pages/report/HomeReportPage";
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -50,5 +51,12 @@ export const volunteerRoutes: RouteType[] = [
     {
         path: Pathnames.volunteer.homePage,
         Component: HomePage,
+    }
+]
+
+export const reportRoutes: RouteType[] = [
+    {
+        path: Pathnames.report.homePage,
+        Component: HomeReportPage,
     }
 ]
