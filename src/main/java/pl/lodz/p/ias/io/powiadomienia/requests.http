@@ -53,7 +53,7 @@ POST http://localhost:8080/notifications
 Content-Type: application/json
 
 {
-  "message": "Proszę się zabić",
+  "message": "Celebruj życie",
   "type": "WARNING",
   "userId": 1
 }

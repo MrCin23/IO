@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Modal from './modal';
 import getDefaultRequest from '../lookup/backend-lookup';
 import useAnnouncments from '../hooks/use-announcement';
-import { AnnouncementType } from '../types/announcement';
+import Announcement, { AnnouncementType } from '../types/announcement';
 import Speaker from '../icons/Speaker';
 import AnnouncementForm from './announcement-form';
 
@@ -32,6 +32,14 @@ const Announcements: React.FC = () => {
         fetch(url, getDefaultRequest("POST"))
     }
 
+    const handleAddAnnouncement = (announcement : Announcement)=>{
+        
+        setAnnouncements((prevState)=>([
+            ...prevState,announcement
+        ]))
+        setForm(false)
+    }
+
 
     const typeStyles = {
         [AnnouncementType.INFORMATION]: "bg-blue-100 text-blue-800",
@@ -55,7 +63,7 @@ const Announcements: React.FC = () => {
                 title='Announcement'
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false); setForm(false) }}>
-                {isForm ? (<AnnouncementForm onComplete={(_) => { setForm(false) }} />) : 
+                {isForm ? (<AnnouncementForm onComplete={handleAddAnnouncement} />) : 
                 <div>
                 <div className='flex flex-row-reverse w-full mb-2'>
                     <button className="bg-blue-500 text-white rounded-full w-8 h-8 hover:bg-blue-600 focus:outline-none 
