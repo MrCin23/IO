@@ -7,7 +7,7 @@ Content-Type: application/json
   "password": "ZAQ!2wsx",
   "firstName": "Mateusz",
   "lastName": "Jakub",
-  "roleName": "ROLE_WOLONTARIUSZ"
+  "roleName": "PRZEDSTAWICIEL_WŁADZ"
 }
 
 ###
@@ -35,7 +35,7 @@ POST http://localhost:8080/announcements/2/hide
 Content-Type: application/x-www-form-urlencoded
 
 ###
-GET http://localhost:8080/announcements/user/1
+GET http://localhost:8080/announcements/user/5
 
 ###
 POST http://localhost:8080/notifications
@@ -44,7 +44,7 @@ Content-Type: application/json
 {
   "message": "Masz nowe powiadomienie",
   "type": "INFORMATION",
-  "userId": 1
+  "userId": 6
 }
 
 ###
@@ -55,11 +55,11 @@ Content-Type: application/json
 {
   "message": "Celebruj życie",
   "type": "WARNING",
-  "userId": 1
+  "userId": 6
 }
 
 ###
-GET http://localhost:8080/notifications/user/1
+GET http://localhost:8080/notifications/user/5
 
 ###
 POST http://localhost:8080/notifications/1/hide

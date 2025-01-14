@@ -51,6 +51,7 @@ public class AnnouncementService {
         List<Announcement> announcementList = new ArrayList<>();
         for (UserAnnouncement userAnnouncement : userAnnouncementList) {
             announcementList.add(userAnnouncement.getAnnouncement());
+            announcementList.getLast().setId(userAnnouncement.getId());
         }
         return announcementList;
     }
