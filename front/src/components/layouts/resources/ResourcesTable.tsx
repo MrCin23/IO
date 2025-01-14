@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Resource } from "@/types";
+import api from "../../../api/Axios.tsx";
 
 export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const [selectedResourceId, setSelectedResourceId] = useState<number | null>(null);
@@ -26,31 +27,19 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 alert("Warning: Low resource quantity!");
             }
 
-            const response = await fetch(`/api/resources/${selectedResourceId}`, {
-                method: "PUT",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    resourceId: resourceToUpdate.resourceId,
-                    resourceName: resourceToUpdate.resourceName,
-                    resourceType: resourceToUpdate.resourceType,
-                    resourceQuantity: selectedQuantity,
-                    resourceStatus,
-                    warehouseId: resourceToUpdate.warehouseId
-                }),
+            await api.put(`/resources/${selectedResourceId}`, {
+                resourceId: resourceToUpdate.resourceId,
+                resourceName: resourceToUpdate.resourceName,
+                resourceType: resourceToUpdate.resourceType,
+                resourceQuantity: selectedQuantity,
+                resourceStatus,
+                warehouseId: resourceToUpdate.warehouseId,
             });
 
-            if (!response.ok) {
-                alert("Failed to update resource");
-                return;
-            }
-
             alert("Resource updated successfully");
-
             window.location.reload();
         } catch (error) {
-            console.error(error);
+            console.error("Failed to update resource:", error);
             alert("An unexpected error occurred.");
         }
     };
@@ -77,9 +66,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                     .slice()
                     .sort((a, b) => a.resourceId - b.resourceId)
                     .map((resource) => (
-                        <tr key={resource.resourceId} className={`border-b border-gray-300 ${
-                            resource.resourceQuantity <= 10 ? "bg-red-100" : ""
-                        }`}>
+                        <tr
+                            key={resource.resourceId}
+                            className={`border-b border-gray-300 ${
+                                resource.resourceQuantity <= 10 ? "bg-red-100" : ""
+                            }`}
+                        >
                             <td className="px-4 py-2">{resource.resourceId}</td>
                             <td className="px-4 py-2">{resource.resourceName}</td>
                             <td className="px-4 py-2">{resource.resourceType}</td>
@@ -89,7 +81,13 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             <td className="px-4 py-2">
                                 <button
                                     className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
-                                    onClick={() => handleEditClick(resource.resourceId, resource.resourceStatus, resource.resourceQuantity)}
+                                    onClick={() =>
+                                        handleEditClick(
+                                            resource.resourceId,
+                                            resource.resourceStatus,
+                                            resource.resourceQuantity
+                                        )
+                                    }
                                 >
                                     Edit
                                 </button>
@@ -115,7 +113,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                                 <input
                                                     type="number"
                                                     className="border border-gray-300 rounded px-2 py-1 ml-2"
-                                                    value={selectedQuantity ?? ''}
+                                                    value={selectedQuantity ?? ""}
                                                     onChange={(e) => setSelectedQuantity(parseInt(e.target.value, 10))}
                                                 />
                                             </label>
@@ -137,4 +135,3 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
         </div>
     );
 };
-
