@@ -1,6 +1,8 @@
 package pl.lodz.p.ias.io.powiadomienia.notification;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -20,11 +22,11 @@ public class NotificationService implements INotificationService {
     /**
      * Pobiera listę powiadomień przypisanych do użytkownika o podanym ID.
      *
-     * @param userId identyfikator użytkownika, dla którego mają zostać pobrane powiadomienia
+     * @param username nazwa użytkownika, dla którego mają zostać pobrane powiadomienia
      * @return lista obiektów {@link Notification} przypisanych do użytkownika
      */
-    public List<Notification> getNotifications(Long userId) {
-        return notificationRepository.findAllByUser(accountRepository.findById(userId).get());
+    public List<Notification> getNotifications(String username) {
+        return notificationRepository.findAllByUser(accountRepository.findByUsername(username));
     }
 
     /**
@@ -57,7 +59,11 @@ public class NotificationService implements INotificationService {
      * @param id identyfikator powiadomienia do usunięcia
      */
     public void hide(Long id) {
-        notificationRepository.deleteById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        if(notificationRepository.findById(id).get().getUser().getUsername().equals(username)) {
+            notificationRepository.deleteById(id);
+        }
     }
 
     /**

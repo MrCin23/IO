@@ -2,7 +2,12 @@ package pl.lodz.p.ias.io.powiadomienia.announcement;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationService;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.List;
 
@@ -19,12 +24,15 @@ public class AnnouncementController {
     /**
      * Pobiera listę ogłoszeń użytkownika.
      *
-     * @param user_id ID użytkownika którego ogłoszenia zostaną pobrane
      * @return lista {@link Announcement} danego użytkownika
      */
-    @GetMapping("/announcements/user/{user_id}")
-    public List<Announcement> getAnnouncements(@PathVariable Long user_id) {
-        return announcementService.getUsersAnnouncements(user_id);
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/announcements/user")
+    public List<Announcement> getAnnouncements() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return announcementService.getUsersAnnouncements(username);
     }
 
     /**
@@ -32,6 +40,7 @@ public class AnnouncementController {
      *
      * @param id ID ogłoszenia do ukrycia
      */
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/announcements/{id}/hide")
     public void hideAnnouncement(@PathVariable Long id) {
         announcementService.hideAnnouncement(id);
@@ -43,6 +52,7 @@ public class AnnouncementController {
      * @param announcement {@link Announcement} obiekt do utworzenia
      * @return stworzony {@link Announcement} obiekt
      */
+    @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'PRZEDSTAWICIEL_WŁADZ')")
     @PostMapping("/announcements")
     public Announcement createAnnouncement(@RequestBody @Valid Announcement announcement) {
         return announcementService.createAnnouncement(announcement);

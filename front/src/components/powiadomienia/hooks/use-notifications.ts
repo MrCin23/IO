@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Notification from "../../../models/powiadomienia/notification";
-import getDefaultRequest from "../../../lib/powiadomienia/backend-lookup";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 
 /**
@@ -27,18 +28,20 @@ const useNotifications = (userId?: string|null) => {
      * @returns {void} Funkcja nie zwraca wartości; aktualizuje stan komponentu.
      *
     */
-    const fetchNotifications = ()=>{
-        const uri=`http://localhost:8080/notifications/user/${userId}`
+    const fetchNotifications = async ()=>{
         setIsLoading(true)
-        fetch(uri, getDefaultRequest("GET"))
-            .then((response)=>{
-                if(response.ok){
-                    response.json().then((body)=>{
-                        setNotifications(body)
-                        setIsLoading(false)
-                    })
-                }
-            })
+        const token = Cookies.get('jwt');
+        if (token) {
+            try {
+                const response = await axios.get(`http://localhost:8080/notifications/user`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
+                setNotifications(response.data)
+                setIsLoading(false)
+            } catch (error) {
+                console.error('Failed to fetch notifications:', error);
+            }
+        }
     }
 
 

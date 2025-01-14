@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './modal';
-import getDefaultRequest from '../../lib/powiadomienia/backend-lookup';
 import Announcement, { AnnouncementType } from '../../models/powiadomienia/announcement';
 import Speaker from './icons/Speaker';
 import AnnouncementForm from './announcement-form';
+import Cookies from "js-cookie";
+import axios from "../../api/Axios.tsx";
 
 
 
@@ -29,14 +30,23 @@ const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate
      *
      * @param {number} id - ID ogłoszenia, które ma zostać ukryte.
      */
-    const handleHideAnnouncement = (id: number) => {
+    const handleHideAnnouncement = async (id: number) => {
         setAnnouncements(
             announcements.filter((value) => {
                 return value.id !== id
             })
         )
-        const url = `http://localhost:8080/announcements/${id}/hide`
-        fetch(url, getDefaultRequest("POST"))
+         const token = Cookies.get('jwt');
+         if (token) {
+             try {
+                 await axios.post(`http://localhost:8080/announcements/${id}/hide`, {
+                     headers: { Authorization: `Bearer ${token}` },
+                 });
+
+             } catch (error) {
+                 console.error('Failed to hide announcement:', error);
+             }
+         }
     }
 
     const handleAddAnnouncement = (announcement : Announcement)=>{

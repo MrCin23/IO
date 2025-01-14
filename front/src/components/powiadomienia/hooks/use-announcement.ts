@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Announcement from "../../../models/powiadomienia/announcement";
-import getDefaultRequest from "../../../lib/powiadomienia/backend-lookup";
+import Cookies from "js-cookie";
+import axios from "../../../api/Axios.tsx";
 
 
 
@@ -29,19 +30,22 @@ const useAnnouncments = (userId?: string|null) => {
      * @returns {void} Funkcja nie zwraca wartości; aktualizuje stan komponentu.
      *
     */
-    const fetchAnnouncements = ()=>{
-        const uri=`http://localhost:8080/announcements/user/${userId}`
-        setIsLoading(true)
-        fetch(uri, getDefaultRequest("GET"),)
-            .then((response)=>{
-                if(response.ok){
-                    response.json().then((body)=>{
-                        setAnnouncements(body)
-                        setIsLoading(false)
-                    })
+    const fetchAnnouncements= async () => {
+            setIsLoading(true)
+            const token = Cookies.get('jwt');
+            if (token) {
+                try {
+                    const response = await axios.get(`http://localhost:8080/announcements/user`, {
+                        headers: { Authorization: `Bearer ${token}` },
+                    });
+                    setAnnouncements(response.data)
+                    setIsLoading(false)
+                } catch (error) {
+                    console.error('Failed to fetch announcements:', error);
                 }
-            })
-    }
+            }
+        };
+
 
 
     useEffect(()=>{

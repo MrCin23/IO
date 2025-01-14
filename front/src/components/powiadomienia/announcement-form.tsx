@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Announcement, { AnnouncementType, createAnnouncement } from "../../models/powiadomienia/announcement";
-import getDefaultRequest from "../../lib/powiadomienia/backend-lookup";
+import axios from "axios";
+import Cookies from "js-cookie";
 
 
 type AnnouncementFormProps = {
@@ -43,16 +44,22 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
    *
    * @param {React.FormEvent<HTMLFormElement>} event - Zdarzenie wysłania formularza.
    */
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const uri = "http://localhost:8080/announcements"
-        fetch(uri,getDefaultRequest("POST",announcement)).then((response)=>{
-            if(response.ok){
-                response.json().then((value)=>{
-                    onComplete(value)
-                })
-            }
-        })
+
+       const token = Cookies.get('jwt');
+       if (token) {
+           try {
+               const response = await axios.post("http://localhost:8080/announcements",
+                   announcement,
+                   {
+                    headers: { Authorization: `Bearer ${token}` }
+                });
+               onComplete(response.data)
+           } catch (error) {
+               console.error('Failed to fetch announcements:', error);
+           }
+       }
     };
 
 
