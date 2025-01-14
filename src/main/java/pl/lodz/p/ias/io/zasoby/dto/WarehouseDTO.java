@@ -1,15 +1,20 @@
 package pl.lodz.p.ias.io.zasoby.dto;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class WarehouseDTO {
+    private long warehouseId;
     private String warehouseName;
     private String location;
 
-    public WarehouseDTO(String warehouseName, String location) {
+    public WarehouseDTO(long warehouseId, String warehouseName, String location) {
+        this.warehouseId = warehouseId;
         this.warehouseName = warehouseName;
         this.location = location;
     }

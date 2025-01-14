@@ -6,13 +6,12 @@ import pl.lodz.p.ias.io.zasoby.model.Resource;
 public class ResourceConverter {
     public ResourceDTO convertResourceToDTO(Resource resource) {
         return new ResourceDTO(
+                resource.getId(),
                 resource.getResourceName(),
                 resource.getResourceType(),
                 resource.getResourceQuantity(),
                 resource.getResourceStatus(),
-                resource.getWarehouseId(),
-                resource.getVolunteerName(),
-                resource.getAssignedTask()
+                resource.getWarehouseId()
         );
     }
 

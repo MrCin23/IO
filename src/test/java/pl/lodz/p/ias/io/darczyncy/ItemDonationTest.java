@@ -11,11 +11,12 @@ import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.implementations.ItemDonationService;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
@@ -29,7 +30,10 @@ import java.util.Date;
 public class ItemDonationTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Autowired
     private ItemDonationService itemDonationService;
@@ -49,7 +53,7 @@ public class ItemDonationTest {
     @BeforeEach
     public void setUp() {
         itemDonationRepository.deleteAll();
-        userRepository.deleteAll();
+        accountRepository.deleteAll();
     }
 
     @Test
@@ -57,37 +61,38 @@ public class ItemDonationTest {
 
         Role role = new Role("DARCZYNCA");
         roleRepository.save(role);
-        Account newUser = userRepository.save(new Account(
+        Account newUser = accountRepository.save(new Account(
                 "User",
                 "Password",
                 role,
                 "Jan",
                 "Nowak"
         ));
+
+        authenticationService.login("User", "Password");
         MaterialNeed materialNeed = MaterialNeed.builder()
-                .product("czajnik")
-                .amount(1)
+                .itemCategory(MaterialNeed.ItemCategory.HOUSEHOLD)
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .description("zasób materialny")
-                .userId(newUser.getId())
+                .description("czajnik")
+                .user(newUser)
         .build();
         materialNeedRepository.save(materialNeed);
 
         Warehouse warehouse = new Warehouse("magazyn", "WDupie");
         warehouseRepository.save(warehouse);
 
+
+
         ItemDonationCreateDTO createDTO = new ItemDonationCreateDTO(
-                newUser.getId(),
-                materialNeed.getId(),
                 "czajnik",
+                materialNeed.getId(),
                 ItemDonation.ItemCategory.HOUSEHOLD.toString(),
                 "bardzo dobry teapot",
-                418,
-                warehouse.getId()
+                418
         );
 
         ItemDonation item = itemDonationService.createItemDonation(createDTO);

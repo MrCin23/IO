@@ -12,7 +12,13 @@ public interface IItemDonationService {
 
     List<ItemDonation> findAllItemDonations();
 
-    List<ItemDonation> findItemDonationsByDonorId(long donorId);
+    List<ItemDonation> findAllItemDonationsByDonorId(long donorId);
+
+    List<ItemDonation> findAllItemDonationsByWarehouseId(long warehouseId);
+
+    List<ItemDonation> findAllByCurrentUser();
+
+    byte[] createConfirmationPdf(long donationId);
 
     ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation);
 

@@ -1,12 +1,10 @@
-import { StrictMode } from "react";
+import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
-import DonorsApp from "./DonorsApp.tsx";
-import "./i18n";
-
+import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
     <StrictMode>
-        <DonorsApp />
-    </StrictMode>
-);
+        <App />
+    </StrictMode>,
+)

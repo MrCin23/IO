@@ -12,11 +12,13 @@ import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.services.implementations.FinancialDonationService;
 
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
-import pl.lodz.p.ias.io.uwierzytelnianie.repositories.UserRepository;
+import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
 
@@ -29,13 +31,16 @@ import java.util.Date;
 public class FinancialDonationTest {
 
     @Autowired
-    private UserRepository userRepository;
+    private AccountRepository accountRepository;
 
     @Autowired
     private FinancialDonationService financialDonationService;
 
     @Autowired
     private FinancialDonationRepository financialDonationRepository;
+
+    @Autowired
+    private AuthenticationService authenticationService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -49,7 +54,7 @@ public class FinancialDonationTest {
     @BeforeEach
     public void setUp() {
         financialDonationRepository.deleteAll();
-        userRepository.deleteAll();
+        accountRepository.deleteAll();
     }
 
     @Test
@@ -57,13 +62,14 @@ public class FinancialDonationTest {
 
         Role role = new Role("DARCZYNCA");
         roleRepository.save(role);
-        Account newUser = userRepository.save(new Account(
+        Account newUser = accountRepository.save(new Account(
                 "User",
                 "Password",
                 role,
                 "Jan",
                 "Nowak"
         ));
+        authenticationService.login("User", "Password");
 
         FinancialNeed financialNeed = FinancialNeed.builder()
                 .collectionGoal(200)
@@ -71,10 +77,10 @@ public class FinancialDonationTest {
                 .description("aa")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
-                .status("Test")
+                .status(Need.Status.PENDING)
                 .priority(2)
                 .creationDate(Date.from(Instant.now().minus(1, ChronoUnit.DAYS)))
-                .userId(newUser.getId())
+                .user(newUser)
         .build();
         financialNeedRepository.save(financialNeed);
 
@@ -82,11 +88,8 @@ public class FinancialDonationTest {
         warehouseRepository.save(warehouse);
 
         FinancialDonationCreateDTO createDTO = new FinancialDonationCreateDTO(
-                newUser.getId(),
                 financialNeed.getId(),
-                warehouse.getId(),
                 200.0,
-                34.88,
                 FinancialDonation.Currency.PLN.toString()
         );
 

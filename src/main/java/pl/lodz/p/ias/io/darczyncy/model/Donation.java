@@ -6,16 +6,16 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import pl.lodz.p.ias.io.poszkodowani.model.Need;
-import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.zasoby.model.Resource;
 
+import java.time.LocalDate;
+
 @Getter @Setter
 @NoArgsConstructor
-@Entity
 @SuperBuilder(toBuilder = true)
-public class Donation extends Resource {
+@MappedSuperclass
+public abstract class Donation extends Resource {
     public enum AcceptanceStatus {
         ACCEPTED, REJECTED, PENDING
     }
@@ -28,23 +28,17 @@ public class Donation extends Resource {
     )
     private Account donor;
 
-    @ManyToOne
-    @JoinColumn(
-            name = "need_id",
-            referencedColumnName = "id",
-            foreignKey = @ForeignKey(name = "donation_need_id_fk")
-    )
-    private Need need;
-
     @Enumerated(EnumType.STRING)
     private AcceptanceStatus acceptanceStatus;
 
-    public Donation (Account donor, Need need, String resourceName, String resourceType,
+    LocalDate donationDate;
+
+    public Donation (Account donor, String resourceName, String resourceType, LocalDate donationDate,
                      int resourceQuantity, long warehouseId) {
         super(resourceName, resourceType, resourceQuantity, warehouseId);
         this.donor = donor;
-        this.need = need;
         this.acceptanceStatus = AcceptanceStatus.PENDING;
+        this.donationDate = donationDate;
     }
 
 }

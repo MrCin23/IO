@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.poszkodowani.model;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.Date;
 
@@ -16,6 +17,9 @@ import java.util.Date;
 @AllArgsConstructor
 @Table(name = "need")
 public abstract class Need {
+    public enum Status {
+        CANCELLED, PENDING, IN_PROGRESS, COMPLETED
+    }
 
     @Id
     //@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,8 +29,9 @@ public abstract class Need {
     @Column(name = "id") // Explicit column name
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Account user;
 
     @Column(name = "map_point_id", nullable = false)
     private Long mapPointId;
@@ -43,7 +48,7 @@ public abstract class Need {
     private Date expirationDate;
 
     @Column(name = "status", length = 50)
-    private String status;
+    private Status status;
 
     @Column(name = "priority", nullable = false)
     private int priority;
