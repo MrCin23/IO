@@ -16,9 +16,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     display: flex;
-    min-width: 320px;
+    margin: -20vw;
+    padding: 0;
+    min-width: 100vw;
     min-height: 100vh;
-    background: url('./assets/back.jpg') no-repeat;
+    background: url('./assets/back.jpg') no-repeat right;
     background-size: cover;
     background-position: center;
 }

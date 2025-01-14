@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import "../../../../styles/DonationList.css";
+import "../styles/DonationList.css";
 
 import { FinancialDonation } from "@/components/layouts/donor/model/FinancialDonation.ts";
 import api from "@/api/Axios.tsx";

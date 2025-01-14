@@ -77,12 +77,24 @@ public class FinancialNeedService {
         return financialNeedRepository.findByUserId(userId);
     }
 
-//    public Optional<FinancialNeed> changeStatus(Long id, Need.Status status) {
-//        Optional<FinancialNeed> financialNeed = financialNeedRepository.findById(id);
-//        financialNeed.ifPresent(fn -> {
-//            fn.setStatus(status);
-//            financialNeedRepository.save(fn);
-//        });
-//        return financialNeed;
-//    }
+    public void updateFinancialNeedCollectionStatus(Long id, double supportAmount) {
+        Optional<FinancialNeed> optionalFinancialNeed = financialNeedRepository.findById(id);
+
+        if (optionalFinancialNeed.isPresent()) {
+            FinancialNeed financialNeed = optionalFinancialNeed.get();
+            double newCollectionStatus = financialNeed.getCollectionStatus() + supportAmount;
+
+            financialNeed.setCollectionStatus(newCollectionStatus);
+
+            if (newCollectionStatus >= financialNeed.getCollectionGoal()) {
+                financialNeed.setStatus(Need.Status.COMPLETED);
+            } else if (newCollectionStatus > 0) {
+                financialNeed.setStatus(Need.Status.IN_PROGRESS);
+            }
+
+            financialNeedRepository.save(financialNeed);
+        } else {
+            throw new NoSuchElementException("FinancialNeed with id " + id + " not found");
+        }
+    }
 }

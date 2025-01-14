@@ -1,6 +1,6 @@
 import {useTranslation} from "react-i18next";
 import React, {useState} from "react";
-import "../../../../styles/DonationPanel.css";
+import "../styles/DonationPanel.css";
 import api from "@/api/Axios.tsx";
 
 interface ItemDonationPanelProps {

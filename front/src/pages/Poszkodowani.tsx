@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { MaterialNeedsList } from './MaterialNeedsList';
-import { ManualNeedsList } from './ManualNeedsList';
-import { FinancialNeedsList } from './FinancialNeedsList';
+import { FinancialNeedsList } from '../components/layouts/victim/FinancialNeedsList';
+import { ManualNeedsList } from '../components/layouts/victim/ManualNeedsList';
+import { MaterialNeedsList } from '../components/layouts/victim/MaterialNeedsList';
 
 const Poszkodowani: React.FC = () => {
     const [activeList, setActiveList] = useState<'financial' | 'manual' | 'material' | null>(null);

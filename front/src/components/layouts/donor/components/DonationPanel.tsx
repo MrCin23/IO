@@ -1,6 +1,6 @@
 import {useState} from "react";
 import { useTranslation } from "react-i18next";
-import "../../../../styles/DonationPanel.css";
+import "../styles/DonationPanel.css";
 import FinancialDonationPanel from "./FinancialDonationPanel.tsx";
 import ItemDonationPanel from "./ItemDonationPanel.tsx";
 

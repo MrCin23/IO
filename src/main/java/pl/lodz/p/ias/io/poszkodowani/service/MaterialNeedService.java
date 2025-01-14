@@ -74,4 +74,16 @@ public class MaterialNeedService {
 
         return optionalMaterialNeed;
     }
+
+    public void completeMaterialNeed(Long id) {
+        Optional<MaterialNeed> optionalMaterialNeed = materialNeedRepository.findById(id);
+
+        if (optionalMaterialNeed.isPresent()) {
+            MaterialNeed materialNeed = optionalMaterialNeed.get();
+            materialNeed.setStatus(Need.Status.COMPLETED);
+            materialNeedRepository.save(materialNeed);
+        } else {
+            throw new NoSuchElementException("MaterialNeed with id " + id + " not found");
+        }
+    }
 }
