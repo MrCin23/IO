@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.model.PointType;
 import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
 
 import java.util.List;
@@ -32,8 +33,12 @@ public class MapService implements IMapService {
 
     @Override
     public List<MapPoint> getPoints() {
-        List<MapPoint> a = mapPointRepository.findAll();
         return mapPointRepository.findAll();
+    }
+
+    @Override
+    public List<MapPoint> getPointsByType(PointType pointType) {
+        return mapPointRepository.findByType(pointType);
     }
 
     @Override

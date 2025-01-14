@@ -1,6 +1,8 @@
 import { Pathnames } from './pathnames'
 
 import {HomePage} from "../pages/HomePage";
+import {Pom} from "../pages/Pom.tsx";
+import {ExternalFormPage} from "../pages/ExternalFormPage.tsx";
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -14,7 +16,15 @@ export const defaultRoutes: RouteType[] = [
     {
         path: Pathnames.default.homePage,
         Component: HomePage,
-    }
+    },
+    {
+        path: Pathnames.default.pomPage,
+        Component: Pom,
+    }, //todo do wywalenia
+    {
+        path: Pathnames.default.externalForm,
+        Component: ExternalFormPage,
+    } //todo do wywalenia
 ]
 
 export const aid_organizationRoutes: RouteType[] = [

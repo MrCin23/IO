@@ -19,10 +19,12 @@ interface Point {
 }
 
 interface MapViewProps {
-    pointType: string; // Typ punktu przekazywany jako argument
+    pointType: string;
+    canAddPoints?: boolean;
+    canShowPoints?: boolean; // Parametr do kontrolowania widoczności punktów
 }
 
-const MapView: React.FC<MapViewProps> = ({ pointType }) => {
+const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false }) => {
     const [points, setPoints] = useState<Point[]>([]);
     const [newPoint, setNewPoint] = useState<Point | null>(null);
     const [formData, setFormData] = useState({
@@ -33,11 +35,13 @@ const MapView: React.FC<MapViewProps> = ({ pointType }) => {
     const MapClickHandler = () => {
         useMapEvents({
             click: (e) => {
-                setNewPoint({
-                    coordinates: { lat: e.latlng.lat, lng: e.latlng.lng },
-                    title: "",
-                    description: "",
-                });
+                if (canAddPoints) {
+                    setNewPoint({
+                        coordinates: { lat: e.latlng.lat, lng: e.latlng.lng },
+                        title: "",
+                        description: "",
+                    });
+                }
             },
         });
         return null;
@@ -45,7 +49,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType }) => {
 
     const fetchPoints = async () => {
         try {
-            const response = await axios.get('api/map');
+            const response = await axios.get(`api/map/type/${pointType}`);
             setPoints(response.data);
         } catch (error) {
             console.error("Błąd podczas pobierania punktów mapy:", error);
@@ -89,7 +93,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType }) => {
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                 />
-                {points.map((point, index) => (
+                {canShowPoints && points.map((point, index) => (
                     <Marker
                         key={index}
                         position={[point.coordinates.lat, point.coordinates.lng]}
@@ -101,7 +105,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType }) => {
                         </Popup>
                     </Marker>
                 ))}
-                {newPoint && (
+                {newPoint && canAddPoints && (
                     <Marker
                         position={[newPoint.coordinates.lat, newPoint.coordinates.lng]}
                         icon={defaultIcon}
@@ -114,8 +118,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType }) => {
                 )}
                 <MapClickHandler />
             </MapContainer>
-
-            {newPoint && (
+            {newPoint && canAddPoints && (
                 <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
                     <h3>Dodaj nowy punkt</h3>
                     <form
@@ -150,6 +153,9 @@ const MapView: React.FC<MapViewProps> = ({ pointType }) => {
         </div>
     );
 };
+
+
+
 
 export default MapView;
 
