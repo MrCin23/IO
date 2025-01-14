@@ -13,6 +13,7 @@ public class ItemDonationMapper {
                 itemDonation.getId(),
                 itemDonation.getDonor().getId(),
                 itemDonation.getResourceName(),
+                itemDonation.getCategory().toString(),
                 itemDonation.getResourceType(),
                 itemDonation.getDescription(),
                 itemDonation.getResourceQuantity(),

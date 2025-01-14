@@ -9,6 +9,7 @@ public record ItemDonationOutputDTO(
         Long donorId,
         String itemName,
         String category,
+        String resourceType,
         String description,
         int resourceQuantity,
         long warehouseId,
