@@ -21,11 +21,6 @@ public class MapService implements IMapService {
         return point;
     }
 
-//    @Override
-//    public MapPoint getPoint(double x, double y) {
-//        throw new UnsupportedOperationException("Not implemented yet");
-//    }
-
     @Override
     public MapPoint getPoint(long id) {
         return mapPointRepository.findById(id).get();
@@ -48,6 +43,11 @@ public class MapService implements IMapService {
 
     @Override
     public void changeStatus(long id, boolean status) {
-//        mapPointRepository.changeStatus(mapPointRepository.findById(id), status);
+        mapPointRepository.updateActiveByPointID(id, status);
+    }
+
+    @Override
+    public List<MapPoint> findByActive(boolean active) {
+        return mapPointRepository.findByActive(active);
     }
 }

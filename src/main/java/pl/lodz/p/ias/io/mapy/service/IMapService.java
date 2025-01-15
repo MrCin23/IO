@@ -20,4 +20,6 @@ public interface IMapService {
     public void removePoint(long id);
 
     public void changeStatus(long id, boolean status);
+
+    List<MapPoint> findByActive(boolean active);
 }
