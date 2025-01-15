@@ -46,7 +46,7 @@ export const ResourceLayout = ({ children }: LayoutProps) => {
         switch (role) {
             case 'aid_organization':
                 return [
-                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('home'), path: Pathnames.aid_organization.homePage },
                     { label: t('warehousesList'), path: Pathnames.aid_organization.warehouses },
                     { label: t('resourcesList'), path: Pathnames.aid_organization.resources },
                     { label: t('createWarehouse'), path: Pathnames.aid_organization.createWarehouse },
@@ -54,7 +54,7 @@ export const ResourceLayout = ({ children }: LayoutProps) => {
                 ];
             case 'donor':
                 return [
-                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('home'), path: Pathnames.donor.homePage },
                     { label: t('donate'), path: Pathnames.donor.homePage },
 /*                    { label: t('showFinancialDonations'), path: Pathnames.donor.financialDonations },
                     { label: t('showItemDonations'), path: Pathnames.donor.itemDonations },*/
@@ -62,7 +62,7 @@ export const ResourceLayout = ({ children }: LayoutProps) => {
                 ];
             case 'authority_representative':
                 return [
-                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('home'), path: Pathnames.authority_representative.homePage },
                     { label: t('warehousesList'), path: Pathnames.authority_representative.warehouses },
                     { label: t('resourcesList'), path: Pathnames.authority_representative.resources },
                     { label: t('createWarehouse'), path: Pathnames.authority_representative.createWarehouse },
@@ -70,12 +70,12 @@ export const ResourceLayout = ({ children }: LayoutProps) => {
                 ];
             case 'victim':
                 return [
-                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('home'), path: Pathnames.victim.homePage },
                     { label: t('resourcesList'), path: Pathnames.victim.resources },
                 ];
             case 'volunteer':
                 return [
-                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('home'), path: Pathnames.volunteer.homePage },
                     { label: t('resourcesList'), path: Pathnames.volunteer.resources },
                 ];
             default:

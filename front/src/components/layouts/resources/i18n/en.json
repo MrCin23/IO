@@ -40,5 +40,8 @@
   "enterLocation": "Enter warehouse location",
   "addWarehouse": "Add Warehouse",
   "blablaWarehouse": "Enter the warehouse name and location to add a new warehouse to the system.",
-  "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system."
+  "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
+  "delete": "Delete",
+  "confirmDeleteResource": "Confirm delete resource",
+  "resourceDeletedSuccess": "Resource delete success"
 }

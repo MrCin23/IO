@@ -23,8 +23,6 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const handleUpdate = async () => {
         if (!selectedResourceId || !selectedStatus || selectedQuantity === null) return;
 
-        console.log("Selected Status: ", selectedStatus);
-
         const validStatuses = ["ACCEPTED", "PENDING", "REJECTED"];
         if (!validStatuses.includes(selectedStatus)) {
             alert(t("invalidStatusSelected"));
@@ -39,7 +37,6 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
             "PENDING": "PENDING",
             "REJECTED": "REJECTED"
         };
-
 
         const resourceToUpdate = resources.find((resource) => resource.resourceId === selectedResourceId);
 
@@ -67,8 +64,18 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
         }
     };
 
+    const handleDelete = async (resourceId: number) => {
+        if (!window.confirm(t("confirmDeleteResource"))) return;
 
-
+        try {
+            await api.delete(`/resources/${resourceId}`);
+            alert(t("resourceDeletedSuccess"));
+            window.location.reload();
+        } catch (error) {
+            console.error(error);
+            alert(t("unexpectedErrorOccurred"));
+        }
+    };
 
     return (
         <div className="overflow-x-auto">
@@ -155,6 +162,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                             disabled={!selectedStatus || selectedQuantity === null}
                                         >
                                             {t("update")}
+                                        </button>
+                                        <button
+                                            className="ml-2 mt-2 bg-red-500 text-white px-3 py-1 rounded"
+                                            onClick={() => handleDelete(resource.resourceId)}
+                                        >
+                                            {t("delete")}
                                         </button>
                                     </div>
                                 )}

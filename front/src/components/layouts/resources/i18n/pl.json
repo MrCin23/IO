@@ -40,5 +40,9 @@
   "enterLocation": "Podaj lokalizacje magazynu",
   "addWarehouse": "Dodaj magazyn",
   "blablaWarehouse": "Podaj nazwę magazynu oraz lokalizację, aby utworzyć magazyn.",
-  "blablaResource": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu."
+  "blablaResource": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu.",
+  "delete": "Usuń",
+  "confirmDeleteResource": "Potwierdź usunięcie zasobu",
+  "resourceDeleteFailed": "Resource delete failed",
+  "resourceDeletedSuccess": "Pomyślnie usunięto zasób"
 }
