@@ -43,6 +43,9 @@
   "blablaResource": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu.",
   "delete": "Usuń",
   "confirmDeleteResource": "Potwierdź usunięcie zasobu",
-  "resourceDeleteFailed": "Resource delete failed",
-  "resourceDeletedSuccess": "Pomyślnie usunięto zasób"
+  "resourceDeletedSuccess": "Pomyślnie usunięto zasób",
+  "warehouseSuccess": "Pomyślnie dodano magazyn",
+  "warehouseFailed": "Nie udało się utworzyć magazynu. Spróbuj ponownie.",
+  "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
+  "resourceId": "ID Zasobu"
 }

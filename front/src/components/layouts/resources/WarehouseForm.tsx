@@ -26,7 +26,7 @@ const WarehouseForm = () => {
             const response = await api.post("/warehouses", values);
 
             if (response.status === 201) {
-                alert("Warehouse added successfully");
+                alert(t("warehouseSuccess"));
                 form.reset();
 
                 if (location.pathname.includes('/organization/warehouses/create')) {
@@ -38,11 +38,11 @@ const WarehouseForm = () => {
                 }
             } else {
                 console.error("Failed to add warehouse:", response.data);
-                alert("Failed to add warehouse. Please try again.");
+                alert(t("warehouseFailed"));
             }
         } catch (error) {
             console.error("An unexpected error occurred:", error);
-            alert("An unexpected error occurred. Please try again.");
+            alert(t("warehouseError"));
         }
     };
 

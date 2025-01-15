@@ -13,6 +13,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
 
     const location = useLocation();
     const isVictimPath = location.pathname.includes('/victim/resources');
+    const isVolunteerPath = location.pathname.includes('/volunteer/resources');
 
     const handleEditClick = (resourceId: number, status: string, quantity: number) => {
         setSelectedResourceId(resourceId);
@@ -85,12 +86,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 </caption>
                 <thead>
                 <tr className="bg-gray-100 border-b border-gray-300">
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("warehouseId")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceId")}</th>
                     <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceName")}</th>
                     <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceType")}</th>
                     <th className="px-4 py-2 text-left font-medium text-gray-700">{t("quantity")}</th>
                     <th className="px-4 py-2 text-left font-medium text-gray-700">{t("status")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("warehouse")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("warehouseId")}</th>
                     <th className="px-4 py-2 text-left font-medium text-gray-700">{t("action")}</th>
                 </tr>
                 </thead>
@@ -114,7 +115,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             </td>
                             <td className="px-4 py-2">{resource.warehouseId ?? ""}</td>
                             <td className="px-4 py-2">
-                                {!isVictimPath && (
+                                {!isVictimPath && !isVolunteerPath && (
                                     <button
                                         className="ml-2 bg-blue-500 text-white px-3 py-1 rounded"
                                         onClick={() =>
@@ -129,7 +130,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                     </button>
                                 )}
 
-                                {selectedResourceId === resource.resourceId && !isVictimPath && (
+                                {selectedResourceId === resource.resourceId && !isVictimPath && !isVolunteerPath && (
                                     <div className="mt-2">
                                         <div>
                                             <label>

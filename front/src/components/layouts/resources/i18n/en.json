@@ -43,5 +43,9 @@
   "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
   "delete": "Delete",
   "confirmDeleteResource": "Confirm delete resource",
-  "resourceDeletedSuccess": "Resource delete success"
+  "resourceDeletedSuccess": "Resource delete success",
+  "warehouseSuccess": "Warehouse added successfully",
+  "warehouseFailed": "Failed to add warehouse. Please try again.",
+  "warehouseError": "An unexpected error occurred. Please try again.",
+  "resourceId": "Resource ID"
 }
