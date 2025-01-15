@@ -23,6 +23,7 @@ const pl = {
     formItemCategory: 'Kategoria',
     formMaxVolunteers: 'Maksymalna liczba wolontariuszy',
     formCollectionGoal: 'Cel zbiórki',
+    formSubmitButton: 'Zatwierdź',
 
     error: 'Błąd',
     loading: 'Ładowanie',

@@ -23,6 +23,7 @@ const en = {
     formItemCategory: 'Category',
     formMaxVolunteers: 'Maximum number of volunteers',
     formCollectionGoal: 'Collection goal',
+    formSubmitButton: 'Submit',
 
     error: 'Error',
     loading: 'Loading',

@@ -9,7 +9,7 @@ import { getCurrentUser } from '../components/layouts/victim/components/NeedsLis
 import { useTranslation } from 'react-i18next';
 
 export const VictimPage = () => {
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
     const [activeList, setActiveList] = useState<'financial' | 'manual' | 'material' | 'form'>('form');
     const navigate = useNavigate();
   
@@ -36,12 +36,6 @@ export const VictimPage = () => {
   
       checkUserRole();
     }, [navigate]);
-  
-    const changeLanguage = (lng: string) => {
-      i18n.changeLanguage(lng).then(() => {
-        window.location.reload();
-      });
-    };
   
     return (
       <div className="flex justify-center items-center overflow-auto">

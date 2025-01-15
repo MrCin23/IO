@@ -236,7 +236,7 @@ export default function AddNeedForm() {
       )}
 
       <Button type="submit" variant="contained" color="primary" fullWidth>
-      Zatwierdź
+      {t('formSubmitButton')}
       </Button>
     </form>
   );
