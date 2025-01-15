@@ -1,6 +1,6 @@
 {
   "group_chat": {
-    "create_chat": "Stwórz nowe czat",
+    "create_chat": "Stwórz nowy czat",
     "dialog_title": "Podaj nazwę czatu",
     "dialog_description": "Ta akcja nie może być cofnięta. Nie będziesz mógł tego zmienić później."
   },
@@ -24,7 +24,8 @@
   "update_chat_form": {
     "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",
     "form_chat_label": "Nazwa czatu",
-    "form_users_description": "Wybierz użytkowników do aktualizacji czatu."
+    "form_users_description": "Wybierz użytkowników do aktualizacji czatu.",
+    "form dialog decsription": "Podaj nazwę czatu"
   },
   "general": {
     "submit": "Wyślij",

@@ -114,7 +114,7 @@ const UpdateChatForm = ({
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Please provide a chat name</DialogTitle>
+          <DialogTitle>{t("update_chat_form.form dialog decsription")}</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="space-y-2">

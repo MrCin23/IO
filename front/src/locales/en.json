@@ -24,7 +24,8 @@
   "update_chat_form": {
     "form_users_error_message": "You have to select at least one user.",
     "form_chat_label": "Chat name",
-    "form_users_description": "Select users to update the chat."
+    "form_users_description": "Select users to update the chat.",
+    "form dialog decsription": "Please provide a chat name"
   },
   "general": {
     "submit": "Submit",
