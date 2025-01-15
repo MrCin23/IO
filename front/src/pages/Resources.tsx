@@ -16,7 +16,6 @@ export const Resources = () => {
 
   return (
       <div className="min-h-screen">
-          <h1 className="text-bold text-5xl text-center my-8">List of Resources</h1>
           <ResourcesTable resources={resources}/>
       </div>
   );

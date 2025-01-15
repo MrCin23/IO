@@ -1,9 +1,12 @@
 import { useState } from "react";
 import { Resource } from "@/types";
 import api from "../../../api/Axios.tsx";
-import {useLocation} from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
+    const { t } = useTranslation();
+
     const [selectedResourceId, setSelectedResourceId] = useState<number | null>(null);
     const [selectedStatus, setSelectedStatus] = useState<string>("");
     const [selectedQuantity, setSelectedQuantity] = useState<number | null>(null);
@@ -20,11 +23,23 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const handleUpdate = async () => {
         if (!selectedResourceId || !selectedStatus || selectedQuantity === null) return;
 
+        console.log("Selected Status: ", selectedStatus);
+
         const validStatuses = ["ACCEPTED", "PENDING", "REJECTED"];
         if (!validStatuses.includes(selectedStatus)) {
-            alert("Invalid status selected.");
+            alert(t("invalidStatusSelected"));
             return;
         }
+
+        const statusMap: { [key in string]: string } = {
+            "Zaakceptowany": "ACCEPTED",
+            "Oczekujący": "PENDING",
+            "Odrzucony": "REJECTED",
+            "ACCEPTED": "ACCEPTED",
+            "PENDING": "PENDING",
+            "REJECTED": "REJECTED"
+        };
+
 
         const resourceToUpdate = resources.find((resource) => resource.resourceId === selectedResourceId);
 
@@ -32,7 +47,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
 
         try {
             if (selectedQuantity <= 10) {
-                alert("Warning: Low resource quantity!");
+                alert(t("lowResourceWarning"));
             }
 
             await api.put(`/resources/${selectedResourceId}`, {
@@ -40,34 +55,36 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 resourceName: resourceToUpdate.resourceName,
                 resourceType: resourceToUpdate.resourceType,
                 resourceQuantity: selectedQuantity,
-                resourceStatus: selectedStatus,
+                resourceStatus: statusMap[selectedStatus as "Zaakceptowany" | "Oczekujący" | "Odrzucony"],
                 warehouseId: resourceToUpdate.warehouseId,
             });
 
-            alert("Resource updated successfully");
+            alert(t("resourceUpdatedSuccess"));
             window.location.reload();
         } catch (error) {
-            console.error("Failed to update resource:", error);
-            alert("An unexpected error occurred.");
+            console.error(t("resourceUpdateFailed"), error);
+            alert(t("unexpectedErrorOccurred"));
         }
     };
+
+
 
 
     return (
         <div className="overflow-x-auto">
             <table className="min-w-full table-auto border-collapse border border-gray-300">
                 <caption className="text-lg font-semibold text-gray-800 my-4">
-                    A list of resources.
+                    {t("resourcesList")}
                 </caption>
                 <thead>
                 <tr className="bg-gray-100 border-b border-gray-300">
-                    <th className="px-4 py-2 text-left font-medium text-gray-700 w-[100px]">Resource ID</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">Name</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">Type</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">Quantity</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">Status</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">Warehouse ID</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">Action</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("warehouseId")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceName")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceType")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("quantity")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("status")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("warehouse")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("action")}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -85,7 +102,9 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             <td className="px-4 py-2">{resource.resourceName}</td>
                             <td className="px-4 py-2">{resource.resourceType}</td>
                             <td className="px-4 py-2">{resource.resourceQuantity}</td>
-                            <td className="px-4 py-2">{resource.resourceStatus}</td>
+                            <td className="px-4 py-2">
+                                {t(`status${resource.resourceStatus.charAt(0).toUpperCase() + resource.resourceStatus.slice(1).toLowerCase()}`)}
+                            </td>
                             <td className="px-4 py-2">{resource.warehouseId ?? ""}</td>
                             <td className="px-4 py-2">
                                 {!isVictimPath && (
@@ -99,7 +118,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                             )
                                         }
                                     >
-                                        Edit
+                                        {t("edit")}
                                     </button>
                                 )}
 
@@ -107,21 +126,21 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                     <div className="mt-2">
                                         <div>
                                             <label>
-                                                Status:
+                                                {t("status")}:
                                                 <select
                                                     className="border border-gray-300 rounded px-2 py-1 ml-2"
                                                     value={selectedStatus}
                                                     onChange={(e) => setSelectedStatus(e.target.value)}
                                                 >
-                                                    <option value="ACCEPTED">ACCEPTED</option>
-                                                    <option value="PENDING">PENDING</option>
-                                                    <option value="REJECTED">REJECTED</option>
+                                                    <option value="ACCEPTED">{t("statusAccepted")}</option>
+                                                    <option value="PENDING">{t("statusPending")}</option>
+                                                    <option value="REJECTED">{t("statusRejected")}</option>
                                                 </select>
                                             </label>
                                         </div>
                                         <div className="mt-2">
                                             <label>
-                                                Quantity:
+                                                {t("quantity")}:
                                                 <input
                                                     type="number"
                                                     className="border border-gray-300 rounded px-2 py-1 ml-2"
@@ -135,7 +154,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                             onClick={handleUpdate}
                                             disabled={!selectedStatus || selectedQuantity === null}
                                         >
-                                            Update
+                                            {t("update")}
                                         </button>
                                     </div>
                                 )}

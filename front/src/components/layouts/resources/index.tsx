@@ -1,7 +1,9 @@
 import { AppBar, Button, Container, Toolbar } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { Pathnames } from '../../../router/pathnames';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import './i18n';
 
 interface LayoutProps {
     children: ReactNode;
@@ -10,6 +12,24 @@ interface LayoutProps {
 export const ResourceLayout = ({ children }: LayoutProps) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { t, i18n } = useTranslation();
+
+    useEffect(() => {
+        const handleLanguageChange = () => {
+            const detectedLanguage = navigator.language.split('-')[0];
+            if (i18n.language !== detectedLanguage) {
+                i18n.changeLanguage(detectedLanguage);
+            }
+        };
+
+        handleLanguageChange();
+
+        window.addEventListener('languagechange', handleLanguageChange);
+
+        return () => {
+            window.removeEventListener('languagechange', handleLanguageChange);
+        };
+    }, [i18n]);
 
     const getRoleFromPath = () => {
         if (location.pathname.startsWith('/organization')) return 'aid_organization';
@@ -26,39 +46,40 @@ export const ResourceLayout = ({ children }: LayoutProps) => {
         switch (role) {
             case 'aid_organization':
                 return [
-                    { label: 'Home', path: Pathnames.default.homePage },
-                    { label: 'Warehouses list', path: Pathnames.aid_organization.warehouses },
-                    { label: 'Resources list', path: Pathnames.aid_organization.resources },
-                    { label: 'Create warehouse', path: Pathnames.aid_organization.createWarehouse },
-                    { label: 'Create resource', path: Pathnames.aid_organization.createResource },
+                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('warehousesList'), path: Pathnames.aid_organization.warehouses },
+                    { label: t('resourcesList'), path: Pathnames.aid_organization.resources },
+                    { label: t('createWarehouse'), path: Pathnames.aid_organization.createWarehouse },
+                    { label: t('createResource'), path: Pathnames.aid_organization.createResource },
                 ];
             case 'donor':
                 return [
-                    { label: 'Home', path: Pathnames.default.homePage },
-                    { label: 'Account', path: Pathnames.donor.accountPage },
-                    { label: 'Accounts List', path: Pathnames.donor.accountsListPage },
-                    { label: 'Create resource', path: Pathnames.donor.createResource },
+                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('donate'), path: Pathnames.donor.homePage },
+/*                    { label: t('showFinancialDonations'), path: Pathnames.donor.financialDonations },
+                    { label: t('showItemDonations'), path: Pathnames.donor.itemDonations },*/
+                    { label: t('myAccount'), path: Pathnames.donor.accountPage },
                 ];
             case 'authority_representative':
                 return [
-                    { label: 'Home', path: Pathnames.default.homePage },
-                    { label: 'Warehouses list', path: Pathnames.authority_representative.warehouses },
-                    { label: 'Resources list', path: Pathnames.authority_representative.resources },
-                    { label: 'Create warehouse', path: Pathnames.authority_representative.createWarehouse },
-                    { label: 'Create resource', path: Pathnames.authority_representative.createResource },
+                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('warehousesList'), path: Pathnames.authority_representative.warehouses },
+                    { label: t('resourcesList'), path: Pathnames.authority_representative.resources },
+                    { label: t('createWarehouse'), path: Pathnames.authority_representative.createWarehouse },
+                    { label: t('createResource'), path: Pathnames.authority_representative.createResource },
                 ];
             case 'victim':
                 return [
-                    { label: 'Home', path: Pathnames.default.homePage },
-                    { label: 'Resources list', path: Pathnames.victim.resources },
+                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('resourcesList'), path: Pathnames.victim.resources },
                 ];
             case 'volunteer':
                 return [
-                    { label: 'Home', path: Pathnames.default.homePage },
-                    { label: 'Resources list', path: Pathnames.volunteer.resources },
+                    { label: t('home'), path: Pathnames.default.homePage },
+                    { label: t('resourcesList'), path: Pathnames.volunteer.resources },
                 ];
             default:
-                return [{ label: 'Home', path: Pathnames.default.homePage }];
+                return [{ label: t('home'), path: Pathnames.default.homePage }];
         }
     };
 
