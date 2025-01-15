@@ -2,18 +2,26 @@ import { useWebSocket } from "../hooks/useWebSocket";
 import { Badge } from "@/components/ui/badge.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import SendMessageForm from "./SendMessageForm";
+import { useTranslation } from "react-i18next";
 
 const Messages = ({ selectedChat, userId, username, chatName }: any) => {
   const { messages, sendMessage, isConnected, isLoading } =
     useWebSocket(selectedChat);
 
+  const { t } = useTranslation();
+
   return (
     <div className="w-full h-screen flex flex-col justify-between py-8 px-6">
       <div className="w-full">
         <h2 className="text-center font-bold text-lg">{chatName}</h2>
-        <div>Status: {isConnected ? "Connected" : "Disconnected"}</div>
+        <div>
+          Status:{" "}
+          {isConnected
+            ? t("messages.connected_status")
+            : t("messages.disconnected_status")}
+        </div>
         {isLoading ? (
-          <div>Loading messages...</div>
+          <div>{t("messages.loading")}</div>
         ) : (
           <ScrollArea className="w-full flex-1 overflow-auto h-full">
             <div>

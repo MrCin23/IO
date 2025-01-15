@@ -26,13 +26,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Settings } from "lucide-react";
-
-const formSchema = z.object({
-  chatName: z.string().nonempty().min(3).max(50),
-  users: z.array(z.string()).refine((value) => value.some((user) => user), {
-    message: "You have to select at least one item.",
-  }),
-});
+import { useTranslation } from "react-i18next";
 
 const UpdateChatForm = ({
   chatId,
@@ -50,6 +44,15 @@ const UpdateChatForm = ({
   if (!initialChatData) {
     throw new Error("Chat not found");
   }
+
+  const { t } = useTranslation();
+
+  const formSchema = z.object({
+    chatName: z.string().nonempty().min(3).max(50),
+    users: z.array(z.string()).refine((value) => value.some((user) => user), {
+      message: t("update_chat_form.form_users_error_message"),
+    }),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -107,7 +110,7 @@ const UpdateChatForm = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-          <Settings color="black" size={48} className="mr-4 mt-4"/>
+        <Settings color="black" size={48} className="mr-4 mt-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -122,7 +125,9 @@ const UpdateChatForm = ({
                 name="chatName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Chat Name</FormLabel>
+                    <FormLabel>
+                      {t("update_chat_form.form_chat_label")}
+                    </FormLabel>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -137,7 +142,7 @@ const UpdateChatForm = ({
                   <FormItem>
                     <div className="mb-4">
                       <FormDescription>
-                        Select users to update the chat.
+                        {t("update_chat_form.form_users_description")}
                       </FormDescription>
                     </div>
                     {users.map((user) => (
@@ -180,7 +185,7 @@ const UpdateChatForm = ({
                   </FormItem>
                 )}
               />
-              <Button type="submit">Update</Button>
+              <Button type="submit">{t("general.update")}</Button>
             </form>
           </Form>
         </div>
