@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
+import {useTranslation} from "react-i18next";
+import "./i18n";
 
 interface LayoutProps {
     children: ReactNode
@@ -11,6 +13,7 @@ interface LayoutProps {
 export const VictimLayout = ({ children }: LayoutProps) => {
     const navigate = useNavigate()
     const { logout } = useAccount();
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -21,6 +24,9 @@ export const VictimLayout = ({ children }: LayoutProps) => {
                     </Button>
                     <Button onClick={() => navigate(Pathnames.victim.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         My Account
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.victim.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("resourcesList")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout

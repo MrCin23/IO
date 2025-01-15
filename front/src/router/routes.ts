@@ -1,8 +1,8 @@
 import { Pathnames } from './pathnames'
 
 import {HomePage} from "../pages/HomePage";
-import {Resources} from "../pages/Resources";
-import {Warehouses} from "../pages/Warehouses";
+import Resources from "../pages/Resources";
+import Warehouses from "../pages/Warehouses";
 import {CreateWarehouse} from "../pages/CreateWarehouse";
 import {CreateResource} from "../pages/CreateResource";
 import LoginPage from '../pages/uwierzytelnianie/LoginPage';
@@ -41,59 +41,7 @@ export const aid_organizationRoutes: RouteType[] = [
     {
         path: Pathnames.aid_organization.accountPage,
         Component: MyAccountPage,
-    }
-
-]
-
-export const authority_representativeRoutes: RouteType[] = [
-    {
-        path: Pathnames.authority_representative.homePage,
-        Component: HomePage,
     },
-    {
-        path: Pathnames.authority_representative.accountPage,
-        Component: MyAccountPage,
-    },
-    {
-        path: Pathnames.authority_representative.accountsListPage,
-        Component: AccountsListPage,
-    }
-]
-
-export const donorRoutes: RouteType[] = [
-    {
-        path: Pathnames.donor.homePage,
-        Component: HomePage,
-    },
-    {
-        path: Pathnames.donor.accountPage,
-        Component: MyAccountPage,
-    }
-]
-
-export const victimRoutes: RouteType[] = [
-    {
-        path: Pathnames.victim.homePage,
-        Component: HomePage,
-    },
-    {
-        path: Pathnames.victim.accountPage,
-        Component: MyAccountPage,
-    }
-]
-
-export const volunteerRoutes: RouteType[] = [
-    {
-        path: Pathnames.volunteer.homePage,
-        Component: HomePage,
-    },
-    {
-        path: Pathnames.volunteer.accountPage,
-        Component: MyAccountPage,
-    }
-]
-
-export const resourceRoutes: RouteType[] = [
     {
         path: Pathnames.aid_organization.resources,
         Component: Resources,
@@ -109,14 +57,21 @@ export const resourceRoutes: RouteType[] = [
     {
         path: Pathnames.aid_organization.createResource,
         Component: CreateResource,
+    }
+]
+
+export const authority_representativeRoutes: RouteType[] = [
+    {
+        path: Pathnames.authority_representative.homePage,
+        Component: HomePage,
     },
     {
-        path: Pathnames.victim.resources,
-        Component: Resources,
+        path: Pathnames.authority_representative.accountPage,
+        Component: MyAccountPage,
     },
     {
-        path: Pathnames.donor.createResource,
-        Component: CreateResource,
+        path: Pathnames.authority_representative.accountsListPage,
+        Component: AccountsListPage,
     },
     {
         path: Pathnames.authority_representative.resources,
@@ -133,6 +88,47 @@ export const resourceRoutes: RouteType[] = [
     {
         path: Pathnames.authority_representative.createResource,
         Component: CreateResource,
+    }
+]
+
+export const donorRoutes: RouteType[] = [
+    {
+        path: Pathnames.donor.homePage,
+        Component: HomePage,
+    },
+    {
+        path: Pathnames.donor.accountPage,
+        Component: MyAccountPage,
+    },
+    {
+        path: Pathnames.donor.createResource,
+        Component: CreateResource,
+    }
+]
+
+export const victimRoutes: RouteType[] = [
+    {
+        path: Pathnames.victim.homePage,
+        Component: HomePage,
+    },
+    {
+        path: Pathnames.victim.accountPage,
+        Component: MyAccountPage,
+    },
+    {
+        path: Pathnames.victim.resources,
+        Component: Resources,
+    }
+]
+
+export const volunteerRoutes: RouteType[] = [
+    {
+        path: Pathnames.volunteer.homePage,
+        Component: HomePage,
+    },
+    {
+        path: Pathnames.volunteer.accountPage,
+        Component: MyAccountPage,
     },
     {
         path: Pathnames.volunteer.resources,

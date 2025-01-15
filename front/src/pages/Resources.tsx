@@ -3,7 +3,7 @@ import { Resource } from '../types/index';
 import { useState, useEffect } from 'react';
 import api from "../api/Axios.tsx";
 
-export const Resources = () => {
+const Resources = () => {
     const [resources, setResources] = useState<Resource[]>([]);
 
     useEffect(() => {
@@ -20,3 +20,5 @@ export const Resources = () => {
       </div>
   );
 };
+
+export default Resources;

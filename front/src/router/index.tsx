@@ -2,7 +2,7 @@ import {Route, Routes, Navigate} from 'react-router-dom'
 import {
     defaultRoutes,
     aid_organizationRoutes,
-    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes, resourceRoutes
+    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes
 } from './routes.ts'
 import {DefaultLayout} from "../components/layouts/default";
 import {AidOrganizationLayout} from "../components/layouts/aid_organization";
@@ -10,7 +10,6 @@ import {AuthorityRepresentativeLayout} from "../components/layouts/autority_repr
 import {DonorLayout} from "../components/layouts/donor";
 import {VictimLayout} from "../components/layouts/victim";
 import {VolunteerLayout} from "../components/layouts/volunteer";
-import {ResourceLayout} from "../components/layouts/resources";
 import { useAccount } from '../contexts/uwierzytelnianie/AccountContext.tsx';
 import PrivateRoute from '../components/PrivateRoute.tsx';
 import { Pathnames } from './pathnames.ts';

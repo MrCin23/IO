@@ -3,6 +3,8 @@ import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
+import {useTranslation} from "react-i18next";
+import "./i18n";
 
 interface LayoutProps {
     children: ReactNode
@@ -12,7 +14,7 @@ export const AuthorityRepresentativeLayout = ({ children }: LayoutProps) => {
     // Udostępnia funkcję pozwalającą na zmianę widoku na inny, zgodnie z określoną ścieżką (pathname)
     const navigate = useNavigate()
     const { logout } = useAccount();
-
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -26,6 +28,18 @@ export const AuthorityRepresentativeLayout = ({ children }: LayoutProps) => {
                     </Button>
                     <Button onClick={() => navigate(Pathnames.authority_representative.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         My Account
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.authority_representative.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("resourcesList")}
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.authority_representative.warehouses)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("warehousesList")}
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.authority_representative.createResource)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("addResource")}
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.authority_representative.createWarehouse)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("addWarehouse")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
