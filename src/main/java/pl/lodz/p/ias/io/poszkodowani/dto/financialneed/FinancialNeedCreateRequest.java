@@ -19,6 +19,7 @@ public class FinancialNeedCreateRequest {
 
     private Long userId;
 
+    @NotNull(message = "Map point ID cannot be null")
     private Long mapPointId;
 
     @NotNull(message = "Description cannot be null")
