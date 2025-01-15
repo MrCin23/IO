@@ -33,7 +33,6 @@ public class Resource {
     @NotNull(message = "Resource status cannot be null")
     private ResourceStatus resourceStatus;
 
-    @Min(value = 1, message = "Warehouse ID must be a positive number")
     private Long warehouseId;
 
     private String volunteerName;
@@ -47,6 +46,14 @@ public class Resource {
         this.resourceType = resourceType;
         this.resourceQuantity = resourceQuantity;
         this.warehouseId = warehouseId;
-        this.resourceStatus = ResourceStatus.NIEPRZYDZIELONY;
+        this.resourceStatus = ResourceStatus.PENDING;
+    }
+
+    public Resource(String resourceName, String resourceType, int resourceQuantity, Long warehouseId, ResourceStatus resourceStatus) {
+        this.resourceName = resourceName;
+        this.resourceType = resourceType;
+        this.resourceQuantity = resourceQuantity;
+        this.warehouseId = warehouseId;
+        this.resourceStatus = resourceStatus;
     }
 }

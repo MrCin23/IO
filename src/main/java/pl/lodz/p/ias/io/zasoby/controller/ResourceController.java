@@ -30,7 +30,7 @@ public class ResourceController {
         return resourceService.getResourceById(id);
     }
 
-    @PreAuthorize("hasAnyRole('DARCZYŃCA', 'PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA', 'POSZKODOWANY')")
+    @PreAuthorize("hasAnyRole('DARCZYŃCA', 'PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA', 'POSZKODOWANY', 'WOLONTARIUSZ')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ResourceDTO> getAllResources() {
