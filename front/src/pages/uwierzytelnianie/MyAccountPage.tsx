@@ -116,6 +116,8 @@ const MyAccountPage = () => {
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Wprowadź nowe hasło"
+                        minLength={8}
+                        maxLength={50}
                         required
                     />
                     <button
