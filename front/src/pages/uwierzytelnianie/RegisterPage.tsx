@@ -67,6 +67,8 @@ const RegisterPage = () => {
                                 placeholder="Nazwa użytkownika"
                                 value={username}
                                 onChange={(e) => setUsername(e.target.value)}
+                                minLength={3}
+                                maxLength={50}
                                 required
                             />
                         </div>
@@ -78,6 +80,8 @@ const RegisterPage = () => {
                                 placeholder="Imię"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
+                                minLength={1}
+                                maxLength={50}
                                 required
                             />
                         </div>
@@ -89,6 +93,8 @@ const RegisterPage = () => {
                                 placeholder="Nazwisko"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
+                                minLength={1}
+                                maxLength={50}
                                 required
                             />
                         </div>
@@ -114,6 +120,8 @@ const RegisterPage = () => {
                                 placeholder="Hasło"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
+                                minLength={8}
+                                maxLength={50}
                                 required
                             />
                             <button
