@@ -42,7 +42,7 @@ public class ItemDonationService implements IItemDonationService {
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
     @Override
-    public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
+    public ItemDonation create(ItemDonationCreateDTO dto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(auth.getName());
         MaterialNeed need = materialNeedRepository.findById(dto.needId())
@@ -74,7 +74,7 @@ public class ItemDonationService implements IItemDonationService {
     }
 
     @Override
-    public ItemDonation findItemDonationById(long id) {
+    public ItemDonation findById(long id) {
         ItemDonation itemDonation = itemDonationRepository.findById(id).orElse(null);
         if (itemDonation == null) {
             throw new ItemDonationNotFoundException();
@@ -88,13 +88,13 @@ public class ItemDonationService implements IItemDonationService {
     }
 
     @Override
-    public List<ItemDonation> findAllItemDonationsByDonorId(long donorId) {
+    public List<ItemDonation> findAllByDonorId(long donorId) {
         accountRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return itemDonationRepository.findAllByDonor_Id(donorId);
     }
 
     @Override
-    public List<ItemDonation> findAllItemDonationsByWarehouseId(long warehouseId) {
+    public List<ItemDonation> findAllByWarehouseId(long warehouseId) {
         warehouseRepository.findById(warehouseId).orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
         return itemDonationRepository.findAllByWarehouseId(warehouseId);
     }
@@ -124,7 +124,7 @@ public class ItemDonationService implements IItemDonationService {
     }
 
     @Override
-    public ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation) {
+    public ItemDonation update(long id, ItemDonation updatedItemDonation) {
         ItemDonation foundDonation = itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
 
         List<Field> fields = new ArrayList<>();
@@ -154,7 +154,7 @@ public class ItemDonationService implements IItemDonationService {
     }
 
     @Override
-    public void deleteItemDonationById(Long id) {
+    public void deleteById(Long id) {
         ItemDonation itemDonation = itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
         itemDonationRepository.delete(itemDonation);
     }

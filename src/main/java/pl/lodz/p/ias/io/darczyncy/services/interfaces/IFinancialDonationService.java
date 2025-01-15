@@ -6,15 +6,15 @@ import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import java.util.List;
 
 public interface IFinancialDonationService {
-    FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto);
+    FinancialDonation create(FinancialDonationCreateDTO dto);
 
-    FinancialDonation findFinancialDonationById(long id);
+    FinancialDonation findById(long id);
 
-    List<FinancialDonation> findAllFinancialDonationByDonorId(long donorId);
+    List<FinancialDonation> findAllByDonorId(long donorId);
 
-    List<FinancialDonation> findAllFinancialDonationByWarehouseId(long warehouseId);
+    List<FinancialDonation> findAllByWarehouseId(long warehouseId);
 
-    List<FinancialDonation> findAllFinancialDonationForCurrentUser();
+    List<FinancialDonation> findAllForCurrentUser();
 
     byte[] createConfirmationPdf(String language, long donationId);
 

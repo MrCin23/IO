@@ -3,7 +3,6 @@ package pl.lodz.p.ias.io.darczyncy.controller.implementations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.ias.io.darczyncy.controller.interfaces.IFinancialDonationController;
 import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
@@ -17,11 +16,9 @@ import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.services.interfaces.IFinancialDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
-import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
 import pl.lodz.p.ias.io.poszkodowani.service.FinancialNeedService;
 
 import java.net.URI;
-import java.util.ArrayList;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -36,7 +33,7 @@ public class FinancialDonationController implements IFinancialDonationController
     public ResponseEntity<?> createFinancialDonation(FinancialDonationCreateDTO financialDonationCreateDTO) {
         FinancialDonation financialDonation;
         try {
-            financialDonation = financialDonationService.createFinancialDonation(financialDonationCreateDTO);
+            financialDonation = financialDonationService.create(financialDonationCreateDTO);
             financialNeedService.updateFinancialNeedCollectionStatus(financialDonation.getNeed().getId(),
                     financialDonation.getAmount());
         }
@@ -51,7 +48,7 @@ public class FinancialDonationController implements IFinancialDonationController
     public ResponseEntity<?> findFinancialDonationById(long id) {
         FinancialDonation financialDonation;
         try {
-            financialDonation = financialDonationService.findFinancialDonationById(id);
+            financialDonation = financialDonationService.findById(id);
         }
         catch (FinancialDonationNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -68,7 +65,7 @@ public class FinancialDonationController implements IFinancialDonationController
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllFinancialDonationsByDonorId(long id) {
-        List<FinancialDonation> financialDonations = financialDonationService.findAllFinancialDonationByDonorId(id);
+        List<FinancialDonation> financialDonations = financialDonationService.findAllByDonorId(id);
         if (financialDonations.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(financialDonations.stream().map(this::convertToOutputDTO));
     }
@@ -76,7 +73,7 @@ public class FinancialDonationController implements IFinancialDonationController
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllFinancialDonationsByWarehouseId(long id) {
-        List<FinancialDonation> financialDonations = financialDonationService.findAllFinancialDonationByWarehouseId(id);
+        List<FinancialDonation> financialDonations = financialDonationService.findAllByWarehouseId(id);
         if (financialDonations.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(financialDonations.stream().map(this::convertToOutputDTO));
     }
@@ -84,7 +81,7 @@ public class FinancialDonationController implements IFinancialDonationController
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
     public ResponseEntity<?> findAllFinancialDonationsForCurrentUser() {
-        List<FinancialDonation> financialDonations = financialDonationService.findAllFinancialDonationForCurrentUser();
+        List<FinancialDonation> financialDonations = financialDonationService.findAllForCurrentUser();
         if (financialDonations.isEmpty()) return ResponseEntity.noContent().build();
         return ResponseEntity.ok(financialDonations.stream().map(this::convertToOutputDTO));
     }

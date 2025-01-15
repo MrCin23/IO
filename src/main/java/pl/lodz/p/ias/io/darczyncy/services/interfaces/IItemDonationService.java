@@ -6,21 +6,21 @@ import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import java.util.List;
 
 public interface IItemDonationService {
-    ItemDonation createItemDonation(ItemDonationCreateDTO dto);
+    ItemDonation create(ItemDonationCreateDTO dto);
 
-    ItemDonation findItemDonationById(long id);
+    ItemDonation findById(long id);
 
     List<ItemDonation> findAllItemDonations();
 
-    List<ItemDonation> findAllItemDonationsByDonorId(long donorId);
+    List<ItemDonation> findAllByDonorId(long donorId);
 
-    List<ItemDonation> findAllItemDonationsByWarehouseId(long warehouseId);
+    List<ItemDonation> findAllByWarehouseId(long warehouseId);
 
     List<ItemDonation> findAllByCurrentUser();
 
     byte[] createConfirmationPdf(String language, long donationId);
 
-    ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation);
+    ItemDonation update(long id, ItemDonation updatedItemDonation);
 
-    void deleteItemDonationById(Long id);
+    void deleteById(Long id);
 }

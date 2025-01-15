@@ -13,7 +13,6 @@ import pl.lodz.p.ias.io.darczyncy.exceptions.DonationBaseException;
 import pl.lodz.p.ias.io.darczyncy.exceptions.ItemDonationNotFoundException;
 import pl.lodz.p.ias.io.darczyncy.mappers.ItemDonationMapper;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
-import pl.lodz.p.ias.io.darczyncy.services.implementations.ItemDonationService;
 import pl.lodz.p.ias.io.darczyncy.services.interfaces.IItemDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
@@ -32,7 +31,7 @@ public class ItemDonationController implements IItemDonationController {
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
     public ResponseEntity<?> createItemDonation(ItemDonationCreateDTO itemDonationCreateDTO) {
-        ItemDonation itemDonation = itemDonationService.createItemDonation(itemDonationCreateDTO);
+        ItemDonation itemDonation = itemDonationService.create(itemDonationCreateDTO);
         materialNeedService.completeMaterialNeed(itemDonation.getNeed().getId());
         return ResponseEntity.created(URI.create("/donations/%s".formatted(itemDonation.getId()))).build();
     }
@@ -42,7 +41,7 @@ public class ItemDonationController implements IItemDonationController {
     public ResponseEntity<?> findItemDonationById(long id) {
         ItemDonation itemDonation;
         try {
-            itemDonation = itemDonationService.findItemDonationById(id);
+            itemDonation = itemDonationService.findById(id);
         }
         catch (ItemDonationNotFoundException e) {
             return ResponseEntity.notFound().build();
@@ -89,7 +88,7 @@ public class ItemDonationController implements IItemDonationController {
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllItemDonationsByDonorId(long donorId) {
-        List<ItemDonation> foundItemDonations = itemDonationService.findAllItemDonationsByDonorId(donorId);
+        List<ItemDonation> foundItemDonations = itemDonationService.findAllByDonorId(donorId);
         if (foundItemDonations.isEmpty()) return ResponseEntity.noContent().build();
         List<ItemDonationOutputDTO> outputDTOS = foundItemDonations.stream().map(this::convertToOutputDTO).toList();
         return ResponseEntity.ok().body(outputDTOS);
@@ -98,7 +97,7 @@ public class ItemDonationController implements IItemDonationController {
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllItemDonationsWarehouseId(long warehouseId) {
-        List<ItemDonation> foundItemDonations = itemDonationService.findAllItemDonationsByWarehouseId(warehouseId);
+        List<ItemDonation> foundItemDonations = itemDonationService.findAllByWarehouseId(warehouseId);
         if (foundItemDonations.isEmpty()) return ResponseEntity.noContent().build();
         List<ItemDonationOutputDTO> outputDTOS = foundItemDonations.stream().map(this::convertToOutputDTO).toList();
         return ResponseEntity.ok().body(outputDTOS);
@@ -117,14 +116,14 @@ public class ItemDonationController implements IItemDonationController {
     @Override
     public ResponseEntity<?> updateItemDonation(long id, ItemDonationUpdateDTO itemDonationUpdateDTO) {
         ItemDonation itemDonation = ItemDonationMapper.fromUpdateDTO(itemDonationUpdateDTO);
-        ItemDonation updatedItem = itemDonationService.updateItemDonation(id, itemDonation);
+        ItemDonation updatedItem = itemDonationService.update(id, itemDonation);
         return ResponseEntity.ok(convertToOutputDTO(updatedItem));
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> deleteItemDonationById(long id) {
-        itemDonationService.deleteItemDonationById(id);
+        itemDonationService.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 

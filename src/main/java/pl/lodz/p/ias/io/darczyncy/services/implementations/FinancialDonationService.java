@@ -39,7 +39,7 @@ public class FinancialDonationService implements IFinancialDonationService {
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
     @Override
-    public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
+    public FinancialDonation create(FinancialDonationCreateDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(authentication.getName());
@@ -70,24 +70,24 @@ public class FinancialDonationService implements IFinancialDonationService {
     }
 
     @Override
-    public FinancialDonation findFinancialDonationById(long id) {
+    public FinancialDonation findById(long id) {
         return financialDonationRepository.findById(id).orElseThrow(FinancialDonationNotFoundException::new);
     }
 
     @Override
-    public List<FinancialDonation> findAllFinancialDonationByDonorId(long donorId) {
+    public List<FinancialDonation> findAllByDonorId(long donorId) {
         accountRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return financialDonationRepository.findAllByDonor_Id(donorId);
     }
 
     @Override
-    public List<FinancialDonation> findAllFinancialDonationByWarehouseId(long warehouseId) {
+    public List<FinancialDonation> findAllByWarehouseId(long warehouseId) {
         warehouseRepository.findById(warehouseId).orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
         return financialDonationRepository.findAllByWarehouseId(warehouseId);
     }
 
     @Override
-    public List<FinancialDonation> findAllFinancialDonationForCurrentUser() {
+    public List<FinancialDonation> findAllForCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Current user: " + auth.getName());
         Account currentUser = accountRepository.findByUsername(auth.getName());
