@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 // Ikona markera
 const defaultIcon = L.icon({
@@ -13,6 +14,7 @@ const defaultIcon = L.icon({
 });
 
 interface Point {
+    pointid: number | undefined;
     coordinates: { lat: number; lng: number };
     title: string;
     description: string;
@@ -42,7 +44,7 @@ interface MapViewProps {
  */
 const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false, externalForm = false, setCoordinates }) => {
     const [points, setPoints] = useState<Point[]>([]);
-
+    const { t } = useTranslation();
     const [newPoint, setNewPoint] = useState<Point | null>(null);
     const [formData, setFormData] = useState({
         title: "",
@@ -51,9 +53,10 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
 
     const MapClickHandler = () => {
         useMapEvents({
-            click: (e) => {
+            click: (e: { latlng: { lat: number; lng: number; }; }) => {
                 if (canAddPoints) {
                     setNewPoint({
+                        pointid: undefined,
                         coordinates: { lat: e.latlng.lat, lng: e.latlng.lng },
                         title: "",
                         description: "",
@@ -73,13 +76,37 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             const response = await axios.get(`api/map/type/${pointType}`);
             setPoints(response.data);
         } catch (error) {
-            console.error("Błąd podczas pobierania punktów mapy:", error);
+            console.error(t(""), error);
         }
     };
 
+    const handleDelete = async (id: number | undefined) => {
+        try {
+            await axios.delete(`api/map/${id}`);
+            setPoints((prev) =>
+                prev.filter((point) => point.pointid !== id)
+            );
+            alert(t("pointDeleted"));
+        } catch (error) {
+            console.error(t("error.readPoint"), error)
+        }
+    }
+
+    const handleArchive = async (id: number | undefined) => {
+        try {
+            await axios.post(`api/map/${id}`);
+            setPoints((prev) =>
+                prev.filter((point) => point.pointid !== id)
+            );
+            alert(t("pointDeleted"));
+        } catch (error) {
+            console.error(t("error.readPoint"), error)
+        }
+    }
+
     const savePoint = async () => {
         if (!formData.title || !formData.description || !newPoint) {
-            alert("Wypełnij wszystkie pola!");
+            alert(t("fillEveryField"));
             return;
         }
         try {
@@ -90,12 +117,12 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 type: pointType,
                 active: true,
             });
-            alert("Punkt zapisany!");
+            alert(t("pointSaved"));
             setNewPoint(null);
             setFormData({ title: "", description: "" });
             fetchPoints();
         } catch (error) {
-            console.error("Błąd podczas zapisywania punktu:", error);
+            console.error(t("error.savePoint"), error);
         }
     };
 
@@ -123,6 +150,9 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         <Popup>
                             <strong>{point.title}</strong>
                             <p>{point.description}</p>
+                            {/*<button onClick={}>{t("editPoint")}</button>*/}
+                            <button onClick={handleDelete(point.pointid)}>{t("deletePoint")}</button>
+                            <button onClick={}>{t("archive")}</button>
                         </Popup>
                     </Marker>
                 ))}
@@ -132,8 +162,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         icon={defaultIcon}
                     >
                         <Popup>
-                            <strong>Nowy punkt</strong>
-                            <p>Dodaj szczegóły poniżej</p>
+                            <strong>{t("addPoint")}</strong>
                         </Popup>
                     </Marker>
                 )}
@@ -141,7 +170,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             </MapContainer>
             {newPoint && canAddPoints && !externalForm && (
                 <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
-                    <h3>Dodaj nowy punkt</h3>
+                    <h3>{t("addPoint")}</h3>
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
@@ -149,7 +178,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         }}
                     >
                         <div>
-                            <label>Tytuł:</label>
+                            <label>{t("title")}</label>
                             <input
                                 type="text"
                                 value={formData.title}
@@ -158,7 +187,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                             />
                         </div>
                         <div>
-                            <label>Opis:</label>
+                            <label>{t("description")}</label>
                             <textarea
                                 value={formData.description}
                                 onChange={(e) =>
@@ -167,7 +196,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                                 required
                             ></textarea>
                         </div>
-                        <button type="submit">Zapisz</button>
+                        <button type="submit">{t("savePoint")}</button>
                     </form>
                 </div>
             )}

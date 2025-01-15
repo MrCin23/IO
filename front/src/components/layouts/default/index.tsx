@@ -2,6 +2,7 @@ import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
+import i18n from "../../i18n/i18n.ts";
 
 interface LayoutProps {
     children: ReactNode
@@ -10,7 +11,9 @@ interface LayoutProps {
 export const DefaultLayout = ({ children }: LayoutProps) => {
     // TODO tutaj należy dodawać przeciski do paska nawigacji. Jeśli chcemy, aby był dostępny dla któregoś aktora, należy go umieścić w odpowiednim widoku
     const navigate = useNavigate()
-
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+    };
 
     return (
         <div>
@@ -27,6 +30,13 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                         Form
                     </Button>
                     {/*//todo do wywalenia*/}
+                    <Button onClick={() => changeLanguage('en')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {i18n.t('english')}
+                    </Button>
+
+                    <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {i18n.t('polish')}
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Container sx={{ p: 2 }}>

@@ -67,17 +67,6 @@ public class MapController {
         }
     }
 
-    @PutMapping("status/{id}")
-    public ResponseEntity<Object> updateMapPoint(@PathVariable("id") long id, @RequestBody boolean status) {
-        try {
-            mapService.changeStatus(id, status);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Map Point not found");
-        }
-    }
-
     @GetMapping("archival")
     public ResponseEntity<Object> getArchival() {
         try {

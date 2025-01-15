@@ -16,7 +16,5 @@ import java.util.List;
 public interface MapPointRepository extends JpaRepository<MapPoint, Long> {
     List<MapPoint> findByType(PointType type);
 
-    void updateActiveByPointID(long pointID, boolean isActive);
-
     List<MapPoint> findByActive(@NotNull boolean active);
 }
