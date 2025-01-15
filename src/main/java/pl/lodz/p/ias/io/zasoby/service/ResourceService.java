@@ -27,7 +27,7 @@ public class ResourceService {
         return converter.convertResourceToDTO(resource);
     }
 
-    public ResourceDTO getResourceById(long id) {
+    public ResourceDTO getResourceById(Long id) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Resource with id " + id + " not found"));
         return converter.convertResourceToDTO(resource);
@@ -41,7 +41,7 @@ public class ResourceService {
     }
 
 //    @Transactional
-    public void updateResource(long id, @Valid ResourceDTO resourceDTO) {
+    public void updateResource(Long id, @Valid ResourceDTO resourceDTO) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Resource with id " + id + " not found"));
 
@@ -54,7 +54,7 @@ public class ResourceService {
         resourceRepository.save(resource);
     }
 
-    public void deleteResource(long id) {
+    public void deleteResource(Long id) {
         if (resourceRepository.existsById(id)) {
             resourceRepository.deleteById(id);
         } else {

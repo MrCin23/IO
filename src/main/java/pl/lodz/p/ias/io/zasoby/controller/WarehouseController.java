@@ -29,7 +29,7 @@ public class WarehouseController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public WarehouseDTO getWarehouse(@PathVariable long id) {
+    public WarehouseDTO getWarehouse(@PathVariable Long id) {
         return warehouseService.getWarehouseById(id);
     }
 
@@ -42,7 +42,7 @@ public class WarehouseController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateWarehouse(@PathVariable long id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
+    public void updateWarehouse(@PathVariable Long id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
         warehouseService.updateWarehouse(id, warehouseDTO);
     }
 }

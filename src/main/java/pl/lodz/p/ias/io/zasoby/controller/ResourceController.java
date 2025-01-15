@@ -26,7 +26,7 @@ public class ResourceController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ResourceDTO getResource(@PathVariable long id) {
+    public ResourceDTO getResource(@PathVariable Long id) {
         return resourceService.getResourceById(id);
     }
 
@@ -40,13 +40,13 @@ public class ResourceController {
     @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateResource(@PathVariable long id, @RequestBody ResourceDTO resourceDTO) {
+    public void updateResource(@PathVariable Long id, @RequestBody ResourceDTO resourceDTO) {
         resourceService.updateResource(id, resourceDTO);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteResource(@PathVariable long id) {
+    public void deleteResource(@PathVariable Long id) {
         resourceService.deleteResource(id);
     }
 }
