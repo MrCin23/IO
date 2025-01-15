@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import { TextField, Button, MenuItem, Select, InputLabel, FormControl, FormControlLabel, Radio, RadioGroup, SelectChangeEvent } from '@mui/material';
 import axios from 'axios';
+import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import MapView from '../../mapComponent/MapView';
 
 const itemCategories = ['CLOTHING', 'HOUSEHOLD', 'FOOD', 'TOYS', 'BOOKS'];
 
 export default function AddNeedForm() {
+  const { t } = useTranslation();
+
   const [needType, setNeedType] = useState('material-needs');
   const [formData, setFormData] = useState({
     description: '',
@@ -15,8 +18,7 @@ export default function AddNeedForm() {
     maxVolunteers: '',
     collectionGoal: ''
   });
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
+  
   const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | { name?: string; value: unknown }> | SelectChangeEvent<string>) => {
@@ -37,14 +39,48 @@ export default function AddNeedForm() {
   
     const token = Cookies.get('jwt');
     if (!token) {
-      alert('You must be logged in to submit a need');
+      alert(t('logginError'));
       return;
     }
   
     try {
-      if (!title || !description || !coordinates) {
-        alert('Wypełnij wszystkie pola!');
+      if (!coordinates) {
+        alert(t('mapError'));
         return;
+      }
+
+      const userResponse = await axios.get('http://localhost:8080/api/auth/me', {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const userId = userResponse.data.id;
+
+      const requestData = {
+        userId: userId,
+        description: formData.description,
+        expirationDate: formData.expirationDate
+      };
+
+      if (requestData.expirationDate < new Date().toISOString().split('T')[0]) {
+        alert(t('expirationDateError'));
+        return;
+      }
+
+      let title = '';
+      let description = '';
+  
+      if (needType === 'material-needs') {
+        Object.assign(requestData, { itemCategory: formData.itemCategory });
+        console.log(requestData)
+        title = "Material need";
+        description = formData.description + ' - ' + formData.itemCategory + ' - expires: ' + formData.expirationDate;
+      } else if (needType === 'manual-needs') {
+        Object.assign(requestData, { maxVolunteers: parseInt(formData.maxVolunteers) });
+        title = "Manual need";
+        description = formData.description + ' - volunteers: ' + formData.maxVolunteers + ' - expires: ' + formData.expirationDate;
+      } else if (needType === 'financial-needs') {
+        Object.assign(requestData, { collectionGoal: parseFloat(formData.collectionGoal) });
+        title = "Financial need";
+        description = formData.description + ' - goal: ' + formData.collectionGoal + ' - expires: ' + formData.expirationDate;
       }
   
       console.log('Coordinates:', coordinates);
@@ -68,26 +104,8 @@ export default function AddNeedForm() {
         console.log('New map point ID:', pointId);
         alert(`Punkt zapisany! ID: ${pointId}`);
       }
-  
-      const userResponse = await axios.get('http://localhost:8080/api/auth/me', {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      const userId = userResponse.data.id;
-  
-      const requestData = {
-        userId: userId,
-        mapPointId: pointId,
-        description: formData.description,
-        expirationDate: formData.expirationDate
-      };
-  
-      if (needType === 'material-needs') {
-        Object.assign(requestData, { itemCategory: formData.itemCategory });
-      } else if (needType === 'manual-needs') {
-        Object.assign(requestData, { maxVolunteers: parseInt(formData.maxVolunteers) });
-      } else if (needType === 'financial-needs') {
-        Object.assign(requestData, { collectionGoal: parseFloat(formData.collectionGoal) });
-      }
+
+      Object.assign(requestData, { mapPointId: pointId });
   
       console.log('Request data:', requestData);
       const endpoint = `http://localhost:8080/api/${needType}`;
@@ -96,7 +114,7 @@ export default function AddNeedForm() {
       });
   
       if (response.status === 200 || response.status === 201) {
-        alert('Need submitted successfully!');
+        alert('Potrzeba zapisana!');
         setFormData({
           description: '',
           expirationDate: '',
@@ -105,17 +123,17 @@ export default function AddNeedForm() {
           collectionGoal: ''
         });
         setCoordinates(null);
-        setTitle('');
-        setDescription('');
+        //setTitle('');
+        //setDescription('');
       }
     } catch (error) {
-      console.error('Error submitting need:', error);
+      console.error('Failed to submit need:', error);
       const err = error as any;
       if (err.response && err.response.data && err.response.data.errors) {
         const errorMessage = err.response.data.errors.map((obj: any) => obj.defaultMessage).join(', ');
-        alert(`Failed to submit need: ${errorMessage}`);
+        alert(`Błąd: ${errorMessage}`);
       } else {
-        alert('Failed to submit need. Please try again.');
+        alert('Błąd podczas zapisywania potrzeby');
       }
     }
   };
@@ -134,27 +152,6 @@ export default function AddNeedForm() {
       />
       </div>
 
-      <TextField
-      name="coordinatetitle"
-      label="Coordinate title"
-      fullWidth
-      margin="normal"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-      className="bg-transparent"
-      required
-      />
-      <TextField
-      name="coordinatedescription"
-      label="Coordinate description"
-      fullWidth
-      margin="normal"
-      value={description}
-      onChange={(e) => setDescription(e.target.value)}
-      className="bg-transparent"
-      required
-      />
-
       <FormControl component="fieldset" className="w-full">
       <RadioGroup
         aria-label="need-type"
@@ -163,15 +160,15 @@ export default function AddNeedForm() {
         onChange={handleNeedTypeChange}
         className="flex flex-col"
       >
-        <FormControlLabel value="material-needs" control={<Radio />} label="Material Needs" />
-        <FormControlLabel value="manual-needs" control={<Radio />} label="Manual Needs" />
-        <FormControlLabel value="financial-needs" control={<Radio />} label="Financial Needs" />
+        <FormControlLabel value="material-needs" control={<Radio />} label={t("materialNeed")} />
+        <FormControlLabel value="manual-needs" control={<Radio />} label={t("manualNeed")} />
+        <FormControlLabel value="financial-needs" control={<Radio />} label={t("financialNeed")} />
       </RadioGroup>
       </FormControl>
 
       <TextField
       name="description"
-      label="Description"
+      label={t('formDescription')}
       fullWidth
       margin="normal"
       value={formData.description}
@@ -182,7 +179,7 @@ export default function AddNeedForm() {
       />
       <TextField
       name="expirationDate"
-      label="Expiration Date"
+      label={t('formExpirationDate')}
       type="date"
       InputLabelProps={{ shrink: true }}
       fullWidth
@@ -195,7 +192,7 @@ export default function AddNeedForm() {
 
       {needType === 'material-needs' && (
       <FormControl fullWidth margin="normal" className="text-left">
-        <InputLabel id="item-category-label" className='bg-gray-100'>Item Category</InputLabel>
+        <InputLabel id="item-category-label" className='bg-gray-100'>{t('formItemCategory')}</InputLabel>
         <Select
         labelId="item-category-label"
         name="itemCategory"
@@ -215,7 +212,7 @@ export default function AddNeedForm() {
       {needType === 'manual-needs' && (
       <TextField
         name="maxVolunteers"
-        label="Max Volunteers"
+        label={t('formMaxVolunteers')}
         type="number"
         fullWidth
         margin="normal"
@@ -228,7 +225,7 @@ export default function AddNeedForm() {
       {needType === 'financial-needs' && (
       <TextField
         name="collectionGoal"
-        label="Collection Goal"
+        label={t('formCollectionGoal')}
         type="number"
         fullWidth
         margin="normal"
@@ -239,7 +236,7 @@ export default function AddNeedForm() {
       )}
 
       <Button type="submit" variant="contained" color="primary" fullWidth>
-      Submit
+      Zatwierdź
       </Button>
     </form>
   );

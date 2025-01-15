@@ -4,7 +4,7 @@ export type FinancialNeed = {
     mapPointId: number | null;
     description: string;
     creationDate: string;
-    expirationDate: string | null;
+    expirationDate: string;
     status: "IN_PROGRESS" | "PENDING" | "COMPLETED" | "CANCELLED";
     priority: number;
     collectionStatus: number;

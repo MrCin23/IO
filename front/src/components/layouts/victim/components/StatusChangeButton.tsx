@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
 
 type Status = "IN_PROGRESS" | "PENDING" | "COMPLETED" | "CANCELLED";
 
@@ -17,6 +18,8 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
     needType,
     onStatusChange 
 }) => {
+    const { t } = useTranslation();
+
     const allowedTransitions: Record<Status, Status[]> = {
         "PENDING": ["CANCELLED", "IN_PROGRESS"],
         "IN_PROGRESS": ["COMPLETED"],
@@ -65,7 +68,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                         onClick={() => handleStatusChange(newStatus)}
                         className={`px-3 py-1 text-white rounded text-sm ${statusColors[newStatus]}`}
                     >
-                        Change to: {newStatus}
+                        {t(`statusLabels.${newStatus}`)}
                     </button>
                 )
             ))}
@@ -75,7 +78,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                     onClick={() => handleStatusChange("CANCELLED")}
                     className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
                 >
-                    Cancel
+                    {t('statusLabels.CANCELLED')}
                 </button>
             )}
         </div>

@@ -14,6 +14,7 @@ public class FinancialNeedMapper {
     public FinancialNeed toFinancialNeed(FinancialNeedCreateRequest dto) {
         return FinancialNeed.builder()
                 .description(dto.getDescription())
+                .expirationDate(dto.getExpirationDate())
                 .collectionGoal(dto.getCollectionGoal())
                 .build();
     }
