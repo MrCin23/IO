@@ -14,7 +14,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Set;
 
-@CrossOrigin("*")
+@CrossOrigin("localhost:5173")
 @RestController
 @RequestMapping("/api/summary-report")
 public class SummaryReportController {

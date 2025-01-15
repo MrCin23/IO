@@ -1,13 +1,39 @@
 import { Button, Box, Typography, TextField, FormControl, InputLabel, Select, MenuItem, Checkbox, ListItemText, SelectChangeEvent } from '@mui/material';
 import { useState, useEffect } from 'react';
 import React from 'react';
+import {Account} from "../../models/uwierzytelnianie/Account.tsx";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export const Summary = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [fields, setFields] = useState<string[]>([]); // Tablica wybranych pól
     const [availableFields, setAvailableFields] = useState<string[]>([]); // Lista dostępnych pól
-    const [userId] = useState(1); // Załóżmy, że userId to 1
+    const [user, setUser] = useState<Account | null>(null);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        };
+        fetchUser();
+    }, []);
+    let userId: number;
+
+    if (user) {
+        userId = +user.id;
+    } else {
+        userId = 0;
+    }
 
     useEffect(() => {
         // Załaduj dostępne pola

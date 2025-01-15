@@ -1,33 +1,65 @@
 import { Button, Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
+import Cookies from "js-cookie";
+import axios from "axios";
+import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 
 export const General = () => {
-    const [userId] = useState(1); // Można to zmienić w zależności od potrzeb
+    const [user, setUser] = useState<Account | null>(null);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        };
+        fetchUser();
+        }, []);
+    let userId: number;
+
+    if (user) {
+        userId = +user.id;
+    } else {
+        userId = 0;
+    }
+
 
     const handleGenerateReport = async (userId: number) => {
         try {
-            const response = await fetch(
+            // Pobranie tokenu JWT z ciasteczek
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            // Wysłanie żądania POST z axios
+            const response = await axios.post(
                 `http://localhost:8080/api/general-report/generate-pdf?userId=${userId}`,
+                null, // Brak ciała żądania w tym przypadku
                 {
-                    method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
+                        Authorization: `Bearer ${token}`, // Dodanie tokenu JWT do nagłówków
                     },
+                    responseType: 'blob', // Oczekiwanie odpowiedzi jako plik binarny
                 }
             );
 
-            // Jeśli odpowiedź jest poprawna (status 200), przetwarzamy plik PDF
-            if (response.ok) {
-                const blob = await response.blob(); // Otrzymujemy dane binarne (PDF)
-                const url = window.URL.createObjectURL(blob); // Tworzymy URL do danych binarnych
-                const link = document.createElement('a'); // Tworzymy element linku
-                link.href = url;
-                link.download = 'general-report.pdf'; // Ustawiamy nazwę pliku do pobrania
-                link.click(); // Symulujemy kliknięcie, aby pobrać plik
-                window.URL.revokeObjectURL(url); // Zwolnienie zasobów URL
-            } else {
-                alert('Wystąpił błąd podczas generowania raportu.');
-            }
+            // Przetwarzanie odpowiedzi i pobieranie pliku PDF
+            const blob = new Blob([response.data], { type: 'application/pdf' }); // Tworzenie obiektu Blob
+            const url = window.URL.createObjectURL(blob); // Tworzenie URL do danych binarnych
+            const link = document.createElement('a'); // Tworzenie elementu linku
+            link.href = url;
+            link.download = 'general-report.pdf'; // Ustawienie nazwy pliku
+            link.click(); // Symulowanie kliknięcia w link, aby pobrać plik
+            window.URL.revokeObjectURL(url); // Zwolnienie zasobów URL
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
             alert('Wystąpił błąd podczas generowania raportu.');

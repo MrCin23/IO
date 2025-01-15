@@ -10,7 +10,7 @@ import pl.lodz.p.ias.io.raportowanie.service.ActionsHistoryReportService;
 
 import java.util.List;
 
-@CrossOrigin("*")
+@CrossOrigin("localhost:5173")
 @RestController
 @RequestMapping("/api/actions-history-report")
 public class ActionsHistoryReportController {

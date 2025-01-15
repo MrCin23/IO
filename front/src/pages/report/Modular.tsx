@@ -1,6 +1,9 @@
 import { Button, Box, Typography, TextField, MenuItem, Select, InputLabel, FormControl, Checkbox, ListItemText, SelectChangeEvent } from '@mui/material';
 import { useState, useEffect } from 'react';
 import React from 'react';
+import {Account} from "../../models/uwierzytelnianie/Account.tsx";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export const Modular = () => {
     const [moduleId, setModuleId] = useState('');
@@ -10,6 +13,30 @@ export const Modular = () => {
     const [availableFields, setAvailableFields] = useState<string[]>([]); // Lista dostępnych pól
     const [modules, setModules] = useState<{ id: string, name: string }[]>([]); // Lista modułów
 
+    const [user, setUser] = useState<Account | null>(null);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        };
+        fetchUser();
+    }, []);
+    let userId: number;
+
+    if (user) {
+        userId = +user.id;
+    } else {
+        userId = 0;
+    }
     // Załaduj dostępne moduły oraz pola, gdy komponent się załaduje
     useEffect(() => {
         setModules([
@@ -52,7 +79,7 @@ export const Modular = () => {
     // Funkcja do wysłania formularza
     const handleSubmit = async () => {
         const params = new URLSearchParams();
-        params.append('userId', '1');  // Zastąp odpowiednią wartością userId
+        params.append('userId', userId.toString());  // Zastąp odpowiednią wartością userId
         params.append('moduleId', moduleId);
         if (startTime) params.append('startTime', new Date(startTime).toISOString());
         if (endTime) params.append('endTime', new Date(endTime).toISOString());

@@ -1,44 +1,86 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button, Box } from '@mui/material';
+import axios from 'axios';
+import { Empty } from './Empty';
 import { General } from './General';
 import { Action } from './Action';
 import { ActionHistory } from './ActionHistory';
 import { Modular } from './Modular';
 import { Summary } from './Summary';
 import { TransactionHistory } from './TransactionHistory';
+import Cookies from "js-cookie";
 
 export const HomeReportPage = () => {
+    const [activeTab, setActiveTab] = useState('EmptyContent');
 
-    const [activeTab, setActiveTab] = useState('GeneralContent');
+    const [visibleButtons, setVisibleButtons] = useState<string[]>([]); // Kontrolowanie widoczności przycisków
 
     const renderContent = () => {
         switch (activeTab) {
+            case 'EmptyContent':
+                return <Empty />;
             case 'GeneralContent':
-                return <General/>;
+                return <General />;
             case 'ActionContent':
-                return <Action/>;
+                return <Action />;
             case 'ActionHistoryContent':
-                return <ActionHistory/>;
+                return <ActionHistory />;
             case 'ModularContent':
-                return <Modular/>;
+                return <Modular />;
             case 'SummaryContent':
-                return <Summary/>;
+                return <Summary />;
             case 'TransactionHistoryContent':
-                return <TransactionHistory/>;
+                return <TransactionHistory />;
             default:
                 return null;
         }
     };
 
-    const [isVisibleG] = useState(true);
-    const [isVisibleA] = useState(true);
-    const [isVisibleAH] = useState(true);
-    const [isVisibleM] = useState(true);
-    const [isVisibleS] = useState(true);
-    const [isVisibleTH] = useState(true);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const userData = response.data;
+
+            // Ustaw widoczność przycisków w zależności od roli użytkownika
+            const role = userData.role.roleName; // Odczytaj nazwę roli
+            let buttons: string[];
+            switch (role) {
+                case 'PRZEDSTAWICIEL_WŁADZ':
+                    buttons = ['General', 'Summary', 'Action', 'Modular'];
+                    break;
+                case 'ORGANIZACJA_POMOCOWA':
+                    buttons = ['General', 'Summary', 'Action', 'Modular', 'TransactionHistory'];
+                    break;
+                case 'WOLONTARIUSZ':
+                    buttons = ['ActionHistory'];
+                    break;
+                case 'DARCZYŃCA':
+                    buttons = ['TransactionHistory'];
+                    break;
+                case 'POSZKODOWANY':
+                    buttons = [];
+                    break;
+                default:
+                    buttons = [];
+            }
+            setVisibleButtons(buttons);
+        };
+
+        fetchUser();
+    }, []);
 
     return (
         <Box sx={{ p: 0, m: 0 }}>
+            {/* Przyciski nawigacyjne */}
             <Box
                 sx={{
                     display: 'flex',
@@ -48,11 +90,10 @@ export const HomeReportPage = () => {
                     position: 'fixed',
                     width: '100%',
                     left: '0',
-                    top: 72
+                    top: 72,
                 }}
             >
-                {/* Osobne przyciski */}
-                {isVisibleG && (
+                {visibleButtons.includes('General') && (
                     <Button
                         variant="contained"
                         onClick={() => setActiveTab('GeneralContent')}
@@ -60,7 +101,7 @@ export const HomeReportPage = () => {
                         General
                     </Button>
                 )}
-                {isVisibleA && (
+                {visibleButtons.includes('Action') && (
                     <Button
                         variant="contained"
                         onClick={() => setActiveTab('ActionContent')}
@@ -68,7 +109,7 @@ export const HomeReportPage = () => {
                         Action
                     </Button>
                 )}
-                {isVisibleAH && (
+                {visibleButtons.includes('ActionHistory') && (
                     <Button
                         variant="contained"
                         onClick={() => setActiveTab('ActionHistoryContent')}
@@ -76,7 +117,7 @@ export const HomeReportPage = () => {
                         Action History
                     </Button>
                 )}
-                {isVisibleM && (
+                {visibleButtons.includes('Modular') && (
                     <Button
                         variant="contained"
                         onClick={() => setActiveTab('ModularContent')}
@@ -84,7 +125,7 @@ export const HomeReportPage = () => {
                         Modular
                     </Button>
                 )}
-                {isVisibleS && (
+                {visibleButtons.includes('Summary') && (
                     <Button
                         variant="contained"
                         onClick={() => setActiveTab('SummaryContent')}
@@ -92,7 +133,7 @@ export const HomeReportPage = () => {
                         Summary
                     </Button>
                 )}
-                {isVisibleTH && (
+                {visibleButtons.includes('TransactionHistory') && (
                     <Button
                         variant="contained"
                         onClick={() => setActiveTab('TransactionHistoryContent')}
@@ -102,6 +143,7 @@ export const HomeReportPage = () => {
                 )}
             </Box>
 
+            {/* Treść dynamiczna */}
             <Box sx={{ mt: '64px', p: 2 }}>
                 {renderContent()}
             </Box>

@@ -1,8 +1,34 @@
 import { Button, Box, Typography } from '@mui/material';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
+import {Account} from "../../models/uwierzytelnianie/Account.tsx";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export const Action = () => {
-    const [userId] = useState(1); // Zmienna przechowująca ID użytkownika
+    const [user, setUser] = useState<Account | null>(null);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        };
+        fetchUser();
+    }, []);
+    let userId: number;
+
+    if (user) {
+        userId = +user.id;
+    } else {
+        userId = 0;
+    }
 
     // Funkcja obsługująca generowanie raportu
     const handleGenerateReport = async (userId: number) => {

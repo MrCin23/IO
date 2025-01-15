@@ -1,11 +1,37 @@
 import { Button, Box, Typography, TextField } from '@mui/material';
-import { useState } from 'react';
+import {useEffect, useState} from 'react';
 import React from 'react';
+import {Account} from "../../models/uwierzytelnianie/Account.tsx";
+import Cookies from "js-cookie";
+import axios from "axios";
 
 export const TransactionHistory = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [userId] = useState(1); // Załóżmy, że userId to 1
+    const [user, setUser] = useState<Account | null>(null);
+    useEffect(() => {
+        const fetchUser = async () => {
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('Brak tokenu JWT');
+            }
+
+            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        };
+        fetchUser();
+    }, []);
+    let userId: number;
+
+    if (user) {
+        userId = +user.id;
+    } else {
+        userId = 0;
+    }
 
 
     // Funkcja do obsługi zmiany daty

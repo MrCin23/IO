@@ -34,7 +34,7 @@ public class GeneralReportQuery {
 
     public Set<String> nameSurnameQuery(Long userId) {
 
-        String query = "SELECT first_name, last_name FROM users WHERE user_id = ?";
+        String query = "SELECT first_name, last_name FROM account WHERE id = ?";
         Set<String> set = new HashSet<String>();
 //        String query2 = "SELECT count(*) FROM users";
 
@@ -63,7 +63,7 @@ public class GeneralReportQuery {
     }
 
     public int countUsers() {
-        String query = "SELECT count(*) FROM users";
+        String query = "SELECT count(*) FROM account";
         int count = 0;
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
