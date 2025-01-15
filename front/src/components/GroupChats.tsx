@@ -11,6 +11,7 @@ import { ChatDB } from "@/types";
 import CreateChatForm from "./CreateChatForm";
 import { Users } from "lucide-react";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const GroupChats = ({
   chats,
@@ -23,6 +24,7 @@ const GroupChats = ({
   setChats: (chats: ChatDB[]) => void;
   selectedChat: string | null;
 }) => {
+  const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   return (
@@ -47,15 +49,14 @@ const GroupChats = ({
       >
         <DialogTrigger asChild>
           <Button onClick={() => setIsDialogOpen(true)} className="bg-blue-500">
-            Create a new Chat
+            {t("group_chat.create_chat")}
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Please provide a chat name</DialogTitle>
+            <DialogTitle>{t("group_chat.dialog_title")}</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. You won't be able to change that
-              later.
+              {t("group_chat.dialog_description")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-2">

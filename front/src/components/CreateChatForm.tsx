@@ -18,13 +18,7 @@ import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ChatDB } from "@/types";
 import { ScrollArea } from "./ui/scroll-area";
-
-const formSchema = z.object({
-  chatName: z.string().nonempty().min(3).max(50),
-  users: z.array(z.string()).refine((value) => value.some((user) => user), {
-    message: "You have to select at least one item.",
-  }),
-});
+import { useTranslation } from "react-i18next";
 
 const CreateChatForm = ({
   setChats,
@@ -34,9 +28,17 @@ const CreateChatForm = ({
   setIsDialogOpen: (isOpen: boolean) => void;
 }) => {
   const [users, setUsers] = useState<Account[]>([]);
-  const [filteredUsers, setFilteredUsers] = useState<Account[]>([]); // Lista filtrowana
-  const [filter, setFilter] = useState("")
+  const [filteredUsers, setFilteredUsers] = useState<Account[]>([]);
+  const [filter, setFilter] = useState("");
   const { account } = useAccount();
+  const { t } = useTranslation();
+
+  const formSchema = z.object({
+    chatName: z.string().nonempty().min(3).max(50),
+    users: z.array(z.string()).refine((value) => value.some((user) => user), {
+      message: t("create_chat_form.form_users_error_message"),
+    }),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,7 +77,6 @@ const CreateChatForm = ({
     const value = e.target.value.toLowerCase();
     setFilter(value);
 
-    // Filtracja użytkowników na podstawie imienia i nazwiska
     setFilteredUsers(
       users.filter(
         (user) =>
@@ -116,7 +117,7 @@ const CreateChatForm = ({
           name="chatName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Chat Name</FormLabel>
+              <FormLabel>{t("create_chat_form.form_chat_label")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -131,12 +132,14 @@ const CreateChatForm = ({
             <FormItem>
               <div className="mb-4">
                 <FormDescription>
-                  Select users to add to the chat.
+                  {t("create_chat_form.form_users_description")}
                 </FormDescription>
               </div>
               <div className="mb-4">
                 <Input
-                  placeholder="Filter users..."
+                  placeholder={t(
+                    "create_chat_form.form_users_input_placeholder"
+                  )}
                   value={filter}
                   onChange={handleFilterChange}
                 />
@@ -182,7 +185,7 @@ const CreateChatForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">{t("general.submit")}</Button>
       </form>
     </Form>
   );

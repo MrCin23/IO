@@ -17,38 +17,39 @@ import { FormLabel } from "@mui/material";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ChatDB } from "@/types";
-
-const formSchema = z.object({
-  chatName: z.string().nonempty().min(3).max(50),
-  users: z.array(z.string()).refine((value) => value.some((user) => user), {
-    message: "You have to select at least one item.",
-  }),
-});
+import { useTranslation } from "react-i18next";
 
 const UpdateChatForm = ({
   chatId,
   chats,
-//   initialChatData,
   setChats,
 }: {
   chatId: string;
-    chats: ChatDB[];
-//   initialChatData: ChatDB;
+  chats: ChatDB[];
   setChats: (chats: ChatDB[]) => void;
 }) => {
   const [users, setUsers] = useState<Account[]>([]);
   const { account } = useAccount();
-  const initialChatData = chats.find(chat => chat.id === chatId);
+  const initialChatData = chats.find((chat) => chat.id === chatId);
 
-    if (!initialChatData) {
-        throw new Error("Chat not found");
-    }
+  if (!initialChatData) {
+    throw new Error("Chat not found");
+  }
+
+  const { t } = useTranslation();
+
+  const formSchema = z.object({
+    chatName: z.string().nonempty().min(3).max(50),
+    users: z.array(z.string()).refine((value) => value.some((user) => user), {
+      message: t("update_chat_form.form_users_error_message"),
+    }),
+  });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       chatName: initialChatData.name,
-      users: initialChatData.users.map(userId => String(userId))
+      users: initialChatData.users.map((userId) => String(userId)),
     },
   });
 
@@ -73,7 +74,7 @@ const UpdateChatForm = ({
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const requestBody = {
-       id: chatId,
+      id: chatId,
       users: data.users,
       name: data.chatName,
     };
@@ -88,9 +89,10 @@ const UpdateChatForm = ({
     if (response.ok) {
       console.log("Chat updated");
       const updatedChat: ChatDB = await response.json();
-      const updatedChats = chats.map(chat => (chat.id === chatId ? updatedChat : chat));
-    //   setChats(prev => prev.map(chat => (chat.id === chatId ? updatedChat : chat)));
-    setChats(updatedChats);
+      const updatedChats = chats.map((chat) =>
+        chat.id === chatId ? updatedChat : chat
+      );
+      setChats(updatedChats);
     } else {
       console.error("Failed to update chat");
     }
@@ -104,7 +106,7 @@ const UpdateChatForm = ({
           name="chatName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Chat Name</FormLabel>
+              <FormLabel>{t("update_chat_form.form_chat_label")}</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -119,7 +121,7 @@ const UpdateChatForm = ({
             <FormItem>
               <div className="mb-4">
                 <FormDescription>
-                  Select users to update the chat.
+                  {t("update_chat_form.form_users_description")}
                 </FormDescription>
               </div>
               {users.map((user) => (
@@ -160,7 +162,7 @@ const UpdateChatForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit">Update</Button>
+        <Button type="submit">{t("general.update")}</Button>
       </form>
     </Form>
   );

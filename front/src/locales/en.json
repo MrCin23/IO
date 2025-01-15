@@ -1,0 +1,33 @@
+{
+  "group_chat": {
+    "create_chat": "Create a new Chat",
+    "dialog_title": "Please provide a chat name",
+    "dialog_description": "This action cannot be undone. You won't be able to change that later."
+  },
+  "messages": {
+    "loading": "Loading messages...",
+    "connected_status": "Connected",
+    "disconnected_status": "Disconnected"
+  },
+  "chat": {
+    "no_chat_selected": "No chat selected"
+  },
+  "create_chat_form": {
+    "form_users_error_message": "You have to select at least one user.",
+    "form_chat_label": "Chat name",
+    "form_users_description": "Select users to add to the chat",
+    "form_users_input_placeholder": "Filter users..."
+  },
+  "send_message_form": {
+    "form_message_input_placeholder": "Type a message"
+  },
+  "update_chat_form": {
+    "form_users_error_message": "You have to select at least one user.",
+    "form_chat_label": "Chat name",
+    "form_users_description": "Select users to update the chat."
+  },
+  "general": {
+    "submit": "Submit",
+    "update": "Update"
+  }
+}

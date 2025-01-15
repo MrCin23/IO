@@ -14,6 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Send } from "lucide-react";
 import { Message } from "@/types";
+import { useTranslation } from "react-i18next";
 
 const formSchema = z.object({
   message: z.string().min(2).max(50),
@@ -30,6 +31,8 @@ const SendMessageForm = ({
       message: "",
     },
   });
+
+  const { t } = useTranslation();
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     if (values.message.trim()) {
@@ -57,7 +60,9 @@ const SendMessageForm = ({
             <FormItem className="flex-grow px-6">
               <FormControl>
                 <Input
-                  placeholder="Type a message"
+                  placeholder={t(
+                    "send_message_form.form_message_input_placeholder"
+                  )}
                   className="w-full"
                   {...field}
                 />

@@ -4,19 +4,21 @@ import Messages from "../components/Messages";
 import { useEffect, useState } from "react";
 import { useAccount } from "@/contexts/uwierzytelnianie/AccountContext";
 import UpdateChatForm from "@/components/UpdateChatForm";
+import { useTranslation } from "react-i18next";
 
 const Chat = () => {
   document.getElementById("root")!.style.padding = "0";
   document.getElementById("root")!.style.margin = "0";
 
+  const {t} = useTranslation();
+  
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
   const { account } = useAccount();
 
   const chatName =
-    chats.find((chat) => chat.id === selectedChat)?.name || "No chat selected";
-
+    chats.find((chat) => chat.id === selectedChat)?.name || t('chat.no_chat_selected');
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -56,7 +58,11 @@ const Chat = () => {
         username={account?.username}
       />
       {selectedChat !== null ? (
-      <UpdateChatForm chatId={selectedChat} chats={chats} setChats={setChats} />
+        <UpdateChatForm
+          chatId={selectedChat}
+          chats={chats}
+          setChats={setChats}
+        />
       ) : null}
     </div>
   );
