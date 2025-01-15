@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge.tsx";
 import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import SendMessageForm from "./SendMessageForm";
 import { useTranslation } from "react-i18next";
+import { ArrowLeft } from "lucide-react";
 
 const Messages = ({ selectedChat, userId, username, chatName }: any) => {
   const { messages, sendMessage, isConnected, isLoading } =
@@ -11,7 +12,11 @@ const Messages = ({ selectedChat, userId, username, chatName }: any) => {
   const { t } = useTranslation();
 
   return (
-    <div className="w-full h-screen flex flex-col justify-between py-8 px-6">
+    <div className="w-full h-screen flex flex-col justify-between py-8 px-6 relative">
+      {/* musi byc przez a bo my resetujemy style i home page nie wyglada jak ma wygladac */}
+      <a href="/" className="absolute top-6 left-6 cursor-pointer">
+        <ArrowLeft />
+      </a>
       <div className="w-full">
         <h2 className="text-center font-bold text-lg">{chatName}</h2>
         <div>
