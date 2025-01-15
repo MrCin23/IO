@@ -44,6 +44,7 @@ public class ResourceController {
         resourceService.updateResource(id, resourceDTO);
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteResource(@PathVariable Long id) {
