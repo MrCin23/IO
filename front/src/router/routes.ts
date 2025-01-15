@@ -33,6 +33,10 @@ export const aid_organizationRoutes: RouteType[] = [
     {
         path: Pathnames.aid_organization.homePage,
         Component: HomePage,
+    },
+    {
+        path: Pathnames.aid_organization.accountPage,
+        Component: MyAccountPage,
     }
 
 ]
@@ -41,6 +45,14 @@ export const authority_representativeRoutes: RouteType[] = [
     {
         path: Pathnames.authority_representative.homePage,
         Component: HomePage,
+    },
+    {
+        path: Pathnames.authority_representative.accountPage,
+        Component: MyAccountPage,
+    },
+    {
+        path: Pathnames.authority_representative.accountsListPage,
+        Component: AccountsListPage,
     }
 ]
 
@@ -52,10 +64,6 @@ export const donorRoutes: RouteType[] = [
     {
         path: Pathnames.donor.accountPage,
         Component: MyAccountPage,
-    },
-    {
-        path: Pathnames.donor.accountsListPage,
-        Component: AccountsListPage,
     }
 ]
 
@@ -63,6 +71,10 @@ export const victimRoutes: RouteType[] = [
     {
         path: Pathnames.victim.homePage,
         Component: HomePage,
+    },
+    {
+        path: Pathnames.victim.accountPage,
+        Component: MyAccountPage,
     }
 ]
 
@@ -70,5 +82,9 @@ export const volunteerRoutes: RouteType[] = [
     {
         path: Pathnames.volunteer.homePage,
         Component: HomePage,
+    },
+    {
+        path: Pathnames.volunteer.accountPage,
+        Component: MyAccountPage,
     }
 ]

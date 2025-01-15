@@ -21,6 +21,9 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.aid_organization.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Home
                     </Button>
+                    <Button onClick={() => navigate(Pathnames.aid_organization.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        My Account
+                    </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
                     </Button>

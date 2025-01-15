@@ -69,25 +69,25 @@ const MyAccountPage = () => {
             <form onSubmit={handleChangePassword}>
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>ID:</strong> {user.id} enter
+                        <strong>ID:</strong> {user.id}
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Nazwa użytkownika:</strong> {user.username} enter
+                        <strong>Nazwa użytkownika:</strong> {user.username}
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Imię:</strong> {user.firstName} enter
+                        <strong>Imię:</strong> {user.firstName}
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Nazwisko:</strong> {user.lastName} enter
+                        <strong>Nazwisko:</strong> {user.lastName}
                     </label>
                 </div>
 
@@ -95,14 +95,14 @@ const MyAccountPage = () => {
                     <label className="form-label">
                         <strong>Status:</strong>
                         <span className={`badge ${user.active ? 'bg-success' : 'bg-danger'} ms-2`}>
-                            {user.active ? 'Aktywny' : 'Nieaktywny'} enter
+                            {user.active ? 'Aktywny' : 'Nieaktywny'}
                         </span>
                     </label>
                 </div>
 
                 <div className="mb-4">
                     <label className="form-label">
-                        <strong>Ostatnie logowanie:</strong> {formatDate(user.lastLogin)} enter
+                        <strong>Ostatnie logowanie:</strong> {formatDate(user.lastLogin)}
                     </label>
                 </div>
 
