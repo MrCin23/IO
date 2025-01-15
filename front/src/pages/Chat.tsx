@@ -4,6 +4,9 @@ import Messages from "../components/Messages";
 import { useEffect, useState } from "react";
 
 const Chat = () => {
+  document.getElementById("root")!.style.padding = "0";
+  document.getElementById("root")!.style.margin = "0";
+
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
