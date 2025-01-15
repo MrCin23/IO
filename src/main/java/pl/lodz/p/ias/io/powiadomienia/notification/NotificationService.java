@@ -82,4 +82,12 @@ public class NotificationService implements INotificationService {
         notification.setUser(user);
         return notificationRepository.save(notification);
     }
+
+    public void readAllNotifications(String username) {
+        List<Notification> notifications = notificationRepository.getNotificationByUser_Username(username);
+        for (Notification notification : notifications){
+            notification.setRead(true);
+        }
+        notificationRepository.saveAll(notifications);
+    }
 }

@@ -18,4 +18,6 @@ public interface NotificationRepository extends JpaRepository<Notification, Long
      * @return lista obiektów {@link Notification} przypisanych do użytkownika
      */
     List<Notification> findAllByUser(Account user);
+
+    List<Notification> getNotificationByUser_Username(String username);
 }

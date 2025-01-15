@@ -55,4 +55,13 @@ public class NotificationController {
     public void hideNotification(@PathVariable Long id) {
         notificationService.hide(id);
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/notifications/user/read")
+    public void readNotifications(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        return notificationService.readAllNotifications(username);
+    }
 }
