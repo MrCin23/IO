@@ -71,26 +71,26 @@ public class ChatRoomController {
     @PostMapping("/{chatRoomId}/addUser/{userId}")
     public void addUserToChatRoom(@PathVariable Long chatRoomId, @PathVariable Long userId) {
         ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
-        Optional<Account> user = authenticationService.getAccountById(userId);
+        Account user = authenticationService.getAccountById(userId);
 
-        if (chatRoom == null || user.isEmpty()) {
+        if (chatRoom == null || user == null ) {
             return;
         }
 
-        chatRoom.getUsers().add(user.get());
+        chatRoom.getUsers().add(user);
         chatRoomService.createChatRoom(chatRoom);
     }
 
     @PostMapping("/{chatRoomId}/deleteUser/{userId}")
     public void deleteUserFromChatRoom(@PathVariable Long chatRoomId, @PathVariable Long userId) {
         ChatRoom chatRoom = chatRoomService.getChatRoom(chatRoomId);
-        Optional<Account> user = authenticationService.getAccountById(userId);
+        Account user = authenticationService.getAccountById(userId);
 
-        if (chatRoom == null || user.isEmpty()) {
+        if (chatRoom == null || user == null ) {
             return;
         }
 
-        chatRoom.getUsers().remove(user.get());
+        chatRoom.getUsers().remove(user);
         chatRoomService.createChatRoom(chatRoom);
     }
 
