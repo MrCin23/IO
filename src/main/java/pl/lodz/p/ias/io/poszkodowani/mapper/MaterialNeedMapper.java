@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class MaterialNeedMapper {
     public MaterialNeed toMaterialNeed(MaterialNeedCreateRequest dto) {
         return MaterialNeed.builder()
-                .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
                 .expirationDate(dto.getExpirationDate())
                 .itemCategory(dto.getItemCategory())
@@ -23,7 +22,7 @@ public class MaterialNeedMapper {
         return MaterialNeedResponse.builder()
                 .id(materialNeed.getId())
                 .userId(materialNeed.getUser().getId())
-                .mapPointId(materialNeed.getMapPointId())
+                .mapPointId(materialNeed.getMapPoint().getPointID())
                 .description(materialNeed.getDescription())
                 .creationDate(materialNeed.getCreationDate())
                 .expirationDate(materialNeed.getExpirationDate())

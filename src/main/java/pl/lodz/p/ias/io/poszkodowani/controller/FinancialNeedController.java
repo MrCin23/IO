@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.service.MapService;
 import pl.lodz.p.ias.io.poszkodowani.dto.financialneed.FinancialNeedCreateRequest;
 import pl.lodz.p.ias.io.poszkodowani.dto.financialneed.FinancialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.mapper.FinancialNeedMapper;
@@ -26,19 +28,23 @@ public class FinancialNeedController {
     private final FinancialNeedService financialNeedService;
     private final AuthenticationService authenticationService;
     private final FinancialNeedMapper financialNeedMapper;
+    private final MapService mapService;
 
     @Autowired
-    public FinancialNeedController(FinancialNeedService financialNeedService, FinancialNeedMapper financialNeedMapper, AuthenticationService authenticationService) {
+    public FinancialNeedController(FinancialNeedService financialNeedService, FinancialNeedMapper financialNeedMapper, AuthenticationService authenticationService, MapService mapService) {
         this.financialNeedService = financialNeedService;
         this.financialNeedMapper = financialNeedMapper;
         this.authenticationService = authenticationService;
+        this.mapService = mapService;
     }
 
     @PostMapping
     public ResponseEntity<FinancialNeedResponse> createFinancialNeed(@Valid @RequestBody FinancialNeedCreateRequest dto) {
         FinancialNeed financialNeed = financialNeedMapper.toFinancialNeed(dto);
         Account user = authenticationService.getAccountById(dto.getUserId());
+        MapPoint mapPoint = mapService.getPoint(dto.getMapPointId());
         financialNeed.setUser(user);
+        financialNeed.setMapPoint(mapPoint);
         FinancialNeed savedFinancialNeed = financialNeedService.createFinancialNeed(financialNeed);
         FinancialNeedResponse responseDTO = financialNeedMapper.toFinancialNeedResponse(savedFinancialNeed);
         return ResponseEntity.ok(responseDTO);
