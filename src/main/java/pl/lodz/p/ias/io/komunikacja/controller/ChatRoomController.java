@@ -39,6 +39,23 @@ public class ChatRoomController {
         this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
+    @PostMapping("/update")
+    public ChatRoomDTO updateChatRoom(@RequestBody @Valid ChatRoomDTO chatRoomDTO) {
+        List<Account> users = authenticationService.getAccountsById(chatRoomDTO.getUsers());
+        ChatRoom chatRoom = ChatRoomMapper.toEntity(chatRoomDTO);
+        chatRoom.setUsers(users);
+
+        ChatRoomDTO createdChatRoomDTO = ChatRoomMapper.toDTO(chatRoomService.updateChatRoom(chatRoom));
+
+        for (Account user : users) {
+            String userDestination = "/user/" + user.getUsername() + "/queue/chatrooms";
+            simpMessagingTemplate.convertAndSend(userDestination, createdChatRoomDTO);
+        }
+
+        return createdChatRoomDTO;
+    }
+
+
     @PostMapping("/create")
     public ChatRoomDTO createChatRoom(@RequestBody @Valid CreateChatRoomDTO chatRoomDTO) {
         List<Account> users = authenticationService.getAccountsById(chatRoomDTO.getUsers());

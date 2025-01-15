@@ -3,6 +3,7 @@ import GroupChats from "../components/GroupChats";
 import Messages from "../components/Messages";
 import { useEffect, useState } from "react";
 import { useAccount } from "@/contexts/uwierzytelnianie/AccountContext";
+import UpdateChatForm from "@/components/UpdateChatForm";
 
 const Chat = () => {
   document.getElementById("root")!.style.padding = "0";
@@ -43,6 +44,9 @@ const Chat = () => {
     <div className="flex w-screen h-screen">
       <GroupChats chats={chats} selectChat={setSelectedChat} setChats={setChats} />
       <Messages selectedChat={selectedChat} userId={account?.id} username={account?.username}/>
+      {selectedChat !== null ? (
+      <UpdateChatForm chatId={selectedChat} chats={chats} setChats={setChats} />
+      ) : null}
     </div>
   );
 };
