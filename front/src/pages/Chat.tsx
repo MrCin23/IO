@@ -11,7 +11,7 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
-  const { account } = useAccount();
+  const {account} = useAccount();
   console.log(account);
 
   useEffect(() => {
@@ -35,14 +35,14 @@ const Chat = () => {
     }
 
     fetchChats();
-  }, [selectedChat])
+  }, [account, selectedChat])
 
  
 
   return (
     <div className="flex w-screen h-screen">
       <GroupChats chats={chats} selectChat={setSelectedChat} setChats={setChats} />
-      <Messages selectedChat={selectedChat} />
+      <Messages selectedChat={selectedChat} userId={account?.id} username={account?.username}/>
     </div>
   );
 };

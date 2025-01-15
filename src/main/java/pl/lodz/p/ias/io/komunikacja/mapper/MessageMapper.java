@@ -6,7 +6,7 @@ import pl.lodz.p.ias.io.komunikacja.model.Message;
 public class MessageMapper {
 
     public static Message DTOToMessage(MessageDTO messageDTO) {
-        return new Message(messageDTO.getContent(), messageDTO.getSenderName(), messageDTO.getChatId(), messageDTO.getSenderId(), messageDTO.getTimestamp());
+        return new Message(messageDTO.getContent(), messageDTO.getSenderName(), messageDTO.getSenderId(), messageDTO.getChatId(), messageDTO.getTimestamp());
     }
 
     public static MessageDTO messageToDTO(Message message) {

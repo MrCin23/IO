@@ -7,10 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Send } from "lucide-react";
 
-const Messages = ({ selectedChat }: any) => {
-  // const groupId = window.localStorage.getItem("groupId") ?? "1";
-  const userId = 1;
-
+const Messages = ({ selectedChat, userId, username }: any) => {
   const { messages, sendMessage, isConnected, isLoading } =
     useWebSocket(selectedChat);
   const [content, setContent] = useState<string>("");
@@ -18,7 +15,7 @@ const Messages = ({ selectedChat }: any) => {
   const handleSendMessage = () => {
     if (content.trim()) {
       const message: Message = {
-        senderName: "User", //TODO zamienic
+        senderName: username,
         senderId: userId,
         chatId: selectedChat,
         content,
@@ -26,14 +23,6 @@ const Messages = ({ selectedChat }: any) => {
       };
       sendMessage(message);
       setContent("");
-    }
-  };
-
-  const resolveMessageBadge = (id: number) => {
-    if (userId === id) {
-      return "bg-blue-500 text-white rounded-lg p-2 m-2 text-xl justify-end";
-    } else {
-      return "bg-gray-500 text-black rounded-lg p-2 m-2 text-xl justify-start";
     }
   };
 
@@ -50,15 +39,12 @@ const Messages = ({ selectedChat }: any) => {
           <ScrollArea className="w-full flex-1 overflow-auto h-full">
             <div>
               {messages.map((message, index) => (
-                // zrobic key
-
                 <div
                   className={`flex w-full flex-col  ${
                     userId === message.senderId ? "items-end " : "items-start"
                   }`}
                   key={`${index}`}
                 >
-                  {/*<div>{message.senderId}</div>*/}
                   <p className="mx-4">{message.senderName}</p>
                   <Badge
                     className={`rounded-lg p-2 mb-2 mx-4 text-lg ${
