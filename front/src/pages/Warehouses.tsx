@@ -20,7 +20,7 @@ export const Warehouses = () => {
     }, []);
 
     return (
-        <div>
+        <div className="min-h-screen">
             <h1 className="text-bold text-5xl text-center my-8">List of Warehouses</h1>
             <WarehouseTable warehouses={warehouses}/>
         </div>

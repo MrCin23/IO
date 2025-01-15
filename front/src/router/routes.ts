@@ -118,4 +118,8 @@ export const resourceRoutes: RouteType[] = [
         path: Pathnames.authority_representative.createResource,
         Component: CreateResource,
     },
+    {
+        path: Pathnames.volunteer.resources,
+        Component: Resources,
+    }
 ]

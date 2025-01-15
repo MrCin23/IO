@@ -19,7 +19,7 @@ const ResourceForm = () => {
             resourceName: "",
             resourceType: "",
             resourceQuantity: 0,
-            resourceStatus: "NIEPRZYDZIELONY",
+            resourceStatus: "PENDING",
             warehouseId: 1,
         },
     });
