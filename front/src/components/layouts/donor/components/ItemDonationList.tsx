@@ -88,12 +88,12 @@ function ItemDonationList() {
                                 <td>{donation.description}</td>
                                 <td>{donation.resourceQuantity}</td>
                                 <td>{donation.category}</td>
-                                <td>{donation.acceptanceStatus}</td>
+                                <td>{donation.resourceStatus}</td>
                                 <td>
                                     <button
                                         className="generate-button"
                                         onClick={() => generateConfirmation(donation)}
-                                        disabled={donation.acceptanceStatus !== "ACCEPTED"}
+                                        disabled={donation.resourceStatus !== "ACCEPTED"}
                                     >
                                         {t("generateConfirmation")}
                                     </button>

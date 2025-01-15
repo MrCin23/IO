@@ -6,7 +6,7 @@ export class FinancialDonation{
     donationDate: Date;
     amount: number;
     currency: string;
-    acceptanceStatus: string;
+    resourceStatus: string;
 
     constructor(
         id: number,
@@ -16,7 +16,7 @@ export class FinancialDonation{
         donationDate: Date,
         amount: number,
         currency: string,
-        acceptanceStatus: string) {
+        resourceStatus: string) {
 
         this.id = id
         this.donorId = donorId
@@ -25,6 +25,6 @@ export class FinancialDonation{
         this.donationDate = donationDate
         this.amount = amount
         this.currency = currency
-        this.acceptanceStatus = acceptanceStatus
+        this.resourceStatus = resourceStatus
     }
 }

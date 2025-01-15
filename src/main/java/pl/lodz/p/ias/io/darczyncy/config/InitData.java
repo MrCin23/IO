@@ -22,6 +22,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
+import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
 import java.time.Instant;
 import java.time.LocalDate;
@@ -35,14 +36,13 @@ public class InitData implements CommandLineRunner {
 
     private final WarehouseRepository warehouseRepository;
     private final FinancialNeedRepository financialNeedRepository;
-    private final RoleRepository roleRepository;
     private final AuthenticationService authenticationService;
     private final MaterialNeedRepository materialNeedRepository;
     private final ItemDonationRepository itemDonationRepository;
     private final FinancialDonationRepository financialDonationRepository;
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         Account newUser = authenticationService.register("User",
                 "Password",
                 "Jan",
@@ -87,18 +87,18 @@ public class InitData implements CommandLineRunner {
                 LocalDate.now()
         );
 
-        itemDonation.setAcceptanceStatus(Donation.AcceptanceStatus.ACCEPTED);
+        itemDonation.setResourceStatus(ResourceStatus.PRZYDZIELONY);
         itemDonationRepository.save(itemDonation);
 
         FinancialDonation financialDonation = new FinancialDonation(
                 newUser,
                 financialNeed,
-                warehouse.getId(),
+                null,
                 100,
                 FinancialDonation.Currency.PLN,
                 LocalDate.now()
         );
-        financialDonation.setAcceptanceStatus(Donation.AcceptanceStatus.ACCEPTED);
+        financialDonation.setResourceStatus(ResourceStatus.PRZYDZIELONY);
         financialDonationRepository.save(financialDonation);
     }
 }

@@ -86,12 +86,12 @@ function FinancialDonationList()
                                 <td>{donation.donationDate.toString()}</td>
                                 <td>{donation.amount}</td>
                                 <td>{donation.currency}</td>
-                                <td>{donation.acceptanceStatus}</td>
+                                <td>{donation.resourceStatus}</td>
                                 <td>
                                     <button
                                         className="generate-button"
                                         onClick={() => generateConfirmation(donation)}
-                                        disabled={donation.acceptanceStatus !== "ACCEPTED"}
+                                        disabled={donation.resourceStatus !== "ACCEPTED"}
                                     >
                                         {t("generateConfirmation")}
                                     </button>

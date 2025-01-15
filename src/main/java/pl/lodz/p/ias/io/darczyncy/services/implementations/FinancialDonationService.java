@@ -100,6 +100,7 @@ public class FinancialDonationService implements IFinancialDonationService {
         FinancialDonation financialDonation = financialDonationRepository.findByIdAndDonor_Username(
                 donationId, currentUserName)
                 .orElseThrow(FinancialDonationNotFoundException::new);
+        // todo check resource status
         return certificateProvider.generateFinancialCertificate(financialDonation.getDonor(), financialDonation, language);
     }
 

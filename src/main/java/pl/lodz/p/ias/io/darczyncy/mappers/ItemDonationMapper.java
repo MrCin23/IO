@@ -19,18 +19,17 @@ public class ItemDonationMapper {
                 itemDonation.getResourceQuantity(),
                 itemDonation.getWarehouseId(),
                 itemDonation.getDonationDate(),
-                itemDonation.getAcceptanceStatus(),
+                itemDonation.getResourceStatus(),
                 materialNeed.getDescription()
         );
     }
-
 
 
     public static ItemDonation fromUpdateDTO(ItemDonationUpdateDTO itemDonationUpdateDTO) {
         return ItemDonation.builder()
                 .resourceName(itemDonationUpdateDTO.name())
                 .description(itemDonationUpdateDTO.description())
-                .acceptanceStatus(itemDonationUpdateDTO.acceptanceStatus())
+                .resourceStatus(itemDonationUpdateDTO.resourceStatus())
                 .category(itemDonationUpdateDTO.category())
                 .build();
     }

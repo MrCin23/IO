@@ -8,7 +8,7 @@ export class ItemDonation{
     category: string;
     description: string;
     resourceQuantity: number;
-    acceptanceStatus: string;
+    resourceStatus: string;
 
     constructor(
         id: number,
@@ -20,7 +20,7 @@ export class ItemDonation{
         category: string,
         description: string,
         resourceQuantity: number,
-        acceptanceStatus: string) {
+        resourceStatus: string) {
 
         this.id = id
         this.donorId = donorId
@@ -31,6 +31,6 @@ export class ItemDonation{
         this.category = category
         this.description = description
         this.resourceQuantity = resourceQuantity
-        this.acceptanceStatus = acceptanceStatus
+        this.resourceStatus = resourceStatus
     }
 }

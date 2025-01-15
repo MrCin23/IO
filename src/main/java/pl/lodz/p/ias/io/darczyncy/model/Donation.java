@@ -1,7 +1,6 @@
 package pl.lodz.p.ias.io.darczyncy.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,9 +15,6 @@ import java.time.LocalDate;
 @SuperBuilder(toBuilder = true)
 @MappedSuperclass
 public abstract class Donation extends Resource {
-    public enum AcceptanceStatus {
-        ACCEPTED, REJECTED, PENDING
-    }
 
     @ManyToOne
     @JoinColumn(
@@ -28,16 +24,12 @@ public abstract class Donation extends Resource {
     )
     private Account donor;
 
-    @Enumerated(EnumType.STRING)
-    private AcceptanceStatus acceptanceStatus;
-
     LocalDate donationDate;
 
     public Donation (Account donor, String resourceName, String resourceType, LocalDate donationDate,
                      int resourceQuantity, Long warehouseId) {
         super(resourceName, resourceType, resourceQuantity, warehouseId);
         this.donor = donor;
-        this.acceptanceStatus = AcceptanceStatus.PENDING;
         this.donationDate = donationDate;
     }
 

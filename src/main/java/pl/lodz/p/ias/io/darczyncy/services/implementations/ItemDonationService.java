@@ -119,6 +119,7 @@ public class ItemDonationService implements IItemDonationService {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         ItemDonation itemDonation = itemDonationRepository.findByIdAndDonor_Username(donationId, currentUserName)
                 .orElseThrow(ItemDonationNotFoundException::new);
+        // todo check resource status
         return certificateProvider.generateItemCertificate(itemDonation.getDonor(), itemDonation, language);
     }
 
