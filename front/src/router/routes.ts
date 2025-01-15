@@ -8,6 +8,7 @@ import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
 import FinancialDonationList from "@/components/layouts/donor/components/FinancialDonationList.tsx";
 import ItemDonationList from "@/components/layouts/donor/components/ItemDonationList.tsx";
 import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
+import {VolunteerInfoPage} from "@/components/layouts/volunteer/VolunteerInfoPage.tsx";
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -81,5 +82,10 @@ export const volunteerRoutes: RouteType[] = [
     {
         path: Pathnames.volunteer.homePage,
         Component: HomePage,
-    }
+    },
+    {
+        path: `${Pathnames.volunteer.homePage}/info`,
+        Component: VolunteerInfoPage,
+    },
+
 ]
