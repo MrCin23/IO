@@ -32,7 +32,7 @@ public class FinancialDonation extends Donation {
     private Currency currency;
 
     public FinancialDonation(Account donor, FinancialNeed need,
-                             long warehouseId,
+                             Long warehouseId,
                              double amount, Currency currency, LocalDate localDate) {
         super(donor, "money", "financial Donation", localDate, 1, warehouseId);
         this.need = need;

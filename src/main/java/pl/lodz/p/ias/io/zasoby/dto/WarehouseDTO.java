@@ -9,11 +9,11 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class WarehouseDTO {
-    private long warehouseId;
+    private Long warehouseId;
     private String warehouseName;
     private String location;
 
-    public WarehouseDTO(long warehouseId, String warehouseName, String location) {
+    public WarehouseDTO(Long warehouseId, String warehouseName, String location) {
         this.warehouseId = warehouseId;
         this.warehouseName = warehouseName;
         this.location = location;

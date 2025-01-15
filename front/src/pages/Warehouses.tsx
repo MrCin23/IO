@@ -1,16 +1,21 @@
-import WarehouseTable from '@/components/WarehousesTable.tsx';
-import { Warehouse } from '@/types';
+import WarehouseTable from '../components/layouts/resources/WarehousesTable.tsx';
+import { Warehouse } from '../types/index';
 import { useState, useEffect } from 'react';
+import api from "../api/Axios.tsx"
 
-const Warehouses = () => {
+export const Warehouses = () => {
     const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
 
     useEffect(() => {
         const fetchWarehouses = async () => {
-            const response = await fetch("/api/warehouses");
-            const result = await response.json();
-            setWarehouses(result);
-        }
+            try {
+                const response = await api.get("/warehouses");
+                setWarehouses(response.data);
+            } catch (error) {
+                console.error("Failed to fetch warehouses:", error);
+            }
+        };
+
         fetchWarehouses();
     }, []);
 
@@ -21,5 +26,3 @@ const Warehouses = () => {
         </div>
     );
 };
-
-export default Warehouses;

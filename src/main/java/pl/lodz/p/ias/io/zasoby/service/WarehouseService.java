@@ -23,7 +23,7 @@ public class WarehouseService {
         return warehouseConverter.convertWarehouseToDTO(warehouse);
     }
 
-    public WarehouseDTO getWarehouseById(long id) {
+    public WarehouseDTO getWarehouseById(Long id) {
         Warehouse warehouse = warehouseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse with id " + id + " not found"));
         return warehouseConverter.convertWarehouseToDTO(warehouse);
@@ -37,7 +37,7 @@ public class WarehouseService {
     }
 
     @Transactional
-    public void updateWarehouse(long id, WarehouseDTO warehouseDTO) {
+    public void updateWarehouse(Long id, WarehouseDTO warehouseDTO) {
         Warehouse warehouse = warehouseRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Warehouse with id " + id + " not found"));
 

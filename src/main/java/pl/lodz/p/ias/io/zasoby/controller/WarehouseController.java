@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.zasoby.controller;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.zasoby.dto.WarehouseDTO;
 import pl.lodz.p.ias.io.zasoby.service.WarehouseService;
@@ -19,6 +20,7 @@ public class WarehouseController {
         this.warehouseService = warehouseService;
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA')")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public WarehouseDTO addWarehouse(@RequestBody @Valid WarehouseDTO warehouseDTO) {
@@ -27,10 +29,11 @@ public class WarehouseController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public WarehouseDTO getWarehouse(@PathVariable long id) {
+    public WarehouseDTO getWarehouse(@PathVariable Long id) {
         return warehouseService.getWarehouseById(id);
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA', 'DARCZYŃCA')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<WarehouseDTO> getAllWarehouses() {
@@ -39,7 +42,7 @@ public class WarehouseController {
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateWarehouse(@PathVariable long id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
+    public void updateWarehouse(@PathVariable Long id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
         warehouseService.updateWarehouse(id, warehouseDTO);
     }
 }

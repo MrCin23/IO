@@ -29,7 +29,6 @@ import java.util.List;
 public class FinancialDonationController implements IFinancialDonationController {
 
     private final IFinancialDonationService financialDonationService;
-    private final FinancialNeedRepository financialNeedRepository;
     private final FinancialNeedService financialNeedService;
 
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")

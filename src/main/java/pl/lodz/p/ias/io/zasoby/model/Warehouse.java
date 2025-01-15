@@ -14,8 +14,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Warehouse {
     @Id
-    @GeneratedValue(generator = "long")
-    private long id;
+    @GeneratedValue(generator = "Long")
+    private Long id;
 
     @NotBlank(message = "Warehouse name cannot be blank")
     private String warehouseName;

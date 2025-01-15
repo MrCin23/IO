@@ -2,7 +2,7 @@ import {Route, Routes} from 'react-router-dom'
 import {
     defaultRoutes,
     aid_organizationRoutes,
-    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes
+    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes, resourceRoutes
 } from './routes.ts'
 import {DefaultLayout} from "../components/layouts/default";
 import {AidOrganizationLayout} from "../components/layouts/aid_organization";
@@ -10,6 +10,7 @@ import {AuthorityRepresentativeLayout} from "../components/layouts/autority_repr
 import {DonorLayout} from "../components/layouts/donor/DonorLayout.tsx";
 import {VictimLayout} from "../components/layouts/victim";
 import {VolunteerLayout} from "../components/layouts/volunteer";
+import {ResourceLayout} from "../components/layouts/resources";
 
 /** Komponent rutera definiuje możliwe ścieżki (konteksty URL), które prowadzą do określonych widoków (komponentów)
  * Używana jest do tego mapa łącząca ścieżkę z komponentem.
@@ -69,6 +70,14 @@ export const RoutesComponent = () => {
                     <VolunteerLayout>
                         <Component />
                     </VolunteerLayout>
+                }
+                />
+            ))}
+            {resourceRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <ResourceLayout>
+                        <Component />
+                    </ResourceLayout>
                 }
                 />
             ))}

@@ -12,7 +12,7 @@ public class FinancialDonationMapper {
         return new FinancialDonationOutputDTO(
                 financialDonation.getId(),
                 financialDonation.getDonor().getId(),
-                financialDonation.getWarehouseId(),
+                financialDonation.getWarehouseId()==null?null:financialDonation.getWarehouseId(),
                 financialDonation.getAmount(),
                 financialDonation.getCurrency().toString(),
                 financialDonation.getDonationDate(),

@@ -1,6 +1,10 @@
 import { Pathnames } from './pathnames'
 
 import {HomePage} from "../pages/HomePage";
+import {Resources} from "../pages/Resources";
+import {Warehouses} from "../pages/Warehouses";
+import {CreateWarehouse} from "../pages/CreateWarehouse";
+import {CreateResource} from "../pages/CreateResource";
 import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
 import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
@@ -82,4 +86,47 @@ export const volunteerRoutes: RouteType[] = [
         path: Pathnames.volunteer.homePage,
         Component: HomePage,
     }
+]
+
+export const resourceRoutes: RouteType[] = [
+    {
+        path: Pathnames.aid_organization.resources,
+        Component: Resources,
+    },
+    {
+        path: Pathnames.aid_organization.warehouses,
+        Component: Warehouses,
+    },
+    {
+        path: Pathnames.aid_organization.createWarehouse,
+        Component: CreateWarehouse,
+    },
+    {
+        path: Pathnames.aid_organization.createResource,
+        Component: CreateResource,
+    },
+    {
+        path: Pathnames.victim.resources,
+        Component: Resources,
+    },
+    {
+        path: Pathnames.donor.createResource,
+        Component: CreateResource,
+    },
+    {
+        path: Pathnames.authority_representative.resources,
+        Component: Resources,
+    },
+    {
+        path: Pathnames.authority_representative.warehouses,
+        Component: Warehouses,
+    },
+    {
+        path: Pathnames.authority_representative.createWarehouse,
+        Component: CreateWarehouse,
+    },
+    {
+        path: Pathnames.authority_representative.createResource,
+        Component: CreateResource,
+    },
 ]

@@ -34,7 +34,7 @@ public abstract class Donation extends Resource {
     LocalDate donationDate;
 
     public Donation (Account donor, String resourceName, String resourceType, LocalDate donationDate,
-                     int resourceQuantity, long warehouseId) {
+                     int resourceQuantity, Long warehouseId) {
         super(resourceName, resourceType, resourceQuantity, warehouseId);
         this.donor = donor;
         this.acceptanceStatus = AcceptanceStatus.PENDING;

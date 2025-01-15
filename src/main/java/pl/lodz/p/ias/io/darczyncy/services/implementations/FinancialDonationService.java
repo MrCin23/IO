@@ -52,15 +52,10 @@ public class FinancialDonationService implements IFinancialDonationService {
             throw new DonationBaseException(I18n.DONATION_CURRENCY_INVALID_VALUE_EXCEPTION);
         }
 
-        List<Warehouse> warehouses = warehouseRepository.findAll();
-        // Losowanie magazynu w którym zostanie umieszczona darowizna
-        Random rand = new Random();
-        Warehouse selectedWarehouse = warehouses.get(rand.nextInt(warehouses.size()));
-
         FinancialDonation financialDonation = new FinancialDonation(
                 donor,
                 need,
-                selectedWarehouse.getId(),
+                null,
                 dto.amount(),
                 FinancialDonation.Currency.valueOf(dto.currency()),
                 LocalDate.now()
