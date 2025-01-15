@@ -54,8 +54,6 @@ const GroupChats = ({
           <DialogHeader>
             <DialogTitle>Please provide a chat name</DialogTitle>
             <DialogDescription>
-              This action cannot be undone. You won't be able to change that
-              later.
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-2">

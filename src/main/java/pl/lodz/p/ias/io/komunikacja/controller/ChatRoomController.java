@@ -69,13 +69,10 @@ public class ChatRoomController {
         }
 
         return createdChatRoomDTO;
-
-        //return ResponseEntity.status(HttpStatus.CREATED).body(createdChatRoomDTO);
     }
 
     @GetMapping("/{chatRoomId}/history")
     public ResponseEntity<List<MessageDTO>> getChatRoomHistory(@PathVariable Long chatRoomId) {
-//        List<Message> messages = chatRoomService.getChatHistory(chatRoomId);
         List<Message> messages = messageService.getMessagesForReceiver(chatRoomId);
         List<MessageDTO> messageDTOList = new ArrayList<>();
 
@@ -130,11 +127,4 @@ public class ChatRoomController {
         List<ChatRoom> chatRooms = chatRoomService.getChatRoomsByUserId(userId);
         return ChatRoomMapper.toDTOList(chatRooms);
     }
-    //public ResponseEntity<List<ChatRoomDTO>> getChatRooms() {
-//        List<ChatRoom> chatRooms = chatRoomService.getChatRooms();
-//
-//        List<ChatRoomDTO> chatRoomDTOs = ChatRoomMapper.toDTOList(chatRooms);
-//
-//        return ResponseEntity.ok(chatRoomDTOs);
-//    }
 }
