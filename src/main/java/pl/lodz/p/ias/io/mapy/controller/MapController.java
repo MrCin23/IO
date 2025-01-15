@@ -67,8 +67,8 @@ public class MapController {
         }
     }
 
-    @PutMapping("status/{id}")
-    public ResponseEntity<Object> updateMapPoint(@PathVariable("id") long id, @RequestBody boolean status) {
+    @PutMapping("status/{id}/{status}")
+    public ResponseEntity<Object> updateMapPoint(@PathVariable("id") long id, @PathVariable("status") boolean status) {
         try {
             mapService.changeStatus(id, status);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -81,7 +81,7 @@ public class MapController {
     @GetMapping("archival")
     public ResponseEntity<Object> getArchival() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(mapService.findByActive(true));
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.findByActive(false));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No archival points found");
         }
@@ -90,7 +90,7 @@ public class MapController {
     @GetMapping("active")
     public ResponseEntity<Object> getActive() {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(mapService.findByActive(false));
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.findByActive(true));
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No active points found");
         }
