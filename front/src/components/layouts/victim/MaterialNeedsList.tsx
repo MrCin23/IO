@@ -3,6 +3,7 @@ import { MaterialNeed } from './type';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { StatusChangeButton } from './components/StatusChangeButton';
+import { getCurrentUser } from './components/NeedsListHelper';
 
 export const MaterialNeedsList: React.FC = () => {
     const [needs, setNeeds] = useState<MaterialNeed[]>([]);
@@ -15,20 +16,31 @@ export const MaterialNeedsList: React.FC = () => {
             if (!token) {
                 throw new Error('No authentication token found');
             }
-
-            const response = await axios.get<MaterialNeed[]>('http://localhost:8080/api/material-needs', {
+    
+            const userInfo = await getCurrentUser(token);
+            let endpoint = 'http://localhost:8080/api/material-needs';
+    
+            if (userInfo.role.roleName === 'POSZKODOWANY') {
+                endpoint = `http://localhost:8080/api/material-needs/user/${userInfo.id}`;
+            } else if (userInfo.role.roleName === 'PRZEDSTAWICIEL_WŁADZ') {
+                endpoint = 'http://localhost:8080/api/material-needs';
+            } else {
+                throw new Error('Role not valid');
+            }
+    
+            const response = await axios.get<MaterialNeed[]>(endpoint, {
                 headers: {
-                Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
-      setNeeds(response.data);
+            setNeeds(response.data);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
             }
         } finally {
             setLoading(false);
-        } 
+        }
     };
 
     useEffect(() => {

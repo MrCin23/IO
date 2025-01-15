@@ -1,11 +1,40 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 import { FinancialNeedsList } from '../components/layouts/victim/FinancialNeedsList';
 import { ManualNeedsList } from '../components/layouts/victim/ManualNeedsList';
 import { MaterialNeedsList } from '../components/layouts/victim/MaterialNeedsList';
 import AddNeedForm from '../components/layouts/victim/AddNeedForm';
+import { getCurrentUser } from '../components/layouts/victim/components/NeedsListHelper';
 
 export const VictimPage = () => {
     const [activeList, setActiveList] = useState<'financial' | 'manual' | 'material' | 'form'>('form');
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const checkUserRole = async () => {
+            try {
+                const token = Cookies.get('jwt');
+                if (!token) {
+                    navigate('/');
+                    return;
+                }
+
+                const userInfo = await getCurrentUser(token);
+                const role = userInfo.role.roleName;
+
+                if (role !== 'POSZKODOWANY' && role !== 'PRZEDSTAWICIEL_WŁADZ') {
+                    navigate('/');
+                }
+            } catch (error) {
+                console.error('Error checking user role:', error);
+                navigate('/');
+            }
+        };
+
+        checkUserRole();
+    }, [navigate]);
 
     return (
 

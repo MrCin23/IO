@@ -3,6 +3,7 @@ import { ManualNeed } from './type';
 import { StatusChangeButton } from './components/StatusChangeButton';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { getCurrentUser } from './components/NeedsListHelper';
 
 export const ManualNeedsList: React.FC = () => {
     const [needs, setNeeds] = useState<ManualNeed[]>([]);
@@ -15,10 +16,21 @@ export const ManualNeedsList: React.FC = () => {
             if (!token) {
                 throw new Error('No authentication token found');
             }
-
-            const response = await axios.get<ManualNeed[]>('http://localhost:8080/api/manual-needs', {
+    
+            const userInfo = await getCurrentUser(token);
+            let endpoint = 'http://localhost:8080/api/manual-needs';
+    
+            if (userInfo.role.roleName === 'POSZKODOWANY') {
+                endpoint = `http://localhost:8080/api/manual-needs/user/${userInfo.id}`;
+            } else if (userInfo.role.roleName === 'PRZEDSTAWICIEL_WŁADZ') {
+                endpoint = 'http://localhost:8080/api/manual-needs';
+            } else {
+                throw new Error('Role not valid');
+            }
+    
+            const response = await axios.get<ManualNeed[]>(endpoint, {
                 headers: {
-                Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
             setNeeds(response.data);

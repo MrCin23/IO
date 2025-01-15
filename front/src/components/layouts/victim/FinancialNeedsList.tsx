@@ -3,6 +3,7 @@ import { FinancialNeed } from './type';
 import Cookies from 'js-cookie';
 import { StatusChangeButton } from './components/StatusChangeButton';
 import axios from 'axios';
+import { getCurrentUser } from './components/NeedsListHelper';
 
 export const FinancialNeedsList: React.FC = () => {
     const [needs, setNeeds] = useState<FinancialNeed[]>([]);
@@ -10,23 +11,33 @@ export const FinancialNeedsList: React.FC = () => {
     const [error, setError] = useState<string | null>(null);
 
     const fetchNeeds = async () => {
-
         try {
             const token = Cookies.get('jwt');
             if (!token) {
                 throw new Error('No authentication token found');
             }
-
-            const response = await axios.get<FinancialNeed[]>('http://localhost:8080/api/financial-needs', {
+    
+            const userInfo = await getCurrentUser(token);
+            let endpoint = 'http://localhost:8080/api/financial-needs';
+    
+            if (userInfo.role.roleName === 'POSZKODOWANY') {
+                endpoint = `http://localhost:8080/api/financial-needs/user/${userInfo.id}`;
+            } else if (userInfo.role.roleName === 'PRZEDSTAWICIEL_WŁADZ') {
+                endpoint = 'http://localhost:8080/api/financial-needs';
+            } else {
+                throw new Error('Role not valid');
+            }
+    
+            const response = await axios.get<FinancialNeed[]>(endpoint, {
                 headers: {
-                Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`
                 }
             });
             setNeeds(response.data);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
-            } 
+            }
         } finally {
             setLoading(false);
         }
