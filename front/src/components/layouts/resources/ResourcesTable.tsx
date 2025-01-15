@@ -20,7 +20,11 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
     const handleUpdate = async () => {
         if (!selectedResourceId || !selectedStatus || selectedQuantity === null) return;
 
-        const resourceStatus = selectedStatus === "PRZYDZIELONY" ? "PRZYDZIELONY" : "NIEPRZYDZIELONY";
+        const validStatuses = ["ACCEPTED", "PENDING", "REJECTED"];
+        if (!validStatuses.includes(selectedStatus)) {
+            alert("Invalid status selected.");
+            return;
+        }
 
         const resourceToUpdate = resources.find((resource) => resource.resourceId === selectedResourceId);
 
@@ -36,7 +40,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 resourceName: resourceToUpdate.resourceName,
                 resourceType: resourceToUpdate.resourceType,
                 resourceQuantity: selectedQuantity,
-                resourceStatus,
+                resourceStatus: selectedStatus,
                 warehouseId: resourceToUpdate.warehouseId,
             });
 
@@ -47,6 +51,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
             alert("An unexpected error occurred.");
         }
     };
+
 
     return (
         <div className="overflow-x-auto">
@@ -81,7 +86,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             <td className="px-4 py-2">{resource.resourceType}</td>
                             <td className="px-4 py-2">{resource.resourceQuantity}</td>
                             <td className="px-4 py-2">{resource.resourceStatus}</td>
-                            <td className="px-4 py-2">{resource.warehouseId}</td>
+                            <td className="px-4 py-2">{resource.warehouseId ?? ""}</td>
                             <td className="px-4 py-2">
                                 {!isVictimPath && (
                                     <button
@@ -108,8 +113,9 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                                     value={selectedStatus}
                                                     onChange={(e) => setSelectedStatus(e.target.value)}
                                                 >
-                                                    <option value="PRZYDZIELONY">PRZYDZIELONY</option>
-                                                    <option value="NIEPRZYDZIELONY">NIEPRZYDZIELONY</option>
+                                                    <option value="ACCEPTED">ACCEPTED</option>
+                                                    <option value="PENDING">PENDING</option>
+                                                    <option value="REJECTED">REJECTED</option>
                                                 </select>
                                             </label>
                                         </div>
