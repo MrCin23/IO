@@ -1,6 +1,9 @@
 package pl.lodz.p.ias.io.uwierzytelnianie.utils;
 
+import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
+
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class EnumUtils {
 
@@ -17,5 +20,11 @@ public class EnumUtils {
         }
         return Arrays.stream(enumClass.getEnumConstants())
                 .anyMatch(e -> e.name().equalsIgnoreCase(value));
+    }
+
+    public static String availableRoles() {
+         return Arrays.stream(UserRole.values())
+                .map(Enum::name)
+                .collect(Collectors.joining(", "));
     }
 }
