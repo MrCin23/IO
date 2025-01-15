@@ -5,6 +5,7 @@ import Resources from "../pages/Resources";
 import Warehouses from "../pages/Warehouses";
 import {CreateWarehouse} from "../pages/CreateWarehouse";
 import {CreateResource} from "../pages/CreateResource";
+import Chat from '@/pages/Chat';
 import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
 import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
@@ -133,5 +134,12 @@ export const volunteerRoutes: RouteType[] = [
     {
         path: Pathnames.volunteer.resources,
         Component: Resources,
+    }
+]
+
+export const chatRoutes: RouteType[] = [
+    {
+        path: Pathnames.chat.homePage,
+        Component: Chat,
     }
 ]

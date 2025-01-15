@@ -2,7 +2,8 @@ import {Route, Routes, Navigate} from 'react-router-dom'
 import {
     defaultRoutes,
     aid_organizationRoutes,
-    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes
+    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes,
+    chatRoutes
 } from './routes.ts'
 import {DefaultLayout} from "../components/layouts/default";
 import {AidOrganizationLayout} from "../components/layouts/aid_organization";
@@ -135,7 +136,45 @@ export const RoutesComponent = () => {
                         <Navigate to={Pathnames.default.homePage} />
                     )
                 }
-            />
+                />
+            
+            {authority_representativeRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <AuthorityRepresentativeLayout>
+                        <Component />
+                    </AuthorityRepresentativeLayout>
+                }
+                />
+            ))}
+            {donorRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <DonorLayout>
+                        <Component />
+                    </DonorLayout>
+                }
+                />
+            ))}
+            {victimRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <VictimLayout>
+                        <Component />
+                    </VictimLayout>
+                }
+                />
+            ))}
+            {volunteerRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <VolunteerLayout>
+                        <Component />
+                    </VolunteerLayout>
+                }
+                />
+            ))}
+            {chatRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <Component/>
+                } />
+            ))}
         </Routes>
     );
 }
