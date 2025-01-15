@@ -2,6 +2,7 @@ import { ChatDB } from "@/types";
 import GroupChats from "../components/GroupChats";
 import Messages from "../components/Messages";
 import { useEffect, useState } from "react";
+import { useAccount } from "@/contexts/uwierzytelnianie/AccountContext";
 
 const Chat = () => {
   document.getElementById("root")!.style.padding = "0";
@@ -10,14 +11,23 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
+  const { account } = useAccount();
+  console.log(account);
+
   useEffect(() => {
     const fetchChats = async () => {
       try {
-        const response = await fetch(`/api/chatrooms/user/${1}`); // Get user ID from context
+        if (account === null) {
+          console.error("Account is null");
+          return;
+        }
+
+        const response = await fetch(`/api/chatrooms/user/${account.id}`); 
         if (!response.ok) {
           throw new Error("Failed to fetch chats");
         }
         const data = await response.json();
+        console.log(data);
         setChats(data);
       } catch (err) {
         console.error("Error fetching chats from DB:", err);
@@ -26,6 +36,8 @@ const Chat = () => {
 
     fetchChats();
   }, [selectedChat])
+
+ 
 
   return (
     <div className="flex w-screen h-screen">
