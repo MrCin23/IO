@@ -11,8 +11,11 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
-  const {account} = useAccount();
-  console.log(account);
+  const { account } = useAccount();
+
+  const chatName =
+    chats.find((chat) => chat.id === selectedChat)?.name || "No chat selected";
+
 
   useEffect(() => {
     const fetchChats = async () => {
@@ -22,7 +25,7 @@ const Chat = () => {
           return;
         }
 
-        const response = await fetch(`/api/chatrooms/user/${account.id}`); 
+        const response = await fetch(`/api/chatrooms/user/${account.id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch chats");
         }
@@ -32,17 +35,25 @@ const Chat = () => {
       } catch (err) {
         console.error("Error fetching chats from DB:", err);
       }
-    }
+    };
 
     fetchChats();
-  }, [account, selectedChat])
-
- 
+  }, [account, selectedChat]);
 
   return (
     <div className="flex w-screen h-screen">
-      <GroupChats chats={chats} selectChat={setSelectedChat} setChats={setChats} />
-      <Messages selectedChat={selectedChat} userId={account?.id} username={account?.username}/>
+      <GroupChats
+        chats={chats}
+        selectedChat={selectedChat}
+        selectChat={setSelectedChat}
+        setChats={setChats}
+      />
+      <Messages
+        chatName={chatName}
+        selectedChat={selectedChat}
+        userId={account?.id}
+        username={account?.username}
+      />
     </div>
   );
 };
