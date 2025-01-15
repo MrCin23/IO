@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/dialog";
 import { Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { ScrollArea } from "./ui/scroll-area";
 
 const UpdateChatForm = ({
   chatId,
@@ -38,6 +39,9 @@ const UpdateChatForm = ({
   setChats: (chats: ChatDB[]) => void;
 }) => {
   const [users, setUsers] = useState<Account[]>([]);
+  const [filteredUsers, setFilteredUsers] = useState<Account[]>([]);
+  const [filter, setFilter] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { account } = useAccount();
   const initialChatData = chats.find((chat) => chat.id === chatId);
 
@@ -62,6 +66,19 @@ const UpdateChatForm = ({
     },
   });
 
+  const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    setFilter(value);
+
+    setFilteredUsers(
+      users.filter(
+        (user) =>
+          user.firstName.toLowerCase().includes(value) ||
+          user.lastName.toLowerCase().includes(value)
+      )
+    );
+  };
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -73,6 +90,7 @@ const UpdateChatForm = ({
 
         const data = await response.json();
         setUsers(data);
+        setFilteredUsers(data);
       } catch (err) {
         console.error("Error fetching users from DB:", err);
       }
@@ -102,19 +120,25 @@ const UpdateChatForm = ({
         chat.id === chatId ? updatedChat : chat
       );
       setChats(updatedChats);
+      setIsDialogOpen(false);
     } else {
       console.error("Failed to update chat");
     }
   };
 
   return (
-    <Dialog>
+    <Dialog
+      open={isDialogOpen}
+      onOpenChange={(isOpen) => setIsDialogOpen(isOpen)}
+    >
       <DialogTrigger asChild>
         <Settings color="black" size={48} className="mr-4 mt-4" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>{t("update_chat_form.form dialog decsription")}</DialogTitle>
+          <DialogTitle>
+            {t("update_chat_form.form dialog decsription")}
+          </DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <div className="space-y-2">
@@ -145,42 +169,60 @@ const UpdateChatForm = ({
                         {t("update_chat_form.form_users_description")}
                       </FormDescription>
                     </div>
-                    {users.map((user) => (
-                      <FormField
-                        key={user.id}
-                        control={form.control}
-                        name="users"
-                        render={({ field }) => {
-                          return (
-                            <FormItem
-                              key={user.id}
-                              className="flex flex-row items-start space-x-3 space-y-0"
-                            >
-                              <FormControl>
-                                <Checkbox
-                                  checked={field.value?.includes(
-                                    String(user.id)
-                                  )}
-                                  onCheckedChange={(checked) => {
-                                    const userId = String(user.id);
-                                    return checked
-                                      ? field.onChange([...field.value, userId])
-                                      : field.onChange(
-                                          field.value?.filter(
-                                            (value) => value !== userId
-                                          )
-                                        );
-                                  }}
-                                />
-                              </FormControl>
-                              <FormLabel className="font-normal">
-                                {user.firstName} {user.lastName}
-                              </FormLabel>
-                            </FormItem>
-                          );
-                        }}
+                    <div className="mb-4">
+                      <Input
+                        placeholder={t(
+                          "create_chat_form.form_users_input_placeholder"
+                        )}
+                        value={filter}
+                        onChange={handleFilterChange}
                       />
-                    ))}
+                    </div>
+                    <ScrollArea className="h-40 border rounded-md p-2">
+                      {filteredUsers.map((user) => (
+                        <FormField
+                          key={user.id}
+                          control={form.control}
+                          name="users"
+                          render={({ field }) => {
+                            return (
+                              <FormItem
+                                key={user.id}
+                                className="flex flex-row items-start space-x-3 space-y-0"
+                              >
+                                <FormControl>
+                                  <Checkbox
+                                    id={user.id}
+                                    checked={field.value?.includes(
+                                      String(user.id)
+                                    )}
+                                    onCheckedChange={(checked) => {
+                                      const userId = String(user.id);
+                                      return checked
+                                        ? field.onChange([
+                                            ...field.value,
+                                            userId,
+                                          ])
+                                        : field.onChange(
+                                            field.value?.filter(
+                                              (value) => value !== userId
+                                            )
+                                          );
+                                    }}
+                                  />
+                                </FormControl>
+                                <FormLabel
+                                  htmlFor={user.id}
+                                  className="font-normal"
+                                >
+                                  {user.firstName} {user.lastName}
+                                </FormLabel>
+                              </FormItem>
+                            );
+                          }}
+                        />
+                      ))}
+                    </ScrollArea>
                     <FormMessage />
                   </FormItem>
                 )}

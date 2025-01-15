@@ -144,7 +144,7 @@ const CreateChatForm = ({
                   onChange={handleFilterChange}
                 />
               </div>
-              <ScrollArea className="h-40 border rounded-md">
+              <ScrollArea className="h-40 border rounded-md p-2">
                 {filteredUsers.map((user) => (
                   <FormField
                     key={user.id}
