@@ -13,11 +13,19 @@ const defaultIcon = L.icon({
     popupAnchor: [1, -34],
 });
 
+const greyIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+});
+
 interface Point {
-    pointid: number | undefined;
+    pointID: number | undefined;
     coordinates: { lat: number; lng: number };
     title: string;
     description: string;
+    active: boolean;
 }
 
 interface MapViewProps {
@@ -56,10 +64,11 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             click: (e: { latlng: { lat: number; lng: number; }; }) => {
                 if (canAddPoints) {
                     setNewPoint({
-                        pointid: undefined,
+                        pointID: undefined,
                         coordinates: { lat: e.latlng.lat, lng: e.latlng.lng },
                         title: "",
                         description: "",
+                        active: true
                     });
 
                     if (externalForm && setCoordinates) {
@@ -82,9 +91,10 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
 
     const handleDelete = async (id: number | undefined) => {
         try {
+            console.log(id);
             await axios.delete(`api/map/${id}`);
             setPoints((prev) =>
-                prev.filter((point) => point.pointid !== id)
+                prev.filter((point) => point.pointID !== id)
             );
             alert(t("pointDeleted"));
         } catch (error) {
@@ -92,17 +102,15 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
         }
     }
 
-    const handleArchive = async (id: number | undefined) => {
+    const handleArchive = async (id: number | undefined, status: boolean) => {
         try {
-            await axios.post(`api/map/${id}`);
-            setPoints((prev) =>
-                prev.filter((point) => point.pointid !== id)
-            );
-            alert(t("pointDeleted"));
+            await axios.put(`api/map/status/${id}/${status}`);
+            await fetchPoints();
+            alert(t("pointStateChanged"));
         } catch (error) {
-            console.error(t("error.readPoint"), error)
+            console.error(t("error.readPoint"), error);
         }
-    }
+    };
 
     const savePoint = async () => {
         if (!formData.title || !formData.description || !newPoint) {
@@ -145,14 +153,14 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                     <Marker
                         key={index}
                         position={[point.coordinates.lat, point.coordinates.lng]}
-                        icon={defaultIcon}
+                        icon={point.active ? defaultIcon : greyIcon}
                     >
                         <Popup>
                             <strong>{point.title}</strong>
                             <p>{point.description}</p>
                             {/*<button onClick={}>{t("editPoint")}</button>*/}
-                            <button onClick={handleDelete(point.pointid)}>{t("deletePoint")}</button>
-                            <button onClick={}>{t("archive")}</button>
+                            <button onClick={() => handleDelete(point.pointID)}>{t("deletePoint")}</button>
+                            <button onClick={() => handleArchive(point.pointID, !point.active)}>{t("switchStatus")}</button>
                         </Popup>
                     </Marker>
                 ))}

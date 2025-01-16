@@ -44,6 +44,12 @@ public class MapService implements IMapService {
     }
 
     @Override
+    public void changeStatus(long id, boolean status) {
+        mapPointRepository.updateActiveByPointID(id, status);
+    }
+
+
+    @Override
     public List<MapPoint> findByActive(boolean active) {
         return mapPointRepository.findByActive(active);
     }

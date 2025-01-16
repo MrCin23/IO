@@ -6,6 +6,9 @@ const en = {
     description: "Description:",
     title: "Title:",
     addPoint: "Add point",
+    pointStateChanged: "Point achived/reactivated!",
+    deletePoint: "Delete",
+    switchStatus: "Switch status",
     error: {
         savePoint: "Error while saving point:",
         readPoint: "Error while reading point:"
