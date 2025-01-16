@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.wolontariusze.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
@@ -38,23 +39,22 @@ public class VolunteerController {
         response.put("id", volunteer.getId().toString());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }*/
-
+    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping
     ResponseEntity<List<Account>> getVolunteers() {
         return new ResponseEntity<>(volunteerService.getAllVolunteers(), HttpStatus.OK);
     }
 
+    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping("/{id}")
     ResponseEntity<Account> getVolunteer(@PathVariable("id") Long id) {
         return new ResponseEntity<>(volunteerService.getVolunteerById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {
-        volunteerService.deleteVolunteer(id);
-        return new ResponseEntity<>("dupa", HttpStatus.OK);
-    }
-
-
+//    @DeleteMapping("/{id}")
+//    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {
+//        volunteerService.deleteVolunteer(id);
+//        return new ResponseEntity<>("dupa", HttpStatus.OK);
+//    }
 
 }

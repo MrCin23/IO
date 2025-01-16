@@ -14,9 +14,12 @@
   "username": "Nazwa Użytkownika",
   "firstName": "Imię",
   "lastName": "Nazwisko",
+  "lastLogon": "Ostatnie zalogowanie",
+  "role": "Rola",
   "status": "Status",
   "active": "Aktywny",
   "inactive": "Nieaktywny",
   "noVolunteers": "Brak dostępnych wolontariuszy.",
-  "noVolunteerGroups": "Brak dostępnych grup wolontariuszy."
+  "noVolunteerGroups": "Brak dostępnych grup wolontariuszy.",
+  "filterByName": "Filtruj po nazwie użytkownika"
 }

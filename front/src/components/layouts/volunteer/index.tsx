@@ -39,20 +39,19 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
             <AppBar position="static">
                 <Toolbar sx={{ display: 'flex'}}>
                     <Button onClick={() => navigate(Pathnames.volunteer.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Home
+                        {t("home")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        My Account
-                    </Button>
-                    <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Logout
-                        {t("home")}
+                        {t("myAccount")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.volunteers)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("volunteerListTitle")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.groups)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("volunteerGroupListTitle")}
+                    </Button>
+                    <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("logOut")}
                     </Button>
                     <div>
                         <LanguageSwitcher/>

@@ -2,55 +2,60 @@ import { useEffect, useState } from "react";
 import "../styles/VolunteerList.css"; // Assuming you create a CSS file for styling
 import { useTranslation } from "react-i18next";
 import {Volunteer} from "@/components/layouts/volunteer/models/Volunteer.tsx";
+import axios from "@/api/Axios.tsx";
 
 function VolunteerList() {
-    const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
-    const [isLoading, setIsLoading] = useState(false);
     const { t } = useTranslation();
 
+    const [volunteers, setVolunteers] = useState<Volunteer[]>([]);
+    const [filter, setFilter] = useState('');
+
     useEffect(() => {
-        // Simulate loading state
-        setIsLoading(true);
-
-        // Hardcoded volunteer data
-
-        setVolunteers([
-            { id: "1", username: "johndoe", firstName: "John", lastName: "Doe", active: true },
-            { id: "2", username: "janedoe", firstName: "Jane", lastName: "Doe", active: false },
-            { id: "3", username: "alexsmith", firstName: "Alex", lastName: "Smith", active: true },
-        ]);
-        setIsLoading(false);
+        axios.get('/volunteers').then((response) => setVolunteers(response.data));
     }, []);
 
     return (
-        <div className="volunteer-list-container">
+        <div className="container my-5">
             <h2>{t("volunteerListTitle")}</h2>
-            {isLoading && <p>{t("loading")}</p>}
-            {!isLoading && volunteers.length === 0 && <p>{t("noVolunteers")}</p>}
-            {!isLoading && volunteers.length > 0 && (
-                <table className="volunteer-list">
-                    <thead>
+            <input
+                type="text"
+                className="form-control mb-3"
+                placeholder={t("filterByName")}
+                value={filter}
+                onChange={(e) => setFilter(e.target.value)}
+            />
+
+            <div className="table-responsive">
+                <table className="table table-striped table-hover table-bordered">
+                    <thead className='table-dark text-center'>
                     <tr>
-                        <th>{t("username")}</th>
+                        <th>{t("")}ID</th>
+                        <th>{t("username")}Nazwa </th>
                         <th>{t("firstName")}</th>
                         <th>{t("lastName")}</th>
+                        <th>{t("lastLogon")}</th>
+                        <th>{t("role")}</th>
                         <th>{t("status")}</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {volunteers.map((volunteer) => (
+                    {volunteers.filter((user) =>
+                        user.username.toLowerCase().includes(filter.toLowerCase())
+                    )
+                    .map((volunteer) => (
                         <tr key={volunteer.id}>
+                            <td>{volunteer.id}</td>
                             <td>{volunteer.username}</td>
                             <td>{volunteer.firstName}</td>
                             <td>{volunteer.lastName}</td>
-                            <td>
-                                {volunteer.active ? t("active") : t("inactive")}
-                            </td>
+                            <td>{volunteer.lastLogin}</td>
+                            <td>{volunteer.role.roleName}</td>
+                            <td>{volunteer.active ? 'Aktywny' : 'Nieaktywny'}</td>
                         </tr>
                     ))}
                     </tbody>
                 </table>
-            )}
+            </div>
         </div>
     );
 }

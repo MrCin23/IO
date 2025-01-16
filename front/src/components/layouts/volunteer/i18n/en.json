@@ -14,9 +14,12 @@
   "username": "Username",
   "firstName": "First Name",
   "lastName": "Last Name",
+  "lastLogon": "Last logon",
+  "role": "Role",
   "status": "Status",
   "active": "Active",
   "inactive": "Inactive",
   "noVolunteers": "No volunteers available.",
-  "noVolunteerGroups": "No volunteer groups available."
+  "noVolunteerGroups": "No volunteer groups available.",
+  "filterByName": "Filter by username"
 }

@@ -32,6 +32,27 @@ h2 {
     margin-bottom: 15px;
 }
 
+.group-name-header {
+    background-color: #f0f8ff; /* Light blue background */
+    color: #333; /* Dark text color for contrast */
+    padding: 10px; /* Adds padding inside the header */
+    border-radius: 5px; /* Rounds the corners slightly */
+    margin-bottom: 10px; /* Adds spacing below the header */
+    display: flex; /* Allows proper layout for button alignment */
+    justify-content: space-between; /* Separates name and button */
+    align-items: center; /* Centers content vertically */
+}
+
+.edit-group-button {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none; /* Remove border */
+    padding: 8px 12px; /* Add padding */
+    border-radius: 4px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
