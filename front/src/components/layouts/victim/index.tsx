@@ -2,7 +2,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, AppBar, Toolbar, Container } from '@mui/material';
-import i18n from './i18n/i18n';
+import i18n from '../../../i18n.ts';
 import { Pathnames } from '@/router/pathnames.ts'
 import { useAccount } from '@/contexts/uwierzytelnianie/AccountContext.tsx'
 import {useTranslation} from "react-i18next";

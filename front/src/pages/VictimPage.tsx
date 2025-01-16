@@ -45,25 +45,25 @@ export const VictimPage = () => {
             onClick={() => setActiveList('financial')}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            {t('financialNeeds')}
+            {t('victim.financialNeeds')}
           </button>
           <button
             onClick={() => setActiveList('manual')}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            {t('manualNeeds')}
+            {t('victim.manualNeeds')}
           </button>
           <button
             onClick={() => setActiveList('material')}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            {t('materialNeeds')}
+            {t('victim.materialNeeds')}
           </button>
           <button
             onClick={() => setActiveList('form')}
             className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           >
-            {t('addNeed')}
+            {t('victim.addNeed')}
           </button>
         </div>
 

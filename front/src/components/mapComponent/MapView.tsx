@@ -5,7 +5,6 @@ import L from "leaflet";
 import axios from "axios";
 import {useTranslation} from "react-i18next";
 
-// Ikona markera
 const defaultIcon = L.icon({
     iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
     iconSize: [25, 41],
@@ -85,7 +84,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             const response = await axios.get(`api/map/type/${pointType}`);
             setPoints(response.data);
         } catch (error) {
-            console.error(t(""), error);
+            console.error(t("maps.error.noDescription"), error);
         }
     };
 
@@ -96,9 +95,9 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             setPoints((prev) =>
                 prev.filter((point) => point.pointID !== id)
             );
-            alert(t("pointDeleted"));
+            alert(t("maps.pointDeleted"));
         } catch (error) {
-            console.error(t("error.readPoint"), error)
+            console.error(t("maps.error.readPoint"), error)
         }
     }
 
@@ -106,9 +105,9 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
         try {
             await axios.put(`api/map/status/${id}/${status}`);
             await fetchPoints();
-            alert(t("pointStateChanged"));
+            alert(t("maps.pointStateChanged"));
         } catch (error) {
-            console.error(t("error.readPoint"), error);
+            console.error(t("maps.error.readPoint"), error);
         }
     };
 
@@ -118,15 +117,15 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
         try {
             await axios.put(`api/map/status/${id}/${status}`);
             await fetchPoints();
-            alert(t("pointStateChanged"));
+            alert(t("maps.pointStateChanged"));
         } catch (error) {
-            console.error(t("error.readPoint"), error);
+            console.error(t("maps.error.readPoint"), error);
         }
     };
 
     const savePoint = async () => {
         if (!formData.title || !formData.description || !newPoint) {
-            alert(t("fillEveryField"));
+            alert(t("maps.fillEveryField"));
             return;
         }
         try {
@@ -137,12 +136,12 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 type: pointType,
                 active: true,
             });
-            alert(t("pointSaved"));
+            alert(t("maps.pointSaved"));
             setNewPoint(null);
             setFormData({ title: "", description: "" });
             fetchPoints();
         } catch (error) {
-            console.error(t("error.savePoint"), error);
+            console.error(t("maps.error.savePoint"), error);
         }
     };
 
@@ -170,7 +169,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         <Popup>
                             {/*{editPoint && canAddPoints && !externalForm && (*/}
                             {/*    <div style={{padding: "10px", background: "#282828", marginTop: "10px"}}>*/}
-                            {/*        <h3>{t("addPoint")}</h3>*/}
+                            {/*        <h3>{t("maps.addPoint")}</h3>*/}
                             {/*        <form*/}
                             {/*            onSubmit={(e) => {*/}
                             {/*                e.preventDefault();*/}
@@ -178,7 +177,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                             {/*            }}*/}
                             {/*        >*/}
                             {/*            <div>*/}
-                            {/*                <label>{t("title")}</label>*/}
+                            {/*                <label>{t("maps.title")}</label>*/}
                             {/*                <input*/}
                             {/*                    type="text"*/}
                             {/*                    value={formData.title}*/}
@@ -187,7 +186,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                             {/*                />*/}
                             {/*            </div>*/}
                             {/*            <div>*/}
-                            {/*                <label>{t("description")}</label>*/}
+                            {/*                <label>{t("maps.description")}</label>*/}
                             {/*                <textarea*/}
                             {/*                    value={formData.description}*/}
                             {/*                    onChange={(e) =>*/}
@@ -196,7 +195,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                             {/*                    required*/}
                             {/*                ></textarea>*/}
                             {/*            </div>*/}
-                            {/*            <button type="submit">{t("savePoint")}</button>*/}
+                            {/*            <button type="submit">{t("maps.savePoint")}</button>*/}
                             {/*        </form>*/}
                             {/*    </div>*/}
                             {/*)}*/}
@@ -210,11 +209,11 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                                 <strong>{point.title}</strong>
                                 <p>{point.description}</p>
                             </div>
-                            {/*<button onClick={}>{t("editPoint")}</button>*/}
-                            <button onClick={() => handleDelete(point.pointID)}>{t("deletePoint")}</button>
+                            {/*<button onClick={}>{t("maps.editPoint")}</button>*/}
+                            <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>
                             <button
-                                onClick={() => handleArchive(point.pointID, !point.active)}>{t("switchStatus")}</button>
-                            <button onClick={() => handleEdit(point.pointID)}>{t("deletePoint")}</button>
+                                onClick={() => handleArchive(point.pointID, !point.active)}>{t("maps.switchStatus")}</button>
+                            <button onClick={() => handleEdit(point.pointID)}>{t("maps.deletePoint")}</button>
                         </Popup>
                     </Marker>
                 ))}
@@ -224,7 +223,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         icon={defaultIcon}
                     >
                         <Popup>
-                            <strong>{t("addPoint")}</strong>
+                            <strong>{t("maps.addPoint")}</strong>
                         </Popup>
                     </Marker>
                 )}
@@ -232,7 +231,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             </MapContainer>
             {newPoint && canAddPoints && !externalForm && (
                 <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
-                    <h3>{t("addPoint")}</h3>
+                    <h3>{t("maps.addPoint")}</h3>
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
@@ -240,7 +239,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         }}
                     >
                         <div>
-                            <label>{t("title")}</label>
+                            <label>{t("maps.title")}</label>
                             <input
                                 type="text"
                                 value={formData.title}
@@ -249,7 +248,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                             />
                         </div>
                         <div>
-                            <label>{t("description")}</label>
+                            <label>{t("maps.description")}</label>
                             <textarea
                                 value={formData.description}
                                 onChange={(e) =>
@@ -258,7 +257,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                                 required
                             ></textarea>
                         </div>
-                        <button type="submit">{t("savePoint")}</button>
+                        <button type="submit">{t("maps.savePoint")}</button>
                     </form>
                 </div>
             )}

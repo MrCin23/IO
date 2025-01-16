@@ -81,5 +81,74 @@
     "warehouseFailed": "Failed to add warehouse. Please try again.",
     "warehouseError": "An unexpected error occurred. Please try again.",
     "resourceId": "Resource ID"
+  },
+  "maps": {
+    "fillEveryField": "Fill every field!",
+    "pointSaved": "Point saved!",
+    "savePoint": "Save point",
+    "description": "Description:",
+    "title": "Title:",
+    "addPoint": "Add point",
+    "pointStateChanged": "Point achived/reactivated!",
+    "deletePoint": "Delete",
+    "switchStatus": "Switch status",
+    "editPoint": "Edit",
+    "error": {
+      "savePoint": "Error while saving point:",
+      "readPoint": "Error while reading point:",
+      "noDescription": "Error"
+    }
+  },
+  "victim": {
+    "financialNeeds": "Financial needs",
+    "manualNeeds": "Manual needs",
+    "materialNeeds": "Material needs",
+    "addNeed": "Add need",
+    "english": "English",
+    "polish": "Polish",
+
+    "noFinancialNeeds": "No financial needs found",
+    "noManualNeeds": "No manual needs found",
+    "noMaterialNeeds": "No material needs found",
+
+    "materialNeed": "Material need",
+    "manualNeed": "Manual need",
+    "financialNeed": "Financial need",
+
+    "expirationDateError": "End date cannot be earlier than start date",
+    "logginError": "You must be logged in to add a need",
+    "mapError": "Provide a point on the map!",
+
+    "formDescription": "Description",
+    "formExpirationDate": "Expiration Date",
+    "formItemCategory": "Category",
+    "formMaxVolunteers": "Maximum number of volunteers",
+    "formCollectionGoal": "Collection goal",
+    "formSubmitButton": "Submit",
+
+    "loading": "Loading",
+
+    "id": "ID",
+    "creationDate": "Creation date",
+    "expirationDate": "Expiration date",
+    "collected": "Collected",
+    "status": "Status",
+
+    "volunteers": "Volunteers",
+
+    "itemCategory": "Item category",
+
+    "statusLabels": {
+      "CANCELLED": "Cancelled",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed"
+    },
+
+    "buttonStatusLabels": {
+      "CANCELLED": "Cancel",
+      "IN_PROGRESS": "Mark as in progress",
+      "COMPLETED": "Mark as complete"
+    }
   }
 }
