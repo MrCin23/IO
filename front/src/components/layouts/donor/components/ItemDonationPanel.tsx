@@ -78,7 +78,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             <div className="item-donation-fields">
                 <div className="row">
                     <div className="column">
-                        <h3>{t("name")}</h3>
+                        <h3>{t("donor.name")}</h3>
                         <input
                             type="text"
                             value={name}
@@ -158,7 +158,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             </div>
 
             <button className="donation-submit" onClick={handleSubmit}>
-                {t("proceed")}
+                {t("donor.proceed")}
             </button>
         </>
     );
