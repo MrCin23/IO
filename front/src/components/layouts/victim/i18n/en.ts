@@ -30,7 +30,8 @@ const en = {
 
     id: 'ID',
     description: 'Description',
-    expirationDate: 'Expiration Date',
+    creationDate: 'Creation date',
+    expirationDate: 'Expiration date',
     collected: 'Collected',
     status: 'Status',
 
@@ -43,7 +44,14 @@ const en = {
         PENDING: 'Pending',
         IN_PROGRESS: 'In Progress',
         COMPLETED: 'Completed'
-      }
-  };
-  
-  export default en;
+    },
+
+    buttonStatusLabels: {
+        CANCELLED: 'Cancel',
+        IN_PROGRESS: 'Mark as in progress',
+        COMPLETED: 'Mark as complete'
+    }
+
+};
+
+export default en;

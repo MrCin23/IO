@@ -19,10 +19,10 @@ export const FinancialNeedsList: React.FC = () => {
             if (!token) {
                 throw new Error('No authentication token found');
             }
-    
+
             const userInfo = await getCurrentUser(token);
             let endpoint = 'http://localhost:8080/api/financial-needs';
-    
+
             if (userInfo.role.roleName === 'POSZKODOWANY') {
                 endpoint = `http://localhost:8080/api/financial-needs/user/${userInfo.id}`;
             } else if (userInfo.role.roleName === 'PRZEDSTAWICIEL_WŁADZ') {
@@ -30,7 +30,7 @@ export const FinancialNeedsList: React.FC = () => {
             } else {
                 throw new Error('Role not valid');
             }
-    
+
             const response = await axios.get<FinancialNeed[]>(endpoint, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -65,33 +65,28 @@ export const FinancialNeedsList: React.FC = () => {
 
     return (
         <div className="space-y-4">
-            {needs
-                .sort((a, b) => a.id - b.id)
-                .map((need) => {
-                    const expirationDate = new Date(need.expirationDate);
-                    const formattedExpirationDate = expirationDate.toLocaleDateString();
-                    return (
-                        <div className="space-y-4">
-                            {needs
-                                .sort((a, b) => a.id - b.id)
-                                .map((need) => (
-                                    <div key={need.id} className="p-4 border rounded-lg shadow-sm text-left bg-gray-100 text-black">
-                                        <p className="mb-1">{t('id')}: {need.id}</p>
-                                        <p className="mb-1">{t('description')}: {need.description}</p>
-                                        <p className="mb-1">{t('expirationDate')}: {formattedExpirationDate}</p>
-                                        <p className="mb-1">{t('collected')}: {need.collectionStatus}/{need.collectionGoal} PLN</p>
-                                        <p className="mb-1">{t('status')}: {t(`statusLabels.${need.status}`)}</p>
-                                        <StatusChangeButton
-                                            needId={need.id}
-                                            currentStatus={need.status}
-                                            needType="financial"
-                                            onStatusChange={fetchNeeds}
-                                        />
-                                    </div>
-                                ))}
-                        </div>
-                    );
-                })}
+            {needs.sort((a, b) => a.id - b.id).map((need) => {
+                const expirationDate = new Date(need.expirationDate);
+                const formattedExpirationDate = expirationDate.toLocaleDateString();
+                const creationDate = new Date(need.creationDate);
+                const formattedCreationDate = creationDate.toLocaleDateString();
+                return (
+                    <div key={need.id} className="p-4 border rounded-lg shadow-sm text-left bg-gray-100 text-black">
+                        <p className="mb-1"><strong>{t('id')}:</strong> {need.id}</p>
+                        <p className="mb-1"><strong>{t('description')}:</strong> {need.description}</p>
+                        <p className="mb-1"><strong>{t('collected')}:</strong> {need.collectionStatus} / {need.collectionGoal} PLN</p>
+                        <p className="mb-1"><strong>{t('creationDate')}:</strong> {formattedCreationDate}</p>
+                        <p className="mb-1"><strong>{t('expirationDate')}:</strong> {formattedExpirationDate}</p>
+                        <p className="mb-1"><strong>{t('status')}:</strong> {t(`statusLabels.${need.status}`)}</p>
+                        <StatusChangeButton
+                            needId={need.id}
+                            currentStatus={need.status}
+                            needType="financial"
+                            onStatusChange={fetchNeeds}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };

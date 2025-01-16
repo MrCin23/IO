@@ -27,10 +27,11 @@ const pl = {
 
     error: 'Błąd',
     loading: 'Ładowanie',
-    
+
 
     id: 'ID',
     description: 'Opis',
+    creationDate: 'Data utworzenia',
     expirationDate: 'Data ważności',
     collected: 'Zebrano',
     status: 'Status',
@@ -44,7 +45,13 @@ const pl = {
         PENDING: 'Oczekujące',
         IN_PROGRESS: 'W trakcie',
         COMPLETED: 'Zakończone'
-      }
-  };
+    },
 
-  export default pl;
+    buttonStatusLabels: {
+        CANCELLED: 'Anuluj',
+        IN_PROGRESS: 'Oznacz jako w trakcie',
+        COMPLETED: 'Oznacz jako zakończone'
+    }
+};
+
+export default pl;

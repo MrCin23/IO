@@ -35,7 +35,7 @@ export const VictimLayout = ({ children }: LayoutProps) => {
         </Toolbar>
       </AppBar>
 
-      <Container sx={{ minHeight: 'calc(100vh - 70px)', paddingTop: '30px' }}>
+      <Container sx={{ minHeight: 'calc(100vh - 70px)', paddingTop: '42px' }}>
         {children}
       </Container>
     </div>
