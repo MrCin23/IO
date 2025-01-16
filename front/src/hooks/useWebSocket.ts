@@ -25,6 +25,10 @@ export const useWebSocket = (groupId: number) => {
   };
 
   useEffect(() => {
+    if (!groupId) {
+      return;
+    }
+
     fetchInitialMessages();
 
     const client = new Client({

@@ -1,0 +1,34 @@
+{
+  "group_chat": {
+    "create_chat": "Stwórz nowy czat",
+    "dialog_title": "Podaj nazwę czatu",
+    "dialog_description": "Ta akcja nie może być cofnięta. Nie będziesz mógł tego zmienić później."
+  },
+  "messages": {
+    "loading": "Ładowanie wiadomości...",
+    "connected_status": "Podłączony",
+    "disconnected_status": "Rozłączony"
+  },
+  "chat": {
+    "no_chat_selected": "Brak wybranego czatu"
+  },
+  "create_chat_form": {
+    "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",
+    "form_chat_label": "Nazwa czatu",
+    "form_users_description": "Wybierz użytkowników, których chcesz dodać do czatu",
+    "form_users_input_placeholder": "Filtruj użytkowników..."
+  },
+  "send_message_form": {
+    "form_message_input_placeholder": "Wpisz wiadomość"
+  },
+  "update_chat_form": {
+    "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",
+    "form_chat_label": "Nazwa czatu",
+    "form_users_description": "Wybierz użytkowników do aktualizacji czatu.",
+    "form dialog decsription": "Podaj nazwę czatu"
+  },
+  "general": {
+    "submit": "Wyślij",
+    "update": "Aktualizuj"
+  }
+}

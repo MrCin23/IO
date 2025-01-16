@@ -53,22 +53,25 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.login(request.getUsername(), request.getPassword()));
     }
 
-//    @PreAuthorize("hasAnyRole('DARCZYŃCA', 'WOLONTARIUSZ')")
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @GetMapping
     public ResponseEntity<List<Account>> getAccounts() {
         return ResponseEntity.ok(authenticationService.getAccounts());
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @GetMapping("/{id}")
     public ResponseEntity<Account> getAccountById(@PathVariable Long id) {
         return ResponseEntity.ok(authenticationService.getAccountById(id));
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @GetMapping("/username/{username}")
     public ResponseEntity<Account> getAccountById(@PathVariable String username) {
         return ResponseEntity.ok(authenticationService.getAccountByUsername(username));
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @GetMapping("/role/{role}")
     public ResponseEntity<List<Account>> getAccounts(@PathVariable String role) {
         if (!EnumUtils.isValidEnum(UserRole.class, role.toUpperCase())) {
@@ -89,11 +92,13 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.resetPassword(username, request.getPassword()));
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @PostMapping("/{id}/activate")
     public ResponseEntity<Account> activateAccount(@PathVariable Long id) {
         return ResponseEntity.ok(authenticationService.activateAccount(id));
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @PostMapping("/{id}/deactivate")
     public ResponseEntity<Account> deactivateAccount(@PathVariable Long id) {
         return ResponseEntity.ok(authenticationService.deactivateAccount(id));
@@ -108,6 +113,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(authenticationService.getAccountByUsername(username));
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ')")
     @PostMapping("/change/{id}")
     public ResponseEntity<Account> changeRole(@PathVariable Long id, @RequestBody @Valid AccountChangeRoleDTO request) {
         if (!EnumUtils.isValidEnum(UserRole.class, request.getRoleName().toUpperCase())) {

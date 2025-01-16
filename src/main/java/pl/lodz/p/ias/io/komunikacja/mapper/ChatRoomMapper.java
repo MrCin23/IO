@@ -25,6 +25,13 @@ public class ChatRoomMapper {
         return chatRoom;
     }
 
+    public static ChatRoom toEntity(ChatRoomDTO chatRoomDTO) {
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.setId(chatRoomDTO.getId());
+        chatRoom.setName(chatRoomDTO.getName());
+        return chatRoom;
+    }
+
     public static List<ChatRoomDTO> toDTOList(List<ChatRoom> chatRooms) {
         return chatRooms.stream()
                 .map(ChatRoomMapper::toDTO)
