@@ -30,7 +30,7 @@ public class ResourceController {
         return resourceService.getResourceById(id);
     }
 
-    @PreAuthorize("hasAnyRole('DARCZYŃCA', 'PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA', 'POSZKODOWANY')")
+    @PreAuthorize("hasAnyRole('DARCZYŃCA', 'PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA', 'POSZKODOWANY', 'WOLONTARIUSZ')")
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ResourceDTO> getAllResources() {
@@ -44,6 +44,7 @@ public class ResourceController {
         resourceService.updateResource(id, resourceDTO);
     }
 
+    @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA')")
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteResource(@PathVariable Long id) {

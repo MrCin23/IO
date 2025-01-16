@@ -3,7 +3,7 @@ import { Warehouse } from '../types/index';
 import { useState, useEffect } from 'react';
 import api from "../api/Axios.tsx"
 
-export const Warehouses = () => {
+const Warehouses = () => {
     const [warehouses, setWarehouses] = useState<Warehouse[]>([]);
 
     useEffect(() => {
@@ -20,9 +20,10 @@ export const Warehouses = () => {
     }, []);
 
     return (
-        <div>
-            <h1 className="text-bold text-5xl text-center my-8">List of Warehouses</h1>
+        <div className="min-h-screen">
             <WarehouseTable warehouses={warehouses}/>
         </div>
     );
 };
+
+export default Warehouses;

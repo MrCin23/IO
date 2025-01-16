@@ -2,6 +2,7 @@ import react from '@vitejs/plugin-react'
 import path from "path"
 import { defineConfig } from 'vite'
 
+// https://vite.dev/config/
 export default defineConfig({
   server: {
     port: 5173,
@@ -22,13 +23,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  // server: {
-  //   port: 5173,
-  //   proxy: {
-  //     "/api": {
-  //       target: "http://localhost:8080",
-  //       changeOrigin: true,
-  //     },
-  //   },
-  // },
-})
+});

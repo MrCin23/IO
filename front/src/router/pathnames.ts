@@ -10,6 +10,7 @@ export const Pathnames = {
     },
     aid_organization: {
         homePage: '/organization',
+        accountPage: '/organization/account',
         resources: '/organization/resources',
         warehouses: '/organization/warehouses',
         createWarehouse: '/organization/warehouses/create',
@@ -17,6 +18,8 @@ export const Pathnames = {
     },
     authority_representative: {
         homePage: '/authority',
+        accountPage: '/authority/account',
+        accountsListPage: '/authority/accounts/list',
         resources: '/authority/resources',
         warehouses: '/authority/warehouses',
         createWarehouse: '/authority/warehouses/create',
@@ -32,9 +35,16 @@ export const Pathnames = {
     },
     victim: {
         homePage: '/victim',
+        accountPage: '/victim/account',
         resources: '/victim/resources'
     },
     volunteer: {
-        homePage: '/volunteer'
+        homePage: '/volunteer',
+        accountPage: '/volunteer/account',
+        resources: '/volunteer/resources'
+    },
+    chat: {
+        homePage: '/chat'
+        
     }
 }
