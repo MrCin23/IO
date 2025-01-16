@@ -6,7 +6,7 @@ import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import java.util.List;
 
 public interface IFinancialDonationService {
-    FinancialDonation create(FinancialDonationCreateDTO dto);
+    FinancialDonation createDonation(FinancialDonationCreateDTO dto);
 
     FinancialDonation findById(long id);
 

@@ -8,7 +8,7 @@
     color: #fff;
     border-radius: 8px;
     padding: 20px;
-    width: 400px;
+    width: 450px;
     font-family: Arial, sans-serif;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
     text-align: center;
@@ -17,6 +17,7 @@
 .donation-header h2 {
     margin: 0;
     font-size: 20px;
+    font-weight: bold;
 }
 
 .donation-header p {
@@ -42,6 +43,7 @@
     cursor: pointer;
     text-align: center;
     font-size: 14px;
+    font-weight: bold;
 }
 
 .donation-tab.active {
@@ -59,6 +61,7 @@
     font-size: 16px;
     margin: 15px 0 10px;
     text-align: left;
+    font-weight: bold;
 }
 
 .column h3,
@@ -144,13 +147,25 @@
     margin-right: 8px;
 }
 
+.column h3 {
+    font-weight: bold;
+}
+
 .column-wide {
     flex: 4;
     margin-right: 8px;
 }
 
+.column-wide h3 {
+    font-weight: bold;
+}
+
 .column-narrow {
     flex: 1;
+}
+
+.column-narrow h3 {
+    font-weight: bold;
 }
 
 input, select, textarea {

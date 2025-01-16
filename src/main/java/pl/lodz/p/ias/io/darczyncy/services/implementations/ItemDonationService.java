@@ -42,7 +42,7 @@ public class ItemDonationService implements IItemDonationService {
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
     @Override
-    public ItemDonation create(ItemDonationCreateDTO dto) {
+    public ItemDonation createDonation(ItemDonationCreateDTO dto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(auth.getName());
         MaterialNeed need = materialNeedRepository.findById(dto.needId())

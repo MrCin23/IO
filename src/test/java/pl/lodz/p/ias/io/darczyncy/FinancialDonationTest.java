@@ -93,7 +93,7 @@ public class FinancialDonationTest {
                 FinancialDonation.Currency.PLN.toString()
         );
 
-        FinancialDonation money = financialDonationService.create(createDTO);
+        FinancialDonation money = financialDonationService.createDonation(createDTO);
         FinancialDonation foundMoney = financialDonationRepository.findById(money.getId()).orElse(null);
         Assertions.assertNotNull(foundMoney);
     }

@@ -93,7 +93,7 @@ function ItemDonationList() {
                                     <button
                                         className="generate-button"
                                         onClick={() => generateConfirmation(donation)}
-                                        disabled={donation.resourceStatus !== "ACCEPTED"}
+                                        disabled={donation.resourceStatus !== "PRZYDZIELONY"}
                                     >
                                         {t("generateConfirmation")}
                                     </button>

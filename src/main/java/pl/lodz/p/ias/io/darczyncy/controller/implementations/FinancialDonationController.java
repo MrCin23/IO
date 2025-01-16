@@ -33,7 +33,7 @@ public class FinancialDonationController implements IFinancialDonationController
     public ResponseEntity<?> createFinancialDonation(FinancialDonationCreateDTO financialDonationCreateDTO) {
         FinancialDonation financialDonation;
         try {
-            financialDonation = financialDonationService.create(financialDonationCreateDTO);
+            financialDonation = financialDonationService.createDonation(financialDonationCreateDTO);
             financialNeedService.updateFinancialNeedCollectionStatus(financialDonation.getNeed().getId(),
                     financialDonation.getAmount());
         }

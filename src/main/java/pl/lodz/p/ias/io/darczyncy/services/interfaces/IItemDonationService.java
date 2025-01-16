@@ -6,7 +6,7 @@ import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import java.util.List;
 
 public interface IItemDonationService {
-    ItemDonation create(ItemDonationCreateDTO dto);
+    ItemDonation createDonation(ItemDonationCreateDTO dto);
 
     ItemDonation findById(long id);
 

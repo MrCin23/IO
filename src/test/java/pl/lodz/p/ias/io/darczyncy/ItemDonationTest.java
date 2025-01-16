@@ -95,7 +95,7 @@ public class ItemDonationTest {
                 418
         );
 
-        ItemDonation item = itemDonationService.create(createDTO);
+        ItemDonation item = itemDonationService.createDonation(createDTO);
         ItemDonation foundDonation = itemDonationRepository.findById(item.getId()).orElse(null);
         Assertions.assertNotNull(foundDonation);
 

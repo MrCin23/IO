@@ -39,7 +39,7 @@ public class FinancialDonationService implements IFinancialDonationService {
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
     @Override
-    public FinancialDonation create(FinancialDonationCreateDTO dto) {
+    public FinancialDonation createDonation(FinancialDonationCreateDTO dto) {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(authentication.getName());
