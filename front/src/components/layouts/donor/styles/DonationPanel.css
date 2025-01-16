@@ -47,8 +47,8 @@
 }
 
 .donation-tab.active {
-    background-color: #e10600;
-    border-color: #e10600;
+    background-color: #1616f1;
+    border-color: #1616f1;
 }
 
 .donation-tab:last-child {
@@ -90,7 +90,7 @@
 
 .goal-select:focus {
     outline: none;
-    border-color: #e10600;
+    border-color: #1616f1;
 }
 
 
@@ -126,8 +126,8 @@
 
 .amount-button.selected,
 .currency-button.selected{
-    background-color: #e10600;
-    border-color: #e10600;
+    background-color: #1616f1;
+    border-color: #1616f1;
 }
 
 .currency-button:focus,
@@ -183,7 +183,7 @@ textarea {
 .donation-submit {
     width: 100%;
     padding: 15px;
-    background-color: #e10600;
+    background-color: #1616f1;
     color: #fff;
     font-size: 16px;
     border: none;
