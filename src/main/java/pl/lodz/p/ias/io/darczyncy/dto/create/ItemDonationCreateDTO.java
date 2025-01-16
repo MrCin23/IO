@@ -4,6 +4,10 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 
+/**
+ * DTO do tworzenia darowizny rzeczowej.
+ * Zawiera dane dotyczące darowizny rzeczowej, w tym nazwę, kategorię, opis i ilość zasobów.
+ */
 public record ItemDonationCreateDTO (
 
         @NotNull

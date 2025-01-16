@@ -29,6 +29,12 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
+/**
+ * Klasa odpowiedzialna za inicjalizację danych w systemie po uruchomieniu aplikacji.
+ * Implementuje interfejs {@link CommandLineRunner}, co oznacza, że jej metoda run
+ * zostanie wykonana podczas startu aplikacji. Służy do utworzenia przykładowych danych,
+ * takich jak użytkownicy, potrzeby finansowe i materialne oraz darowizny.
+ */
 @Component
 @RequiredArgsConstructor
 @Order(10)
@@ -41,6 +47,13 @@ public class InitData implements CommandLineRunner {
     private final ItemDonationRepository itemDonationRepository;
     private final FinancialDonationRepository financialDonationRepository;
 
+    /**
+     * Metoda uruchamiana przy starcie aplikacji. Służy do inicjalizacji przykładowych danych
+     * w bazie danych, takich jak użytkownik, potrzeby finansowe i materialne, darowizny
+     * rzeczowe oraz finansowe.
+     *
+     * @param args argumenty wiersza poleceń (nieużywane w tej klasie)
+     */
     @Override
     public void run(String... args) {
         Account newUser = authenticationService.register("User",

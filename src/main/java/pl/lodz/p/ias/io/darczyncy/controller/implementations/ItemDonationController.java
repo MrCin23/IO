@@ -21,13 +21,40 @@ import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
 import java.net.URI;
 import java.util.List;
 
+/**
+ * Kontroler REST obsługujący operacje związane z darowiznami przedmiotów.
+ * Implementuje interfejs {@link IItemDonationController}.
+ *
+ * <p>Ten kontroler zapewnia funkcjonalności takie jak:
+ * - Tworzenie nowych darowizn przedmiotów.
+ * - Pobieranie szczegółowych informacji o darowiznach.
+ * - Aktualizacja istniejących darowizn.
+ * - Usuwanie darowizn.
+ * - Generowanie potwierdzeń darowizn w formacie PDF.
+ * - Filtrowanie darowizn na podstawie różnych kryteriów.
+ *
+ * <p>Wymagane role użytkowników są określone dla każdej metody za pomocą adnotacji {@code @PreAuthorize}.
+ * Adnotacje zabezpieczają dostęp w zależności od ról użytkowników.
+ */
 @RequiredArgsConstructor
 @RestController
 public class ItemDonationController implements IItemDonationController {
 
+    /**
+     * Serwis obsługujący logikę biznesową dla darowizn rzeczowych.
+     */
     private final IItemDonationService itemDonationService;
+
+    /**
+     * Serwis obsługujący potrzeby materialne.
+     */
     private final MaterialNeedService materialNeedService;
 
+    /**
+     * Tworzy nową darowiznę przedmiotu.
+     * @param itemDonationCreateDTO Obiekt zawierający dane do utworzenia darowizny.
+     * @return Odpowiedź HTTP z lokalizacją nowo utworzonej darowizny.
+     */
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
     public ResponseEntity<?> createItemDonation(ItemDonationCreateDTO itemDonationCreateDTO) {
@@ -36,6 +63,11 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.created(URI.create("/donations/%s".formatted(itemDonation.getId()))).build();
     }
 
+    /**
+     * Wyszukuje darowiznę przedmiotu na podstawie jej identyfikatora.
+     * @param id Identyfikator darowizny.
+     * @return Odpowiedź HTTP zawierająca szczegóły darowizny lub kod 404, jeśli darowizna nie istnieje.
+     */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findItemDonationById(long id) {
@@ -49,12 +81,26 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok().body(convertToOutputDTO(itemDonation));
     }
 
+    /**
+     * Konwertuje obiekt {@link ItemDonation} na obiekt {@link ItemDonationOutputDTO}.
+     *
+     * <p>Metoda pobiera potrzebę materialną powiązaną z darowizną oraz przekształca
+     * dane na obiekt DTO, który jest wykorzystywany w odpowiedziach HTTP.</p>
+     *
+     * @param itemDonation Obiekt darowizny, który ma zostać przekonwertowany.
+     * @return Obiekt {@link ItemDonationOutputDTO} zawierający szczegóły darowizny.
+     * @throws DonationBaseException jeśli powiązana potrzeba materialna nie zostanie znaleziona.
+     */
     private ItemDonationOutputDTO convertToOutputDTO(ItemDonation itemDonation) {
         MaterialNeed materialNeed = materialNeedService.getMaterialNeedById(itemDonation.getNeed().getId())
                 .orElseThrow(() -> new DonationBaseException(I18n.MATERIAL_NEED_NOT_FOUND_EXCEPTION));
         return ItemDonationMapper.toOutputDTO(itemDonation, materialNeed);
     }
 
+    /**
+     * Pobiera listę wszystkich darowizn przedmiotów.
+     * @return Odpowiedź HTTP z listą darowizn lub kod 204, jeśli brak darowizn.
+     */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllItemDonations() {
@@ -64,6 +110,12 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok().body(outputDTOS);
     }
 
+    /**
+     * Generuje potwierdzenie darowizny w formacie PDF na podstawie jej identyfikatora.
+     * @param language Kod języka (np. "pl").
+     * @param id Identyfikator darowizny.
+     * @return Odpowiedź HTTP z plikiem PDF lub kod 400 w przypadku błędu.
+     */
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
     public ResponseEntity<?> getConfirmationDonationById(String language, long id) {
@@ -85,6 +137,11 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok().headers(headers).body(pdfBytes);
     }
 
+    /**
+     * Pobiera listę darowizn powiązanych z określonym darczyńcą.
+     * @param donorId Identyfikator darczyńcy.
+     * @return Odpowiedź HTTP z listą darowizn lub kod 204, jeśli brak darowizn.
+     */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllItemDonationsByDonorId(long donorId) {
@@ -94,6 +151,11 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok().body(outputDTOS);
     }
 
+    /**
+     * Pobiera listę darowizn powiązanych z określonym magazynem.
+     * @param warehouseId Identyfikator magazynu.
+     * @return Odpowiedź HTTP z listą darowizn lub kod 204, jeśli brak darowizn.
+     */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> findAllItemDonationsWarehouseId(long warehouseId) {
@@ -103,6 +165,10 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok().body(outputDTOS);
     }
 
+    /**
+     * Pobiera listę darowizn powiązanych z aktualnie zalogowanym użytkownikiem.
+     * @return Odpowiedź HTTP z listą darowizn lub kod 204, jeśli brak darowizn.
+     */
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
     public ResponseEntity<?> findAllItemDonationsByCurrentUser() {
@@ -112,6 +178,12 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok().body(outputDTOS);
     }
 
+    /**
+     * Aktualizuje istniejącą darowiznę przedmiotu.
+     * @param id Identyfikator darowizny do aktualizacji.
+     * @param itemDonationUpdateDTO Obiekt zawierający dane do aktualizacji darowizny.
+     * @return Odpowiedź HTTP z danymi zaktualizowanej darowizny.
+     */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> updateItemDonation(long id, ItemDonationUpdateDTO itemDonationUpdateDTO) {
@@ -120,6 +192,11 @@ public class ItemDonationController implements IItemDonationController {
         return ResponseEntity.ok(convertToOutputDTO(updatedItem));
     }
 
+    /**
+     * Usuwa darowiznę przedmiotu na podstawie jej identyfikatora.
+     * @param id Identyfikator darowizny do usunięcia.
+     * @return Odpowiedź HTTP z kodem 204 po pomyślnym usunięciu.
+     */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'WOLONTARIUSZ', 'PRZEDSTAWICIEL_WŁADZ')")
     @Override
     public ResponseEntity<?> deleteItemDonationById(long id) {

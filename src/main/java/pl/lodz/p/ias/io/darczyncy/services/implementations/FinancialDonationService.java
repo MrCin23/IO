@@ -27,20 +27,49 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Klasa implementująca logikę biznesową dla darowizn finansowych.
+ * Odpowiada za zarządzanie darowiznami finansowymi, w tym ich tworzenie, wyszukiwanie i generowanie potwierdzeń.
+ */
 @RequiredArgsConstructor
 @Service
 public class FinancialDonationService implements IFinancialDonationService {
 
+    /**
+     * Repozytorium do zarządzania danymi darowizn finansowych.
+     */
     private final FinancialDonationRepository financialDonationRepository;
+
+    /**
+     * Repozytorium do zarządzania kontami użytkowników.
+     */
     private final AccountRepository accountRepository;
+
+    /**
+     * Repozytorium do zarządzania potrzebami finansowymi.
+     */
     private final FinancialNeedRepository financialNeedRepository;
+
+    /**
+     * Repozytorium do zarządzania magazynami.
+     */
     private final WarehouseRepository warehouseRepository;
 
+    /**
+     * Obiekt do generowania certyfikatów dla darowizn.
+     */
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
+    /**
+     * Tworzy nową darowiznę finansową.
+     *
+     * @param dto Obiekt DTO zawierający dane nowej darowizny.
+     * @return Utworzona darowizna finansowa.
+     * @throws DonationBaseException W przypadku błędnych danych wejściowych.
+     * @throws PaymentFailedException W przypadku niepowodzenia płatności.
+     */
     @Override
     public FinancialDonation createDonation(FinancialDonationCreateDTO dto) {
-
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(authentication.getName());
         FinancialNeed need = financialNeedRepository.findById(dto.needId())
@@ -69,23 +98,49 @@ public class FinancialDonationService implements IFinancialDonationService {
         throw new PaymentFailedException();
     }
 
+    /**
+     * Znajduje darowiznę po identyfikatorze.
+     *
+     * @param id Identyfikator darowizny.
+     * @return Znaleziona darowizna finansowa.
+     * @throws FinancialDonationNotFoundException Jeśli darowizna nie zostanie znaleziona.
+     */
     @Override
     public FinancialDonation findById(long id) {
         return financialDonationRepository.findById(id).orElseThrow(FinancialDonationNotFoundException::new);
     }
 
+    /**
+     * Znajduje wszystkie darowizny dla danego darczyńcy.
+     *
+     * @param donorId Identyfikator darczyńcy.
+     * @return Lista darowizn finansowych.
+     * @throws DonationBaseException Jeśli darczyńca nie zostanie znaleziony.
+     */
     @Override
     public List<FinancialDonation> findAllByDonorId(long donorId) {
         accountRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return financialDonationRepository.findAllByDonor_Id(donorId);
     }
 
+    /**
+     * Znajduje wszystkie darowizny powiązane z magazynem.
+     *
+     * @param warehouseId Identyfikator magazynu.
+     * @return Lista darowizn finansowych powiązanych z magazynem.
+     * @throws DonationBaseException Jeśli magazyn nie zostanie znaleziony.
+     */
     @Override
     public List<FinancialDonation> findAllByWarehouseId(long warehouseId) {
         warehouseRepository.findById(warehouseId).orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
         return financialDonationRepository.findAllByWarehouseId(warehouseId);
     }
 
+    /**
+     * Znajduje wszystkie darowizny dla bieżącego użytkownika.
+     *
+     * @return Lista darowizn finansowych bieżącego użytkownika.
+     */
     @Override
     public List<FinancialDonation> findAllForCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -94,16 +149,29 @@ public class FinancialDonationService implements IFinancialDonationService {
         return financialDonationRepository.findAllByDonor_Id(currentUser.getId());
     }
 
+    /**
+     * Tworzy plik PDF z potwierdzeniem darowizny.
+     *
+     * @param language Język potwierdzenia.
+     * @param donationId Identyfikator darowizny.
+     * @return Plik PDF jako tablica bajtów.
+     * @throws FinancialDonationNotFoundException Jeśli darowizna nie zostanie znaleziona.
+     */
     @Override
     public byte[] createConfirmationPdf(String language, long donationId) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
         FinancialDonation financialDonation = financialDonationRepository.findByIdAndDonor_Username(
-                donationId, currentUserName)
+                        donationId, currentUserName)
                 .orElseThrow(FinancialDonationNotFoundException::new);
         // todo check resource status
         return certificateProvider.generateFinancialCertificate(financialDonation.getDonor(), financialDonation, language);
     }
 
+    /**
+     * Pobiera wszystkie darowizny.
+     *
+     * @return Lista wszystkich darowizn finansowych.
+     */
     @Override
     public List<FinancialDonation> findAll() {
         return financialDonationRepository.findAll();
