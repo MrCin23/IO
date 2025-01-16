@@ -2,7 +2,8 @@ import {Route, Routes} from 'react-router-dom'
 import {
     defaultRoutes,
     aid_organizationRoutes,
-    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes
+    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes,
+    chatRoutes
 } from './routes.ts'
 import {DefaultLayout} from "../components/layouts/default";
 import {AidOrganizationLayout} from "../components/layouts/aid_organization";
@@ -71,6 +72,11 @@ export const RoutesComponent = () => {
                     </VolunteerLayout>
                 }
                 />
+            ))}
+            {chatRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <Component/>
+                } />
             ))}
         </Routes>
     )
