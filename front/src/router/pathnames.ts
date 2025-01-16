@@ -10,9 +10,12 @@ export const Pathnames = {
     },
     aid_organization: {
         homePage: '/organization',
+        accountPage: '/organization/account',
     },
     authority_representative: {
-        homePage: '/authority'
+        homePage: '/authority',
+        accountPage: '/authority/account',
+        accountsListPage: '/authority/accounts/list',
     },
     donor: {
         homePage: '/donor',
@@ -22,11 +25,14 @@ export const Pathnames = {
         accountsListPage: '/donor/accounts/list',
     },
     victim: {
-        homePage: '/victim'
+        homePage: '/victim',
+        accountPage: '/victim/account',
     },
     volunteer: {
         homePage: '/volunteer',
         volunteers: '/volunteers',
         groups: '/volunteer/groups'
+        homePage: '/volunteer',
+        accountPage: '/volunteer/account',
     }
 }

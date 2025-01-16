@@ -5,16 +5,15 @@ import { useNavigate } from 'react-router-dom'
 import {useTranslation} from "react-i18next";
 import i18n from "@/components/layouts/volunteer/i18n";
 import LanguageSwitcher from "@/components/layouts/volunteer/components/LanguageSwitcher.tsx";
+import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
 
 interface LayoutProps {
     children: ReactNode
 }
-// i18n.changeLanguage("pl");
-// i18n.changeLanguage("en");
-// const { t } = useTranslation();
-// i18n.t
+
 export const VolunteerLayout = ({ children }: LayoutProps) => {
     const navigate = useNavigate()
+    const { logout } = useAccount();
     const { t } = useTranslation();
     useEffect(() => {
         const handleLanguageChange = () => {
@@ -40,6 +39,13 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
             <AppBar position="static">
                 <Toolbar sx={{ display: 'flex'}}>
                     <Button onClick={() => navigate(Pathnames.volunteer.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Home
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.volunteer.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        My Account
+                    </Button>
+                    <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Logout
                         {t("home")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.volunteers)} sx={{ my: 2, mx: 2, color: 'white' }}>
