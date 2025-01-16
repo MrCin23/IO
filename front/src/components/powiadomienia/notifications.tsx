@@ -1,12 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Modal from './modal';
 import Notification, { NotificationType } from '../../models/powiadomienia/notification';
-import getDefaultRequest from '../../lib/powiadomienia/backend-lookup';
 import Letter from './icons/Letter';
 import { useTranslation } from 'react-i18next';
 import api from '@/api/Axios';
-import Cookies from 'js-cookie';
-import axios from 'axios';
 
 
 
@@ -25,6 +22,7 @@ interface NotificationsProps {
 const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNotification }) => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
     const [notifications, setNotifications] = useState<Notification[]>(notificationList)
+    const isInitialized = useRef<boolean>(false)
     const {t} = useTranslation()
 
     /**
@@ -63,7 +61,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
 
 
     useEffect(() => {
-        if (notifications.length !== 0) {
+        if (isInitialized.current) {
             const newNotifications = notificationList.filter((element) => {
                 return !notifications.some((value) => {
                     return value.id === element.id
@@ -73,6 +71,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
                 onNewNotification(newNotifications[0])
             }
         }
+        isInitialized.current = true
         setNotifications(notificationList)
     }, [notificationList])
 
