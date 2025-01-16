@@ -2,7 +2,7 @@ import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
-import {useTranslation} from "react-i18next";
+// import {useTranslation} from "react-i18next";
 // import i18n from "@/components/layouts/volunteer/i18n";
 
 interface LayoutProps {
@@ -10,7 +10,7 @@ interface LayoutProps {
 }
 // i18n.changeLanguage("pl");
 // i18n.changeLanguage("en");
-const { t } = useTranslation();
+// const { t } = useTranslation();
 
 export const VolunteerLayout = ({ children }: LayoutProps) => {
     const navigate = useNavigate()
@@ -20,10 +20,10 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
             <AppBar position="static">
                 <Toolbar sx={{ display: 'flex'}}>
                     <Button onClick={() => navigate(Pathnames.volunteer.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("home")}
+                        home
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.volunteers)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("volunteer")}
+                        volunteer
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.groups)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Volunteer groups Info
