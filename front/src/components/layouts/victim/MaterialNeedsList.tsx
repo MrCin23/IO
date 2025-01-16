@@ -5,7 +5,6 @@ import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 import { StatusChangeButton } from './components/StatusChangeButton';
 import { getCurrentUser } from './components/NeedsListHelper';
-import { getPolishStatusLabel } from './statuses';
 
 export const MaterialNeedsList: React.FC = () => {
     const { t } = useTranslation();

@@ -5,7 +5,6 @@ import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import Cookies from 'js-cookie';
 import { getCurrentUser } from './components/NeedsListHelper';
-import { getPolishStatusLabel } from './statuses';
 
 export const ManualNeedsList: React.FC = () => {
     const { t } = useTranslation();

@@ -5,7 +5,6 @@ import { StatusChangeButton } from './components/StatusChangeButton';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
 import { getCurrentUser } from './components/NeedsListHelper';
-import { getPolishStatusLabel } from './statuses';
 
 export const FinancialNeedsList: React.FC = () => {
     const { t } = useTranslation();
