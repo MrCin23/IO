@@ -55,7 +55,7 @@ function ItemDonationList() {
             a.click();
             window.URL.revokeObjectURL(url);
         } catch (error) {
-            alert(t("confirmationFailedAlert"));
+            alert(t("donor.confirmationFailedAlert"));
         }
     };
 
@@ -63,20 +63,20 @@ function ItemDonationList() {
         <div className="donation-list-container">
             <h2>{t("itemDonationsList")}</h2>
             {isLoading && <p>{t("loading")}</p>}
-            {!isLoading && itemDonations.length === 0 && <p>{t("noItemDonations")}</p>}
+            {!isLoading && itemDonations.length === 0 && <p>{t("donor.noItemDonations")}</p>}
             {!isLoading && itemDonations.length > 0 && (
                 <div className="donation-list-wrapper">
                     <table className="donation-list">
                         <thead>
                         <tr>
-                            <th>{t("listGoal")}</th>
-                            <th>{t("listDate")}</th>
-                            <th>{t("listItem")}</th>
-                            <th>{t("listDescription")}</th>
-                            <th>{t("listQuantity")}</th>
-                            <th>{t("listCategory")}</th>
-                            <th>{t("listStatus")}</th>
-                            <th>{t("listConfirmation")}</th>
+                            <th>{t("donor.listGoal")}</th>
+                            <th>{t("donor.listDate")}</th>
+                            <th>{t("donor.listItem")}</th>
+                            <th>{t("donor.listDescription")}</th>
+                            <th>{t("donor.listQuantity")}</th>
+                            <th>{t("donor.listCategory")}</th>
+                            <th>{t("donor.listStatus")}</th>
+                            <th>{t("donor.listConfirmation")}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -93,9 +93,9 @@ function ItemDonationList() {
                                     <button
                                         className="generate-button"
                                         onClick={() => generateConfirmation(donation)}
-                                        disabled={donation.resourceStatus !== "PRZYDZIELONY"}
+                                        disabled={donation.resourceStatus !== "ACCEPTED"}
                                     >
-                                        {t("generateConfirmation")}
+                                        {t("donor.generateConfirmation")}
                                     </button>
                                 </td>
                             </tr>

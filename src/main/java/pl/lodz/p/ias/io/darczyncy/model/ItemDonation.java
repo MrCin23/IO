@@ -8,6 +8,7 @@ import lombok.experimental.SuperBuilder;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
 import java.time.LocalDate;
 
@@ -70,7 +71,7 @@ public class ItemDonation extends Donation {
     public ItemDonation(Account donor, MaterialNeed need, String itemName,
                         int resourceQuantity, long warehouseId,
                         ItemCategory category, String description, LocalDate localDate) {
-        super(donor, itemName, "Item donation", localDate, resourceQuantity, warehouseId);
+        super(donor, itemName, "Item donation", localDate, resourceQuantity, warehouseId, ResourceStatus.PENDING);
         this.need = need;
         this.description = description;
         this.category = category;

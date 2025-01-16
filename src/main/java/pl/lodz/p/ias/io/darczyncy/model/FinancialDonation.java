@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
 import java.time.LocalDate;
 
@@ -63,7 +64,7 @@ public class FinancialDonation extends Donation {
     public FinancialDonation(Account donor, FinancialNeed need,
                              Long warehouseId,
                              double amount, Currency currency, LocalDate localDate) {
-        super(donor, "money", "financial Donation", localDate, 1, warehouseId);
+        super(donor, "money", "financial Donation", localDate, 1, warehouseId, ResourceStatus.ACCEPTED);
         this.need = need;
         this.amount = amount;
         this.currency = currency;

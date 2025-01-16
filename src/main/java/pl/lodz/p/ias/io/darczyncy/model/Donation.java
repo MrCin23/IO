@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.zasoby.model.Resource;
+import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 
 import java.time.LocalDate;
 
@@ -57,8 +58,8 @@ public abstract class Donation extends Resource {
      * @param warehouseId     Identyfikator magazynu, w którym zasób został zdeponowany.
      */
     public Donation(Account donor, String resourceName, String resourceType, LocalDate donationDate,
-                    int resourceQuantity, Long warehouseId) {
-        super(resourceName, resourceType, resourceQuantity, warehouseId);
+                    int resourceQuantity, Long warehouseId, ResourceStatus resourceStatus) {
+        super(resourceName, resourceType, resourceQuantity, warehouseId, resourceStatus);
         this.donor = donor;
         this.donationDate = donationDate;
     }

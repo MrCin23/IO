@@ -25,8 +25,8 @@ function DonationPanel() {
     return (
         <div className="donation-panel">
             <div className="donation-header">
-                <h2>{t("header")}</h2>
-                <p>{t("motivation_message")}</p>
+                <h2>{t("donor.header")}</h2>
+                <p>{t("donor.motivation_message")}</p>
             </div>
 
             <div className="donation-tabs">
@@ -36,7 +36,7 @@ function DonationPanel() {
                     }`}
                     onClick={() => handleTabClick("financial")}
                 >
-                    {t("financialDonation")}
+                    {t("donor.financialDonation")}
                 </button>
                 <button
                     className={`donation-tab ${
@@ -44,7 +44,7 @@ function DonationPanel() {
                     }`}
                     onClick={() => handleTabClick("item")}
                 >
-                    {t("itemDonation")}
+                    {t("donor.itemDonation")}
                 </button>
             </div>
             {selectedTab === "financial" ? (
@@ -68,7 +68,7 @@ function DonationPanel() {
             )}
 
             <p className="donation-footer">
-                {t("footer")}
+                {t("donor.footer")}
             </p>
         </div>
     );

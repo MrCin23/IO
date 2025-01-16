@@ -100,7 +100,7 @@ public class InitData implements CommandLineRunner {
                 LocalDate.now()
         );
 
-        itemDonation.setResourceStatus(ResourceStatus.PRZYDZIELONY);
+        itemDonation.setResourceStatus(ResourceStatus.ACCEPTED);
         itemDonationRepository.save(itemDonation);
 
         FinancialDonation financialDonation = new FinancialDonation(
@@ -111,7 +111,7 @@ public class InitData implements CommandLineRunner {
                 FinancialDonation.Currency.PLN,
                 LocalDate.now()
         );
-        financialDonation.setResourceStatus(ResourceStatus.PRZYDZIELONY);
+        financialDonation.setResourceStatus(ResourceStatus.ACCEPTED);
         financialDonationRepository.save(financialDonation);
     }
 }
