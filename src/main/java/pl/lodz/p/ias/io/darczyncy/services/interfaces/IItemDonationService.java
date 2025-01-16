@@ -17,7 +17,7 @@ public interface IItemDonationService {
      * @param dto Obiekt zawierający dane do utworzenia darowizny.
      * @return Utworzona darowizna rzeczowa.
      */
-    ItemDonation createDonation(ItemDonationCreateDTO dto);
+    ItemDonation createItemDonation(ItemDonationCreateDTO dto);
 
     /**
      * Wyszukuje darowiznę rzeczową na podstawie jej identyfikatora.

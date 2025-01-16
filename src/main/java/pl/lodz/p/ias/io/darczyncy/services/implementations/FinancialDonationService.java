@@ -69,7 +69,7 @@ public class FinancialDonationService implements IFinancialDonationService {
      * @throws PaymentFailedException W przypadku niepowodzenia płatności.
      */
     @Override
-    public FinancialDonation createDonation(FinancialDonationCreateDTO dto) {
+    public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(authentication.getName());
         FinancialNeed need = financialNeedRepository.findById(dto.needId())

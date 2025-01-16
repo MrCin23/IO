@@ -69,7 +69,7 @@ public class ItemDonationService implements IItemDonationService {
      * @throws DonationBaseException jeśli kategoria darowizny jest nieprawidłowa lub potrzeba materialna nie istnieje.
      */
     @Override
-    public ItemDonation createDonation(ItemDonationCreateDTO dto) {
+    public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(auth.getName());
         MaterialNeed need = materialNeedRepository.findById(dto.needId())

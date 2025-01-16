@@ -17,7 +17,7 @@ public interface IFinancialDonationService {
      * @param dto Obiekt zawierający dane do utworzenia darowizny.
      * @return Utworzona darowizna finansowa.
      */
-    FinancialDonation createDonation(FinancialDonationCreateDTO dto);
+    FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto);
 
     /**
      * Wyszukuje darowiznę finansową na podstawie jej identyfikatora.
