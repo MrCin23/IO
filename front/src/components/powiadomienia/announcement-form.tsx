@@ -2,11 +2,12 @@ import { useState } from "react";
 import Announcement, { AnnouncementType, createAnnouncement } from "../../models/powiadomienia/announcement";
 import axios from "axios";
 import Cookies from "js-cookie";
+import { useTranslation } from "react-i18next";
 
 
 type AnnouncementFormProps = {
     onComplete: (announcement: Announcement) => void;
-  };
+};
 
 
 /**
@@ -16,7 +17,9 @@ type AnnouncementFormProps = {
  * @param {AnnouncementFormProps} props - Właściwości komponentu.
  * @returns {JSX.Element} Formularz do tworzenia ogłoszeń.
  */
-const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
+const AnnouncementForm = ({ onComplete }: AnnouncementFormProps) => {
+
+    const { t } = useTranslation();
 
     const [announcement, setAnnouncement] = useState<createAnnouncement>({
         title: "",
@@ -25,11 +28,11 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
     });
 
 
-   /**
-   * Obsługuje zmiany w polach formularza i aktualizuje stan komponentu.
-   *
-   * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>} event - Zdarzenie zmiany wartości pola.
-   */
+    /**
+    * Obsługuje zmiany w polach formularza i aktualizuje stan komponentu.
+    *
+    * @param {React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>} event - Zdarzenie zmiany wartości pola.
+    */
     const handleChange = (event: any) => {
         const { name, value } = event.target;
         setAnnouncement((prev) => ({
@@ -39,27 +42,27 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
         }))
     };
 
-   /**
-   * Obsługuje wysyłanie formularza i wysyła dane ogłoszenia do API.
-   *
-   * @param {React.FormEvent<HTMLFormElement>} event - Zdarzenie wysłania formularza.
-   */
+    /**
+    * Obsługuje wysyłanie formularza i wysyła dane ogłoszenia do API.
+    *
+    * @param {React.FormEvent<HTMLFormElement>} event - Zdarzenie wysłania formularza.
+    */
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-       const token = Cookies.get('jwt');
-       if (token) {
-           try {
-               const response = await axios.post("http://localhost:8080/announcements",
-                   announcement,
-                   {
-                    headers: { Authorization: `Bearer ${token}` }
-                });
-               onComplete(response.data)
-           } catch (error) {
-               console.error('Failed to fetch announcements:', error);
-           }
-       }
+        const token = Cookies.get('jwt');
+        if (token) {
+            try {
+                const response = await axios.post("http://localhost:8080/announcements",
+                    announcement,
+                    {
+                        headers: { Authorization: `Bearer ${token}` }
+                    });
+                onComplete(response.data)
+            } catch (error) {
+                console.error('Failed to fetch announcements:', error);
+            }
+        }
     };
 
 
@@ -73,7 +76,7 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
                     htmlFor="title"
                     className="block text-lg font-semibold mb-2"
                 >
-                    Title
+                    {t('create_announcement_form.title')}
                 </label>
                 <input
                     name="title"
@@ -88,7 +91,7 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
                     htmlFor="message"
                     className="block text-lg font-semibold mb-2"
                 >
-                    Your Message
+                    {t('create_announcement_form.message')}
                 </label>
                 <textarea
                     name="message"
@@ -101,7 +104,7 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
 
                 <div className="mb-4">
                     <label htmlFor="type" className="block text-sm font-medium text-gray-700">
-                        Notification Type
+                        {t('create_announcement_form.type')}
                     </label>
                     <select
                         id="type"
@@ -110,17 +113,19 @@ const AnnouncementForm = ({onComplete}:AnnouncementFormProps) => {
                         onChange={handleChange}
                         className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
                     >
-                        {Object.values(AnnouncementType).map((value)=>(
-                            <option key={value} value={value}>{value}</option>
+                        {Object.values(AnnouncementType).map((value) => (
+                            <option key={value} value={value}>
+                                {t(`announcements.announcement_type_labels.${value}`)}
+                            </option>
                         ))}
-                    
+
                     </select>
                 </div>
                 <button
                     type="submit"
                     className="mt-4 w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600"
                 >
-                    Submit
+                    {t('general.submit')}
                 </button>
 
             </form>

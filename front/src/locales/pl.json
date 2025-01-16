@@ -30,5 +30,22 @@
   "general": {
     "submit": "Wyślij",
     "update": "Aktualizuj"
+  },
+  "notifications": {
+    "dialog_title": "Powiadomienia"
+  },
+
+  "announcements": {
+    "dialog_title": "Ogłoszenia",
+    "announcement_type_labels": {
+      "WARNING": "Ostrzeżenie",
+      "INFORMATION": "Informacja"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Tytuł",
+    "message":"Treść",
+    "type":"Typ ogłoszenia"
   }
 }

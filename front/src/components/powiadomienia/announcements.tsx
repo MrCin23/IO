@@ -5,6 +5,7 @@ import Speaker from './icons/Speaker';
 import AnnouncementForm from './announcement-form';
 import Cookies from "js-cookie";
 import axios from "../../api/Axios.tsx";
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -23,6 +24,7 @@ const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
     const [announcements, setAnnouncements] = useState<Announcement[]>(announcementsList)
     const [isForm, setForm] = useState<boolean>(false)
+    const {t} = useTranslation()
   
 
      /**
@@ -77,13 +79,13 @@ const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate
              text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none
               focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <Speaker />
-                    <span className="sr-only">Announcements</span>
+                    <span className="sr-only">{t('announcements.dialog_title')}</span>
                     <div className="absolute  inline-flex items-center justify-center w-6 h-6 text-xs font-bold
                  text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2">{announcements.length}</div>
                 </button>
             </div>
             <Modal
-                title='Announcement'
+                title={t('announcements.dialog_title')}
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false); setForm(false) }}>
                 {(isForm&&canCreate) ? (<AnnouncementForm onComplete={handleAddAnnouncement} />) : 

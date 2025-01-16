@@ -3,6 +3,7 @@ import Modal from './modal';
 import Notification, { NotificationType } from '../../models/powiadomienia/notification';
 import getDefaultRequest from '../../lib/powiadomienia/backend-lookup';
 import Letter from './icons/Letter';
+import { useTranslation } from 'react-i18next';
 
 
 
@@ -21,6 +22,7 @@ interface NotificationsProps {
 const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNotification }) => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
     const [notifications, setNotifications] = useState<Notification[]>(notificationList)
+    const {t} = useTranslation()
 
     /**
      * Ukrywa powiadomienie na podstawie jego identyfikatora.
@@ -72,14 +74,14 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
              text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none
               focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <Letter />
-                    <span className="sr-only">Notifications</span>
+                    <span className="sr-only">{t('notifications.dialog_title')}</span>
                     <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs
                      font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2
                     ">{notifications.length}</div>
                 </button>
             </div>
             <Modal
-                title='Notifications'
+                title={t('notifications.dialog_title')}
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false) }}>
                 <ul className="space-y-2">
