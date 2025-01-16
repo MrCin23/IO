@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
+import {useTranslation} from "react-i18next";
 
 interface LayoutProps {
     children: ReactNode
@@ -12,7 +13,7 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
     // Udostępnia funkcję pozwalającą na zmianę widoku na inny, zgodnie z określoną ścieżką (pathname)
     const navigate = useNavigate()
     const { logout } = useAccount();
-    //const { t } = useTranslation();
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -25,20 +26,16 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                         My Account
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {/*{t("resources.resourcesList")}*/}
-                        Resources list
+                        {t("resources.resourcesList")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.warehouses)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {/*{t("resources.warehousesList")}*/}
-                        Warehouses list
+                        {t("resources.warehousesList")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.createResource)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {/*{t("resources.addResource")}*/}
-                        Create Resource
+                        {t("resources.addResource")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.createWarehouse)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {/*{t("resources.addWarehouse")}*/}
-                        Create Warehouse
+                        {t("resources.addWarehouse")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
