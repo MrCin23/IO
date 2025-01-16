@@ -18,7 +18,7 @@ public class MessageService {
         return messageRepository.save(message);
     }
 
-    public List<Message> getMessagesForReceiver(String receiver) {
-        return messageRepository.findByReceiver(receiver);
+    public List<Message> getMessagesForReceiver(long chatId) {
+        return messageRepository.findByChatId(chatId);
     }
 }

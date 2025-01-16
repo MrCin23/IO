@@ -1,0 +1,85 @@
+{
+  "group_chat": {
+    "create_chat": "Create a new Chat",
+    "dialog_title": "Please provide a chat name",
+    "dialog_description": "This action cannot be undone. You won't be able to change that later."
+  },
+  "messages": {
+    "loading": "Loading messages...",
+    "connected_status": "Connected",
+    "disconnected_status": "Disconnected"
+  },
+  "chat": {
+    "no_chat_selected": "No chat selected"
+  },
+  "create_chat_form": {
+    "form_users_error_message": "You have to select at least one user.",
+    "form_chat_label": "Chat name",
+    "form_users_description": "Select users to add to the chat",
+    "form_users_input_placeholder": "Filter users..."
+  },
+  "send_message_form": {
+    "form_message_input_placeholder": "Type a message"
+  },
+  "update_chat_form": {
+    "form_users_error_message": "You have to select at least one user.",
+    "form_chat_label": "Chat name",
+    "form_users_description": "Select users to update the chat.",
+    "form dialog decsription": "Please provide a chat name"
+  },
+  "general": {
+    "submit": "Submit",
+    "update": "Update"
+  },
+  "resources": {
+    "addResource": "Add Resource",
+    "resourceName": "Resource Name",
+    "resourceType": "Resource Type",
+    "selectResourceType": "Select resource type",
+    "food": "Food",
+    "toys": "Toys",
+    "items": "Items",
+    "quantity": "Quantity",
+    "warehouse": "Warehouse",
+    "warehouseName": "Warehouse name",
+    "warehouseLocation": "Location",
+    "noWarehousesFound": "No warehouses found.",
+    "warehouseId": "Warehouse ID",
+    "home": "Home",
+    "warehousesList": "Warehouses List",
+    "resourcesList": "Resources List",
+    "createWarehouse": "Create Warehouse",
+    "createResource": "Create Resource",
+    "enterResourceName": "Enter resource name",
+    "resourceNameRequired": "Resource name is required",
+    "enterQuantity": "Enter quantity",
+    "quantityRequired": "Quantity is required",
+    "status": "Status",
+    "action": "Action",
+    "edit": "Edit",
+    "statusPending": "Pending",
+    "statusAccepted": "Accepted",
+    "statusRejected": "Rejected",
+    "update": "Update",
+    "lowResourceWarning": "Warning: Low resource quantity!",
+    "resourceUpdatedSuccess": "Resource updated successfully.",
+    "resourceUpdateFailed": "Failed to update resource.",
+    "unexpectedErrorOccurred": "An unexpected error occurred.",
+    "invalidStatusSelected": "Invalid status selected.",
+    "warehouseNameRequired": "Warehouse name is required",
+    "enterWarehouseName": "Enter warehouse name",
+    "location": "Location",
+    "locationRequired": "Location is required",
+    "enterLocation": "Enter warehouse location",
+    "addWarehouse": "Add Warehouse",
+    "blablaWarehouse": "Enter the warehouse name and location to add a new warehouse to the system.",
+    "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
+    "delete": "Delete",
+    "confirmDeleteResource": "Confirm delete resource",
+    "resourceDeletedSuccess": "Resource delete success",
+    "warehouseSuccess": "Warehouse added successfully",
+    "warehouseFailed": "Failed to add warehouse. Please try again.",
+    "warehouseError": "An unexpected error occurred. Please try again.",
+    "resourceId": "Resource ID"
+  }
+}
