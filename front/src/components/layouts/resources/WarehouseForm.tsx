@@ -1,3 +1,4 @@
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../../api/Axios.tsx";
@@ -9,7 +10,11 @@ export interface Warehouse {
     location: string;
 }
 
-const WarehouseForm = () => {
+interface WarehouseFormProps {
+    coordinates?: { lat: number; lng: number };
+}
+
+const WarehouseForm: React.FC<WarehouseFormProps> = ({ coordinates }) => {
     const { t } = useTranslation();
     const form = useForm<Warehouse>({
         defaultValues: {
@@ -20,6 +25,13 @@ const WarehouseForm = () => {
 
     const navigate = useNavigate();
     const location = useLocation();
+
+    useEffect(() => {
+        if (coordinates) {
+            const formattedLocation = `${coordinates.lat}, ${coordinates.lng}`;
+            form.setValue("location", formattedLocation);
+        }
+    }, [coordinates, form]);
 
     const onSubmit = async (values: Warehouse) => {
         try {
@@ -74,6 +86,7 @@ const WarehouseForm = () => {
                     {...form.register("location", { required: t("resources.locationRequired") })}
                     className="mt-2 p-3 border border-gray-300 rounded-md"
                     placeholder={t("resources.enterLocation")}
+                    readOnly
                 />
                 {form.formState.errors.location && (
                     <span className="text-red-600 text-sm mt-1">
