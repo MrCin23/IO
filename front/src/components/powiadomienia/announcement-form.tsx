@@ -3,6 +3,7 @@ import Announcement, { AnnouncementType, createAnnouncement } from "../../models
 import axios from "axios";
 import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
+import api from "@/api/Axios";
 
 
 type AnnouncementFormProps = {
@@ -49,20 +50,9 @@ const AnnouncementForm = ({ onComplete }: AnnouncementFormProps) => {
     */
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
-        const token = Cookies.get('jwt');
-        if (token) {
-            try {
-                const response = await axios.post("http://localhost:8080/announcements",
-                    announcement,
-                    {
-                        headers: { Authorization: `Bearer ${token}` }
-                    });
-                onComplete(response.data)
-            } catch (error) {
-                console.error('Failed to fetch announcements:', error);
-            }
-        }
+        api.post("/announcements",announcement).then((response)=>{
+            onComplete(response.data)
+        })
     };
 
 

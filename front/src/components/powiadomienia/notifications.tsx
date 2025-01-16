@@ -4,6 +4,9 @@ import Notification, { NotificationType } from '../../models/powiadomienia/notif
 import getDefaultRequest from '../../lib/powiadomienia/backend-lookup';
 import Letter from './icons/Letter';
 import { useTranslation } from 'react-i18next';
+import api from '@/api/Axios';
+import Cookies from 'js-cookie';
+import axios from 'axios';
 
 
 
@@ -39,8 +42,16 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
                 return value.id !== id
             })
         )
-        const url = `http://localhost:8080/notifications/${id}/hide`
-        fetch(url, getDefaultRequest("POST"))
+        api.post(`/notifications/${id}/hide`)
+    }
+
+    const handleOpenNotifications = (_)=>{
+        setModalOpen(true);
+        setNotifications(notifications.map((notification)=>{
+            notification.read = true
+            return notification
+        }))
+        api.post("/notifications/user/read")
     }
 
 
@@ -69,7 +80,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
 
         <React.Fragment>
             <div>
-                <button type="button" onClick={(_) => { setModalOpen(true) }}
+                <button type="button" onClick={handleOpenNotifications}
                     className="relative inline-flex items-center p-3 text-sm font-medium text-center
              text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none
               focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -77,7 +88,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
                     <span className="sr-only">{t('notifications.dialog_title')}</span>
                     <div className="absolute inline-flex items-center justify-center w-6 h-6 text-xs
                      font-bold text-white bg-red-500 border-2 border-white rounded-full -top-2 -end-2
-                    ">{notifications.length}</div>
+                    ">{notifications.filter((notifaction)=>(!notifaction.read)).length}</div>
                 </button>
             </div>
             <Modal

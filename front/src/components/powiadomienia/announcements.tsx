@@ -6,13 +6,14 @@ import AnnouncementForm from './announcement-form';
 import Cookies from "js-cookie";
 import axios from "../../api/Axios.tsx";
 import { useTranslation } from 'react-i18next';
+import api from '../../api/Axios.tsx';
 
 
 
 
-interface AnnouncementProps{
-    announcementsList:Announcement[],
-    canCreate:boolean
+interface AnnouncementProps {
+    announcementsList: Announcement[],
+    canCreate: boolean
 }
 
 /**
@@ -20,41 +21,31 @@ interface AnnouncementProps{
  *
  * @returns {JSX.Element} Interfejs ogłoszeń.
  */
-const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate}) => {
+const Announcements: React.FC<AnnouncementProps> = ({ announcementsList, canCreate }) => {
     const [isModalOpen, setModalOpen] = useState<boolean>(false)
     const [announcements, setAnnouncements] = useState<Announcement[]>(announcementsList)
     const [isForm, setForm] = useState<boolean>(false)
-    const {t} = useTranslation()
-  
+    const { t } = useTranslation()
 
-     /**
-     * Obsługuje ukrywanie ogłoszenia przez jego usunięcie z listy oraz wysłanie żądania do API.
-     *
-     * @param {number} id - ID ogłoszenia, które ma zostać ukryte.
-     */
+
+    /**
+    * Obsługuje ukrywanie ogłoszenia przez jego usunięcie z listy oraz wysłanie żądania do API.
+    *
+    * @param {number} id - ID ogłoszenia, które ma zostać ukryte.
+    */
     const handleHideAnnouncement = async (id: number) => {
         setAnnouncements(
             announcements.filter((value) => {
                 return value.id !== id
             })
         )
-         const token = Cookies.get('jwt');
-         if (token) {
-             try {
-                 await axios.post(`http://localhost:8080/announcements/${id}/hide`, {
-                     headers: { Authorization: `Bearer ${token}` },
-                 });
-
-             } catch (error) {
-                 console.error('Failed to hide announcement:', error);
-             }
-         }
+        api.post(`/announcements/${id}/hide`)
     }
 
-    const handleAddAnnouncement = (announcement : Announcement)=>{
-        
-        setAnnouncements((prevState)=>([
-            ...prevState,announcement
+    const handleAddAnnouncement = (announcement: Announcement) => {
+
+        setAnnouncements((prevState) => ([
+            ...prevState, announcement
         ]))
         setForm(false)
     }
@@ -66,9 +57,9 @@ const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate
     };
 
 
-    useEffect(()=>{
+    useEffect(() => {
         setAnnouncements(announcementsList)
-    },[announcementsList])
+    }, [announcementsList])
 
 
     return (
@@ -88,33 +79,33 @@ const Announcements: React.FC<AnnouncementProps> = ({announcementsList,canCreate
                 title={t('announcements.dialog_title')}
                 isOpen={isModalOpen}
                 onClose={() => { setModalOpen(false); setForm(false) }}>
-                {(isForm&&canCreate) ? (<AnnouncementForm onComplete={handleAddAnnouncement} />) : 
-                <div>
-                {canCreate && <div className='flex flex-row-reverse w-full mb-2'>
-                    <button className="bg-blue-500 text-white rounded-full w-8 h-8 hover:bg-blue-600 focus:outline-none 
+                {(isForm && canCreate) ? (<AnnouncementForm onComplete={handleAddAnnouncement} />) :
+                    <div>
+                        {canCreate && <div className='flex flex-row-reverse w-full mb-2'>
+                            <button className="bg-blue-500 text-white rounded-full w-8 h-8 hover:bg-blue-600 focus:outline-none 
                     text-xl flex items-center justify-center mr-2"
-                    onClick={(_) => { setForm(true) }}>
-                        <span className='mb-1'>+</span>
-                    </button>
-                </div>}
-                     <ul className="space-y-2">
-                    {announcements.map((announcement) => (
-                
-                        <li
-                            key={announcement.id}
-                            className={`flex flex-col p-3 rounded-lg ${typeStyles[announcement.type]}`}
-                        >
-                            <div className='flex'>
-                                <span className="font-semibold text-lg">{announcement.title}</span>
-                                <button className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 focus:outline-none"
-                                    onClick={(_) => { handleHideAnnouncement(announcement.id) }}>
-                                    <span className="text-xl mb-1">&times;</span>
-                                </button>
-                            </div>
-                            <span className="font-medium mt-1">{announcement.message}</span>
-                        </li>
-                    ))}
-                </ul>
+                                onClick={(_) => { setForm(true) }}>
+                                <span className='mb-1'>+</span>
+                            </button>
+                        </div>}
+                        <ul className="space-y-2">
+                            {announcements.map((announcement) => (
+
+                                <li
+                                    key={announcement.id}
+                                    className={`flex flex-col p-3 rounded-lg ${typeStyles[announcement.type]}`}
+                                >
+                                    <div className='flex'>
+                                        <span className="font-semibold text-lg">{announcement.title}</span>
+                                        <button className="ml-2 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center hover:bg-red-600 focus:outline-none"
+                                            onClick={(_) => { handleHideAnnouncement(announcement.id) }}>
+                                            <span className="text-xl mb-1">&times;</span>
+                                        </button>
+                                    </div>
+                                    <span className="font-medium mt-1">{announcement.message}</span>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
                 }
 

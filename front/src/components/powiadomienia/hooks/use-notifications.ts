@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Notification from "../../../models/powiadomienia/notification";
 import axios from "axios";
 import Cookies from "js-cookie";
+import api from "@/api/Axios";
 
 
 /**
@@ -30,17 +31,12 @@ const useNotifications = (userId?: string|null) => {
     */
     const fetchNotifications = async ()=>{
         setIsLoading(true)
-        const token = Cookies.get('jwt');
-        if (token) {
-            try {
-                const response = await axios.get(`http://localhost:8080/notifications/user`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                setNotifications(response.data)
-                setIsLoading(false)
-            } catch (error) {
-                console.error('Failed to fetch notifications:', error);
-            }
+        try {
+            const response = await api.get("/notifications/user")
+            setNotifications(response.data)
+            setIsLoading(false)
+        }catch(error){
+            console.error('Failed to fetch notifications:', error);
         }
     }
 
@@ -50,7 +46,7 @@ const useNotifications = (userId?: string|null) => {
             return
         }
         fetchNotifications()
-        const interval = 10 * 1000
+        const interval = 2 * 1000
         const timerId = setInterval(() => {
             fetchNotifications()
           }, interval);

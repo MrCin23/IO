@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Announcement from "../../../models/powiadomienia/announcement";
-import Cookies from "js-cookie";
-import axios from "../../../api/Axios.tsx";
+import api from "../../../api/Axios.tsx";
 
 
 
@@ -32,17 +31,12 @@ const useAnnouncments = (userId?: string|null) => {
     */
     const fetchAnnouncements= async () => {
             setIsLoading(true)
-            const token = Cookies.get('jwt');
-            if (token) {
-                try {
-                    const response = await axios.get(`http://localhost:8080/announcements/user`, {
-                        headers: { Authorization: `Bearer ${token}` },
-                    });
-                    setAnnouncements(response.data)
-                    setIsLoading(false)
-                } catch (error) {
-                    console.error('Failed to fetch announcements:', error);
-                }
+            try {
+                const response = await api.get("/announcements/user")
+                setAnnouncements(response.data)
+                setIsLoading(false)
+            }catch(error){
+                console.error('Failed to fetch notifications:', error);
             }
         };
 

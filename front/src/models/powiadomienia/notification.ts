@@ -10,5 +10,6 @@ export enum NotificationType {
 export default interface Notification{
     message:string;
     type:NotificationType,
-    id:number
+    id:number,
+    read:boolean
 }

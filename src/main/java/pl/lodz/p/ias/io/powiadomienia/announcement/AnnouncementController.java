@@ -27,7 +27,7 @@ public class AnnouncementController {
      * @return lista {@link Announcement} danego użytkownika
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/announcements/user")
+    @GetMapping("/api/announcements/user")
     public List<Announcement> getAnnouncements() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -41,7 +41,7 @@ public class AnnouncementController {
      * @param id ID ogłoszenia do ukrycia
      */
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/announcements/{id}/hide")
+    @PostMapping("/api/announcements/{id}/hide")
     public void hideAnnouncement(@PathVariable Long id) {
         announcementService.hideAnnouncement(id);
     }
@@ -53,7 +53,7 @@ public class AnnouncementController {
      * @return stworzony {@link Announcement} obiekt
      */
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'PRZEDSTAWICIEL_WŁADZ')")
-    @PostMapping("/announcements")
+    @PostMapping("/api/announcements")
     public Announcement createAnnouncement(@RequestBody @Valid Announcement announcement) {
         return announcementService.createAnnouncement(announcement);
     }

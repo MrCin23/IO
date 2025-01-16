@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/announcements
+POST http://localhost:8080/api/announcements
 Content-Type: application/json
 
 {
@@ -21,7 +21,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/announcements
+POST http://localhost:8080/api/announcements
 Content-Type: application/json
 
 {
@@ -31,14 +31,14 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8080/announcements/2/hide
+POST http://localhost:8080/api/announcements/2/hide
 Content-Type: application/x-www-form-urlencoded
 
 ###
-GET http://localhost:8080/announcements/user/5
+GET http://localhost:8080/api/announcements/user/5
 
 ###
-POST http://localhost:8080/notifications
+POST http://localhost:8080/api/notifications
 Content-Type: application/json
 
 {
@@ -49,7 +49,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:8080/notifications
+POST http://localhost:8080/api/notifications
 Content-Type: application/json
 
 {
@@ -59,8 +59,8 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:8080/notifications/user/5
+GET http://localhost:8080/api/notifications/user/5
 
 ###
-POST http://localhost:8080/notifications/1/hide
+POST http://localhost:8080/api/notifications/1/hide
 

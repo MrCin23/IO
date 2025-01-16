@@ -25,7 +25,7 @@ public class NotificationController {
      * @return lista obiektów {@link Notification} przypisanych do użytkownika
      */
     @PreAuthorize("isAuthenticated()")
-    @GetMapping("/notifications/user")
+    @GetMapping("/api/notifications/user")
     public List<Notification> getNotifications() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -39,8 +39,8 @@ public class NotificationController {
      * @param notification obiekt {@link NotificationDto} zawierający dane nowego powiadomienia
      * @return utworzony obiekt {@link Notification}
      */
-    @PreAuthorize("isAuthenticated()")
-    @PostMapping("/notifications")
+//    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/api/notifications")
     public Notification addNotification(@RequestBody @Valid NotificationDto notification) {
         return notificationService.saveFromDto(notification);
     }
@@ -51,13 +51,13 @@ public class NotificationController {
      * @param id identyfikator powiadomienia do ukrycia
      */
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/notifications/{id}/hide")
+    @PostMapping("/api/notifications/{id}/hide")
     public void hideNotification(@PathVariable Long id) {
         notificationService.hide(id);
     }
 
     @PreAuthorize("isAuthenticated()")
-    @PostMapping("/notifications/user/read")
+    @PostMapping("/api/notifications/user/read")
     public void readNotifications(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
