@@ -35,7 +35,7 @@ export const defaultRoutes: RouteType[] = [
         path: Pathnames.default.externalForm,
         Component: ExternalFormPage,
     } //todo do wywalenia
-    },
+    ,
     {
         path: Pathnames.default.loginPage,
         Component: LoginPage,

@@ -70,7 +70,7 @@
     "enterWarehouseName": "Podaj nazwę magazynu",
     "location": "Lokalizacja",
     "locationRequired": "Lokalizacja jest wymagana",
-    "enterLocation": "Podaj lokalizacje magazynu",
+    "enterLocation": "Zaznacz lokalizacje magazynu",
     "addWarehouse": "Dodaj magazyn",
     "blablaWarehouse": "Podaj nazwę magazynu oraz lokalizację, aby utworzyć magazyn.",
     "blablaResource": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu.",
