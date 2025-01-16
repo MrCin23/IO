@@ -51,6 +51,19 @@ public class VolunteerGroupService {
         return users;
     }
 
+    public List<Account> getNotMembersByGroupId(Long id) {
+        Role role = roleRepository.findByRoleName(VolunteerConstants.ROLE);
+        List<Account> allVolunteers = volunteerRepository.findAllByRole(role);
+        VolunteerGroup group = volunteerGroupRepository.findById(id).orElse(null);
+        allVolunteers.removeAll(group.getMembers());
+//        Set<Account> restVolunteers = allVolunteers.removeAll(group.getMembers());
+//        List<Account> allVolunteers = volunteerRepository.findAll()
+//        return volunteerGroupRepository.findById(id).orElse(null);
+        return allVolunteers;
+    }
+
+
+
     @Transactional
     public VolunteerGroup addMembersToGroup(Long groupId, Set<Long> userIds) {
         VolunteerGroup group = volunteerGroupRepository.findById(groupId)

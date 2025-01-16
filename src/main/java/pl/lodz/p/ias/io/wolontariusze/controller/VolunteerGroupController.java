@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.wolontariusze.dto.AddVolunteersDTO;
 import pl.lodz.p.ias.io.wolontariusze.dto.CreateVolunteerGroupDTO;
 import pl.lodz.p.ias.io.wolontariusze.model.VolunteerGroup;
@@ -13,6 +14,7 @@ import pl.lodz.p.ias.io.wolontariusze.services.VolunteerGroupService;
 
 import java.util.List;
 
+@PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
 @RestController
 @RequestMapping("/api/volunteerGroups")
 public class VolunteerGroupController {
@@ -23,7 +25,6 @@ public class VolunteerGroupController {
         this.volunteerGroupService = volunteerGroupService;
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @PostMapping
     public ResponseEntity<VolunteerGroup> createGroup(@RequestBody @Valid CreateVolunteerGroupDTO createVolunteerGroupDTO) {
         try {
@@ -34,7 +35,6 @@ public class VolunteerGroupController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @PostMapping("/{groupId}/addMembers")
     public ResponseEntity<VolunteerGroup> addMembersToGroup(@PathVariable Long groupId, @RequestBody AddVolunteersDTO addVolunteersDTO) {
         try {
@@ -45,7 +45,6 @@ public class VolunteerGroupController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @PostMapping("/{groupId}/removeMembers")
     public ResponseEntity<VolunteerGroup> removeMembersFromGroup(@PathVariable Long groupId, @RequestBody AddVolunteersDTO addVolunteersDTO) {
         try {
@@ -56,19 +55,21 @@ public class VolunteerGroupController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping
     public ResponseEntity<List<VolunteerGroup>> getAllGroups() {
         return ResponseEntity.ok(volunteerGroupService.getAllGroups());
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping("/{id}")
     public ResponseEntity<VolunteerGroup> getGroupById(@PathVariable Long id) {
         return ResponseEntity.ok(volunteerGroupService.getGroupById(id));
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
+    @GetMapping("/{id}/notMembers")
+    public ResponseEntity<List<Account>> getNotGroupMembersById(@PathVariable Long id) {
+        return ResponseEntity.ok(volunteerGroupService.getNotMembersByGroupId(id));
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteGroup(@PathVariable Long id) {
         volunteerGroupService.deleteGroupById(id);

@@ -1,3 +1,57 @@
+.add-group-form {
+    color: cornflowerblue; /* Ensures all text in the popup is black */
+}
+.popup-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+    color: black; /* Ensures all text in the popup is black */
+}
+
+.popup h3 {
+    margin-bottom: 10px;
+}
+
+.add-member-button,
+.remove-member-button,
+.save-group-button,
+.close-popup-button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.add-member-button:hover,
+.remove-member-button:hover,
+.save-group-button:hover,
+.close-popup-button:hover {
+    background-color: #0056b3;
+}
+
+
+
 .volunteer-group-list-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -41,6 +95,7 @@ h2 {
     display: flex; /* Allows proper layout for button alignment */
     justify-content: space-between; /* Separates name and button */
     align-items: center; /* Centers content vertically */
+    width: 100%;
 }
 
 .edit-group-button {
