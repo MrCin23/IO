@@ -19,6 +19,7 @@ import { Input } from "./ui/input";
 import { ChatDB } from "@/types";
 import { ScrollArea } from "./ui/scroll-area";
 import { useTranslation } from "react-i18next";
+import axios from "@/api/Axios";
 
 const CreateChatForm = ({
   setChats,
@@ -48,29 +49,8 @@ const CreateChatForm = ({
   });
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        // TODO odkomentowac jak bedzie dzialac
-        // if (account === null) {
-        //   console.error("Account is null");
-        //   return;
-        // }
-
-        const response = await fetch(`/api/auth`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-
-        const data = await response.json();
-        setUsers(data);
-        setFilteredUsers(data);
-      } catch (err) {
-        console.error("Error fetching users from DB:", err);
-      }
-    };
-
-    fetchUsers();
+    axios.get("/auth").then((response) => setUsers(response.data));
+    axios.get("/auth").then((response) => setFilteredUsers(response.data));
   }, [account]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
