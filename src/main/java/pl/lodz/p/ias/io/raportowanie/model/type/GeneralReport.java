@@ -24,7 +24,12 @@ public class GeneralReport extends Report {
         GeneralReportQuery grq = new GeneralReportQuery();
         int usersCount = grq.countUsers();
 
-        content = "Raport ogolny" + "\n" + "Ilosc uzytkownikow: " + usersCount;
+        content = "Raport ogolny" + "\n"
+                + "Ilosc uzytkownikow: " + usersCount
+        + "\n\nIlosc potrzeb: " + "\n"
+        + "  - Finansowych: " + grq.countFinancialNeeds() + "\n"
+        + "  - Manualnych: " + grq.countManualNeeds() + "\n"
+        + "  - Materialnych: " + grq.countMaterialNeeds() + "\n";
 
         return new GeneratedReport(getUserId(), content);
     }

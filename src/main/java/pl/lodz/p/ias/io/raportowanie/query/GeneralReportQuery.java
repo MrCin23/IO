@@ -79,4 +79,58 @@ public class GeneralReportQuery {
         }
         return count;
     }
+
+    public int countFinancialNeeds() {
+        String query = "SELECT count(*) FROM financial_need";
+        int count = 0;
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                } else {
+                    System.out.println("No financial needs found.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countManualNeeds() {
+        String query = "SELECT count(*) FROM manual_need";
+        int count = 0;
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                } else {
+                    System.out.println("No manual needs found.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    public int countMaterialNeeds() {
+        String query = "SELECT count(*) FROM material_need";
+        int count = 0;
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    count = rs.getInt(1);
+                } else {
+                    System.out.println("No material needs found.");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
 }
