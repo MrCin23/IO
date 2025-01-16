@@ -83,6 +83,14 @@ public class NotificationService implements INotificationService {
         return notificationRepository.save(notification);
     }
 
+    @Override
+    public Notification notify(String message, NotificationType type) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        Account account = accountRepository.findByUsername(username);
+        return notify(message, type, account);
+    }
+
     public void readAllNotifications(String username) {
         List<Notification> notifications = notificationRepository.getNotificationByUser_Username(username);
         for (Notification notification : notifications){
