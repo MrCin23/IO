@@ -26,7 +26,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
 
         const validStatuses = ["ACCEPTED", "PENDING", "REJECTED"];
         if (!validStatuses.includes(selectedStatus)) {
-            alert(t("invalidStatusSelected"));
+            alert(t("resources.invalidStatusSelected"));
             return;
         }
 
@@ -45,7 +45,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
 
         try {
             if (selectedQuantity <= 10) {
-                alert(t("lowResourceWarning"));
+                alert(t("resources.lowResourceWarning"));
             }
 
             await api.put(`/resources/${selectedResourceId}`, {
@@ -57,24 +57,24 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 warehouseId: resourceToUpdate.warehouseId,
             });
 
-            alert(t("resourceUpdatedSuccess"));
+            alert(t("resources.resourceUpdatedSuccess"));
             window.location.reload();
         } catch (error) {
             console.error(t("resourceUpdateFailed"), error);
-            alert(t("unexpectedErrorOccurred"));
+            alert(t("resources.unexpectedErrorOccurred"));
         }
     };
 
     const handleDelete = async (resourceId: number) => {
-        if (!window.confirm(t("confirmDeleteResource"))) return;
+        if (!window.confirm(t("resources.confirmDeleteResource"))) return;
 
         try {
             await api.delete(`/resources/${resourceId}`);
-            alert(t("resourceDeletedSuccess"));
+            alert(t("resources.resourceDeletedSuccess"));
             window.location.reload();
         } catch (error) {
             console.error(error);
-            alert(t("unexpectedErrorOccurred"));
+            alert(t("resources.unexpectedErrorOccurred"));
         }
     };
 
@@ -82,17 +82,17 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
         <div className="overflow-x-auto">
             <table className="min-w-full table-auto border-collapse border border-gray-300">
                 <caption className="text-lg font-semibold text-gray-800 my-4">
-                    {t("resourcesList")}
+                    {t("resources.resourcesList")}
                 </caption>
                 <thead>
                 <tr className="bg-gray-100 border-b border-gray-300">
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceId")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceName")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resourceType")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("quantity")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("status")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("warehouseId")}</th>
-                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("action")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.resourceId")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.resourceName")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.resourceType")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.quantity")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.status")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.warehouseId")}</th>
+                    <th className="px-4 py-2 text-left font-medium text-gray-700">{t("resources.action")}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -111,7 +111,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                             <td className="px-4 py-2">{resource.resourceType}</td>
                             <td className="px-4 py-2">{resource.resourceQuantity}</td>
                             <td className="px-4 py-2">
-                                {t(`status${resource.resourceStatus.charAt(0).toUpperCase() + resource.resourceStatus.slice(1).toLowerCase()}`)}
+                                {t(`resources.status${resource.resourceStatus.charAt(0).toUpperCase() + resource.resourceStatus.slice(1).toLowerCase()}`)}
                             </td>
                             <td className="px-4 py-2">{resource.warehouseId ?? ""}</td>
                             <td className="px-4 py-2">
@@ -126,7 +126,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                             )
                                         }
                                     >
-                                        {t("edit")}
+                                        {t("resources.edit")}
                                     </button>
                                 )}
 
@@ -134,21 +134,21 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                     <div className="mt-2">
                                         <div>
                                             <label>
-                                                {t("status")}:
+                                                {t("resources.status")}:
                                                 <select
                                                     className="border border-gray-300 rounded px-2 py-1 ml-2"
                                                     value={selectedStatus}
                                                     onChange={(e) => setSelectedStatus(e.target.value)}
                                                 >
-                                                    <option value="ACCEPTED">{t("statusAccepted")}</option>
-                                                    <option value="PENDING">{t("statusPending")}</option>
-                                                    <option value="REJECTED">{t("statusRejected")}</option>
+                                                    <option value="ACCEPTED">{t("resources.statusAccepted")}</option>
+                                                    <option value="PENDING">{t("resources.statusPending")}</option>
+                                                    <option value="REJECTED">{t("resources.statusRejected")}</option>
                                                 </select>
                                             </label>
                                         </div>
                                         <div className="mt-2">
                                             <label>
-                                                {t("quantity")}:
+                                                {t("resources.quantity")}:
                                                 <input
                                                     type="number"
                                                     className="border border-gray-300 rounded px-2 py-1 ml-2"
@@ -162,13 +162,13 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                                             onClick={handleUpdate}
                                             disabled={!selectedStatus || selectedQuantity === null}
                                         >
-                                            {t("update")}
+                                            {t("resources.update")}
                                         </button>
                                         <button
                                             className="ml-2 mt-2 bg-red-500 text-white px-3 py-1 rounded"
                                             onClick={() => handleDelete(resource.resourceId)}
                                         >
-                                            {t("delete")}
+                                            {t("resources.delete")}
                                         </button>
                                     </div>
                                 )}

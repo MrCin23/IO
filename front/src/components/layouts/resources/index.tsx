@@ -3,7 +3,6 @@ import { ReactNode, useEffect } from 'react';
 import { Pathnames } from '../../../router/pathnames';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import './i18n';
 
 interface LayoutProps {
     children: ReactNode;

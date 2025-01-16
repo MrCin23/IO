@@ -8,13 +8,13 @@ const WarehousesTable = ({ warehouses }: { warehouses: Warehouse[] }) => {
         <div className="overflow-x-auto">
             <table className="min-w-full table-auto border-collapse">
                 <caption className="text-xl font-semibold text-center py-4">
-                    {t("warehousesList")}
+                    {t("resources.warehousesList")}
                 </caption>
                 <thead>
                 <tr className="bg-gray-100">
-                    <th className="px-4 py-2 text-left border">{t("warehouseId")}</th>
-                    <th className="px-4 py-2 text-left border">{t("warehouseName")}</th>
-                    <th className="px-4 py-2 text-left border">{t("warehouseLocation")}</th>
+                    <th className="px-4 py-2 text-left border">{t("resources.warehouseId")}</th>
+                    <th className="px-4 py-2 text-left border">{t("resources.warehouseName")}</th>
+                    <th className="px-4 py-2 text-left border">{t("resources.warehouseLocation")}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -29,7 +29,7 @@ const WarehousesTable = ({ warehouses }: { warehouses: Warehouse[] }) => {
                 ) : (
                     <tr>
                         <td colSpan={3} className="px-4 py-2 text-center">
-                            {t("noWarehousesFound")}
+                            {t("resources.noWarehousesFound")}
                         </td>
                     </tr>
                 )}

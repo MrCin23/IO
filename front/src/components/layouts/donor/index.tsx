@@ -4,7 +4,7 @@ import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext';
 import {useTranslation} from "react-i18next";
-import "./i18n";
+
 
 interface LayoutProps {
     children: ReactNode
