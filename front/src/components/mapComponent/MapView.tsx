@@ -112,6 +112,18 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
         }
     };
 
+    const handleEdit = async (id: number | undefined) => {
+
+
+        try {
+            await axios.put(`api/map/status/${id}/${status}`);
+            await fetchPoints();
+            alert(t("pointStateChanged"));
+        } catch (error) {
+            console.error(t("error.readPoint"), error);
+        }
+    };
+
     const savePoint = async () => {
         if (!formData.title || !formData.description || !newPoint) {
             alert(t("fillEveryField"));
@@ -156,11 +168,48 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         icon={point.active ? defaultIcon : greyIcon}
                     >
                         <Popup>
-                            <strong>{point.title}</strong>
-                            <p>{point.description}</p>
+                            {editPoint && canAddPoints && !externalForm && (
+                                <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
+                                    <h3>{t("addPoint")}</h3>
+                                    <form
+                                        onSubmit={(e) => {
+                                            e.preventDefault();
+                                            savePoint();
+                                        }}
+                                    >
+                                        <div>
+                                            <label>{t("title")}</label>
+                                            <input
+                                                type="text"
+                                                value={formData.title}
+                                                onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                                                required
+                                            />
+                                        </div>
+                                        <div>
+                                            <label>{t("description")}</label>
+                                            <textarea
+                                                value={formData.description}
+                                                onChange={(e) =>
+                                                    setFormData({ ...formData, description: e.target.value })
+                                                }
+                                                required
+                                            ></textarea>
+                                        </div>
+                                        <button type="submit">{t("savePoint")}</button>
+                                    </form>
+                                </div>
+                            )}
+                            {!editPoint && canAddPoints && !externalForm && (
+                                <div>
+                                    <strong>{point.title}</strong>
+                                    <p>{point.description}</p>
+                                </div>
+                            )}
                             {/*<button onClick={}>{t("editPoint")}</button>*/}
                             <button onClick={() => handleDelete(point.pointID)}>{t("deletePoint")}</button>
                             <button onClick={() => handleArchive(point.pointID, !point.active)}>{t("switchStatus")}</button>
+                            <button onClick={() => handleEdit(point.pointID)}>{t("deletePoint")}</button>
                         </Popup>
                     </Marker>
                 ))}

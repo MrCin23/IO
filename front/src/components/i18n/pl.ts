@@ -9,6 +9,7 @@ const pl = {
     pointStateChanged: "Punkt zarchiwizowano/przywrócono!",
     deletePoint: "Usuń",
     switchStatus: "Zmień status",
+    editPoint: "Edytuj",
     error: {
         savePoint: "Błąd podczas zapisywania punktu:",
         readPoint: "Błąd podczas pobierania punktów mapy:"

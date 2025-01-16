@@ -9,6 +9,7 @@ const en = {
     pointStateChanged: "Point achived/reactivated!",
     deletePoint: "Delete",
     switchStatus: "Switch status",
+    editPoint: "Edit",
     error: {
         savePoint: "Error while saving point:",
         readPoint: "Error while reading point:"
