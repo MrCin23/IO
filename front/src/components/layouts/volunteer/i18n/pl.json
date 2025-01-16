@@ -7,5 +7,17 @@
   "home": "Strona główna",
   "loading": "Ładowanie danych...",
   "listDescription": "Opis",
-  "listStatus": "Status"
+  "listStatus": "Status",
+  "volunteer": "Wolontariusz",
+
+  "volunteerListTitle": "Lista Wolontariuszy",
+  "volunteerGroupListTitle": "Lista Grup Wolontariuszy",
+  "username": "Nazwa Użytkownika",
+  "firstName": "Imię",
+  "lastName": "Nazwisko",
+  "status": "Status",
+  "active": "Aktywny",
+  "inactive": "Nieaktywny",
+  "noVolunteers": "Brak dostępnych wolontariuszy.",
+  "noVolunteerGroups": "Brak dostępnych grup wolontariuszy."
 }

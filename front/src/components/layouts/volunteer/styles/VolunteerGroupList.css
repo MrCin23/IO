@@ -1,0 +1,84 @@
+.volunteer-group-list-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.volunteer-group-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.volunteer-group {
+    width: 48%;
+    background-color: #ecf0f1;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.volunteer-group h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+}
+
+th {
+    background-color: #2c3e50;
+    color: white;
+    font-size: 1.1rem;
+}
+
+td {
+    background-color: #ecf0f1;
+    color: #2c3e50;
+    font-size: 1rem;
+}
+
+tr:nth-child(even) td {
+    background-color: #f4f6f7;
+}
+
+tr:hover {
+    background-color: #f1c40f;
+}
+
+.volunteer-group-list-container p {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #7f8c8d;
+}
+
+.loading {
+    font-weight: bold;
+    color: #e67e22;
+}
+
+.no-volunteers {
+    color: #95a5a6;
+    font-style: italic;
+}
+

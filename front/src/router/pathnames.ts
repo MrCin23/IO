@@ -25,6 +25,8 @@ export const Pathnames = {
         homePage: '/victim'
     },
     volunteer: {
-        homePage: '/volunteer'
+        homePage: '/volunteer',
+        volunteers: '/volunteers',
+        groups: '/volunteer/groups'
     }
 }

@@ -7,5 +7,17 @@
   "home": "Home",
   "loading": "Loading...",
   "listDescription": "Description",
-  "listStatus": "Status"
+  "listStatus": "Status",
+  "volunteer": "Volunteer",
+
+  "volunteerListTitle": "List of Volunteers",
+  "volunteerGroupListTitle": "List of Volunteer Groups",
+  "username": "Username",
+  "firstName": "First Name",
+  "lastName": "Last Name",
+  "status": "Status",
+  "active": "Active",
+  "inactive": "Inactive",
+  "noVolunteers": "No volunteers available.",
+  "noVolunteerGroups": "No volunteer groups available."
 }
