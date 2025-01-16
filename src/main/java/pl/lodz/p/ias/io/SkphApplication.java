@@ -5,7 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+//		"pl.lodz.p.ias.io.poszkodowani",
+//		"pl.lodz.p.ias.io.uwierzytelnianie"
+})
 public class SkphApplication {
 
 	public static void main(String[] args) {

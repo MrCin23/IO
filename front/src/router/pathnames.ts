@@ -7,6 +7,8 @@ export const Pathnames = {
         homePage: '/',
         loginPage: '/login',
         registerPage: '/register',
+        pomPage: '/pom', //todo do wywalenia
+        externalForm: '/form'//todo do wywalenia
     },
     aid_organization: {
         homePage: '/organization',
