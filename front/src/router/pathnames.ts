@@ -5,6 +5,8 @@ export const Pathnames = {
     // TODO WAŻNE info: niech ścieżki przestrzegają przedrostków jak niżej
     default: {
         homePage: '/',
+        loginPage: '/login',
+        registerPage: '/register',
         pomPage: '/pom', //todo do wywalenia
         externalForm: '/form',//todo do wywalenia
         loginPage: '/login',
@@ -28,6 +30,9 @@ export const Pathnames = {
         createResource: '/authority/resources/create',
     },
     donor: {
+        homePage: '/donor',
+        accountPage: '/donor/account',
+        accountsListPage: '/donor/accounts/list',
         homePage: '/donor',
         accountPage: '/donor/account',
         accountsListPage: '/donor/accounts/list',
