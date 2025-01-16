@@ -4,13 +4,15 @@ import React from 'react';
 import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 import Cookies from "js-cookie";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 export const Summary = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [fields, setFields] = useState<string[]>([]); // Tablica wybranych pól
     const [availableFields, setAvailableFields] = useState<string[]>([]); // Lista dostępnych pól
-    const [user, setUser] = useState<Account | null>(null);
+    const [user, setUser] = useState<Account | null>(null)
+    const { t } = useTranslation();
     useEffect(() => {
         const fetchUser = async () => {
             const token = Cookies.get('jwt');
@@ -80,23 +82,23 @@ export const Summary = () => {
                 link.click();
                 window.URL.revokeObjectURL(url);
             } else {
-                alert('Wystąpił błąd podczas generowania raportu.');
+                alert(t('errorReport'));
             }
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert('Wystąpił błąd podczas generowania raportu.');
+            alert(t('errorReport'));
         }
     };
 
     return (
         <Box sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
-                Generowanie raportu podsumowującego
+                {t('summaryTitle')}
             </Typography>
 
             {/* Formularz dat */}
             <TextField
-                label="Data początkowa"
+                label={t('summaryFormStart')}
                 type="datetime-local"
                 value={startDate}
                 onChange={(e) => handleDateChange(e, setStartDate)}
@@ -108,7 +110,7 @@ export const Summary = () => {
             />
 
             <TextField
-                label="Data końcowa"
+                label={t('summaryFormEnd')}
                 type="datetime-local"
                 value={endDate}
                 onChange={(e) => handleDateChange(e, setEndDate)}
@@ -121,12 +123,12 @@ export const Summary = () => {
 
             {/* Formularz wyboru pól */}
             <FormControl fullWidth sx={{ mb: 2 }}>
-                <InputLabel sx={{ color: 'white' }}>Wybierz pola</InputLabel>
+                <InputLabel sx={{ color: 'white' }}>{t('summaryFormFields')}</InputLabel>
                 <Select
                     multiple
                     value={fields}
                     onChange={handleFieldChange}
-                    label="Wybierz pola"
+                    label={t('summaryFormFields')}
                     renderValue={(selected) => selected.join(', ')}
                     sx={{ '& .MuiInputBase-input': { color: 'white' }, '& .MuiInputLabel-root': { color: 'white' },
                         backgroundColor: '#555' }}
@@ -142,7 +144,7 @@ export const Summary = () => {
 
             {/* Przycisk generowania raportu */}
             <Button variant="contained" color="primary" onClick={handleSubmit}>
-                Generuj raport podsumowujący
+                {t('summaryButton')}
             </Button>
         </Box>
     );

@@ -9,11 +9,15 @@ import { Modular } from './Modular';
 import { Summary } from './Summary';
 import { TransactionHistory } from './TransactionHistory';
 import Cookies from "js-cookie";
+import {useTranslation} from "react-i18next";
+import {useNavigate} from "react-router-dom";
 
 export const HomeReportPage = () => {
     const [activeTab, setActiveTab] = useState('EmptyContent');
 
     const [visibleButtons, setVisibleButtons] = useState<string[]>([]); // Kontrolowanie widoczności przycisków
+    const navigate = useNavigate();
+    const { t } = useTranslation();
 
     const renderContent = () => {
         switch (activeTab) {
@@ -40,6 +44,7 @@ export const HomeReportPage = () => {
         const fetchUser = async () => {
             const token = Cookies.get('jwt');
             if (!token) {
+                navigate('/');
                 throw new Error('Brak tokenu JWT');
             }
 
@@ -98,7 +103,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('GeneralContent')}
                     >
-                        General
+                        {t('general')}
                     </Button>
                 )}
                 {visibleButtons.includes('Action') && (
@@ -106,7 +111,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('ActionContent')}
                     >
-                        Action
+                        {t('action')}
                     </Button>
                 )}
                 {visibleButtons.includes('ActionHistory') && (
@@ -114,7 +119,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('ActionHistoryContent')}
                     >
-                        Action History
+                        {t('actionHistory')}
                     </Button>
                 )}
                 {visibleButtons.includes('Modular') && (
@@ -122,7 +127,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('ModularContent')}
                     >
-                        Modular
+                        {t('modular')}
                     </Button>
                 )}
                 {visibleButtons.includes('Summary') && (
@@ -130,7 +135,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('SummaryContent')}
                     >
-                        Summary
+                        {t('summary')}
                     </Button>
                 )}
                 {visibleButtons.includes('TransactionHistory') && (
@@ -138,7 +143,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('TransactionHistoryContent')}
                     >
-                        Transaction History
+                        {t('transactionHistory')}
                     </Button>
                 )}
             </Box>

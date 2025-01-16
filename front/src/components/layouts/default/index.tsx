@@ -35,6 +35,9 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.default.externalForm)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Form
                     </Button>
+                    <Button onClick={() => navigate(Pathnames.report.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Report
+                    </Button>
                     {/*//todo do wywalenia*/}
                 </Toolbar>
             </AppBar>

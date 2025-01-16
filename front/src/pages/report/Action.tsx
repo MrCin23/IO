@@ -3,8 +3,10 @@ import {useEffect, useState} from 'react';
 import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 import Cookies from "js-cookie";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 export const Action = () => {
+    const { t } = useTranslation();
     const [user, setUser] = useState<Account | null>(null);
     useEffect(() => {
         const fetchUser = async () => {
@@ -53,11 +55,11 @@ export const Action = () => {
                 link.click(); // Symulujemy kliknięcie, aby pobrać plik
                 window.URL.revokeObjectURL(url); // Zwolnienie zasobów URL
             } else {
-                alert('Wystąpił błąd podczas generowania raportu.');
+                alert(t('errorReport'));
             }
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert('Wystąpił błąd podczas generowania raportu.');
+            alert(t('errorReport'));
         }
     };
 
@@ -65,10 +67,10 @@ export const Action = () => {
         <Box sx={{ p: 2 }}>
             {/* Opis sekcji Actions */}
             <Typography variant="h6" gutterBottom>
-                Generowanie raportu akcji
+                {t('actionTitle')}
             </Typography>
             <Typography variant="body1" gutterBottom>
-                Kliknięcie przycisku poniżej wywoła proces generowania raportu akcji w formacie PDF.
+                {t('actionDescription')}
             </Typography>
 
             {/* Przycisk generowania raportu */}
@@ -78,7 +80,7 @@ export const Action = () => {
                 onClick={() => handleGenerateReport(userId)} // Przekazanie dynamicznego userId
                 sx={{ mt: 2 }}
             >
-                Generuj raport akcji
+                {t('actionButton')}
             </Button>
         </Box>
     );

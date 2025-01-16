@@ -3,8 +3,10 @@ import {useEffect, useState} from 'react';
 import Cookies from "js-cookie";
 import axios from "axios";
 import {Account} from "../../models/uwierzytelnianie/Account.tsx";
+import {useTranslation} from "react-i18next";
 
 export const General = () => {
+    const { t } = useTranslation();
     const [user, setUser] = useState<Account | null>(null);
     useEffect(() => {
         const fetchUser = async () => {
@@ -62,7 +64,7 @@ export const General = () => {
             window.URL.revokeObjectURL(url); // Zwolnienie zasobów URL
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert('Wystąpił błąd podczas generowania raportu.');
+            alert(t('errorReport'));
         }
     };
 
@@ -70,10 +72,10 @@ export const General = () => {
         <Box sx={{ p: 2 }}>
             {/* Opis raportu */}
             <Typography variant="h6" gutterBottom>
-                Generowanie raportu ogólnego
+                {t('generalTitle')}
             </Typography>
             <Typography variant="body1" gutterBottom>
-                Kliknięcie przycisku poniżej wywoła proces generowania raportu ogólnego w formacie PDF.
+                {t('generalDescription')}
             </Typography>
 
             {/* Przycisk generowania raportu */}
@@ -83,7 +85,7 @@ export const General = () => {
                 onClick={() => handleGenerateReport(userId)} // Przekazanie dynamicznego userId
                 sx={{ mt: 2 }}
             >
-                Generuj raport
+                {t('generalButton')}
             </Button>
         </Box>
     );

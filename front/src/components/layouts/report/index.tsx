@@ -2,6 +2,8 @@ import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
+import i18n from "../../../pages/report/i18n/i18n";
+import {useTranslation} from "react-i18next";
 
 interface LayoutProps {
     children: ReactNode
@@ -9,6 +11,12 @@ interface LayoutProps {
 
 export const ReportLayout = ({ children }: LayoutProps) => {
     const navigate = useNavigate()
+
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+    };
+
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -21,11 +29,12 @@ export const ReportLayout = ({ children }: LayoutProps) => {
                     >
                         Home
                     </Button>
-                    <Button
-                        onClick={() => navigate(Pathnames.donor.homePage)}
-                        sx={{ my: 2, mx: 2, color: 'white' }}
-                    >
-                        Donor
+                    <Button onClick={() => changeLanguage('en')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t('english')}
+                    </Button>
+
+                    <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t('polish')}
                     </Button>
                 </Toolbar>
             </AppBar>

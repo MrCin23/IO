@@ -4,6 +4,7 @@ import React from 'react';
 import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 import Cookies from "js-cookie";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 export const Modular = () => {
     const [moduleId, setModuleId] = useState('');
@@ -12,6 +13,7 @@ export const Modular = () => {
     const [fields, setFields] = useState<string[]>([]); // Tablica wybranych pól
     const [availableFields, setAvailableFields] = useState<string[]>([]); // Lista dostępnych pól
     const [modules, setModules] = useState<{ id: string, name: string }[]>([]); // Lista modułów
+    const { t } = useTranslation();
 
     const [user, setUser] = useState<Account | null>(null);
     useEffect(() => {
@@ -102,11 +104,11 @@ export const Modular = () => {
                 link.click();
                 window.URL.revokeObjectURL(url);
             } else {
-                alert('Wystąpił błąd podczas generowania raportu.');
+                alert(t('errorReport'));
             }
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert('Wystąpił błąd podczas generowania raportu.');
+            alert(t('errorReport'));
         }
     };
 
@@ -114,16 +116,16 @@ export const Modular = () => {
     return (
         <Box sx={{ p: 2, color: 'white' }}>
             <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
-                Generowanie raportu modularnego
+                {t('modularTitle')}
             </Typography>
 
             {/* Formularz */}
             <FormControl fullWidth sx={{ mb: 2, borderColor: 'white', borderWidth: 1, color: 'white' }}>
-                <InputLabel sx={{ color: 'white' }}>Moduł</InputLabel>
+                <InputLabel sx={{ color: 'white' }}>{t('modularFormModule')}</InputLabel>
                 <Select
                     value={moduleId}
                     onChange={handleModuleChange}
-                    label="Moduł"
+                    label={t('modularFormModule')}
                     sx={{
                         '& .MuiSelect-icon': {
                             color: 'white',
@@ -148,7 +150,7 @@ export const Modular = () => {
             </FormControl>
 
             <TextField
-                label="Data początkowa"
+                label={t('modularFormStart')}
                 type="datetime-local"
                 value={startTime}
                 onChange={(e) => handleDateChange(e, setStartTime)}
@@ -173,7 +175,7 @@ export const Modular = () => {
             />
 
             <TextField
-                label="Data końcowa"
+                label={t('modularFormEnd')}
                 type="datetime-local"
                 value={endTime}
                 onChange={(e) => handleDateChange(e, setEndTime)}
@@ -198,12 +200,12 @@ export const Modular = () => {
             />
 
             <FormControl fullWidth sx={{ mb: 2, borderColor: 'white', color: 'white' }}>
-                <InputLabel sx={{ color: 'white' }}>Wybierz pola</InputLabel>
+                <InputLabel sx={{ color: 'white' }}>{t('modularFormFields')}</InputLabel>
                 <Select
                     multiple
                     value={fields}
                     onChange={handleFieldChange}
-                    label="Wybierz pola"
+                    label={t('modularFormFields')}
                     renderValue={(selected) => selected.join(', ')}
                     sx={{
                         '& .MuiSelect-icon': {
@@ -230,7 +232,7 @@ export const Modular = () => {
             </FormControl>
 
             <Button variant="contained" color="primary" onClick={handleSubmit}>
-                Generuj raport modularny
+                {t('modularButton')}
             </Button>
         </Box>
     );

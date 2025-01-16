@@ -4,11 +4,13 @@ import React from 'react';
 import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 import Cookies from "js-cookie";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
 export const TransactionHistory = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [user, setUser] = useState<Account | null>(null);
+    const { t } = useTranslation();
     useEffect(() => {
         const fetchUser = async () => {
             const token = Cookies.get('jwt');
@@ -63,23 +65,23 @@ export const TransactionHistory = () => {
                 link.click();
                 window.URL.revokeObjectURL(url);
             } else {
-                alert('Wystąpił błąd podczas generowania raportu.');
+                alert(t('errorReport'));
             }
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert('Wystąpił błąd podczas generowania raportu.');
+            alert(t('errorReport'));
         }
     };
 
     return (
         <Box sx={{ p: 2 }}>
             <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
-                Generowanie raportu podsumowującego
+                {t('transactionHistoryTitle')}
             </Typography>
 
             {/* Formularz dat */}
             <TextField
-                label="Data początkowa"
+                label={t('transactionHistoryFormStart')}
                 type="datetime-local"
                 value={startDate}
                 onChange={(e) => handleDateChange(e, setStartDate)}
@@ -91,7 +93,7 @@ export const TransactionHistory = () => {
             />
 
             <TextField
-                label="Data końcowa"
+                label={t('transactionHistoryFormEnd')}
                 type="datetime-local"
                 value={endDate}
                 onChange={(e) => handleDateChange(e, setEndDate)}
@@ -104,7 +106,7 @@ export const TransactionHistory = () => {
 
             {/* Przycisk generowania raportu */}
             <Button variant="contained" color="primary" onClick={handleSubmit}>
-                Generuj raport podsumowujący
+                {t('transactionHistoryButton')}
             </Button>
         </Box>
     );
