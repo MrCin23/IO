@@ -22,6 +22,9 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.default.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Home
                     </Button>
+                    <Button onClick={() => navigate(Pathnames.victim.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Victim
+                    </Button>
                     <Button onClick={() => navigate(Pathnames.default.pomPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Pom
                     </Button>

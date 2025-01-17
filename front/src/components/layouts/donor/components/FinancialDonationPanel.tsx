@@ -30,6 +30,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
         try {
             const response = await api.get(`/financial-needs`);
             const data = response.data;
+            console.log(response)
             const formattedNeeds = data.map((need: any) => [need.id, need.description]);
             setNeeds(formattedNeeds);
         } catch (error) {

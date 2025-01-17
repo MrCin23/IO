@@ -1,6 +1,6 @@
 import { Pathnames } from './pathnames'
 
-import {HomePage} from "../pages/mapExamples/HomePage.tsx";
+
 import {Pom} from "../pages/mapExamples/Pom.tsx";
 import {ExternalFormPage} from "../pages/mapExamples/ExternalFormPage.tsx";
 import {HomePage} from "../pages/HomePage";
@@ -16,6 +16,7 @@ import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
 import FinancialDonationList from "@/components/layouts/donor/components/FinancialDonationList.tsx";
 import ItemDonationList from "@/components/layouts/donor/components/ItemDonationList.tsx";
 import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
+import VictimPage from '../pages/VictimPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -30,6 +31,15 @@ export const defaultRoutes: RouteType[] = [
         path: Pathnames.default.homePage,
         Component: HomePage,
     },
+    {
+        path: Pathnames.default.loginPage,
+        Component: LoginPage,
+    },
+    {
+        path: Pathnames.default.registerPage,
+        Component: RegisterPage,
+    },
+
     {
         path: Pathnames.default.pomPage,
         Component: Pom,
@@ -134,15 +144,7 @@ export const donorRoutes: RouteType[] = [
 export const victimRoutes: RouteType[] = [
     {
         path: Pathnames.victim.homePage,
-        Component: HomePage,
-    },
-    {
-        path: Pathnames.victim.accountPage,
-        Component: MyAccountPage,
-    },
-    {
-        path: Pathnames.victim.resources,
-        Component: Resources,
+        Component: VictimPage,
     }
 ]
 

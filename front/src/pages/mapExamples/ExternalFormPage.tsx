@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MapView from "../../components/mapComponent/MapView.tsx";
 import axios from "axios";
 import { useTranslation } from 'react-i18next';
@@ -18,7 +18,11 @@ export const ExternalFormPage = () => {
 
     const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
-
+    useEffect(() => {
+        if (coordinates) {
+            console.log('Coordinates changed:', coordinates);
+        }
+    }, [coordinates]);
 
     const handleSavePoint = async (e: React.FormEvent) => {
         e.preventDefault();

@@ -1,5 +1,6 @@
 package pl.lodz.p.ias.io.darczyncy.config;
 
+import com.google.maps.model.LatLng;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -9,6 +10,9 @@ import pl.lodz.p.ias.io.darczyncy.model.FinancialDonation;
 import pl.lodz.p.ias.io.darczyncy.model.ItemDonation;
 import pl.lodz.p.ias.io.darczyncy.repositories.FinancialDonationRepository;
 import pl.lodz.p.ias.io.darczyncy.repositories.ItemDonationRepository;
+import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.model.PointType;
+import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
@@ -46,6 +50,7 @@ public class InitData implements CommandLineRunner {
     private final MaterialNeedRepository materialNeedRepository;
     private final ItemDonationRepository itemDonationRepository;
     private final FinancialDonationRepository financialDonationRepository;
+    private final MapPointRepository mapPointRepository;
 
     /**
      * Metoda uruchamiana przy starcie aplikacji. Służy do inicjalizacji przykładowych danych
@@ -56,6 +61,24 @@ public class InitData implements CommandLineRunner {
      */
     @Override
     public void run(String... args) {
+
+        // Example objects:
+        MapPoint mapPoint1 = new MapPoint(
+                new LatLng(40.712776, -74.005974), // New York City coordinates
+                "Central Park",
+                "A large public park in New York City.",
+                PointType.VICTIM
+        );
+
+        MapPoint mapPoint2 = new MapPoint(
+                new LatLng(48.858844, 2.294351), // Eiffel Tower coordinates
+                "Eiffel Tower",
+                "An iconic tower located in Paris, France.",
+                PointType.VICTIM
+        );
+
+        mapPointRepository.save(mapPoint1);
+        mapPointRepository.save(mapPoint2);
         Account newUser = authenticationService.register("User",
                 "Password",
                 "Jan",
@@ -66,7 +89,7 @@ public class InitData implements CommandLineRunner {
                 .collectionGoal(200)
                 .collectionStatus(2)
                 .description("chora córka")
-                .mapPointId(2L)
+                .mapPoint(mapPoint1)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
                 .status(Need.Status.PENDING)
                 .priority(2)
@@ -79,7 +102,7 @@ public class InitData implements CommandLineRunner {
 
         MaterialNeed materialNeed = MaterialNeed.builder()
                 .itemCategory(MaterialNeed.ItemCategory.HOUSEHOLD)
-                .mapPointId(2L)
+                .mapPoint(mapPoint2)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
                 .status(Need.Status.PENDING)
                 .priority(2)
