@@ -65,7 +65,7 @@ public class InitData implements CommandLineRunner {
         FinancialNeed financialNeed = FinancialNeed.builder()
                 .collectionGoal(200)
                 .collectionStatus(2)
-                .description("na chorom curkę")
+                .description("chora córka")
                 .mapPointId(2L)
                 .expirationDate(Date.from(Instant.now().plus(2, ChronoUnit.DAYS)))
                 .status(Need.Status.PENDING)

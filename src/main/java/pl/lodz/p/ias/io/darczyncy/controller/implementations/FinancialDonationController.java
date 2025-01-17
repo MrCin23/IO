@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.darczyncy.controller.implementations;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import pl.lodz.p.ias.io.darczyncy.controller.interfaces.IFinancialDonationController;
 import pl.lodz.p.ias.io.darczyncy.dto.create.FinancialDonationCreateDTO;
@@ -17,6 +18,7 @@ import pl.lodz.p.ias.io.darczyncy.services.interfaces.IFinancialDonationService;
 import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.service.FinancialNeedService;
+import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 
 import java.net.URI;
 import java.util.List;
@@ -51,16 +53,17 @@ public class FinancialDonationController implements IFinancialDonationController
      */
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
-    public ResponseEntity<?> createFinancialDonation(FinancialDonationCreateDTO financialDonationCreateDTO) {
+    public ResponseEntity<?> createFinancialDonation(String language, FinancialDonationCreateDTO financialDonationCreateDTO) {
         FinancialDonation financialDonation;
         try {
-            financialDonation = financialDonationService.createFinancialDonation(financialDonationCreateDTO);
+            financialDonation = financialDonationService.createFinancialDonation(financialDonationCreateDTO, language.substring(0,2));
             financialNeedService.updateFinancialNeedCollectionStatus(financialDonation.getNeed().getId(),
                     financialDonation.getAmount());
         }
         catch (PaymentFailedException e) {
             return ResponseEntity.status(HttpStatus.SERVICE_UNAVAILABLE).build();
         }
+
         return ResponseEntity.created(URI.create("/donations/%s".formatted(financialDonation.getId()))).build();
     }
 

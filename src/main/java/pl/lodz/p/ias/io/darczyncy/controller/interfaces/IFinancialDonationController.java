@@ -22,7 +22,8 @@ public interface IFinancialDonationController {
      * @return Odpowiedź HTTP zawierająca status operacji
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> createFinancialDonation(@Valid @RequestBody FinancialDonationCreateDTO financialDonationCreateDTO);
+    ResponseEntity<?> createFinancialDonation(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String language,
+                                              @Valid @RequestBody FinancialDonationCreateDTO financialDonationCreateDTO);
 
     /**
      * Wyszukuje darowiznę finansową po identyfikatorze.

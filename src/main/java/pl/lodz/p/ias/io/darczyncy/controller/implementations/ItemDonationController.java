@@ -57,8 +57,8 @@ public class ItemDonationController implements IItemDonationController {
      */
     @PreAuthorize("hasAnyRole('DARCZYŃCA')")
     @Override
-    public ResponseEntity<?> createItemDonation(ItemDonationCreateDTO itemDonationCreateDTO) {
-        ItemDonation itemDonation = itemDonationService.createItemDonation(itemDonationCreateDTO);
+    public ResponseEntity<?> createItemDonation(String language, ItemDonationCreateDTO itemDonationCreateDTO) {
+        ItemDonation itemDonation = itemDonationService.createItemDonation(itemDonationCreateDTO, language.substring(0,2));
         materialNeedService.completeMaterialNeed(itemDonation.getNeed().getId());
         return ResponseEntity.created(URI.create("/donations/%s".formatted(itemDonation.getId()))).build();
     }

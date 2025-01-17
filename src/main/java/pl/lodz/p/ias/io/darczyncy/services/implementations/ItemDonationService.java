@@ -15,6 +15,8 @@ import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationService;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
@@ -61,6 +63,8 @@ public class ItemDonationService implements IItemDonationService {
      */
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
+    private final NotificationService notificationService;
+
     /**
      * Tworzy nową darowiznę na podstawie danych z DTO.
      *
@@ -69,7 +73,7 @@ public class ItemDonationService implements IItemDonationService {
      * @throws DonationBaseException jeśli kategoria darowizny jest nieprawidłowa lub potrzeba materialna nie istnieje.
      */
     @Override
-    public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
+    public ItemDonation createItemDonation(ItemDonationCreateDTO dto, String language) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(auth.getName());
         MaterialNeed need = materialNeedRepository.findById(dto.needId())
@@ -95,6 +99,18 @@ public class ItemDonationService implements IItemDonationService {
                 dto.description(),
                 LocalDate.now()
         );
+
+        String message;
+        if (language.equals("pl")) {
+            message = "Dziękujemy! Przekazano darowiznę rzeczową '%s' na cel %s";
+        }
+        else {
+            message = "Thank you! A item donation '%s' was made for the purpose of %s";
+        }
+
+        message = message.formatted(dto.name(), need.getDescription());
+
+        notificationService.notify(message, NotificationType.INFORMATION);
         return itemDonationRepository.save(itemDonation);
     }
 

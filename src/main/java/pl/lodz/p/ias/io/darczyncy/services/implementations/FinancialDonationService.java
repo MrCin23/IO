@@ -18,6 +18,8 @@ import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.darczyncy.utils.PaymentProvider;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationService;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
@@ -60,6 +62,8 @@ public class FinancialDonationService implements IFinancialDonationService {
      */
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
+    private final NotificationService notificationService;
+
     /**
      * Tworzy nową darowiznę finansową.
      *
@@ -69,7 +73,7 @@ public class FinancialDonationService implements IFinancialDonationService {
      * @throws PaymentFailedException W przypadku niepowodzenia płatności.
      */
     @Override
-    public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto) {
+    public FinancialDonation createFinancialDonation(FinancialDonationCreateDTO dto, String language) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(authentication.getName());
         FinancialNeed need = financialNeedRepository.findById(dto.needId())
@@ -92,10 +96,22 @@ public class FinancialDonationService implements IFinancialDonationService {
         PaymentProvider paymentProvider = new PaymentProvider();
         boolean isPaymentSucceed = paymentProvider.processPayment();
 
-        if (isPaymentSucceed) {
-            return financialDonationRepository.save(financialDonation);
+        if (!isPaymentSucceed) {
+            throw new PaymentFailedException();
         }
-        throw new PaymentFailedException();
+
+        String message;
+        if (language.equals("pl")) {
+            message = "Dziękujemy! Przekazano darowiznę finansową o kwocie %s %s na cel %s";
+        }
+        else {
+            message = "Thank you! A financial donation of the amount of %s %s was made for the purpose of %s";
+        }
+
+        message = message.formatted(dto.amount(), dto.currency(), need.getDescription());
+
+        notificationService.notify(message, NotificationType.INFORMATION);
+        return financialDonationRepository.save(financialDonation);
     }
 
     /**

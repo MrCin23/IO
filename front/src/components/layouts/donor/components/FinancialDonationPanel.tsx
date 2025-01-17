@@ -97,13 +97,6 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
                     'Content-Type': 'application/json'
                 }
             });
-
-            const [id, description] = needs.find( ([id]) => id===selectedNeed);
-            alert(
-                `${t("donor.alertDonationProceed")}: ${t("donor.financialDonation")}, ${t(
-                    "donor.alertAmount"
-                )}: ${amount} ${currency}, ${t("donor.alertGoal")}: ${description}`
-            );
         } catch (error) {
             console.error(error);
             alert(t("donor.donationError"));

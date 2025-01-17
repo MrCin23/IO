@@ -60,13 +60,6 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
                     'Content-Type': 'application/json'
                 }
             });
-            alert(
-                `${t("donor.alertDonationProceed")}: ${t("donor.itemDonation")}, ${t(
-                    "name"
-                )}: ${name}, ${t("donor.category")}: ${category}, ${t(
-                    "donor.description"
-                )}: ${description}, ${t("donor.resourceQuantity")}: ${resourceQuantity}`
-            );
         } catch (error) {
             console.error(error);
             alert(t("donor.donationError"));

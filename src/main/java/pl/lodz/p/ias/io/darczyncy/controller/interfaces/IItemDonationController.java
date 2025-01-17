@@ -24,7 +24,8 @@ public interface IItemDonationController {
      * @return Odpowiedź HTTP z wynikiem operacji
      */
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<?> createItemDonation(@Valid @RequestBody ItemDonationCreateDTO itemDonationCreateDTO);
+    ResponseEntity<?> createItemDonation(@RequestHeader(HttpHeaders.ACCEPT_LANGUAGE) String language,
+                                         @Valid @RequestBody ItemDonationCreateDTO itemDonationCreateDTO);
 
     /**
      * Znajduje darowiznę przedmiotu na podstawie identyfikatora.
