@@ -16,7 +16,7 @@ function VolunteerList() {
 
     return (
         <div className="container my-5">
-            <h2>{t("volunteerListTitle")}</h2>
+            <h2>{t("volunteer.volunteerListTitle")}</h2>
             <input
                 type="text"
                 className="form-control mb-3"
@@ -29,13 +29,13 @@ function VolunteerList() {
                 <table className="table table-striped table-hover table-bordered">
                     <thead className='table-dark text-center'>
                     <tr>
-                        <th>{t("")}ID</th>
-                        <th>{t("username")}</th>
-                        <th>{t("firstName")}</th>
-                        <th>{t("lastName")}</th>
-                        <th>{t("lastLogon")}</th>
-                        <th>{t("role")}</th>
-                        <th>{t("status")}</th>
+                        <th>ID</th>
+                        <th>{t("volunteer.username")}</th>
+                        <th>{t("volunteer.firstName")}</th>
+                        <th>{t("volunteer.lastName")}</th>
+                        <th>{t("volunteer.lastLogon")}</th>
+                        <th>{t("volunteer.role")}</th>
+                        <th>{t("volunteer.status")}</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -50,7 +50,7 @@ function VolunteerList() {
                             <td>{volunteer.lastName}</td>
                             <td>{volunteer.lastLogin}</td>
                             <td>{volunteer.role.roleName}</td>
-                            <td> {volunteer.active ? t("active") : t("inactive")}</td>
+                            <td> {volunteer.active ? t("volunteer.active") : t("volunteer.inactive")}</td>
                         </tr>
                     ))}
                     </tbody>

@@ -21,7 +21,7 @@ function VolunteerGroupList() {
     const handleAddGroup = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!newGroupName.trim()) {
-            alert(t("groupNameRequired")); // Use translation for error message
+            alert(t("volunteer.groupNameRequired")); // Use translation for error message
             return;
         }
 
@@ -29,10 +29,10 @@ function VolunteerGroupList() {
             const response = await axios.post("/volunteerGroups", {groupName: newGroupName});
             setVolunteerGroups((prev) => [...prev, response.data]); // Add the new group to the list
             setNewGroupName(""); // Clear the input field
-            alert(t("groupCreatedSuccessfully")); // Optional success message
+            alert(t("volunteer.groupCreatedSuccessfully")); // Optional success message
         } catch (error) {
             console.error("Failed to create group:", error);
-            alert(t("groupCreationFailed")); // Optional error message
+            alert(t("volunteer.groupCreationFailed")); // Optional error message
         }
     };
     // Fetch volunteer groups
@@ -110,10 +110,10 @@ function VolunteerGroupList() {
             setIsPopupVisible(false);
             setGroupMembers([])
             setRemoveGroupMembers([])
-            alert(t("groupUpdatedSuccessfully"));
+            alert(t("volunteer.groupUpdatedSuccessfully"));
         } catch (error) {
             console.error("Failed to save group:", error);
-            alert(t("groupUpdateFailed"));
+            alert(t("volunteer.groupUpdateFailed"));
         }
     };
 
@@ -125,18 +125,18 @@ function VolunteerGroupList() {
 
     return (
         <div className="volunteer-group-list-container">
-            <h2>{t("volunteerGroupListTitle")}</h2>
+            <h2>{t("volunteer.volunteerGroupListTitle")}</h2>
 
             <form onSubmit={handleAddGroup} className="add-group-form">
                 <input
                     type="text"
                     value={newGroupName}
                     onChange={(e) => setNewGroupName(e.target.value)}
-                    placeholder={t("enterGroupName")}
+                    placeholder={t("volunteer.enterGroupName")}
                     className="group-input"
                 />
                 <button type="submit" className="add-group-button">
-                    {t("addGroup")}
+                    {t("volunteer.addGroup")}
                 </button>
             </form>
 
@@ -148,16 +148,16 @@ function VolunteerGroupList() {
                             onClick={() => handleEditGroup(group.id, group.members)}
                             className="edit-group-button"
                         >
-                            {t("edit")}
+                            {t("volunteer.edit")}
                         </button>
                     </h3>
                     <table>
                         <thead>
                         <tr>
-                            <th>{t("username")}</th>
-                            <th>{t("firstName")}</th>
-                            <th>{t("lastName")}</th>
-                            <th>{t("status")}</th>
+                            <th>{t("volunteer.username")}</th>
+                            <th>{t("volunteer.firstName")}</th>
+                            <th>{t("volunteer.lastName")}</th>
+                            <th>{t("volunteer.status")}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -166,7 +166,7 @@ function VolunteerGroupList() {
                                 <td>{member.username}</td>
                                 <td>{member.firstName}</td>
                                 <td>{member.lastName}</td>
-                                <td>{member.active ? t("active") : t("inactive")}</td>
+                                <td>{member.active ? t("volunteer.active") : t("volunteer.inactive")}</td>
                             </tr>
                         ))}
                         </tbody>
@@ -178,9 +178,9 @@ function VolunteerGroupList() {
                 <div className="edit-group-modal">
                     <div className="popup-backdrop" onClick={closePopup}/>
                     <div className="popup">
-                        <h3>{t("editGroupMembers")}</h3>
+                        <h3>{t("volunteer.editGroupMembers")}</h3>
                         <div className="volunteer-list">
-                            <h4>{t("allVolunteers")}</h4>
+                            <h4>{t("volunteer.allVolunteers")}</h4>
                             <ul>
                                 {notMembers.map((volunteer) => (
                                     <li key={volunteer.id}>
@@ -190,14 +190,14 @@ function VolunteerGroupList() {
                                             onClick={() => handleAddMember(volunteer)}
                                             className="add-member-button"
                                         >
-                                            {t("add")}
+                                            {t("volunteer.add")}
                                         </button>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                         <div className="current-members">
-                            <h4>{t("currentMembers")}</h4>
+                            <h4>{t("volunteer.currentMembers")}</h4>
                             <ul>
                                 {groupMembers.map((member) => (
                                     <li key={member.id}>
@@ -207,17 +207,17 @@ function VolunteerGroupList() {
                                             onClick={() => handleRemoveMember(member)}
                                             className="remove-member-button"
                                         >
-                                            {t("remove")}
+                                            {t("volunteer.remove")}
                                         </button>
                                     </li>
                                 ))}
                             </ul>
                         </div>
                         <button onClick={handleSaveGroup} className="save-group-button">
-                            {t("save")}
+                            {t("volunteer.save")}
                         </button>
                         <button onClick={closePopup} className="close-popup-button">
-                            {t("close")}
+                            {t("volunteer.close")}
                         </button>
                     </div>
                 </div>

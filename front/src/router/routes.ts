@@ -16,9 +16,6 @@ import ItemDonationList from "@/components/layouts/donor/components/ItemDonation
 import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
 import VictimPage from '../pages/VictimPage';
 // import VictimPage from '../pages/VictimPage';
-import FinancialDonationList from "@/components/layouts/donor/components/FinancialDonationList.tsx";
-import ItemDonationList from "@/components/layouts/donor/components/ItemDonationList.tsx";
-import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
 import VolunteerGroupList from "@/components/layouts/volunteer/components/VolunteerGroupList.tsx";
 import VolunteerList from "@/components/layouts/volunteer/components/VolunteerList.tsx";
 import volunteerInfoPage from "@/components/layouts/volunteer/components/volunteerInfoPage.tsx";

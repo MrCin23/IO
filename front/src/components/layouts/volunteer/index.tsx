@@ -2,10 +2,12 @@ import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import {ReactNode, useEffect} from 'react'
 import { useNavigate } from 'react-router-dom'
 import {useTranslation} from "react-i18next";
-import i18n from "@/components/layouts/volunteer/i18n";
+// import i18n from "@/components/layouts/volunteer/i18n";
+
 import LanguageSwitcher from "@/components/layouts/volunteer/components/LanguageSwitcher.tsx";
 import {useAccount} from "@/contexts/uwierzytelnianie/AccountContext.tsx";
 import {Pathnames} from "@/router/pathnames.ts";
+import i18n from "i18next";
 
 interface LayoutProps {
     children: ReactNode
@@ -39,17 +41,16 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
             <AppBar position="static">
                 <Toolbar sx={{ display: 'flex'}}>
                     <Button onClick={() => navigate(Pathnames.volunteer.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("home")}
+                        {t("volunteer.home")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("myAccount")}
+                        {t("volunteer.myAccount")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.volunteers)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("volunteerListTitle")}
+                        {t("volunteer.volunteerListTitle")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.groups)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("volunteerGroupListTitle")}
-                        {t("general.account")}
+                        {t("volunteer.volunteerGroupListTitle")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.resourcesList")}
@@ -58,7 +59,7 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
                         {t("chat.chat")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("logOut")}
+                        {t("volunteer.logOut")}
                     </Button>
                     <div>
                         <LanguageSwitcher/>

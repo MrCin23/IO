@@ -36,6 +36,7 @@ export const Pathnames = {
     victim: {
         homePage: '/victim',
         accountPage: '/victim/account',
+        resources: '/victim/resources'
     },
     volunteer: {
         homePage: '/volunteer',

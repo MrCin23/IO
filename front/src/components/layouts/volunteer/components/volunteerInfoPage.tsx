@@ -42,7 +42,7 @@ const volunteerInfoPage = () => {
             })
             .catch((error) => console.log(error))
 
-        alert(t("profileUpdatedSuccessfully")); // Optional success message
+        alert(t("volunteer.profileUpdatedSuccessfully")); // Optional success message
         setIsEditing(false); // Close the editing form
     };
 
@@ -54,30 +54,30 @@ const volunteerInfoPage = () => {
                         onClick={() => handleEditProfile()}
                         className="edit-group-button"
                     >
-                        {t("edit")}
+                        {t("volunteer.edit")}
                     </button>
                     <MyAccountPage />
                 </>
             ) : (
                 <div className="edit-profile-form">
-                    <h3>{t("editProfile")}</h3>
+                    <h3>{t("volunteer.editProfile")}</h3>
                     <form onSubmit={(e) => e.preventDefault()}>
                         <div>
-                            <label>{t("firstName")}</label>
+                            <label>{t("volunteer.firstName")}</label>
                             <input
                                 type="text"
                                 value={firstName}
                                 onChange={(e) => setFirstName(e.target.value)}
-                                placeholder={t("enterFirstName")}
+                                placeholder={t("volunteer.enterFirstName")}
                             />
                         </div>
                         <div>
-                            <label>{t("lastName")}</label>
+                            <label>{t("volunteer.lastName")}</label>
                             <input
                                 type="text"
                                 value={lastName}
                                 onChange={(e) => setLastName(e.target.value)}
-                                placeholder={t("enterLastName")}
+                                placeholder={t("volunteer.enterLastName")}
                             />
                         </div>
                         <div>
@@ -86,14 +86,14 @@ const volunteerInfoPage = () => {
                                 onClick={handleSaveProfile}
                                 className="save-profile-button"
                             >
-                                {t("save")}
+                                {t("volunteer.save")}
                             </button>
                             <button
                                 type="button"
                                 onClick={() => setIsEditing(false)}
                                 className="cancel-edit-button"
                             >
-                                {t("cancel")}
+                                {t("volunteer.cancel")}
                             </button>
                         </div>
                     </form>
