@@ -31,6 +31,61 @@
     "submit": "Submit",
     "update": "Update"
   },
+  "donor" : {
+    "header": "Those in need await your help",
+    "motivation_message": "By supporting SKPH, you help impoverished families, seniors, the sick, and those affected by natural disasters.",
+    "financialDonation": "Financial Donation",
+    "itemDonation": "Item Donation",
+    "name": "Item",
+    "description": "Description",
+    "category": "Category",
+    "resourceQuantity": "Quantity",
+    "selectCategory": "Select category ...",
+    "categoryClothing": "Clothing",
+    "categoryHousehold": "Household",
+    "categoryFood": "Food",
+    "categoryToys": "Toys",
+    "categoryBooks": "Books",
+    "selectAmount": "Select an amount:",
+    "selectCurrency": "Select currency:",
+    "otherAmount": "Other",
+    "selectGoal": "Select a goal:",
+    "goalPlaceholder": "Choose a goal...",
+    "goalOption1": "Help for seniors",
+    "goalOption2": "Help for flood victims",
+    "proceed": "Proceed",
+    "footer": "The donation is voluntary. All rights reserved.",
+    "invalidAmount": "Please enter a valid amount (positive number).",
+    "alertDonationProceed":"Thank you! You chose",
+    "alertAmount": "Amount",
+    "alertItem": "Donation item",
+    "alertGoal": "Goal",
+    "errorFetchingGoals": "Error fetching needs.",
+    "donationError": "Error sending donation.",
+    "showItemDonations": "Show item donations",
+    "showFinancialDonations": "Show financial donations",
+    "myAccount": "My Account",
+    "logOut": "Logout",
+    "donate": "Donate",
+    "home": "Home",
+    "confirmationFailedAlert": "Unable to generate confirmation. Try again later.",
+    "itemDonationsList": "Item donations list",
+    "financialDonationsList": "Financial donations list",
+    "loading": "Loading...",
+    "noItemDonations": "No item donations",
+    "noFinancialDonations": "No financial donations",
+    "listGoal": "Goal",
+    "listDate": "Date",
+    "listItem": "Item",
+    "listDescription": "Description",
+    "listQuantity": "Quantity",
+    "listCategory": "Category",
+    "listStatus": "Status",
+    "listConfirmation": "Confirmation",
+    "listAmount": "Amount",
+    "listCurrency": "Currency",
+    "generateConfirmation": "Generate confirmation"
+  },
   "resources": {
     "addResource": "Add Resource",
     "resourceName": "Resource Name",
@@ -81,6 +136,25 @@
     "warehouseFailed": "Failed to add warehouse. Please try again.",
     "warehouseError": "An unexpected error occurred. Please try again.",
     "resourceId": "Resource ID"
+  },
+
+  "notifications": {
+    "dialog_title": "Notifications",
+    "message":"Your message"
+  },
+
+  "announcements": {
+    "dialog_title": "Announcements",
+    "announcement_type_labels": {
+      "WARNING": "Warning",
+      "INFORMATION": "Information"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Title",
+    "message":"Your message",
+    "type":"Announcement type"
   },
   "maps": {
     "fillEveryField": "Fill every field!",

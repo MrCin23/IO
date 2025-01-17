@@ -7,6 +7,8 @@ import { Pathnames } from '@/router/pathnames.ts'
 import { useAccount } from '@/contexts/uwierzytelnianie/AccountContext.tsx'
 import {useTranslation} from "react-i18next";
 
+import i18n from './i18n/i18n';
+
 interface LayoutProps {
   children: React.ReactNode;
 }
@@ -50,4 +52,5 @@ export const VictimLayout = ({ children }: LayoutProps) => {
             </Container>
         </div>
     )
+
 };

@@ -11,7 +11,11 @@ import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
 import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
 import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
+import FinancialDonationList from "@/components/layouts/donor/components/FinancialDonationList.tsx";
+import ItemDonationList from "@/components/layouts/donor/components/ItemDonationList.tsx";
+import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
 import VictimPage from '../pages/VictimPage';
+// import VictimPage from '../pages/VictimPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -101,7 +105,7 @@ export const authority_representativeRoutes: RouteType[] = [
 export const donorRoutes: RouteType[] = [
     {
         path: Pathnames.donor.homePage,
-        Component: HomePage,
+        Component: DonationPanel,
     },
     {
         path: Pathnames.donor.accountPage,
@@ -116,8 +120,16 @@ export const donorRoutes: RouteType[] = [
         Component: MyAccountPage,
     },
     {
-        path: Pathnames.donor.createResource,
-        Component: CreateResource,
+        path: Pathnames.donor.accountsListPage,
+        Component: AccountsListPage,
+    },
+    {
+        path: Pathnames.donor.financialDonations,
+        Component: FinancialDonationList
+    },
+    {
+        path: Pathnames.donor.itemDonations,
+        Component: ItemDonationList
     }
 ]
 
