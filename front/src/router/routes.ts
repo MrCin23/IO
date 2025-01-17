@@ -11,9 +11,6 @@ import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
 import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
 import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
-import FinancialDonationList from "@/components/layouts/donor/components/FinancialDonationList.tsx";
-import ItemDonationList from "@/components/layouts/donor/components/ItemDonationList.tsx";
-import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
 import VictimPage from '../pages/VictimPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.

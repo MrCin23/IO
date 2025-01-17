@@ -27,6 +27,8 @@ export const Pathnames = {
     },
     donor: {
         homePage: '/donor',
+        financialDonations: '/financial-donations',
+        itemDonations: '/item-donations',
         accountPage: '/donor/account',
         accountsListPage: '/donor/accounts/list',
         createResource: '/donor/resources/create'
