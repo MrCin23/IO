@@ -10,7 +10,8 @@
     "disconnected_status": "Rozłączony"
   },
   "chat": {
-    "no_chat_selected": "Brak wybranego czatu"
+    "no_chat_selected": "Brak wybranego czatu",
+    "chat": "Czat"
   },
   "create_chat_form": {
     "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",

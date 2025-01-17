@@ -79,9 +79,8 @@ const CreateChatForm = ({
       body: JSON.stringify(requestBody),
     });
     if (response.ok) {
-      console.log("Chat created");
       const data: ChatDB = await response.json();
-      // @ts-ignore // TODO: Fix this later
+      // @ts-ignore
       setChats((prev) => [...prev, data]);
       setIsDialogOpen(false);
     } else {

@@ -37,6 +37,9 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.aid_organization.createWarehouse)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.addWarehouse")}
                     </Button>
+                    <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("chat.chat")}
+                    </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
                     </Button>

@@ -10,7 +10,8 @@
     "disconnected_status": "Disconnected"
   },
   "chat": {
-    "no_chat_selected": "No chat selected"
+    "no_chat_selected": "No chat selected",
+    "chat": "Chat"
   },
   "create_chat_form": {
     "form_users_error_message": "You have to select at least one user.",
