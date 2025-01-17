@@ -9,3 +9,8 @@ export interface Volunteer {
     lastLogin: string | null;
     role: Role;
 }
+
+export interface UpdateVolunteer {
+    firstName: string;
+    lastName: string;
+}

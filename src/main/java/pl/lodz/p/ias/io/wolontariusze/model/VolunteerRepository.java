@@ -12,4 +12,5 @@ import java.util.Set;
 public interface VolunteerRepository extends JpaRepository<Account, Long> {
     Set<Account> findAllByIdInAndRole(Set<Long> ids, Role role);
     List<Account> findAllByRole(Role role);
+//    void updateById(Long id, Account account);
 }

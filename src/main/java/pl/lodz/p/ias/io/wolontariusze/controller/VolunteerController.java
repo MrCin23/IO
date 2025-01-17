@@ -36,7 +36,6 @@ public class VolunteerController {
         response.put("id", volunteer.getId().toString());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }*/
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping
     ResponseEntity<List<Account>> getVolunteers() {
         return new ResponseEntity<>(volunteerService.getAllVolunteers(), HttpStatus.OK);
@@ -46,11 +45,11 @@ public class VolunteerController {
     ResponseEntity<Account> getVolunteer(@PathVariable("id") Long id) {
         return new ResponseEntity<>(volunteerService.getVolunteerById(id), HttpStatus.OK);
     }
-//
-//    @PutMapping("/{id}")
-//    ResponseEntity<Account> updateVolunteer(@PathVariable("id") Long id, @RequestBody UpdateVolunteerDTO updateVolunteerDTO) {
-//        return new ResponseEntity<>(volunteerService.updateVolunteer(id, updateVolunteerDTO.getFirstName(), updateVolunteerDTO.getLastName()), HttpStatus.OK);
-//    }
+
+    @PutMapping("/{id}")
+    ResponseEntity<Account> updateVolunteer(@PathVariable("id") Long id, @RequestBody UpdateVolunteerDTO updateVolunteerDTO) {
+        return new ResponseEntity<>(volunteerService.updateVolunteer(id, updateVolunteerDTO.getFirstName(), updateVolunteerDTO.getLastName()), HttpStatus.OK);
+    }
 
 //    @DeleteMapping("/{id}")
 //    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {

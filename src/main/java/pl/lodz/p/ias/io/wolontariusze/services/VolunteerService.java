@@ -27,12 +27,15 @@ public class VolunteerService {
     public Account getVolunteerById(Long id) {
         return volunteerRepository.findById(id).orElse(null);
     }
-//    public Account updateVolunteer(Long id, String firstName, String lastName) {
-//        Account volunteer = volunteerRepository.findById(id).get();
-//        if (!firstName.isEmpty()) {
-//        }
-//        return volunteerRepository.findById(id).orElse(null);
-//    }
+
+    public Account updateVolunteer(Long id, String firstName, String lastName) {
+        Account volunteer = volunteerRepository.findById(id).get();
+        volunteer.setFirstName(firstName);
+        volunteer.setLastName(lastName);
+//        volunteerRepository.update(volunteer);
+        volunteerRepository.save(volunteer);
+        return volunteerRepository.findById(id).get();
+    }
     public void deleteVolunteer(Long id) {
         volunteerRepository.deleteById(id);
     }
