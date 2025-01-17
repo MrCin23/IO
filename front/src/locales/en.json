@@ -176,6 +176,7 @@
     "deletePoint": "Delete",
     "switchStatus": "Switch status",
     "editPoint": "Edit",
+    "cancelEdit": "Cancel",
     "error": {
       "savePoint": "Error while saving point:",
       "readPoint": "Error while reading point:",

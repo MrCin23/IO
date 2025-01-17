@@ -8,14 +8,16 @@ public class WarehouseConverter {
         return new WarehouseDTO(
                 warehouse.getId(),
                 warehouse.getWarehouseName(),
-                warehouse.getLocation()
+                warehouse.getLocation(),
+                warehouse.getMapPoint()
         );
     }
 
     public Warehouse convertDTOToWarehouse(WarehouseDTO warehouseDTO) {
         return new Warehouse(
                 warehouseDTO.getWarehouseName(),
-                warehouseDTO.getLocation()
+                warehouseDTO.getLocation(),
+                warehouseDTO.getMapPoint()
         );
     }
 }

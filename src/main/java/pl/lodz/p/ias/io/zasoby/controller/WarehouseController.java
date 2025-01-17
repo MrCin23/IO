@@ -54,4 +54,10 @@ public class WarehouseController {
     public void updateWarehouse(@PathVariable Long id, @RequestBody @Valid WarehouseDTO warehouseDTO) {
         warehouseService.updateWarehouse(id, warehouseDTO);
     }
+
+    @GetMapping("point/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public WarehouseDTO getWarehouseByMapPointId(@PathVariable Long id) {
+        return warehouseService.getWarehouseByMapPoint(id);
+    }
 }
