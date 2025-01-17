@@ -13,7 +13,6 @@ import {
   FormItem,
   FormMessage,
 } from "./ui/form";
-import { FormLabel } from "@mui/material";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ChatDB } from "@/types";
@@ -29,6 +28,7 @@ import { Settings } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { ScrollArea } from "./ui/scroll-area";
 import axios from "@/api/Axios";
+import { Label } from "./ui/label";
 
 const UpdateChatForm = ({
   chatId,
@@ -117,7 +117,11 @@ const UpdateChatForm = ({
       onOpenChange={(isOpen) => setIsDialogOpen(isOpen)}
     >
       <DialogTrigger asChild>
-        <Settings color="black" size={48} className="mr-4 mt-20 cursor-pointer" />
+        <Settings
+          color="white"
+          size={48}
+          className="mr-4 mt-20 cursor-pointer"
+        />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -134,9 +138,7 @@ const UpdateChatForm = ({
                 name="chatName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      {t("update_chat_form.form_chat_label")}
-                    </FormLabel>
+                    <Label>{t("update_chat_form.form_chat_label")}</Label>
                     <FormControl>
                       <Input {...field} />
                     </FormControl>
@@ -164,55 +166,59 @@ const UpdateChatForm = ({
                       />
                     </div>
                     <ScrollArea className="h-40 border rounded-md p-2">
-                      {filteredUsers.map((user) => (
-                        <FormField
-                          key={user.id}
-                          control={form.control}
-                          name="users"
-                          render={({ field }) => {
-                            return (
-                              <FormItem
-                                key={user.id}
-                                className="flex flex-row items-start space-x-3 space-y-0"
-                              >
-                                <FormControl>
-                                  <Checkbox
-                                    id={user.id}
-                                    checked={field.value?.includes(
-                                      String(user.id)
-                                    )}
-                                    onCheckedChange={(checked) => {
-                                      const userId = String(user.id);
-                                      return checked
-                                        ? field.onChange([
-                                            ...field.value,
-                                            userId,
-                                          ])
-                                        : field.onChange(
-                                            field.value?.filter(
-                                              (value) => value !== userId
-                                            )
-                                          );
-                                    }}
-                                  />
-                                </FormControl>
-                                <FormLabel
-                                  htmlFor={user.id}
-                                  className="font-normal"
+                      <div className="space-y-2">
+                        {filteredUsers.map((user) => (
+                          <FormField
+                            key={user.id}
+                            control={form.control}
+                            name="users"
+                            render={({ field }) => {
+                              return (
+                                <FormItem
+                                  key={user.id}
+                                  className="flex flex-row items-start space-x-3 space-y-0"
                                 >
-                                  {user.firstName} {user.lastName}
-                                </FormLabel>
-                              </FormItem>
-                            );
-                          }}
-                        />
-                      ))}
+                                  <FormControl>
+                                    <Checkbox
+                                      id={user.id}
+                                      checked={field.value?.includes(
+                                        String(user.id)
+                                      )}
+                                      onCheckedChange={(checked) => {
+                                        const userId = String(user.id);
+                                        return checked
+                                          ? field.onChange([
+                                              ...field.value,
+                                              userId,
+                                            ])
+                                          : field.onChange(
+                                              field.value?.filter(
+                                                (value) => value !== userId
+                                              )
+                                            );
+                                      }}
+                                    />
+                                  </FormControl>
+                                  <Label
+                                    htmlFor={user.id}
+                                    className="font-normal text-white"
+                                  >
+                                    {user.firstName} {user.lastName}
+                                  </Label>
+                                </FormItem>
+                              );
+                            }}
+                          />
+                        ))}
+                      </div>
                     </ScrollArea>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit">{t("general.update")}</Button>
+              <Button type="submit" className="bg-white text-black">
+                {t("general.update")}
+              </Button>
             </form>
           </Form>
         </div>
