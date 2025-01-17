@@ -36,7 +36,12 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ coordinates }) => {
 
     const onSubmit = async (values: Warehouse) => {
         try {
-            const response = await api.post("/warehouses", values);
+            const message = encodeURIComponent(t("resources.warehouseSuccess"));
+            const response = await api.post("/warehouses", values, {
+                headers: {
+                    "message": message,
+                }
+            });
             await api.post("/map", {
                 coordinates: coordinates,
                 title: values.warehouseName,

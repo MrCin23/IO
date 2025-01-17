@@ -69,8 +69,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
         if (!window.confirm(t("resources.confirmDeleteResource"))) return;
 
         try {
-            await api.delete(`/resources/${resourceId}`);
-            alert(t("resources.resourceDeletedSuccess"));
+            const message = encodeURIComponent(t("resources.resourceDeletedSuccess"));
+            await api.delete(`/resources/${resourceId}`, {
+                headers: {
+                    "message": message,
+                }
+            });
             window.location.reload();
         } catch (error) {
             console.error(error);

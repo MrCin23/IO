@@ -44,7 +44,12 @@ const ResourceForm = () => {
 
     const onSubmit = async (values: Resource) => {
         try {
-            const response = await api.post("/resources", values);
+            const message = encodeURIComponent(t("resources.resourceSuccess"));
+            const response = await api.post("/resources", values, {
+                headers: {
+                    "message": message,
+                }
+            });
             console.log("Resource added:", response.data);
 
             if (location.pathname.includes('/organization/resources/create')) {

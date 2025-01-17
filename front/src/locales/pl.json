@@ -144,7 +144,8 @@
     "warehouseFailed": "Nie udało się utworzyć magazynu. Spróbuj ponownie.",
     "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
     "resourceId": "ID Zasobu",
-    "enterResourceType": "Podaj typ zasobu"
+    "enterResourceType": "Podaj typ zasobu",
+    "resourceSuccess": "Pomyślnie dodano zasób"
   },
 
   "notifications": {
