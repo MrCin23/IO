@@ -52,15 +52,15 @@ export const MaterialNeedsList: React.FC = () => {
     }, []);
 
     if (loading) {
-        return <div>{t('loading')}...</div>;
+        return <div>{t('victim.loading')}...</div>;
     }
 
     if (error) {
-        return <div>{t('error')}: {error}</div>;
+        return <div>{t('victim.error')}: {error}</div>;
     }
 
     if (needs.length === 0) {
-        return <div className="text-center p-4 rounded-lg">{t('noMaterialNeeds')}</div>;
+        return <div className="text-center p-4 rounded-lg">{t('victim.noMaterialNeeds')}</div>;
     }
     return (
         <div className="space-y-4">
@@ -71,13 +71,13 @@ export const MaterialNeedsList: React.FC = () => {
                 const formattedCreationDate = creationDate.toLocaleDateString();
                 return (
                     <div key={need.id} className="p-4 border rounded-lg shadow-sm text-left bg-gray-100 text-black">
-                        <p className="mb-1"><strong>{t('id')}:</strong> {need.id}</p>
-                        <p className="mb-1"><strong>{t('description')}:</strong> {need.description}</p>
-                        <p className="mb-1"><strong>{t('expirationDate')}:</strong> {formattedExpirationDate}</p>
-                        <p className="mb-1"><strong>{t('itemCategory')}:</strong> {need.itemCategory}</p>
-                        <p className="mb-1"><strong>{t('creationDate')}:</strong> {formattedCreationDate}</p>
-                        <p className="mb-1"><strong>{t('expirationDate')}:</strong> {formattedExpirationDate}</p>
-                        <p className="mb-1"><strong>{t('status')}:</strong> {t(`statusLabels.${need.status}`)}</p>
+                        <p className="mb-1"><strong>{t('victim.id')}:</strong> {need.id}</p>
+                        <p className="mb-1"><strong>{t('victim.description')}:</strong> {need.description}</p>
+                        <p className="mb-1"><strong>{t('victim.expirationDate')}:</strong> {formattedExpirationDate}</p>
+                        <p className="mb-1"><strong>{t('victim.itemCategory')}:</strong> {need.itemCategory}</p>
+                        <p className="mb-1"><strong>{t('victim.creationDate')}:</strong> {formattedCreationDate}</p>
+                        <p className="mb-1"><strong>{t('victim.expirationDate')}:</strong> {formattedExpirationDate}</p>
+                        <p className="mb-1"><strong>{t('victim.status')}:</strong> {t(`statusLabels.${need.status}`)}</p>
                         <StatusChangeButton
                             needId={need.id}
                             currentStatus={need.status}

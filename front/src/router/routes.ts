@@ -17,6 +17,8 @@ import FinancialDonationList from "@/components/layouts/donor/components/Financi
 import ItemDonationList from "@/components/layouts/donor/components/ItemDonationList.tsx";
 import DonationPanel from "@/components/layouts/donor/components/DonationPanel.tsx";
 import VictimPage from '../pages/VictimPage';
+import {VictimPage} from "@/pages/VictimPage.tsx";
+// import VictimPage from '../pages/VictimPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -41,21 +43,16 @@ export const defaultRoutes: RouteType[] = [
     },
 
     {
-        path: Pathnames.default.pomPage,
-        Component: Pom,
-    }, //todo do wywalenia
-    {
-        path: Pathnames.default.externalForm,
-        Component: ExternalFormPage,
-    } //todo do wywalenia
-    ,
-    {
         path: Pathnames.default.loginPage,
         Component: LoginPage,
     },
     {
         path: Pathnames.default.registerPage,
         Component: RegisterPage,
+    },
+    {
+        path: Pathnames.default.loginPage,
+        Component: LoginPage,
     }
 ]
 
@@ -84,7 +81,6 @@ export const aid_organizationRoutes: RouteType[] = [
         path: Pathnames.aid_organization.createResource,
         Component: CreateResource,
     }
-
 ]
 
 export const authority_representativeRoutes: RouteType[] = [
@@ -132,6 +128,14 @@ export const donorRoutes: RouteType[] = [
         Component: AccountsListPage,
     },
     {
+        path: Pathnames.donor.accountPage,
+        Component: MyAccountPage,
+    },
+    {
+        path: Pathnames.donor.accountsListPage,
+        Component: AccountsListPage,
+    },
+    {
         path: Pathnames.donor.financialDonations,
         Component: FinancialDonationList
     },
@@ -145,6 +149,14 @@ export const victimRoutes: RouteType[] = [
     {
         path: Pathnames.victim.homePage,
         Component: VictimPage,
+    },
+    {
+        path: Pathnames.victim.accountPage,
+        Component: MyAccountPage,
+    },
+    {
+        path: Pathnames.victim.resources,
+        Component: Resources,
     }
 ]
 

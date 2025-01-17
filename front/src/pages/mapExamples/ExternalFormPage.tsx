@@ -28,7 +28,7 @@ export const ExternalFormPage = () => {
         e.preventDefault();
         if (coordinates && title && description) {
             if (!title || !description || !coordinates) {
-                alert(t("fillEveryField"));
+                alert(t("maps.fillEveryField"));
                 return;
             }
             try {
@@ -40,12 +40,12 @@ export const ExternalFormPage = () => {
                     type: "VOLUNTEER",
                     active: true,
                 });
-                alert(t("pointSaved"));
+                alert(t("maps.pointSaved"));
                 setCoordinates(null);
                 setTitle("");
                 setDescription("");
             } catch (error) {
-                console.error(t("error.savePoint"), error);
+                console.error(t("maps.error.savePoint"), error);
             }
         }
     };
@@ -53,10 +53,10 @@ export const ExternalFormPage = () => {
     return (
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
             <div style={{ width: "45%" }}>
-                <h2>{t("addPoint")}</h2>
+                <h2>{t("maps.addPoint")}</h2>
                 <form onSubmit={handleSavePoint}>
                     <div>
-                        <label>{t("title")}</label>
+                        <label>{t("maps.title")}</label>
                         <input
                             type="text"
                             value={title}
@@ -65,14 +65,14 @@ export const ExternalFormPage = () => {
                         />
                     </div>
                     <div>
-                        <label>{t("description")}</label>
+                        <label>{t("maps.description")}</label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
                         ></textarea>
                     </div>
-                    <button type="submit">{t("savePoint")}</button>
+                    <button type="submit">{t("maps.savePoint")}</button>
                 </form>
             </div>
 
