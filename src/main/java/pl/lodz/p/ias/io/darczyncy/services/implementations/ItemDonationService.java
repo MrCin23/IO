@@ -15,6 +15,8 @@ import pl.lodz.p.ias.io.darczyncy.utils.I18n;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
 
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationService;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
@@ -27,22 +29,51 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Klasa ItemDonationService implementuje logikę biznesową dla operacji związanych z darowiznami rzeczowymi.
+ * Obsługuje tworzenie, aktualizację, usuwanie oraz wyszukiwanie darowizn.
+ * Jest oznaczona adnotacją @Service, co czyni ją komponentem Springa.
+ */
 @RequiredArgsConstructor
 @Service
 public class ItemDonationService implements IItemDonationService {
 
+    /**
+     * Repozytorium do zarządzania danymi darowizn rzeczowych.
+     */
     private final ItemDonationRepository itemDonationRepository;
 
+    /**
+     * Repozytorium do zarządzania potrzebami materialnymi.
+     */
     private final MaterialNeedRepository materialNeedRepository;
 
+    /**
+     * Repozytorium do zarządzania magazynami.
+     */
     private final WarehouseRepository warehouseRepository;
 
+    /**
+     * Repozytorium do zarządzania kontami użytkowników.
+     */
     private final AccountRepository accountRepository;
 
+    /**
+     * Obiekt do generowania certyfikatów dla darowizn.
+     */
     private final CertificateProvider certificateProvider = new CertificateProvider();
 
+    private final NotificationService notificationService;
+
+    /**
+     * Tworzy nową darowiznę na podstawie danych z DTO.
+     *
+     * @param dto obiekt zawierający dane nowej darowizny.
+     * @return utworzona darowizna.
+     * @throws DonationBaseException jeśli kategoria darowizny jest nieprawidłowa lub potrzeba materialna nie istnieje.
+     */
     @Override
-    public ItemDonation createItemDonation(ItemDonationCreateDTO dto) {
+    public ItemDonation createItemDonation(ItemDonationCreateDTO dto, String language) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Account donor = accountRepository.findByUsername(auth.getName());
         MaterialNeed need = materialNeedRepository.findById(dto.needId())
@@ -55,8 +86,6 @@ public class ItemDonationService implements IItemDonationService {
         }
 
         List<Warehouse> warehouses = warehouseRepository.findAll();
-
-        // Losowanie magazynu w którym zostanie umieszczona darowizna
         Random rand = new Random();
         Warehouse selectedWarehouse = warehouses.get(rand.nextInt(warehouses.size()));
 
@@ -70,43 +99,74 @@ public class ItemDonationService implements IItemDonationService {
                 dto.description(),
                 LocalDate.now()
         );
+
+        String message;
+        if (language.equals("pl")) {
+            message = "Dziękujemy! Przekazano darowiznę rzeczową '%s' na cel %s";
+        }
+        else {
+            message = "Thank you! A item donation '%s' was made for the purpose of %s";
+        }
+
+        message = message.formatted(dto.name(), need.getDescription());
+
+        notificationService.notify(message, NotificationType.INFORMATION);
         return itemDonationRepository.save(itemDonation);
     }
 
+    /**
+     * Znajduje darowiznę na podstawie identyfikatora.
+     *
+     * @param id identyfikator darowizny.
+     * @return znaleziona darowizna.
+     * @throws ItemDonationNotFoundException jeśli darowizna nie zostanie znaleziona.
+     */
     @Override
-    public ItemDonation findItemDonationById(long id) {
-        ItemDonation itemDonation = itemDonationRepository.findById(id).orElse(null);
-        if (itemDonation == null) {
-            throw new ItemDonationNotFoundException();
-        }
-        return itemDonation;
+    public ItemDonation findById(long id) {
+        return itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
     }
 
+    /**
+     * Pobiera listę wszystkich darowizn.
+     *
+     * @return lista darowizn.
+     */
     @Override
     public List<ItemDonation> findAllItemDonations() {
         return itemDonationRepository.findAll();
     }
 
+    /**
+     * Pobiera listę darowizn wykonanych przez określonego darczyńcę.
+     *
+     * @param donorId identyfikator darczyńcy.
+     * @return lista darowizn wykonanych przez danego darczyńcę.
+     * @throws DonationBaseException jeśli darczyńca nie zostanie znaleziony.
+     */
     @Override
-    public List<ItemDonation> findAllItemDonationsByDonorId(long donorId) {
+    public List<ItemDonation> findAllByDonorId(long donorId) {
         accountRepository.findById(donorId).orElseThrow(() -> new DonationBaseException(I18n.DONOR_NOT_FOUND_EXCEPTION));
         return itemDonationRepository.findAllByDonor_Id(donorId);
     }
 
+    /**
+     * Pobiera listę darowizn przechowywanych w określonym magazynie.
+     *
+     * @param warehouseId identyfikator magazynu.
+     * @return lista darowizn w danym magazynie.
+     * @throws DonationBaseException jeśli magazyn nie zostanie znaleziony.
+     */
     @Override
-    public List<ItemDonation> findAllItemDonationsByWarehouseId(long warehouseId) {
+    public List<ItemDonation> findAllByWarehouseId(long warehouseId) {
         warehouseRepository.findById(warehouseId).orElseThrow(() -> new DonationBaseException(I18n.WAREHOUSE_NOT_FOUND_EXCEPTION));
         return itemDonationRepository.findAllByWarehouseId(warehouseId);
     }
 
-    private static void getAllFields(List<Field> fields, Class<?> type) {
-        fields.addAll(Arrays.asList(type.getDeclaredFields()));
-
-        if (type.getSuperclass() != null) {
-            getAllFields(fields, type.getSuperclass());
-        }
-    }
-
+    /**
+     * Pobiera listę darowizn powiązanych z aktualnie zalogowanym użytkownikiem.
+     *
+     * @return lista darowizn użytkownika.
+     */
     @Override
     public List<ItemDonation> findAllByCurrentUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -114,6 +174,14 @@ public class ItemDonationService implements IItemDonationService {
         return itemDonationRepository.findAllByDonor_Id(currentUser.getId());
     }
 
+    /**
+     * Generuje potwierdzenie darowizny w formacie PDF.
+     *
+     * @param language język dokumentu.
+     * @param donationId identyfikator darowizny.
+     * @return potwierdzenie w formie bajtów PDF.
+     * @throws ItemDonationNotFoundException jeśli darowizna nie zostanie znaleziona.
+     */
     @Override
     public byte[] createConfirmationPdf(String language, long donationId) {
         String currentUserName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -122,16 +190,22 @@ public class ItemDonationService implements IItemDonationService {
         return certificateProvider.generateItemCertificate(itemDonation.getDonor(), itemDonation, language);
     }
 
+    /**
+     * Aktualizuje dane istniejącej darowizny.
+     *
+     * @param id identyfikator darowizny.
+     * @param updatedItemDonation obiekt zaktualizowanej darowizny.
+     * @return zaktualizowana darowizna.
+     * @throws ItemDonationNotFoundException jeśli darowizna nie zostanie znaleziona.
+     */
     @Override
-    public ItemDonation updateItemDonation(long id, ItemDonation updatedItemDonation) {
+    public ItemDonation update(long id, ItemDonation updatedItemDonation) {
         ItemDonation foundDonation = itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
 
         List<Field> fields = new ArrayList<>();
-
         getAllFields(fields, foundDonation.getClass());
 
-        fields = fields.stream().filter( (field) ->
-        {
+        fields = fields.stream().filter(field -> {
             try {
                 field.setAccessible(true);
                 return field.get(updatedItemDonation) != null && !field.getName().equals("id");
@@ -141,8 +215,8 @@ public class ItemDonationService implements IItemDonationService {
         }).toList();
 
         for (Field field : fields) {
-            field.setAccessible(true);
             try {
+                field.setAccessible(true);
                 field.set(foundDonation, field.get(updatedItemDonation));
                 field.setAccessible(false);
             } catch (IllegalAccessException e) {
@@ -152,9 +226,28 @@ public class ItemDonationService implements IItemDonationService {
         return itemDonationRepository.save(foundDonation);
     }
 
+    /**
+     * Usuwa darowiznę na podstawie identyfikatora.
+     *
+     * @param id identyfikator darowizny.
+     * @throws ItemDonationNotFoundException jeśli darowizna nie zostanie znaleziona.
+     */
     @Override
-    public void deleteItemDonationById(Long id) {
+    public void deleteById(Long id) {
         ItemDonation itemDonation = itemDonationRepository.findById(id).orElseThrow(ItemDonationNotFoundException::new);
         itemDonationRepository.delete(itemDonation);
+    }
+
+    /**
+     * Pobiera wszystkie pola klasy (łącznie z polami klas nadrzędnych).
+     *
+     * @param fields lista pól do wypełnienia.
+     * @param type klasa, której pola mają być pobrane.
+     */
+    private static void getAllFields(List<Field> fields, Class<?> type) {
+        fields.addAll(Arrays.asList(type.getDeclaredFields()));
+        if (type.getSuperclass() != null) {
+            getAllFields(fields, type.getSuperclass());
+        }
     }
 }

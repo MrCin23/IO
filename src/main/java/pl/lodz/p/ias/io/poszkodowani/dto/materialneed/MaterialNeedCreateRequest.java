@@ -15,8 +15,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class MaterialNeedCreateRequest {
 
+    @NotNull(message = "User ID cannot be null")
     private Long userId;
 
+    @NotNull(message = "Map point ID cannot be null")
     private Long mapPointId;
 
     // Fields from Need class

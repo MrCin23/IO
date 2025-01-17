@@ -20,6 +20,11 @@
     align-items: center; /* Centruje w poziomie */
 }
 
+.donation-list-container h2 {
+    font-weight: bold;
+    font-size: 24px;
+}
+
 .donation-list-wrapper {
     width: 100%; /* Dopasowuje szerokość do kontenera */
     max-height: 100%; /* Maksymalna wysokość zgodna z kontenerem */
@@ -34,13 +39,13 @@
     text-align: center;
     background-color: #2b2323;
     border-collapse: collapse;
-    border: 1px solid red;
+    border: 1px solid #1616f1;
 }
 
 
 .donation-list th, .donation-list td {
     padding: 10px 15px;
-    border: 1px solid red;
+    border: 1px solid #1616f1;
 }
 
 .donation-list th {
@@ -58,7 +63,7 @@
 }
 
 .generate-button {
-    background-color: red;
+    background-color: #1616f1;
     color: white;
     border: none;
     border-radius: 5px;

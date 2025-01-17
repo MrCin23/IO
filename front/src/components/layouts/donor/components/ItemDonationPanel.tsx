@@ -37,7 +37,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             setNeeds(formattedNeeds);
         } catch (error) {
             console.error(error);
-            alert(t("errorFetchingGoals"));
+            alert(t("donor.errorFetchingGoals"));
         }
     };
 
@@ -60,16 +60,9 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
                     'Content-Type': 'application/json'
                 }
             });
-            alert(
-                `${t("alertDonationProceed")}: ${t("itemDonation")}, ${t(
-                    "name"
-                )}: ${name}, ${t("category")}: ${category}, ${t(
-                    "description"
-                )}: ${description}, ${t("resourceQuantity")}: ${resourceQuantity}`
-            );
         } catch (error) {
             console.error(error);
-            alert(t("donationError"));
+            alert(t("donor.donationError"));
         }
     };
 
@@ -78,7 +71,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             <div className="item-donation-fields">
                 <div className="row">
                     <div className="column">
-                        <h3>{t("name")}</h3>
+                        <h3>{t("donor.name")}</h3>
                         <input
                             type="text"
                             value={name}
@@ -86,28 +79,28 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
                         />
                     </div>
                     <div className="column">
-                        <h3>{t("category")}</h3>
+                        <h3>{t("donor.category")}</h3>
                         <select
                             value={category}
                             onChange={(e) => onCategoryChange(e.target.value)}
                         >
                             <option value="" disabled>
-                                {t("selectCategory")}
+                                {t("donor.selectCategory")}
                             </option>
                             <option value={"CLOTHING"}>
-                                {t("categoryClothing")}
+                                {t("donor.categoryClothing")}
                             </option>
                             <option value={"HOUSEHOLD"}>
-                                {t("categoryHousehold")}
+                                {t("donor.categoryHousehold")}
                             </option>
                             <option value={"FOOD"}>
-                                {t("categoryFood")}
+                                {t("donor.categoryFood")}
                             </option>
                             <option value={"TOYS"}>
-                                {t("categoryToys")}
+                                {t("donor.categoryToys")}
                             </option>
                             <option value={"BOOKS"}>
-                                {t("categoryBooks")}
+                                {t("donor.categoryBooks")}
                             </option>
                         </select>
                     </div>
@@ -115,14 +108,14 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
 
                 <div className="row">
                     <div className="column-wide">
-                        <h3>{t("description")}</h3>
+                        <h3>{t("donor.description")}</h3>
                         <textarea
                             value={description}
                             onChange={(e) => onDescriptionChange(e.target.value)}
                         />
                     </div>
                     <div className="column-narrow">
-                        <h3>{t("resourceQuantity")}</h3>
+                        <h3>{t("donor.resourceQuantity")}</h3>
                         <input
                             type="number"
                             min="1"
@@ -137,7 +130,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
                 </div>
             </div>
             <div className="donation-goal">
-                <h3>{t("selectGoal")}</h3>
+                <h3>{t("donor.selectGoal")}</h3>
                 <div className="donation-goal-list">
                     <select
                         className="goal-select"
@@ -146,7 +139,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
                         onClick={fetchNeeds} // Pobierz dane przy kliknięciu
                     >
                         <option value="" disabled>
-                            {t("goalPlaceholder")}
+                            {t("donor.goalPlaceholder")}
                         </option>
                         {needs.map(([id, description]) => (
                             <option key={id} value={id}>
@@ -158,7 +151,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             </div>
 
             <button className="donation-submit" onClick={handleSubmit}>
-                {t("proceed")}
+                {t("donor.proceed")}
             </button>
         </>
     );

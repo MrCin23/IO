@@ -1,27 +1,50 @@
 import React, { useEffect, useState } from 'react';
 import { MaterialNeed } from './type';
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
+import axios from 'axios';
 import { StatusChangeButton } from './components/StatusChangeButton';
+import { getCurrentUser } from './components/NeedsListHelper';
 
 export const MaterialNeedsList: React.FC = () => {
+    const { t } = useTranslation();
+
     const [needs, setNeeds] = useState<MaterialNeed[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
 
     const fetchNeeds = async () => {
         try {
-            const response = await fetch('http://localhost:8080/api/material-needs');
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('No authentication token found');
             }
-            const data: MaterialNeed[] = await response.json();
-            setNeeds(data);
+
+            const userInfo = await getCurrentUser(token);
+            let endpoint = 'http://localhost:8080/api/material-needs';
+
+            if (userInfo.role.roleName === 'POSZKODOWANY') {
+                endpoint = `http://localhost:8080/api/material-needs/user/${userInfo.id}`;
+            } else if (userInfo.role.roleName === 'PRZEDSTAWICIEL_WŁADZ') {
+                endpoint = 'http://localhost:8080/api/material-needs';
+            } else {
+                throw new Error('Role not valid');
+            }
+
+            const response = await axios.get<MaterialNeed[]>(endpoint, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(response.data);
+            setNeeds(response.data);
         } catch (error) {
             if (error instanceof Error) {
                 setError(error.message);
             }
         } finally {
             setLoading(false);
-        } 
+        }
     };
 
     useEffect(() => {
@@ -29,32 +52,41 @@ export const MaterialNeedsList: React.FC = () => {
     }, []);
 
     if (loading) {
-        return <div>Loading...</div>;
+        return <div>{t('victim.loading')}...</div>;
     }
 
     if (error) {
-        return <div>Error: {error}</div>;
+        return <div>{t('victim.error')}: {error}</div>;
     }
 
+    if (needs.length === 0) {
+        return <div className="text-center p-4 rounded-lg">{t('victim.noMaterialNeeds')}</div>;
+    }
     return (
         <div className="space-y-4">
-            {needs
-                .sort((a, b) => a.id - b.id)
-                .map((need) => (
-                <div key={need.id} className="p-4 border rounded-lg shadow-sm">
-                    <p className="mb-1">ID: {need.id}</p>
-                    <p className="mb-1">Description: {need.description}</p>
-                    <p className="mb-1">Category: {need.itemCategory}</p>
-                    <p className="mb-1">Status: {need.status}</p>
-                    <p className="mb-1">Priority: {need.priority}</p>
-                    <StatusChangeButton
-                        needId={need.id}
-                        currentStatus={need.status}
-                        needType="material"
-                        onStatusChange={fetchNeeds}
-                    />
-                </div>
-            ))}
+            {needs.sort((a, b) => a.id - b.id).map((need) => {
+                const expirationDate = new Date(need.expirationDate);
+                const formattedExpirationDate = expirationDate.toLocaleDateString();
+                const creationDate = new Date(need.creationDate);
+                const formattedCreationDate = creationDate.toLocaleDateString();
+                return (
+                    <div key={need.id} className="p-4 border rounded-lg shadow-sm text-left bg-gray-100 text-black">
+                        <p className="mb-1"><strong>{t('victim.id')}:</strong> {need.id}</p>
+                        <p className="mb-1"><strong>{t('victim.description')}:</strong> {need.description}</p>
+                        <p className="mb-1"><strong>{t('victim.expirationDate')}:</strong> {formattedExpirationDate}</p>
+                        <p className="mb-1"><strong>{t('victim.itemCategory')}:</strong> {need.itemCategory}</p>
+                        <p className="mb-1"><strong>{t('victim.creationDate')}:</strong> {formattedCreationDate}</p>
+                        <p className="mb-1"><strong>{t('victim.expirationDate')}:</strong> {formattedExpirationDate}</p>
+                        <p className="mb-1"><strong>{t('victim.status')}:</strong> {t(`statusLabels.${need.status}`)}</p>
+                        <StatusChangeButton
+                            needId={need.id}
+                            currentStatus={need.status}
+                            needType="material"
+                            onStatusChange={fetchNeeds}
+                        />
+                    </div>
+                );
+            })}
         </div>
     );
 };

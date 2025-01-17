@@ -2,6 +2,7 @@ package pl.lodz.p.ias.io.komunikacja.service;
 
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.komunikacja.model.ChatRoom;
+import pl.lodz.p.ias.io.komunikacja.model.Message;
 import pl.lodz.p.ias.io.komunikacja.repository.ChatRoomRepository;
 
 import java.util.List;
@@ -18,7 +19,23 @@ public class ChatRoomService {
         return chatRoomRepository.save(chatRoom);
     }
 
+    public ChatRoom updateChatRoom(ChatRoom chatRoom) {
+        return chatRoomRepository.save(chatRoom);
+    }
+
+    public List<Message> getChatHistory(Long chatRoomId) {
+        return chatRoomRepository.findById(chatRoomId).map(ChatRoom::getMessages).orElse(null);
+    }
+
     public List<ChatRoom> getChatRooms() {
         return chatRoomRepository.findAll();
+    }
+
+    public ChatRoom getChatRoom(Long id) {
+        return chatRoomRepository.findById(id).orElse(null);
+    }
+
+    public List<ChatRoom> getChatRoomsByUserId(Long userId) {
+        return chatRoomRepository.findAllByUsers_Id(userId);
     }
 }

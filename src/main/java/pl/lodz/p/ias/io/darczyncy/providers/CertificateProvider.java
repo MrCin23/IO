@@ -24,8 +24,21 @@ import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+/**
+ * Klasa CertificateProvider odpowiada za generowanie certyfikatów w formacie PDF dla darowizn rzeczowych i finansowych.
+ * Certyfikaty są tworzone w formacie A4 (orientacja pozioma) z określonym tłem i zawartością zależną od języka.
+ * Wykorzystuje bibliotekę iText do generowania dokumentów PDF.
+ */
 public class CertificateProvider {
 
+    /**
+     * Generuje certyfikat PDF dla darowizny rzeczowej.
+     *
+     * @param account   Konto darczyńcy, zawierające informacje takie jak imię i nazwisko.
+     * @param donation  Informacje o darowiźnie rzeczowej, w tym opis przedmiotu i cel.
+     * @param language  Język certyfikatu ("pl" dla polskiego, inny ciąg znaków dla angielskiego).
+     * @return          Tablica bajtów reprezentująca wygenerowany dokument PDF.
+     */
     public byte[] generateItemCertificate(Account account, ItemDonation donation, String language) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {
@@ -108,6 +121,14 @@ public class CertificateProvider {
         return stream.toByteArray();
     }
 
+    /**
+     * Generuje certyfikat PDF dla darowizny finansowej.
+     *
+     * @param account   Konto darczyńcy, zawierające informacje takie jak imię i nazwisko.
+     * @param donation  Informacje o darowiźnie finansowej, w tym kwota, waluta i cel.
+     * @param language  Język certyfikatu ("pl" dla polskiego, inny ciąg znaków dla angielskiego).
+     * @return          Tablica bajtów reprezentująca wygenerowany dokument PDF.
+     */
     public byte[] generateFinancialCertificate(Account account, FinancialDonation donation, String language) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         try {

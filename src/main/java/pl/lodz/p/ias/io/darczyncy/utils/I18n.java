@@ -1,5 +1,10 @@
 package pl.lodz.p.ias.io.darczyncy.utils;
 
+/**
+ * Klasa zawierająca klucze tłumaczeń (i18n) dla komunikatów wyjątków w aplikacji.
+ * Klucze te są wykorzystywane w procesie obsługi wyjątków, aby umożliwić
+ * tłumaczenie komunikatów na różne języki.
+ */
 public class I18n {
     public static String ITEM_DONATION_NOT_FOUND_EXCEPTION = "item.donation.not.found.exception";
     public static String FINANCIAL_DONATION_NOT_FOUND_EXCEPTION = "financial.donation.not.found.exception";

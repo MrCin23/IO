@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 public class ManualNeedMapper {
     public ManualNeed toManualNeed(ManualNeedCreateRequest dto) {
         return ManualNeed.builder()
-                .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
                 .expirationDate(dto.getExpirationDate())
                 .maxVolunteers(dto.getMaxVolunteers())
@@ -23,7 +22,7 @@ public class ManualNeedMapper {
         return ManualNeedResponse.builder()
                 .id(manualNeed.getId())
                 .userId(manualNeed.getUser().getId())
-                .mapPointId(manualNeed.getMapPointId())
+                .mapPointId(manualNeed.getMapPoint().getPointID())
                 .description(manualNeed.getDescription())
                 .creationDate(manualNeed.getCreationDate())
                 .expirationDate(manualNeed.getExpirationDate())

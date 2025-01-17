@@ -13,8 +13,8 @@ public class FinancialNeedMapper {
 
     public FinancialNeed toFinancialNeed(FinancialNeedCreateRequest dto) {
         return FinancialNeed.builder()
-                .mapPointId(dto.getMapPointId())
                 .description(dto.getDescription())
+                .expirationDate(dto.getExpirationDate())
                 .collectionGoal(dto.getCollectionGoal())
                 .build();
     }
@@ -23,6 +23,7 @@ public class FinancialNeedMapper {
         return FinancialNeedResponse.builder()
                 .id(financialNeed.getId())
                 .userId(financialNeed.getUser().getId())
+                .mapPointId(financialNeed.getMapPoint().getPointID())
                 .description(financialNeed.getDescription())
                 .creationDate(financialNeed.getCreationDate())
                 .expirationDate(financialNeed.getExpirationDate())

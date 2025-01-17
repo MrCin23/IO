@@ -19,7 +19,7 @@ import pl.lodz.p.ias.io.zasoby.utils.ResourceStatus;
 public class Resource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotBlank(message = "Resource name cannot be blank")
     private String resourceName;
@@ -33,8 +33,7 @@ public class Resource {
     @NotNull(message = "Resource status cannot be null")
     private ResourceStatus resourceStatus;
 
-    @Min(value = 1, message = "Warehouse ID must be a positive number")
-    private long warehouseId;
+    private Long warehouseId;
 
     private String volunteerName;
 
@@ -42,11 +41,19 @@ public class Resource {
 
     private int alertThreshold;
 
-    public Resource(String resourceName, String resourceType, int resourceQuantity, long warehouseId) {
+    public Resource(String resourceName, String resourceType, int resourceQuantity, Long warehouseId) {
         this.resourceName = resourceName;
         this.resourceType = resourceType;
         this.resourceQuantity = resourceQuantity;
         this.warehouseId = warehouseId;
-        this.resourceStatus = ResourceStatus.NIEPRZYDZIELONY;
+        this.resourceStatus = ResourceStatus.PENDING;
+    }
+
+    public Resource(String resourceName, String resourceType, int resourceQuantity, Long warehouseId, ResourceStatus resourceStatus) {
+        this.resourceName = resourceName;
+        this.resourceType = resourceType;
+        this.resourceQuantity = resourceQuantity;
+        this.warehouseId = warehouseId;
+        this.resourceStatus = resourceStatus;
     }
 }

@@ -6,16 +6,24 @@ export const Pathnames = {
     default: {
         homePage: '/',
         loginPage: '/login',
-        registerPage: '/register',
+        registerPage: '/register'
     },
     aid_organization: {
         homePage: '/organization',
         accountPage: '/organization/account',
+        resources: '/organization/resources',
+        warehouses: '/organization/warehouses',
+        createWarehouse: '/organization/warehouses/create',
+        createResource: '/organization/resources/create',
     },
     authority_representative: {
         homePage: '/authority',
         accountPage: '/authority/account',
         accountsListPage: '/authority/accounts/list',
+        resources: '/authority/resources',
+        warehouses: '/authority/warehouses',
+        createWarehouse: '/authority/warehouses/create',
+        createResource: '/authority/resources/create',
     },
     donor: {
         homePage: '/donor',
@@ -23,6 +31,7 @@ export const Pathnames = {
         itemDonations: '/item-donations',
         accountPage: '/donor/account',
         accountsListPage: '/donor/accounts/list',
+        createResource: '/donor/resources/create'
     },
     victim: {
         homePage: '/victim',
@@ -33,5 +42,10 @@ export const Pathnames = {
         volunteers: '/volunteers',
         groups: '/volunteer/groups',
         accountPage: '/volunteer/account',
+        resources: '/volunteer/resources'
+    },
+    chat: {
+        homePage: '/chat'
+
     }
 }

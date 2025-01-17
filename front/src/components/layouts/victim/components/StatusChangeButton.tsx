@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import { useTranslation } from 'react-i18next';
+import { getCurrentUser } from './NeedsListHelper';
 
 type Status = "IN_PROGRESS" | "PENDING" | "COMPLETED" | "CANCELLED";
 
@@ -9,12 +13,32 @@ interface StatusChangeButtonProps {
     onStatusChange: () => void;
 }
 
-export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({ 
-    needId, 
-    currentStatus, 
+export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
+    needId,
+    currentStatus,
     needType,
-    onStatusChange 
+    onStatusChange
 }) => {
+    const { t } = useTranslation();
+    const [userRole, setUserRole] = useState<string | null>(null);
+
+    useEffect(() => {
+        const fetchUserRole = async () => {
+            try {
+                const token = Cookies.get('jwt');
+                if (!token) {
+                    throw new Error('No authentication token found');
+                }
+                const userInfo = await getCurrentUser(token);
+                setUserRole(userInfo.role.roleName);
+            } catch (error) {
+                console.error('Error fetching user role:', error);
+            }
+        };
+
+        fetchUserRole();
+    }, []);
+
     const allowedTransitions: Record<Status, Status[]> = {
         "PENDING": ["CANCELLED", "IN_PROGRESS"],
         "IN_PROGRESS": ["COMPLETED"],
@@ -31,16 +55,22 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
 
     const handleStatusChange = async (newStatus: Status) => {
         try {
-            const response = await fetch(
-                `http://localhost:8080/api/${needType}-needs/status/${needId}?status=${newStatus}`,
-                { method: 'PATCH' }
-            );
-            
-            if (!response.ok) {
-                throw new Error('Failed to update status');
+            const token = Cookies.get('jwt');
+            if (!token) {
+                throw new Error('No authentication token found');
             }
-            
-            onStatusChange();
+
+            const response = await axios.patch(
+                `http://localhost:8080/api/${needType}-needs/status/${needId}?status=${newStatus}`,
+                {}, // empty body for PATCH request
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+
+            if (response.status === 200) {
+                onStatusChange();
+            }
         } catch (error) {
             console.error('Error updating status:', error);
         }
@@ -48,7 +78,18 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
 
     const availableTransitions = allowedTransitions[currentStatus];
 
-    return (
+    return userRole === 'POSZKODOWANY' ? (
+        <div className="flex gap-2 mt-2">
+            {availableTransitions.includes("CANCELLED") && (
+                <button
+                    onClick={() => handleStatusChange("CANCELLED")}
+                    className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
+                >
+                    {t('buttonStatusLabels.CANCELLED')}
+                </button>
+            )}
+        </div>
+    ) : (
         <div className="flex gap-2 mt-2">
             {availableTransitions.map(newStatus => (
                 newStatus === "CANCELLED" ? null : (
@@ -57,17 +98,17 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                         onClick={() => handleStatusChange(newStatus)}
                         className={`px-3 py-1 text-white rounded text-sm ${statusColors[newStatus]}`}
                     >
-                        Change to: {newStatus}
+                        {t(`buttonStatusLabels.${newStatus}`)}
                     </button>
                 )
             ))}
-            
+
             {availableTransitions.includes("CANCELLED") && (
                 <button
                     onClick={() => handleStatusChange("CANCELLED")}
                     className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
                 >
-                    Cancel
+                    {t('buttonStatusLabels.CANCELLED')}
                 </button>
             )}
         </div>

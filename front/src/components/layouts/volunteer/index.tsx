@@ -49,6 +49,13 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.groups)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("volunteerGroupListTitle")}
+                        {t("general.account")}
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.volunteer.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("resources.resourcesList")}
+                    </Button>
+                    <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("chat.chat")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("logOut")}

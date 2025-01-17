@@ -18,7 +18,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
 
 }) => {
     const { t } = useTranslation();
-    const [amountText, setAmountText] = useState<number | string>(t("otherAmount"));
+    const [amountText, setAmountText] = useState<number | string>(t("donor.otherAmount"));
     const [isEditing, setIsEditing] = useState<boolean>(false);
     const [customAmount, setCustomAmount] = useState<string>("");
     const [needs, setNeeds] = useState<Array<[number, string]>>([]);
@@ -30,11 +30,12 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
         try {
             const response = await api.get(`/financial-needs`);
             const data = response.data;
+            console.log(response)
             const formattedNeeds = data.map((need: any) => [need.id, need.description]);
             setNeeds(formattedNeeds);
         } catch (error) {
             console.error(error);
-            alert(t("errorFetchingGoals"));
+            alert(t("donor.errorFetchingGoals"));
         }
     };
 
@@ -77,8 +78,8 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
                 onAmountChange(parsedAmount);
                 setIsEditing(false);
             } else {
-                alert(t("invalidAmount"));
-                setAmountText(t("otherAmount"));
+                alert(t("donor.invalidAmount"));
+                setAmountText(t("donor.otherAmount"));
             }
         }
 
@@ -97,23 +98,16 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
                     'Content-Type': 'application/json'
                 }
             });
-
-            const [id, description] = needs.find( ([id]) => id===selectedNeed);
-            alert(
-                `${t("alertDonationProceed")}: ${t("financialDonation")}, ${t(
-                    "alertAmount"
-                )}: ${amount} ${currency}, ${t("alertGoal")}: ${description}`
-            );
         } catch (error) {
             console.error(error);
-            alert(t("donationError"));
+            alert(t("donor.donationError"));
         }
     };
 
     return (
         <>
             <div className="donation-currency">
-                <h3>{t("selectCurrency")}</h3>
+                <h3>{t("donor.selectCurrency")}</h3>
                 <button
                     className={`currency-button ${currency === "PLN" ? "selected" : ""}`}
                     onClick={() => handleCurrencyChange("PLN")}
@@ -129,7 +123,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
             </div>
 
             <div className="donation-amounts">
-                <h3>{t("selectAmount")}</h3>
+                <h3>{t("donor.selectAmount")}</h3>
                 <div className="amount-options">
                     {amounts.map((amount) => (
                         <button
@@ -163,7 +157,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
                 </div>
             </div>
             <div className="donation-goal">
-                <h3>{t("selectGoal")}</h3>
+                <h3>{t("donor.selectGoal")}</h3>
                 <div className="donation-goal-list">
                     <select
                         className="goal-select"
@@ -172,7 +166,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
                         onClick={fetchNeeds} // Pobierz dane przy kliknięciu
                     >
                         <option value="" disabled>
-                            {t("goalPlaceholder")}
+                            {t("donor.goalPlaceholder")}
                         </option>
                         {needs.map(([id, description]) => (
                             <option key={id} value={id}>
@@ -184,7 +178,7 @@ const FinancialDonationPanel: React.FC<FinancialDonationPanelProps> = ({
             </div>
 
             <button className="donation-submit" onClick={handleSubmit}>
-                {t("proceed")}
+                {t("donor.proceed")}
             </button>
         </>
 

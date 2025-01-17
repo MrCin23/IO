@@ -1,23 +1,31 @@
-import WarehouseForm from "@/components/WarehouseForm";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import MapView from "../components/mapComponent/MapView.tsx";
+import WarehouseForm from "../components/layouts/resources/WarehouseForm.tsx";
 
-const CreateWarehouse = () => {
+export const CreateWarehouse = () => {
+    const { t } = useTranslation();
+    const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | undefined>(undefined);
+
     return (
         <div className="min-h-screen flex items-center justify-center p-4">
             <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-2xl">
                 <div className="text-center">
-                    <h1 className="text-3xl font-semibold">Create a New Warehouse</h1>
-                    <p className="mt-2 text-gray-600">
-                        Enter the warehouse name and location to add a new warehouse to the system.
-                    </p>
+                    <h1 className="text-3xl font-semibold">{t("resources.createWarehouse")}</h1>
+                    <p className="mt-2 text-gray-600">{t("resources.blablaWarehouse")}</p>
+                </div>
+                <div className="mt-8 flex justify-center">
+                    <div className="w-full max-w-md -ml-12" >
+                        <MapView
+                            pointType="AID_ORGANIZATION"
+                            canAddPoints={true}
+                            externalForm={true}
+                            setCoordinates={setCoordinates}
+                        />
+                    </div>
                 </div>
                 <div className="mt-8">
-                    <WarehouseForm />
-                </div>
-                <div className="mt-6 flex justify-center">
-                    <Link to="/warehouses" className="text-blue-700 hover:underline">
-                        Back to Warehouse List
-                    </Link>
+                    <WarehouseForm coordinates={coordinates}/>
                 </div>
             </div>
         </div>

@@ -17,8 +17,10 @@ import java.util.Date;
 @NoArgsConstructor
 public class ManualNeedCreateRequest {
 
+    @NotNull(message = "User ID cannot be null")
     private Long userId;
 
+    @NotNull(message = "Map point ID cannot be null")
     private Long mapPointId;
 
     @NotNull(message = "Description cannot be null")
