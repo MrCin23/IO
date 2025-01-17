@@ -136,5 +136,24 @@
     "warehouseFailed": "Failed to add warehouse. Please try again.",
     "warehouseError": "An unexpected error occurred. Please try again.",
     "resourceId": "Resource ID"
+  },
+
+  "notifications": {
+    "dialog_title": "Notifications",
+    "message":"Your message"
+  },
+
+  "announcements": {
+    "dialog_title": "Announcements",
+    "announcement_type_labels": {
+      "WARNING": "Warning",
+      "INFORMATION": "Information"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Title",
+    "message":"Your message",
+    "type":"Announcement type"
   }
 }
