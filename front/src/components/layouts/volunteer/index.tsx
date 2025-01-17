@@ -23,10 +23,16 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
             <AppBar position="static">
                 <Toolbar sx={{ display: 'flex'}}>
                     <Button onClick={() => navigate(Pathnames.volunteer.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Home
+                        {t("volunteer.home")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("general.account")}
+                        {t("volunteer.myAccount")}
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.volunteer.volunteers)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("volunteer.volunteerListTitle")}
+                    </Button>
+                    <Button onClick={() => navigate(Pathnames.volunteer.groups)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("volunteer.volunteerGroupListTitle")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.resourcesList")}

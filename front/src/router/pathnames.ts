@@ -40,6 +40,8 @@ export const Pathnames = {
     },
     volunteer: {
         homePage: '/volunteer',
+        volunteers: '/volunteers',
+        groups: '/volunteer/groups',
         accountPage: '/volunteer/account',
         resources: '/volunteer/resources'
     },

@@ -3,18 +3,16 @@ package pl.lodz.p.ias.io.wolontariusze.controller;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
-import pl.lodz.p.ias.io.wolontariusze.constants.VolunteerConstants;
-import pl.lodz.p.ias.io.wolontariusze.dto.CreateVolunteerDTO;
+import pl.lodz.p.ias.io.wolontariusze.dto.UpdateVolunteerDTO;
 import pl.lodz.p.ias.io.wolontariusze.services.VolunteerService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
 @RestController
 @RequestMapping("/api/volunteers")
 public class VolunteerController {
@@ -38,7 +36,6 @@ public class VolunteerController {
         response.put("id", volunteer.getId().toString());
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }*/
-
     @GetMapping
     ResponseEntity<List<Account>> getVolunteers() {
         return new ResponseEntity<>(volunteerService.getAllVolunteers(), HttpStatus.OK);
@@ -49,12 +46,15 @@ public class VolunteerController {
         return new ResponseEntity<>(volunteerService.getVolunteerById(id), HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {
-        volunteerService.deleteVolunteer(id);
-        return new ResponseEntity<>("dupa", HttpStatus.OK);
+    @PutMapping("/{id}")
+    ResponseEntity<Account> updateVolunteer(@PathVariable("id") Long id, @RequestBody UpdateVolunteerDTO updateVolunteerDTO) {
+        return new ResponseEntity<>(volunteerService.updateVolunteer(id, updateVolunteerDTO.getFirstName(), updateVolunteerDTO.getLastName()), HttpStatus.OK);
     }
 
-
+//    @DeleteMapping("/{id}")
+//    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {
+//        volunteerService.deleteVolunteer(id);
+//        return new ResponseEntity<>("dupa", HttpStatus.OK);
+//    }
 
 }
