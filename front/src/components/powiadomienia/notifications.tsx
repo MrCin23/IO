@@ -43,7 +43,7 @@ const Notifications: React.FC<NotificationsProps> = ({ notificationList, onNewNo
         api.post(`/notifications/${id}/hide`)
     }
 
-    const handleOpenNotifications = (_)=>{
+    const handleOpenNotifications = ()=>{
         setModalOpen(true);
         setNotifications(notifications.map((notification)=>{
             notification.read = true

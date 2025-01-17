@@ -32,7 +32,8 @@
     "submit": "Submit",
     "update": "Update",
     "account": "My account",
-    "account_list": "Account list"
+    "account_list": "Account list",
+    "cancel":"Cancel"
   },
   "donor" : {
     "header": "Those in need await your help",
@@ -142,8 +143,7 @@
   },
 
   "notifications": {
-    "dialog_title": "Notifications",
-    "message":"Your message"
+    "dialog_title": "Notifications"
   },
 
   "announcements": {
