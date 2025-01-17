@@ -40,12 +40,6 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {i18n.t('polish')}
                     </Button>
-                    <Button onClick={() => navigate(Pathnames.default.loginPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Login
-                    </Button>
-                    <Button onClick={() => navigate(Pathnames.default.registerPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Register
-                    </Button>
                 </Toolbar>
             </AppBar>
             <Container sx={{ p: 2 }}>
