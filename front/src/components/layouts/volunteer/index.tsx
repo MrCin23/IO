@@ -22,7 +22,7 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
                         Home
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        My Account
+                        {t("general.account")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.volunteer.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.resourcesList")}

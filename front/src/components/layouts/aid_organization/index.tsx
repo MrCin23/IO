@@ -23,7 +23,7 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                         Home
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.accountPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        My Account
+                        {t("general.account")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.resourcesList")}

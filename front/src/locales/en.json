@@ -29,7 +29,9 @@
   },
   "general": {
     "submit": "Submit",
-    "update": "Update"
+    "update": "Update",
+    "account": "My account",
+    "account_list": "Account list"
   },
   "donor" : {
     "header": "Those in need await your help",

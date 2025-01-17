@@ -29,7 +29,9 @@
   },
   "general": {
     "submit": "Wyślij",
-    "update": "Aktualizuj"
+    "update": "Aktualizuj",
+    "account": "Moje konto",
+    "account_list": "Lista kont"
   },
   "donor" : {
     "header": "Potrzebujący czekają na twoją pomoc",
