@@ -1,15 +1,17 @@
 import { Pathnames } from './pathnames'
 
-import {HomePage} from "../pages/HomePage";
 import Resources from "../pages/Resources";
 import Warehouses from "../pages/Warehouses";
 import {CreateWarehouse} from "../pages/CreateWarehouse";
 import {CreateResource} from "../pages/CreateResource";
 import Chat from '@/pages/Chat';
+import {HomePage} from "../pages/HomePage";
 import LoginPage from '../pages/uwierzytelnianie/LoginPage';
 import RegisterPage from '../pages/uwierzytelnianie/RegisterPage';
 import MyAccountPage from '../pages/uwierzytelnianie/MyAccountPage';
 import AccountsListPage from '../pages/uwierzytelnianie/AccountsListPage';
+import {VictimPage} from "@/pages/VictimPage.tsx";
+// import VictimPage from '../pages/VictimPage';
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -31,6 +33,10 @@ export const defaultRoutes: RouteType[] = [
     {
         path: Pathnames.default.registerPage,
         Component: RegisterPage,
+    },
+    {
+        path: Pathnames.default.loginPage,
+        Component: LoginPage,
     }
 ]
 
@@ -102,6 +108,14 @@ export const donorRoutes: RouteType[] = [
         Component: MyAccountPage,
     },
     {
+        path: Pathnames.donor.accountsListPage,
+        Component: AccountsListPage,
+    },
+    {
+        path: Pathnames.donor.accountPage,
+        Component: MyAccountPage,
+    },
+    {
         path: Pathnames.donor.createResource,
         Component: CreateResource,
     }
@@ -110,7 +124,7 @@ export const donorRoutes: RouteType[] = [
 export const victimRoutes: RouteType[] = [
     {
         path: Pathnames.victim.homePage,
-        Component: HomePage,
+        Component: VictimPage,
     },
     {
         path: Pathnames.victim.accountPage,
@@ -119,6 +133,7 @@ export const victimRoutes: RouteType[] = [
     {
         path: Pathnames.victim.resources,
         Component: Resources,
+        //Component: VictimPage,
     }
 ]
 

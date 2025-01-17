@@ -4,7 +4,7 @@ import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext';
 import {useTranslation} from "react-i18next";
-import "./i18n";
+
 
 interface LayoutProps {
     children: ReactNode
@@ -26,7 +26,7 @@ export const DonorLayout = ({ children }: LayoutProps) => {
                         My Account
                     </Button>
                     <Button onClick={() => navigate(Pathnames.donor.createResource)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("addResource")}
+                        {t("resources.addResource")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout

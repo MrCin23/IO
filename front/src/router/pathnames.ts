@@ -6,7 +6,7 @@ export const Pathnames = {
     default: {
         homePage: '/',
         loginPage: '/login',
-        registerPage: '/register',
+        registerPage: '/register'
     },
     aid_organization: {
         homePage: '/organization',
@@ -43,6 +43,6 @@ export const Pathnames = {
     },
     chat: {
         homePage: '/chat'
-        
+
     }
 }

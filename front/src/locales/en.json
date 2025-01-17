@@ -30,5 +30,125 @@
   "general": {
     "submit": "Submit",
     "update": "Update"
+  },
+  "resources": {
+    "addResource": "Add Resource",
+    "resourceName": "Resource Name",
+    "resourceType": "Resource Type",
+    "selectResourceType": "Select resource type",
+    "food": "Food",
+    "toys": "Toys",
+    "items": "Items",
+    "quantity": "Quantity",
+    "warehouse": "Warehouse",
+    "warehouseName": "Warehouse name",
+    "warehouseLocation": "Location",
+    "noWarehousesFound": "No warehouses found.",
+    "warehouseId": "Warehouse ID",
+    "home": "Home",
+    "warehousesList": "Warehouses List",
+    "resourcesList": "Resources List",
+    "createWarehouse": "Create Warehouse",
+    "createResource": "Create Resource",
+    "enterResourceName": "Enter resource name",
+    "resourceNameRequired": "Resource name is required",
+    "enterQuantity": "Enter quantity",
+    "quantityRequired": "Quantity is required",
+    "status": "Status",
+    "action": "Action",
+    "edit": "Edit",
+    "statusPending": "Pending",
+    "statusAccepted": "Accepted",
+    "statusRejected": "Rejected",
+    "update": "Update",
+    "lowResourceWarning": "Warning: Low resource quantity!",
+    "resourceUpdatedSuccess": "Resource updated successfully.",
+    "resourceUpdateFailed": "Failed to update resource.",
+    "unexpectedErrorOccurred": "An unexpected error occurred.",
+    "invalidStatusSelected": "Invalid status selected.",
+    "warehouseNameRequired": "Warehouse name is required",
+    "enterWarehouseName": "Enter warehouse name",
+    "location": "Location",
+    "locationRequired": "Location is required",
+    "enterLocation": "Mark warehouse location",
+    "addWarehouse": "Add Warehouse",
+    "blablaWarehouse": "Enter the warehouse name and location to add a new warehouse to the system.",
+    "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
+    "delete": "Delete",
+    "confirmDeleteResource": "Confirm delete resource",
+    "resourceDeletedSuccess": "Resource delete success",
+    "warehouseSuccess": "Warehouse added successfully",
+    "warehouseFailed": "Failed to add warehouse. Please try again.",
+    "warehouseError": "An unexpected error occurred. Please try again.",
+    "resourceId": "Resource ID"
+  },
+  "maps": {
+    "fillEveryField": "Fill every field!",
+    "pointSaved": "Point saved!",
+    "savePoint": "Save point",
+    "description": "Description:",
+    "title": "Title:",
+    "addPoint": "Add point",
+    "pointStateChanged": "Point achived/reactivated!",
+    "deletePoint": "Delete",
+    "switchStatus": "Switch status",
+    "editPoint": "Edit",
+    "error": {
+      "savePoint": "Error while saving point:",
+      "readPoint": "Error while reading point:",
+      "noDescription": "Error"
+    }
+  },
+  "victim": {
+    "financialNeeds": "Financial needs",
+    "manualNeeds": "Manual needs",
+    "materialNeeds": "Material needs",
+    "addNeed": "Add need",
+    "english": "English",
+    "polish": "Polish",
+
+    "noFinancialNeeds": "No financial needs found",
+    "noManualNeeds": "No manual needs found",
+    "noMaterialNeeds": "No material needs found",
+
+    "materialNeed": "Material need",
+    "manualNeed": "Manual need",
+    "financialNeed": "Financial need",
+
+    "expirationDateError": "End date cannot be earlier than start date",
+    "logginError": "You must be logged in to add a need",
+    "mapError": "Provide a point on the map!",
+
+    "formDescription": "Description",
+    "formExpirationDate": "Expiration Date",
+    "formItemCategory": "Category",
+    "formMaxVolunteers": "Maximum number of volunteers",
+    "formCollectionGoal": "Collection goal",
+    "formSubmitButton": "Submit",
+
+    "loading": "Loading",
+
+    "id": "ID",
+    "creationDate": "Creation date",
+    "expirationDate": "Expiration date",
+    "collected": "Collected",
+    "status": "Status",
+
+    "volunteers": "Volunteers",
+
+    "itemCategory": "Item category",
+
+    "statusLabels": {
+      "CANCELLED": "Cancelled",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed"
+    },
+
+    "buttonStatusLabels": {
+      "CANCELLED": "Cancel",
+      "IN_PROGRESS": "Mark as in progress",
+      "COMPLETED": "Mark as complete"
+    }
   }
 }

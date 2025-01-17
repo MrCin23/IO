@@ -4,7 +4,6 @@ import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
 import {useTranslation} from "react-i18next";
-import "./i18n";
 
 interface LayoutProps {
     children: ReactNode
@@ -30,16 +29,16 @@ export const AuthorityRepresentativeLayout = ({ children }: LayoutProps) => {
                         My Account
                     </Button>
                     <Button onClick={() => navigate(Pathnames.authority_representative.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("resourcesList")}
+                        {t("resources.resourcesList")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.authority_representative.warehouses)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("warehousesList")}
+                        {t("resources.warehousesList")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.authority_representative.createResource)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("addResource")}
+                        {t("resources.addResource")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.authority_representative.createWarehouse)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("addWarehouse")}
+                        {t("resources.addWarehouse")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
