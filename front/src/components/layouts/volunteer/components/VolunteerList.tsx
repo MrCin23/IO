@@ -20,7 +20,7 @@ function VolunteerList() {
             <input
                 type="text"
                 className="form-control mb-3"
-                placeholder={t("filterByName")}
+                placeholder={t("volunteer.filterByName")}
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
             />

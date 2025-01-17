@@ -43,6 +43,7 @@ function VolunteerGroupList() {
             .catch((error) => console.error("Failed to fetch groups:", error));
     }, []);
 
+    console.log(volunteers);
     // Fetch all volunteers
     useEffect(() => {
         axios
