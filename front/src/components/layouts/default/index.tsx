@@ -1,6 +1,6 @@
 import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { ReactNode } from 'react'
-import { Pathnames } from '../../../router/pathnames'
+import { Pathnames } from '@/router/pathnames.ts'
 import { useNavigate } from 'react-router-dom'
 import i18n from "../../../i18n.ts";
 
