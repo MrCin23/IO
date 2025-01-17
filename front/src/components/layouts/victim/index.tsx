@@ -42,7 +42,7 @@ export const VictimLayout = ({ children }: LayoutProps) => {
                         {i18n.t('english')}
                     </Button>
                     <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Chat
+                        {t("chat.chat")}
                     </Button>
                     <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {i18n.t('polish')}

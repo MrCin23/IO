@@ -41,7 +41,7 @@ export const AuthorityRepresentativeLayout = ({ children }: LayoutProps) => {
                         {t("resources.addWarehouse")}
                     </Button>
                     <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Chat
+                        {t("chat.chat")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
