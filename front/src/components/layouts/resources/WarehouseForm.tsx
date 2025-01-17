@@ -4,10 +4,19 @@ import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../../api/Axios.tsx";
 import {useTranslation} from "react-i18next";
 
+interface MapPoint {
+    pointID?: number;
+    coordinates: { lat: number; lng: number };
+    title: string;
+    description: string;
+    active: boolean;
+}
+
 export interface Warehouse {
     warehouseId?: number;
     warehouseName: string;
     location: string;
+    mapPoint: MapPoint;
 }
 
 interface WarehouseFormProps {
@@ -36,14 +45,17 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ coordinates }) => {
 
     const onSubmit = async (values: Warehouse) => {
         try {
-            const response = await api.post("/warehouses", values);
-            await api.post("/map", {
+            const pointRes = await api.post("/map", {
                 coordinates: coordinates,
                 title: values.warehouseName,
                 description: `${values.warehouseName} type: ${type}`,
                 type: type,
                 active: true,
             });
+            if(pointRes.status === 201) {
+                values.mapPoint = pointRes.data;
+            }
+            const response = await api.post("/warehouses", values);
 
             if (response.status === 201) {
                 alert(t("resources.warehouseSuccess"));

@@ -5,6 +5,7 @@ import L from "leaflet";
 // import axios from "axios";
 import api from "../../api/Axios.tsx"
 import {useTranslation} from "react-i18next";
+import "./maps.css"
 
 const defaultIcon = L.icon({
     iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
@@ -25,6 +26,7 @@ interface Point {
     coordinates: { lat: number; lng: number };
     title: string;
     description: string;
+    type: string;
     active: boolean;
 }
 
@@ -69,6 +71,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         coordinates: { lat: e.latlng.lat, lng: e.latlng.lng },
                         title: "",
                         description: "",
+                        type: pointType,
                         active: true
                     });
 
@@ -136,6 +139,11 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 title: formData.title,
                 description: formData.description,
             });
+            if(point.type == "WAREHOUSE") {
+                const response = await api.get(`warehouses/point/${point.pointID}`, {})
+                response.data.warehouseName = formData.title;
+                await api.put(`warehouses/${response.data.warehouseId}`, response.data);
+            }
             alert(t("maps.pointUpdated"));
             setEditPoint(null);
             fetchPoints();
@@ -203,7 +211,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         {/*</Popup>*/}
                         <Popup>
                             {editPoint?.pointID === point.pointID ? (
-                                <>
+                                <div className="popup-content">
                                     <div>
                                         <label>{t("maps.title")}</label>
                                         <input
@@ -229,21 +237,25 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                                             }
                                         ></textarea>
                                     </div>
-                                    <button onClick={() => saveEdit(editPoint!)}>{t("maps.savePoint")}</button>
-                                    <button onClick={cancelEdit}>{t("maps.cancelEdit")}</button>
-                                </>
+                                    <div className="popup-buttons">
+                                        <button onClick={() => saveEdit(editPoint!)}>{t("maps.savePoint")}</button>
+                                        <button onClick={cancelEdit}>{t("maps.cancelEdit")}</button>
+                                    </div>
+                                </div>
                             ) : (
-                                <>
-                                <div>
+                                <div className="popup-content">
+                                    <div>
                                         <strong>{point.title}</strong>
                                         <p>{point.description}</p>
                                     </div>
-                                    <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>
-                                    <button onClick={() => handleArchive(point.pointID, !point.active)}>
-                                        {t("maps.switchStatus")}
-                                    </button>
-                                    <button onClick={() => handleEdit(point)}>{t("maps.editPoint")}</button>
-                                </>
+                                    <div className="popup-buttons">
+                                        <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>
+                                        <button onClick={() => handleArchive(point.pointID, !point.active)}>
+                                            {t("maps.switchStatus")}
+                                        </button>
+                                        <button onClick={() => handleEdit(point)}>{t("maps.editPoint")}</button>
+                                    </div>
+                                </div>
                             )}
                         </Popup>
                     </Marker>

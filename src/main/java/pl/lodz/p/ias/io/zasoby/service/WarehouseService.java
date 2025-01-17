@@ -3,6 +3,8 @@ package pl.lodz.p.ias.io.zasoby.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.lodz.p.ias.io.mapy.model.MapPoint;
+import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
 import pl.lodz.p.ias.io.zasoby.dto.WarehouseDTO;
 import pl.lodz.p.ias.io.zasoby.model.Warehouse;
 import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 public class WarehouseService {
     private final WarehouseRepository warehouseRepository;
     private final WarehouseConverter warehouseConverter = new WarehouseConverter();
+    private MapPointRepository mapPointRepository;
+
 
     public WarehouseDTO addWarehouse(WarehouseDTO warehouseDTO) {
         Warehouse warehouse = warehouseConverter.convertDTOToWarehouse(warehouseDTO);
@@ -43,5 +47,17 @@ public class WarehouseService {
 
         warehouse.setWarehouseName(warehouseDTO.getWarehouseName());
         warehouse.setLocation(warehouseDTO.getLocation());
+        warehouse.setMapPoint(warehouseDTO.getMapPoint());
+        warehouseRepository.save(warehouse);
+    }
+
+    public WarehouseDTO getWarehouseByMapPoint(Long mapPointId) {
+        MapPoint mapPoint = mapPointRepository.findById(mapPointId)
+                .orElseThrow(() -> new IllegalArgumentException("MapPoint with id " + mapPointId + " not found"));
+
+        Warehouse warehouse = warehouseRepository.findByMapPoint(mapPoint)
+                .orElseThrow(() -> new IllegalArgumentException("Warehouse with MapPoint id " + mapPointId + " not found"));
+
+        return warehouseConverter.convertWarehouseToDTO(warehouse);
     }
 }

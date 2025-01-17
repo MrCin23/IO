@@ -97,8 +97,8 @@ public class InitData implements CommandLineRunner {
                 .user(newUser)
                 .build();
         financialNeedRepository.save(financialNeed);
-        Warehouse warehouse = new Warehouse("magazyn", (new LatLng(21.37, 42.0)).toString());
-        warehouseRepository.save(warehouse);
+//        Warehouse warehouse = new Warehouse("magazyn", (new LatLng(21.37, 42.0)).toString(), new MapPoint(new LatLng(21.37, 42.0), "Kędzierzyn-Koźle", "Baranie", PointType.WAREHOUSE));
+//        warehouseRepository.save(warehouse);
 
         MaterialNeed materialNeed = MaterialNeed.builder()
                 .itemCategory(MaterialNeed.ItemCategory.HOUSEHOLD)
@@ -112,19 +112,19 @@ public class InitData implements CommandLineRunner {
                 .build();
         materialNeedRepository.save(materialNeed);
 
-        ItemDonation itemDonation = new ItemDonation(
-                newUser,
-                materialNeed,
-                "czajnik",
-                418,
-                warehouse.getId(),
-                ItemDonation.ItemCategory.HOUSEHOLD,
-                "bardzo dobry teapot",
-                LocalDate.now()
-        );
-
-        itemDonation.setResourceStatus(ResourceStatus.ACCEPTED);
-        itemDonationRepository.save(itemDonation);
+//        ItemDonation itemDonation = new ItemDonation(
+//                newUser,
+//                materialNeed,
+//                "czajnik",
+//                418,
+//                warehouse.getId(),
+//                ItemDonation.ItemCategory.HOUSEHOLD,
+//                "bardzo dobry teapot",
+//                LocalDate.now()
+//        );
+//
+//        itemDonation.setResourceStatus(ResourceStatus.ACCEPTED);
+//        itemDonationRepository.save(itemDonation);
 
         FinancialDonation financialDonation = new FinancialDonation(
                 newUser,
