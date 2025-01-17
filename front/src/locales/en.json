@@ -31,6 +31,25 @@
     "submit": "Submit",
     "update": "Update"
   },
+
+  "notifications": {
+    "dialog_title": "Notifications",
+    "message":"Your message"
+  },
+
+  "announcements": {
+    "dialog_title": "Announcements",
+    "announcement_type_labels": {
+      "WARNING": "Warning",
+      "INFORMATION": "Information"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Title",
+    "message":"Your message",
+    "type":"Announcement type"
+  },
   "resources": {
     "addResource": "Add Resource",
     "resourceName": "Resource Name",

@@ -1,0 +1,66 @@
+###
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "Powiadomienia",
+  "password": "ZAQ!2wsx",
+  "firstName": "Mateusz",
+  "lastName": "Jakub",
+  "roleName": "PRZEDSTAWICIEL_WŁADZ"
+}
+
+###
+POST http://localhost:8080/api/announcements
+Content-Type: application/json
+
+{
+    "message": "msg1",
+    "title": "title",
+    "type": "INFORMATION"
+}
+
+###
+POST http://localhost:8080/api/announcements
+Content-Type: application/json
+
+{
+  "message":"msg2",
+  "title":"title",
+  "type":"WARNING"
+}
+
+###
+POST http://localhost:8080/api/announcements/2/hide
+Content-Type: application/x-www-form-urlencoded
+
+###
+GET http://localhost:8080/api/announcements/user/5
+
+###
+POST http://localhost:8080/api/notifications
+Content-Type: application/json
+
+{
+  "message": "Masz nowe powiadomienie",
+  "type": "INFORMATION",
+  "userId": 6
+}
+
+###
+
+POST http://localhost:8080/api/notifications
+Content-Type: application/json
+
+{
+  "message": "Celebruj życie",
+  "type": "WARNING",
+  "userId": 6
+}
+
+###
+GET http://localhost:8080/api/notifications/user/5
+
+###
+POST http://localhost:8080/api/notifications/1/hide
+
