@@ -36,4 +36,19 @@ public class MapPoint {
         this.active = true;
         this.type = type;
     }
+
+    public double checkDistance(MapPoint volunteer) {
+        final int EARTH_RADIUS_KM = 6371;
+        double lat1 = Math.toRadians(volunteer.getCoordinates().lat);
+        double lon1 = Math.toRadians(volunteer.getCoordinates().lng);
+        double lat2 = Math.toRadians(this.getCoordinates().lat);
+        double lon2 = Math.toRadians(this.getCoordinates().lng);
+        double diffLat = lat2 - lat1;
+        double diffLon = lon2 - lon1;
+        double a = Math.sin(diffLat / 2) * Math.sin(diffLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                        Math.sin(diffLon / 2) * Math.sin(diffLon / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        return EARTH_RADIUS_KM * c;
+    }
 }
