@@ -1,11 +1,11 @@
 import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import {ReactNode, useEffect} from 'react'
-import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import {useTranslation} from "react-i18next";
 import i18n from "@/components/layouts/volunteer/i18n";
 import LanguageSwitcher from "@/components/layouts/volunteer/components/LanguageSwitcher.tsx";
-import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
+import {useAccount} from "@/contexts/uwierzytelnianie/AccountContext.tsx";
+import {Pathnames} from "@/router/pathnames.ts";
 
 interface LayoutProps {
     children: ReactNode

@@ -30,7 +30,7 @@ function VolunteerList() {
                     <thead className='table-dark text-center'>
                     <tr>
                         <th>{t("")}ID</th>
-                        <th>{t("username")}Nazwa </th>
+                        <th>{t("username")}</th>
                         <th>{t("firstName")}</th>
                         <th>{t("lastName")}</th>
                         <th>{t("lastLogon")}</th>
@@ -50,7 +50,7 @@ function VolunteerList() {
                             <td>{volunteer.lastName}</td>
                             <td>{volunteer.lastLogin}</td>
                             <td>{volunteer.role.roleName}</td>
-                            <td>{volunteer.active ? 'Aktywny' : 'Nieaktywny'}</td>
+                            <td> {volunteer.active ? t("active") : t("inactive")}</td>
                         </tr>
                     ))}
                     </tbody>

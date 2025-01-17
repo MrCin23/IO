@@ -7,15 +7,12 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
-import pl.lodz.p.ias.io.wolontariusze.constants.VolunteerConstants;
-import pl.lodz.p.ias.io.wolontariusze.dto.CreateVolunteerDTO;
+import pl.lodz.p.ias.io.wolontariusze.dto.UpdateVolunteerDTO;
 import pl.lodz.p.ias.io.wolontariusze.services.VolunteerService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+@PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
 @RestController
 @RequestMapping("/api/volunteers")
 public class VolunteerController {
@@ -45,11 +42,15 @@ public class VolunteerController {
         return new ResponseEntity<>(volunteerService.getAllVolunteers(), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping("/{id}")
     ResponseEntity<Account> getVolunteer(@PathVariable("id") Long id) {
         return new ResponseEntity<>(volunteerService.getVolunteerById(id), HttpStatus.OK);
     }
+//
+//    @PutMapping("/{id}")
+//    ResponseEntity<Account> updateVolunteer(@PathVariable("id") Long id, @RequestBody UpdateVolunteerDTO updateVolunteerDTO) {
+//        return new ResponseEntity<>(volunteerService.updateVolunteer(id, updateVolunteerDTO.getFirstName(), updateVolunteerDTO.getLastName()), HttpStatus.OK);
+//    }
 
 //    @DeleteMapping("/{id}")
 //    ResponseEntity<String> deleteVolunteer(@RequestParam Long id) {
