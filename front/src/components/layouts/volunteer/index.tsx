@@ -27,6 +27,9 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.volunteer.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.resourcesList")}
                     </Button>
+                    <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Chat
+                    </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
                     </Button>

@@ -47,7 +47,8 @@ const UpdateChatForm = ({
   const initialChatData = chats.find((chat) => chat.id === chatId);
 
   if (!initialChatData) {
-    throw new Error("Chat not found");
+    console.log("Chat not found");
+    return;
   }
 
   const { t } = useTranslation();
@@ -91,7 +92,6 @@ const UpdateChatForm = ({
       users: data.users,
       name: data.chatName,
     };
-    console.log(requestBody);
     const response = await fetch(`/api/chatrooms/update`, {
       method: "POST",
       headers: {
@@ -100,7 +100,6 @@ const UpdateChatForm = ({
       body: JSON.stringify(requestBody),
     });
     if (response.ok) {
-      console.log("Chat updated");
       const updatedChat: ChatDB = await response.json();
       const updatedChats = chats.map((chat) =>
         chat.id === chatId ? updatedChat : chat
@@ -118,7 +117,7 @@ const UpdateChatForm = ({
       onOpenChange={(isOpen) => setIsDialogOpen(isOpen)}
     >
       <DialogTrigger asChild>
-        <Settings color="black" size={48} className="mr-4 mt-4" />
+        <Settings color="black" size={48} className="mr-4 mt-20 cursor-pointer" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

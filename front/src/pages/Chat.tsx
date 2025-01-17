@@ -15,7 +15,7 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
-  const { account } = useAccount();
+  const { account } = useAccount();;
 
   const chatName =
     chats.find((chat) => chat.id === selectedChat)?.name || t('chat.no_chat_selected');
@@ -33,7 +33,6 @@ const Chat = () => {
           throw new Error("Failed to fetch chats");
         }
         const data = await response.json();
-        console.log(data);
         setChats(data);
       } catch (err) {
         console.error("Error fetching chats from DB:", err);
@@ -50,6 +49,7 @@ const Chat = () => {
         selectedChat={selectedChat}
         selectChat={setSelectedChat}
         setChats={setChats}
+        role={account?.role.roleName}
       />
       <Messages
         chatName={chatName}

@@ -40,6 +40,9 @@ export const AuthorityRepresentativeLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.authority_representative.createWarehouse)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.addWarehouse")}
                     </Button>
+                    <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Chat
+                    </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout
                     </Button>
