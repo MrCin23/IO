@@ -3,9 +3,7 @@ import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
-import { useTranslation } from 'react-i18next';
-import "./i18n";
-
+import {useTranslation} from "react-i18next";
 
 interface LayoutProps {
     children: ReactNode
@@ -28,16 +26,16 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                         My Account
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("resourcesList")}
+                        {t("resources.resourcesList")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.warehouses)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("warehousesList")}
+                        {t("resources.warehousesList")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.createResource)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("addResource")}
+                        {t("resources.addResource")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.aid_organization.createWarehouse)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("addWarehouse")}
+                        {t("resources.addWarehouse")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Logout

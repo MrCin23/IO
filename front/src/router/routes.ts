@@ -1,5 +1,8 @@
 import { Pathnames } from './pathnames'
 
+import {HomePage} from "../pages/mapExamples/HomePage.tsx";
+import {Pom} from "../pages/mapExamples/Pom.tsx";
+import {ExternalFormPage} from "../pages/mapExamples/ExternalFormPage.tsx";
 import {HomePage} from "../pages/HomePage";
 import Resources from "../pages/Resources";
 import Warehouses from "../pages/Warehouses";
@@ -27,6 +30,15 @@ export const defaultRoutes: RouteType[] = [
         path: Pathnames.default.homePage,
         Component: HomePage,
     },
+    {
+        path: Pathnames.default.pomPage,
+        Component: Pom,
+    }, //todo do wywalenia
+    {
+        path: Pathnames.default.externalForm,
+        Component: ExternalFormPage,
+    } //todo do wywalenia
+    ,
     {
         path: Pathnames.default.loginPage,
         Component: LoginPage,

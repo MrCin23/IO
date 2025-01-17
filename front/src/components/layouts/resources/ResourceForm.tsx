@@ -63,16 +63,16 @@ const ResourceForm = () => {
 
     return (
         <div className="max-w-lg mx-auto p-6 bg-white shadow-md rounded">
-            <h2 className="text-xl font-semibold text-center mb-4">{t("addResource")}</h2>
+            <h2 className="text-xl font-semibold text-center mb-4">{t("resources.addResource")}</h2>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
                 <div>
                     <label htmlFor="resourceName" className="block text-sm font-medium text-gray-700">
-                        {t("resourceName")}
+                        {t("resources.resourceName")}
                     </label>
                     <input
                         id="resourceName"
-                        {...form.register("resourceName", { required: t("resourceNameRequired") })}
-                        placeholder={t("enterResourceName")}
+                        {...form.register("resourceName", { required: t("resources.resourceNameRequired") })}
+                        placeholder={t("resources.enterResourceName")}
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
                     />
                     {form.formState.errors.resourceName && (
@@ -82,7 +82,7 @@ const ResourceForm = () => {
 
                 <div>
                     <label htmlFor="resourceType" className="block text-sm font-medium text-gray-700">
-                        {t("resourceType")}
+                        {t("resources.resourceType")}
                     </label>
                     <select
                         id="resourceType"
@@ -90,11 +90,11 @@ const ResourceForm = () => {
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
                     >
                         <option value="" disabled>
-                            {t("selectResourceType")}
+                            {t("resources.selectResourceType")}
                         </option>
-                        <option value="Food">{t("food")}</option>
-                        <option value="Toys">{t("toys")}</option>
-                        <option value="Items">{t("items")}</option>
+                        <option value="Food">{t("resources.food")}</option>
+                        <option value="Toys">{t("resources.toys")}</option>
+                        <option value="Items">{t("resources.items")}</option>
                     </select>
                     {form.formState.errors.resourceType && (
                         <p className="text-sm text-red-600 mt-1">{form.formState.errors.resourceType.message}</p>
@@ -103,7 +103,7 @@ const ResourceForm = () => {
 
                 <div>
                     <label htmlFor="resourceQuantity" className="block text-sm font-medium text-gray-700">
-                        {t("quantity")}
+                        {t("resources.quantity")}
                     </label>
                     <input
                         id="resourceQuantity"
@@ -119,7 +119,7 @@ const ResourceForm = () => {
 
                 <div>
                     <label htmlFor="warehouseId" className="block text-sm font-medium text-gray-700">
-                        {t("warehouse")}
+                        {t("resources.warehouse")}
                     </label>
                     <select
                         id="warehouseId"
@@ -142,7 +142,7 @@ const ResourceForm = () => {
                         type="submit"
                         className="px-4 py-2 bg-blue-600 text-white rounded shadow hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
                     >
-                        {t("addResource")}
+                        {t("resources.addResource")}
                     </button>
                 </div>
             </form>
