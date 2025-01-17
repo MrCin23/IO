@@ -15,7 +15,7 @@ const Chat = () => {
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
-  const { account } = useAccount();;
+  const { account } = useAccount();
 
   const chatName =
     chats.find((chat) => chat.id === selectedChat)?.name || t('chat.no_chat_selected');
