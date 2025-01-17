@@ -1,7 +1,5 @@
 import { useState } from "react";
 import Announcement, { AnnouncementType, createAnnouncement } from "../../models/powiadomienia/announcement";
-import axios from "axios";
-import Cookies from "js-cookie";
 import { useTranslation } from "react-i18next";
 import api from "@/api/Axios";
 

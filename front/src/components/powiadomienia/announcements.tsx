@@ -3,8 +3,6 @@ import Modal from './modal';
 import Announcement, { AnnouncementType } from '../../models/powiadomienia/announcement';
 import Speaker from './icons/Speaker';
 import AnnouncementForm from './announcement-form';
-import Cookies from "js-cookie";
-import axios from "../../api/Axios.tsx";
 import { useTranslation } from 'react-i18next';
 import api from '../../api/Axios.tsx';
 
