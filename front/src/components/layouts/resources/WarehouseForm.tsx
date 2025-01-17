@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../../api/Axios.tsx";
 import {useTranslation} from "react-i18next";
-import axios from "axios";
 
 export interface Warehouse {
     warehouseId?: number;

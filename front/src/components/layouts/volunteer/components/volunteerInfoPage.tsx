@@ -4,6 +4,8 @@ import MyAccountPage from "@/pages/uwierzytelnianie/MyAccountPage";
 import axios from "@/api/Axios.tsx";
 import {UpdateVolunteer} from "@/components/layouts/volunteer/models/Volunteer.tsx";
 import {Account} from "@/models/uwierzytelnianie/Account.tsx";
+import "../styles/VolunteerInfoPage.css"; // Assuming you create a CSS file for styling
+
 
 const volunteerInfoPage = () => {
     const { t } = useTranslation();
@@ -43,6 +45,8 @@ const volunteerInfoPage = () => {
             .catch((error) => console.log(error))
 
         alert(t("volunteer.profileUpdatedSuccessfully")); // Optional success message
+        setFirstName("")
+        setLastName("")
         setIsEditing(false); // Close the editing form
     };
 

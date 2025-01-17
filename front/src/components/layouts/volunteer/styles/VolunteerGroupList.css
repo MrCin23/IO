@@ -1,160 +1,236 @@
-.add-group-form {
-    color: cornflowerblue; /* Ensures all text in the popup is black */
+/* General container styling */
+.volunteer-group-list-container {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0; /* Light gray background for contrast */
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    color: #333;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
 }
-.popup-backdrop {
+
+.volunteer-group-list-container h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #222;
+}
+
+/* Form to add a new group */
+.add-group-form {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.group-input {
+    padding: 10px;
+    width: 300px;
+    border: 1px solid #555; /* Darker border for contrast */
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #fff;
+}
+
+.add-group-button {
+    margin-left: 10px;
+    padding: 10px 20px;
+    background-color: #0062cc;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.add-group-button:hover {
+    background-color: #004085;
+}
+
+/* Group list styling */
+.volunteer-group-list {
+    margin-bottom: 30px;
+    background: #ffffff; /* White background for content */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15); /* More pronounced shadow */
+}
+
+.group-name-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.edit-group-button {
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    color: white;
+    background-color: #28a745; /* Green button for editing */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.edit-group-button:hover {
+    background-color: #218838;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+}
+
+thead th {
+    background-color: #007bff; /* Blue header for better contrast */
+    color: white;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 2px solid #0056b3; /* Darker border for separation */
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f8f9fa; /* Light gray for alternating rows */
+}
+
+/* Popup modal styling */
+.edit-group-modal {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.popup-backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for emphasis */
+    z-index: 1000;
 }
 
 .popup {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
+    position: relative;
+    background: #ffffff; /* White background for popup */
     padding: 20px;
-    border-radius: 8px;
-    z-index: 1000;
-    width: 400px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Stronger shadow for depth */
+    z-index: 1001;
+    width: 500px;
     max-width: 90%;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
-    color: black; /* Ensures all text in the popup is black */
 }
 
 .popup h3 {
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.volunteer-list, .current-members {
+    margin-bottom: 20px;
+}
+
+.volunteer-list ul, .current-members ul {
+    list-style: none;
+    padding: 0;
+}
+
+.volunteer-list li, .current-members li {
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 10px;
 }
 
-.add-member-button,
-.remove-member-button,
-.save-group-button,
-.close-popup-button {
-    margin: 5px;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff;
+.add-member-button, .remove-member-button {
+    padding: 5px 10px;
+    font-size: 0.8rem;
     color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
-.add-member-button:hover,
-.remove-member-button:hover,
-.save-group-button:hover,
-.close-popup-button:hover {
+.add-member-button {
+    background-color: #28a745;
+}
+
+.add-member-button:hover {
+    background-color: #218838;
+}
+
+.remove-member-button {
+    background-color: #dc3545;
+}
+
+.remove-member-button:hover {
+    background-color: #c82333;
+}
+
+.save-group-button, .close-popup-button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 10px 5px 0 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-group-button {
+    background-color: #007bff;
+    color: white;
+}
+
+.save-group-button:hover {
     background-color: #0056b3;
 }
 
-
-
-.volunteer-group-list-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-    font-family: Arial, sans-serif;
-}
-
-h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 20px;
-}
-
-.volunteer-group-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
-
-.volunteer-group {
-    width: 48%;
-    background-color: #a5a5a5;
-    margin-bottom: 20px;
-    border-radius: 5px;
-    padding: 15px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.volunteer-group h3 {
-    text-align: center;
-    font-size: 1.5rem;
-    margin-bottom: 15px;
-}
-
-.group-name-header {
-    background-color: #f0f8ff; /* Light blue background */
-    color: #333; /* Dark text color for contrast */
-    padding: 10px; /* Adds padding inside the header */
-    border-radius: 5px; /* Rounds the corners slightly */
-    margin-bottom: 10px; /* Adds spacing below the header */
-    display: flex; /* Allows proper layout for button alignment */
-    justify-content: space-between; /* Separates name and button */
-    align-items: center; /* Centers content vertically */
-    width: 100%;
-}
-
-.edit-group-button {
-    background-color: #007bff; /* Blue background */
-    color: white; /* White text */
-    border: none; /* Remove border */
-    padding: 8px 12px; /* Add padding */
-    border-radius: 4px; /* Rounded corners */
-    cursor: pointer; /* Pointer cursor on hover */
-    transition: background-color 0.3s ease; /* Smooth hover effect */
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-th, td {
-    padding: 12px;
-    text-align: left;
-}
-
-th {
-    background-color: #2c3e50;
+.close-popup-button {
+    background-color: #6c757d;
     color: white;
-    font-size: 1.1rem;
 }
 
-td {
-    background-color: #ecf0f1;
-    color: #2c3e50;
-    font-size: 1rem;
+.close-popup-button:hover {
+    background-color: #5a6268;
 }
 
-tr:nth-child(even) td {
-    background-color: #f4f6f7;
-}
+/* Responsive styling */
+@media (max-width: 768px) {
+    .popup {
+        width: 90%;
+    }
 
-tr:hover {
-    background-color: #f1c40f;
-}
+    table {
+        font-size: 0.9rem;
+    }
 
-.volunteer-group-list-container p {
-    text-align: center;
-    font-size: 1.2rem;
-    color: #7f8c8d;
-}
+    .group-input {
+        width: 80%;
+    }
 
-.loading {
-    font-weight: bold;
-    color: #e67e22;
+    .add-group-button {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
 }
-
-.no-volunteers {
-    color: #95a5a6;
-    font-style: italic;
-}
-

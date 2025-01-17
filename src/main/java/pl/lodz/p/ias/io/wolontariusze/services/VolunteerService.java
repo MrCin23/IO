@@ -30,8 +30,12 @@ public class VolunteerService {
 
     public Account updateVolunteer(Long id, String firstName, String lastName) {
         Account volunteer = volunteerRepository.findById(id).get();
-        volunteer.setFirstName(firstName);
-        volunteer.setLastName(lastName);
+        if (firstName != null && !firstName.isEmpty()) {
+            volunteer.setFirstName(firstName);
+        }
+        if (lastName != null && !lastName.isEmpty()) {
+            volunteer.setLastName(lastName);
+        }
 //        volunteerRepository.update(volunteer);
         volunteerRepository.save(volunteer);
         return volunteerRepository.findById(id).get();
