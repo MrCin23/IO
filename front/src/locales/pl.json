@@ -32,7 +32,11 @@
     "submit": "Wyślij",
     "update": "Aktualizuj",
     "account": "Moje konto",
-    "account_list": "Lista kont"
+    "account_list": "Lista kont",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "logout": "Wyloguj",
+      "cancel":"Anuluj"
   },
   "donor" : {
     "header": "Potrzebujący czekają na twoją pomoc",
@@ -141,6 +145,7 @@
     "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
     "resourceId": "ID Zasobu"
   },
+
   "notifications": {
     "dialog_title": "Powiadomienia"
   },

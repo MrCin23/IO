@@ -21,7 +21,7 @@ const AlertOverlay = ({children}:AlertOverlayProps) => {
 
     return (
         <React.Fragment>
-            {account && <div className="fixed top-4 right-4 z-50 flex gap-x-4">
+            {account && <div className="fixed top-4 right-4 z-[10000] flex gap-x-4">
                 <Notifications
                     notificationList={notifications}
                     onNewNotification={(alert:Notification)=>{setAlertNotification(alert)}}

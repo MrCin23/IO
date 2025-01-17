@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import api from "../../../api/Axios.tsx";
 import {useTranslation} from "react-i18next";
+import axios from "axios";
 
 export interface Warehouse {
     warehouseId?: number;
@@ -22,6 +23,7 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ coordinates }) => {
             location: "",
         },
     });
+    const type = "WAREHOUSE";
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,6 +38,13 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ coordinates }) => {
     const onSubmit = async (values: Warehouse) => {
         try {
             const response = await api.post("/warehouses", values);
+            await api.post("/map", {
+                coordinates: coordinates,
+                title: values.warehouseName,
+                description: `${values.warehouseName} type: ${type}`,
+                type: type,
+                active: true,
+            });
 
             if (response.status === 201) {
                 alert(t("resources.warehouseSuccess"));

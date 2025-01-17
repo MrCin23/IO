@@ -4,6 +4,7 @@ import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
 import { useAccount } from '../../../contexts/uwierzytelnianie/AccountContext'
 import {useTranslation} from "react-i18next";
+import i18n from "@/i18n.ts";
 
 interface LayoutProps {
     children: ReactNode
@@ -11,6 +12,9 @@ interface LayoutProps {
 
 export const AidOrganizationLayout = ({ children }: LayoutProps) => {
     // Udostępnia funkcję pozwalającą na zmianę widoku na inny, zgodnie z określoną ścieżką (pathname)
+    const changeLanguage = (lng: string) => {
+        i18n.changeLanguage(lng);
+    };
     const navigate = useNavigate()
     const { logout } = useAccount();
     const { t } = useTranslation();
@@ -41,7 +45,14 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                         {t("chat.chat")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Logout
+                        {t("general.logout")}
+                    </Button>
+                    <Button onClick={() => changeLanguage('en')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {i18n.t('english')}
+                    </Button>
+
+                    <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {i18n.t('polish')}
                     </Button>
                 </Toolbar>
             </AppBar>
