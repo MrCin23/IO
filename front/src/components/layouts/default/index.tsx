@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Pathnames } from '@/router/pathnames.ts'
 import { useNavigate } from 'react-router-dom'
 import i18n from "../../../i18n.ts";
+import {useTranslation} from "react-i18next";
 
 interface LayoutProps {
     children: ReactNode
@@ -14,6 +15,7 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
     const changeLanguage = (lng: string) => {
         i18n.changeLanguage(lng).catch(console.error);
     };
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -22,14 +24,11 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.default.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Home
                     </Button>
-                    <Button onClick={() => navigate(Pathnames.victim.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Victim
-                    </Button>
                     <Button onClick={() => navigate(Pathnames.default.loginPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Login
+                        {t("general.login")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.default.registerPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Register
+                        {t("general.register")}
                     </Button>
                     <Button onClick={() => changeLanguage('en')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {i18n.t('english')}

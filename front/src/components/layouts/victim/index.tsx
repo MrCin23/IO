@@ -35,14 +35,14 @@ export const VictimLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.victim.resources)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("resources.resourcesList")}
                     </Button>
+                    <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {t("chat.chat")}
+                    </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Logout
+                        {t("general.logout")}
                     </Button>
                     <Button onClick={() => changeLanguage('en')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {i18n.t('english')}
-                    </Button>
-                    <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        {t("chat.chat")}
                     </Button>
                     <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {i18n.t('polish')}

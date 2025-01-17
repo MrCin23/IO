@@ -33,6 +33,9 @@
     "update": "Update",
     "account": "My account",
     "account_list": "Account list",
+    "login": "Log in",
+    "register": "Register",
+    "logout": "Log out",
     "cancel":"Cancel"
   },
   "donor" : {
@@ -143,7 +146,8 @@
   },
 
   "notifications": {
-    "dialog_title": "Notifications"
+    "dialog_title": "Notifications",
+    "message":"Your message"
   },
 
   "announcements": {
