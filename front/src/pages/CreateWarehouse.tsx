@@ -17,7 +17,7 @@ export const CreateWarehouse = () => {
                 <div className="mt-8 flex justify-center">
                     <div className="w-full max-w-md -ml-12" >
                         <MapView
-                            pointType="AID_ORGANIZATION"
+                            pointType="WAREHOUSE"
                             canAddPoints={true}
                             externalForm={true}
                             setCoordinates={setCoordinates}
