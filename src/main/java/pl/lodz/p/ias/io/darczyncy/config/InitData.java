@@ -97,7 +97,7 @@ public class InitData implements CommandLineRunner {
                 .user(newUser)
                 .build();
         financialNeedRepository.save(financialNeed);
-        Warehouse warehouse = new Warehouse("magazyn", "Kędzierzyn-Koźle");
+        Warehouse warehouse = new Warehouse("magazyn", (new LatLng(21.37, 42.0)).toString());
         warehouseRepository.save(warehouse);
 
         MaterialNeed materialNeed = MaterialNeed.builder()

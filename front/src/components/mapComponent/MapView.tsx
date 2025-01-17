@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import axios from "axios";
+// import axios from "axios";
+import api from "../../api/Axios.tsx"
 import {useTranslation} from "react-i18next";
 
 const defaultIcon = L.icon({
@@ -81,7 +82,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
 
     const fetchPoints = async () => {
         try {
-            const response = await axios.get(`api/map/type/${pointType}`);
+            const response = await api.get(`map/type/${pointType}`);
             setPoints(response.data);
         } catch (error) {
             console.error(t("maps.error.noDescription"), error);
@@ -91,7 +92,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
     const handleDelete = async (id: number | undefined) => {
         try {
             console.log(id);
-            await axios.delete(`api/map/${id}`);
+            await api.delete(`map/${id}`);
             setPoints((prev) =>
                 prev.filter((point) => point.pointID !== id)
             );
@@ -103,7 +104,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
 
     const handleArchive = async (id: number | undefined, status: boolean) => {
         try {
-            await axios.put(`api/map/status/${id}/${status}`);
+            await api.put(`map/status/${id}/${status}`);
             await fetchPoints();
             alert(t("maps.pointStateChanged"));
         } catch (error) {
@@ -115,7 +116,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
 
 
         try {
-            await axios.put(`api/map/status/${id}/${status}`);
+            await api.put(`map/status/${id}/${status}`);
             await fetchPoints();
             alert(t("maps.pointStateChanged"));
         } catch (error) {
@@ -129,7 +130,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             return;
         }
         try {
-            await axios.post("api/map", {
+            await api.post("map", {
                 coordinates: newPoint.coordinates,
                 title: formData.title,
                 description: formData.description,
