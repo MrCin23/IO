@@ -84,18 +84,13 @@ const ResourceForm = () => {
                     <label htmlFor="resourceType" className="block text-sm font-medium text-gray-700">
                         {t("resources.resourceType")}
                     </label>
-                    <select
+                    <input
                         id="resourceType"
-                        {...form.register("resourceType", { required: "Resource type is required" })}
+                        type="text"
+                        {...form.register("resourceType", { required: t("resources.resourceTypeRequired") })}
+                        placeholder={t("resources.enterResourceType")}
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
-                    >
-                        <option value="" disabled>
-                            {t("resources.selectResourceType")}
-                        </option>
-                        <option value="Food">{t("resources.food")}</option>
-                        <option value="Toys">{t("resources.toys")}</option>
-                        <option value="Items">{t("resources.items")}</option>
-                    </select>
+                    />
                     {form.formState.errors.resourceType && (
                         <p className="text-sm text-red-600 mt-1">{form.formState.errors.resourceType.message}</p>
                     )}
@@ -109,7 +104,7 @@ const ResourceForm = () => {
                         id="resourceQuantity"
                         type="number"
                         {...form.register("resourceQuantity", { required: t("quantityRequired") })}
-                        placeholder={("enterQuantity")}
+                        placeholder={t("resources.enterQuantity")}
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
                     />
                     {form.formState.errors.resourceQuantity && (
@@ -123,7 +118,7 @@ const ResourceForm = () => {
                     </label>
                     <select
                         id="warehouseId"
-                        {...form.register("warehouseId", { required: "Warehouse is required" })}
+                        {...form.register("warehouseId", { required: t("resources.warehouseRequired") })}
                         className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring focus:ring-blue-200"
                     >
                         {warehouses.map((warehouse) => (

@@ -134,15 +134,16 @@
     "locationRequired": "Location is required",
     "enterLocation": "Mark warehouse location",
     "addWarehouse": "Add Warehouse",
-    "blablaWarehouse": "Enter the warehouse name and location to add a new warehouse to the system.",
-    "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
+    "warehouseInfo": "Enter the warehouse name and location to add a new warehouse to the system.",
+    "resourceInfo": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
     "delete": "Delete",
     "confirmDeleteResource": "Confirm delete resource",
     "resourceDeletedSuccess": "Resource delete success",
     "warehouseSuccess": "Warehouse added successfully",
     "warehouseFailed": "Failed to add warehouse. Please try again.",
     "warehouseError": "An unexpected error occurred. Please try again.",
-    "resourceId": "Resource ID"
+    "resourceId": "Resource ID",
+    "enterResourceType": "Enter resource type"
   },
 
   "notifications": {
