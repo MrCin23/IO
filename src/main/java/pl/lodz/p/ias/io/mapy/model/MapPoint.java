@@ -14,7 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class MapPoint {
+public class MapPoint implements IMapPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long pointID;

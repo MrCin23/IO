@@ -99,4 +99,15 @@ public class MapService implements IMapService {
     public List<MapPoint> findByActive(boolean active) {
         return mapPointRepository.findByActive(active);
     }
+
+    @Override
+    public MapPoint updateMapPoint(Long id, MapPoint mapPoint) {
+        return mapPointRepository.findById(id).map(existingMapPoint -> {
+            existingMapPoint.setTitle(mapPoint.getTitle());
+            existingMapPoint.setDescription(mapPoint.getDescription());
+
+
+            return mapPointRepository.save(existingMapPoint);
+        }).orElse(null);
+    }
 }

@@ -7,9 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Entity
 public class Account extends AbstractEntity {
+    @Getter
     @Column(unique = true)
     private String username;
 
@@ -17,23 +17,31 @@ public class Account extends AbstractEntity {
     @Column(unique = true)
     private String email;*/
 
+    @Getter
     @Setter
     @JsonIgnore
     private String passwordHash;
 
+    @Getter
+    @Setter
     private String firstName;
 
+    @Getter
+    @Setter
     private String lastName;
 
+    @Getter
     @Setter
     private boolean active;
 
     @Column(nullable = true)
     @Setter
+    @Getter
     private LocalDateTime lastLogin;
 
     @ManyToOne
     @JoinColumn(name = "role_id")
+    @Getter
     @Setter
     private Role role;
 

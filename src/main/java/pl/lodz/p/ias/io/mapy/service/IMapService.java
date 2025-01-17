@@ -22,4 +22,6 @@ public interface IMapService {
     public void changeStatus(long id, boolean status);
 
     List<MapPoint> findByActive(boolean active);
+
+    public MapPoint updateMapPoint(Long id, MapPoint mapPoint);
 }

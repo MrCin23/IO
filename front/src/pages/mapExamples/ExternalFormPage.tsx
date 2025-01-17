@@ -81,7 +81,7 @@ export const ExternalFormPage = () => {
                     pointType="VOLUNTEER"
                     canAddPoints={true}
                     externalForm={true}
-                    canShowPoints={false}
+                    canShowPoints={true}
                     setCoordinates={setCoordinates}
                 />
 

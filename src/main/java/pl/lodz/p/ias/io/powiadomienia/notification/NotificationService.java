@@ -6,8 +6,10 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -89,6 +91,18 @@ public class NotificationService implements INotificationService {
         String username = authentication.getName();
         Account account = accountRepository.findByUsername(username);
         return notify(message, type, account);
+    }
+
+    @Override
+    public List<Notification> notify(String message, NotificationType type, Role role) {
+        List<Account> accounts = accountRepository.findByRole(role);
+        List<Notification> notifications = new ArrayList<>();
+        for(Account account : accounts) {
+            notifications.add(
+                this.notify(message, type, account)
+            );
+        }
+        return notifications;
     }
 
     public void readAllNotifications(String username) {

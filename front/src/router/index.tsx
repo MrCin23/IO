@@ -8,7 +8,7 @@ import {
 import {DefaultLayout} from "../components/layouts/default";
 import {AidOrganizationLayout} from "../components/layouts/aid_organization";
 import {AuthorityRepresentativeLayout} from "../components/layouts/autority_representative";
-import {DonorLayout} from "../components/layouts/donor";
+import {DonorLayout} from "../components/layouts/donor/DonorLayout.tsx";
 import {VictimLayout} from "../components/layouts/victim";
 import {VolunteerLayout} from "../components/layouts/volunteer";
 import { useAccount } from '../contexts/uwierzytelnianie/AccountContext.tsx';

@@ -10,7 +10,8 @@
     "disconnected_status": "Disconnected"
   },
   "chat": {
-    "no_chat_selected": "No chat selected"
+    "no_chat_selected": "No chat selected",
+    "chat": "Chat"
   },
   "create_chat_form": {
     "form_users_error_message": "You have to select at least one user.",
@@ -29,7 +30,68 @@
   },
   "general": {
     "submit": "Submit",
-    "update": "Update"
+    "update": "Update",
+    "account": "My account",
+    "account_list": "Account list",
+    "login": "Log in",
+    "register": "Register",
+    "logout": "Log out",
+    "cancel":"Cancel"
+  },
+  "donor" : {
+    "header": "Those in need await your help",
+    "motivation_message": "By supporting SKPH, you help impoverished families, seniors, the sick, and those affected by natural disasters.",
+    "financialDonation": "Financial Donation",
+    "itemDonation": "Item Donation",
+    "name": "Item",
+    "description": "Description",
+    "category": "Category",
+    "resourceQuantity": "Quantity",
+    "selectCategory": "Select category ...",
+    "categoryClothing": "Clothing",
+    "categoryHousehold": "Household",
+    "categoryFood": "Food",
+    "categoryToys": "Toys",
+    "categoryBooks": "Books",
+    "selectAmount": "Select an amount:",
+    "selectCurrency": "Select currency:",
+    "otherAmount": "Other",
+    "selectGoal": "Select a goal:",
+    "goalPlaceholder": "Choose a goal...",
+    "goalOption1": "Help for seniors",
+    "goalOption2": "Help for flood victims",
+    "proceed": "Proceed",
+    "footer": "The donation is voluntary. All rights reserved.",
+    "invalidAmount": "Please enter a valid amount (positive number).",
+    "alertDonationProceed":"Thank you! You chose",
+    "alertAmount": "Amount",
+    "alertItem": "Donation item",
+    "alertGoal": "Goal",
+    "errorFetchingGoals": "Error fetching needs.",
+    "donationError": "Error sending donation.",
+    "showItemDonations": "Show item donations",
+    "showFinancialDonations": "Show financial donations",
+    "myAccount": "My Account",
+    "logOut": "Logout",
+    "donate": "Donate",
+    "home": "Home",
+    "confirmationFailedAlert": "Unable to generate confirmation. Try again later.",
+    "itemDonationsList": "Item donations list",
+    "financialDonationsList": "Financial donations list",
+    "loading": "Loading...",
+    "noItemDonations": "No item donations",
+    "noFinancialDonations": "No financial donations",
+    "listGoal": "Goal",
+    "listDate": "Date",
+    "listItem": "Item",
+    "listDescription": "Description",
+    "listQuantity": "Quantity",
+    "listCategory": "Category",
+    "listStatus": "Status",
+    "listConfirmation": "Confirmation",
+    "listAmount": "Amount",
+    "listCurrency": "Currency",
+    "generateConfirmation": "Generate confirmation"
   },
 
   "notifications": {
@@ -101,6 +163,25 @@
     "warehouseError": "An unexpected error occurred. Please try again.",
     "resourceId": "Resource ID"
   },
+
+  "notifications": {
+    "dialog_title": "Notifications",
+    "message":"Your message"
+  },
+
+  "announcements": {
+    "dialog_title": "Announcements",
+    "announcement_type_labels": {
+      "WARNING": "Warning",
+      "INFORMATION": "Information"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Title",
+    "message":"Your message",
+    "type":"Announcement type"
+  },
   "maps": {
     "fillEveryField": "Fill every field!",
     "pointSaved": "Point saved!",
@@ -169,5 +250,51 @@
       "IN_PROGRESS": "Mark as in progress",
       "COMPLETED": "Mark as complete"
     }
+  },
+
+  "volunteer": {
+    "header": "Join us",
+    "description": "Description",
+    "footer": "The donation is voluntary. All rights reserved.",
+    "myAccount": "My Account",
+    "logOut": "Logout",
+    "home": "Home",
+    "loading": "Loading...",
+    "listDescription": "Description",
+    "listStatus": "Status",
+    "volunteer": "Volunteer",
+    "volunteerListTitle": "List of Volunteers",
+    "volunteerGroupListTitle": "List of Volunteer Groups",
+    "username": "Username",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "lastLogon": "Last logon",
+    "role": "Role",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "noVolunteers": "No volunteers available.",
+    "noVolunteerGroups": "No volunteer groups available.",
+    "filterByName": "Filter by username",
+    "groupNameRequired": "Group name is required.",
+    "groupCreatedSuccessfully": "The group was created successfully.",
+    "groupCreationFailed": "Failed to create the group.",
+    "edit": "Edit",
+    "enterGroupName": "Enter group name",
+    "addGroup": "Add Group",
+    "editGroupMembers": "Edit Group Members",
+    "allVolunteers": "All Volunteers",
+    "add": "Add",
+    "remove": "Remove",
+    "currentMembers": "Current Members",
+    "save": "Save",
+    "close": "Close",
+    "groupUpdatedSuccessfully": "The group was updated successfully.",
+    "groupUpdateFailed": "Failed to update the group.",
+    "editProfile": "Edit Profile",
+    "enterFirstName": "Enter First Name",
+    "enterLastName": "Enter Last Name",
+    "cancel": "Cancel",
+    "profileUpdatedSuccessfully": "Profile updated successfully!"
   }
 }

@@ -10,7 +10,8 @@
     "disconnected_status": "Rozłączony"
   },
   "chat": {
-    "no_chat_selected": "Brak wybranego czatu"
+    "no_chat_selected": "Brak wybranego czatu",
+    "chat": "Czat"
   },
   "create_chat_form": {
     "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",
@@ -29,7 +30,69 @@
   },
   "general": {
     "submit": "Wyślij",
-    "update": "Aktualizuj"
+    "update": "Aktualizuj",
+    "account": "Moje konto",
+    "account_list": "Lista kont",
+    "login": "Zaloguj się",
+    "register": "Zarejestruj się",
+    "logout": "Wyloguj",
+      "cancel":"Anuluj"
+  },
+  "donor" : {
+    "header": "Potrzebujący czekają na twoją pomoc",
+    "motivation_message": "Wspierając SKPH pomagasz ubogim rodzinom, seniorom, chorym i osobom dotkniętym klęską żywiołową.",
+    "financialDonation": "Darowizna finansowa",
+    "itemDonation": "Darowizna rzeczowa",
+    "name": "Przedmiot",
+    "description": "Opis",
+    "category": "Kategoria",
+    "resourceQuantity": "Ilość",
+    "selectCategory": "Wybierz kategorię ...",
+    "categoryClothing": "Odzież",
+    "categoryHousehold": "Dom",
+    "categoryFood": "Żywność",
+    "categoryToys": "Zabawki",
+    "categoryBooks": "Książki",
+    "selectAmount": "Wybieram kwotę wpłaty:",
+    "selectCurrency": "Wybierz walutę:",
+    "otherAmount": "Inna",
+    "selectGoal": "Wybieram cel wpłaty:",
+    "goalPlaceholder": "Wybierz cel...",
+    "goalOption1": "Pomoc seniorom",
+    "goalOption2": "Pomoc dla powodzian",
+    "proceed": "Przechodzę dalej",
+    "footer": "Wpłata darowizny jest dobrowolna. Wszystkie prawa zastrzeżone.",
+    "invalidAmount": "Proszę wpisać poprawną kwotę (liczba dodatnia).",
+    "alertDonationProceed":"Dziękujemy! Wybrano",
+    "alertAmount": "Kwota",
+    "alertItem": "Dar",
+    "alertGoal": "Cel",
+    "errorFetchingGoals": "Błąd pobierania potrzeb.",
+    "donationError": "Błąd podczas wysyłania darowizny.",
+    "showItemDonations": "Wyświetl darowizny rzeczowe",
+    "showFinancialDonations": "Wyświetl darowizny finansowe",
+    "myAccount": "Moje Konto",
+    "logOut": "Wyloguj",
+    "donate": "Przekaż darowiznę",
+    "home": "Strona główna",
+    "confirmationFailedAlert": "Nie udało się wygenerować potwierdzenia. Spróbuj ponownie później.",
+    "itemDonationsList": "Lista darowizn rzeczowych",
+    "financialDonationsList": "Lista darowizn finansowych",
+    "loading": "Ładowanie danych...",
+    "noItemDonations": "Brak darowizn rzeczowych",
+    "noFinancialDonations": "Brak darowizn finansowych",
+    "listGoal": "Cel",
+    "listDate": "Data",
+    "listItem": "Przedmiot",
+    "listDescription": "Opis",
+    "listQuantity": "Ilość",
+    "listCategory": "Kategoria",
+    "listStatus": "Status",
+    "listConfirmation": "Potwierdzenie",
+    "listAmount": "Kwota",
+    "listCurrency": "Waluta",
+    "generateConfirmation": "Wygeneruj potwierdzenie"
+
   },
   "resources": {
     "addResource": "Dodaj zasób",
@@ -82,6 +145,24 @@
     "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
     "resourceId": "ID Zasobu"
   },
+
+  "notifications": {
+    "dialog_title": "Powiadomienia"
+  },
+
+  "announcements": {
+    "dialog_title": "Ogłoszenia",
+    "announcement_type_labels": {
+      "WARNING": "Ostrzeżenie",
+      "INFORMATION": "Informacja"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Tytuł",
+    "message":"Treść",
+    "type":"Typ ogłoszenia"
+  },
   "maps": {
     "fillEveryField": "Wypełnij wszystkie pola!",
     "pointSaved": "Punkt zapisany!",
@@ -93,6 +174,7 @@
     "deletePoint": "Usuń",
     "switchStatus": "Zmień status",
     "editPoint": "Edytuj",
+    "cancelEdit": "Anuluj",
     "error": {
       "savePoint": "Błąd podczas zapisywania punktu:",
       "readPoint": "Błąd podczas pobierania punktów mapy:",
@@ -151,21 +233,49 @@
       "COMPLETED": "Oznacz jako zakończone"
     }
   },
-  "notifications": {
-    "dialog_title": "Powiadomienia"
-  },
-
-  "announcements": {
-    "dialog_title": "Ogłoszenia",
-    "announcement_type_labels": {
-      "WARNING": "Ostrzeżenie",
-      "INFORMATION": "Informacja"
-    }
-  },
-
-  "create_announcement_form":{
-    "title":"Tytuł",
-    "message":"Treść",
-    "type":"Typ ogłoszenia"
+  "volunteer": {
+    "header": "Potrzebujący czekają na twoją pomoc",
+    "description": "Opis",
+    "footer": "Wpłata darowizny jest dobrowolna. Wszystkie prawa zastrzeżone.",
+    "myAccount": "Moje Konto",
+    "logOut": "Wyloguj",
+    "home": "Strona główna",
+    "loading": "Ładowanie danych...",
+    "listDescription": "Opis",
+    "listStatus": "Status",
+    "volunteer": "Wolontariusz",
+    "volunteerListTitle": "Lista Wolontariuszy",
+    "volunteerGroupListTitle": "Lista Grup Wolontariuszy",
+    "username": "Nazwa Użytkownika",
+    "firstName": "Imię",
+    "lastName": "Nazwisko",
+    "lastLogon": "Ostatnie zalogowanie",
+    "role": "Rola",
+    "status": "Status",
+    "active": "Aktywny",
+    "inactive": "Nieaktywny",
+    "noVolunteers": "Brak dostępnych wolontariuszy.",
+    "noVolunteerGroups": "Brak dostępnych grup wolontariuszy.",
+    "filterByName": "Filtruj po nazwie użytkownika",
+    "groupNameRequired": "Nazwa grupy jest wymagana.",
+    "groupCreatedSuccessfully": "Grupa została pomyślnie utworzona.",
+    "groupCreationFailed": "Nie udało się utworzyć grupy.",
+    "edit": "Edytuj",
+    "enterGroupName": "Wprowadź nazwę grupy",
+    "addGroup": "Dodaj Grupę",
+    "editGroupMembers": "Edytuj Członków Grupy",
+    "allVolunteers": "Wszyscy Wolontariusze",
+    "add": "Dodaj",
+    "remove": "Usuń",
+    "currentMembers": "Obecni Członkowie",
+    "save": "Zapisz",
+    "close": "Zamknij",
+    "groupUpdatedSuccessfully": "Grupa została pomyślnie zaktualizowana.",
+    "groupUpdateFailed": "Nie udało się zaktualizować grupy.",
+    "editProfile": "Edytuj profil",
+    "enterFirstName": "Wprowadź imię",
+    "enterLastName": "Wprowadź nazwisko",
+    "cancel": "Anuluj",
+    "profileUpdatedSuccessfully": "Profil zaktualizowany pomyślnie!"
   }
 }

@@ -3,6 +3,9 @@ package pl.lodz.p.ias.io.wolontariusze.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
+import org.springframework.data.repository.cdi.Eager;
+import org.springframework.lang.Contract;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 import java.util.Set;
@@ -18,11 +21,11 @@ public class VolunteerGroup {
     @Column(unique = true)
     private String name;
 
-    @OneToMany
+    @ManyToMany
     @JoinTable(
             name = "group_users", // Join table
-            joinColumns = @JoinColumn(name = "group_id"),
-            inverseJoinColumns = @JoinColumn(name = "user_id")
+            joinColumns = @JoinColumn(name = "group_id")
+//            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private Set<Account> members;
 

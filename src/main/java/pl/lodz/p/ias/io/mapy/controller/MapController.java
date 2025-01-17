@@ -95,4 +95,14 @@ public class MapController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No active points found");
         }
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Object> updateMapPoint(@PathVariable Long id, @RequestBody MapPoint mapPoint) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.updateMapPoint(id, mapPoint));
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Point not found");
+        }
+    }
 }

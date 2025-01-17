@@ -4,7 +4,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotEmpty;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 import pl.lodz.p.ias.io.wolontariusze.dto.AddVolunteersDTO;
 import pl.lodz.p.ias.io.wolontariusze.dto.CreateVolunteerGroupDTO;
 import pl.lodz.p.ias.io.wolontariusze.model.VolunteerGroup;
@@ -12,6 +14,7 @@ import pl.lodz.p.ias.io.wolontariusze.services.VolunteerGroupService;
 
 import java.util.List;
 
+@PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
 @RestController
 @RequestMapping("/api/volunteerGroups")
 public class VolunteerGroupController {
@@ -60,6 +63,11 @@ public class VolunteerGroupController {
     @GetMapping("/{id}")
     public ResponseEntity<VolunteerGroup> getGroupById(@PathVariable Long id) {
         return ResponseEntity.ok(volunteerGroupService.getGroupById(id));
+    }
+
+    @GetMapping("/{id}/notMembers")
+    public ResponseEntity<List<Account>> getNotGroupMembersById(@PathVariable Long id) {
+        return ResponseEntity.ok(volunteerGroupService.getNotMembersByGroupId(id));
     }
 
     @DeleteMapping("/{id}")

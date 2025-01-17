@@ -18,11 +18,13 @@ const GroupChats = ({
   selectChat,
   setChats,
   selectedChat,
+  role,
 }: {
   chats: ChatDB[];
   selectChat: (chatId: string | null) => void;
   setChats: (chats: ChatDB[]) => void;
   selectedChat: string | null;
+  role: string | undefined;
 }) => {
   const { t } = useTranslation();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -43,30 +45,35 @@ const GroupChats = ({
           </div>
         ))}
       </div>
-      <Dialog
-        open={isDialogOpen}
-        onOpenChange={(isOpen) => setIsDialogOpen(isOpen)}
-      >
-        <DialogTrigger asChild>
-          <Button onClick={() => setIsDialogOpen(true)} className="bg-blue-500">
-            {t("group_chat.create_chat")}
-          </Button>
-        </DialogTrigger>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t("group_chat.dialog_title")}</DialogTitle>
-            <DialogDescription>
-              {t("group_chat.dialog_description")}
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-2">
-            <CreateChatForm
-              setChats={setChats}
-              setIsDialogOpen={setIsDialogOpen}
-            />
-          </div>
-        </DialogContent>
-      </Dialog>
+      {role === "PRZEDSTAWICIEL_WŁADZ" && (
+        <Dialog
+          open={isDialogOpen}
+          onOpenChange={(isOpen) => setIsDialogOpen(isOpen)}
+        >
+          <DialogTrigger asChild>
+            <Button
+              onClick={() => setIsDialogOpen(true)}
+              className="bg-blue-500"
+            >
+              {t("group_chat.create_chat")}
+            </Button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>{t("group_chat.dialog_title")}</DialogTitle>
+              <DialogDescription>
+                {t("group_chat.dialog_description")}
+              </DialogDescription>
+            </DialogHeader>
+            <div className="space-y-2">
+              <CreateChatForm
+                setChats={setChats}
+                setIsDialogOpen={setIsDialogOpen}
+              />
+            </div>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };

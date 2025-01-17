@@ -13,12 +13,14 @@ import {
   FormItem,
   FormMessage,
 } from "./ui/form";
-import { FormLabel } from "@mui/material";
+// import { FormLabel } from "@mui/material";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { ChatDB } from "@/types";
 import { ScrollArea } from "./ui/scroll-area";
 import { useTranslation } from "react-i18next";
+import axios from "@/api/Axios";
+import { Label } from "./ui/label";
 
 const CreateChatForm = ({
   setChats,
@@ -43,34 +45,14 @@ const CreateChatForm = ({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      chatName: "",
       users: [],
     },
   });
 
   useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        // TODO odkomentowac jak bedzie dzialac
-        // if (account === null) {
-        //   console.error("Account is null");
-        //   return;
-        // }
-
-        const response = await fetch(`/api/auth`);
-
-        if (!response.ok) {
-          throw new Error("Failed to fetch users");
-        }
-
-        const data = await response.json();
-        setUsers(data);
-        setFilteredUsers(data);
-      } catch (err) {
-        console.error("Error fetching users from DB:", err);
-      }
-    };
-
-    fetchUsers();
+    axios.get("/auth").then((response) => setUsers(response.data));
+    axios.get("/auth").then((response) => setFilteredUsers(response.data));
   }, [account]);
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -99,9 +81,8 @@ const CreateChatForm = ({
       body: JSON.stringify(requestBody),
     });
     if (response.ok) {
-      console.log("Chat created");
       const data: ChatDB = await response.json();
-      // @ts-ignore // TODO: Fix this later
+      // @ts-ignore
       setChats((prev) => [...prev, data]);
       setIsDialogOpen(false);
     } else {
@@ -117,7 +98,7 @@ const CreateChatForm = ({
           name="chatName"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>{t("create_chat_form.form_chat_label")}</FormLabel>
+              <Label>{t("create_chat_form.form_chat_label")}</Label>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -145,47 +126,49 @@ const CreateChatForm = ({
                 />
               </div>
               <ScrollArea className="h-40 border rounded-md p-2">
-                {filteredUsers.map((user) => (
-                  <FormField
-                    key={user.id}
-                    control={form.control}
-                    name="users"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={user.id}
-                          className="flex flex-row items-start space-x-3 space-y-0"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              id={user.id}
-                              checked={field.value?.includes(String(user.id))}
-                              onCheckedChange={(checked) => {
-                                const userId = String(user.id);
-                                return checked
-                                  ? field.onChange([...field.value, userId])
-                                  : field.onChange(
-                                      field.value?.filter(
-                                        (value) => value !== userId
-                                      )
-                                    );
-                              }}
-                            />
-                          </FormControl>
-                          <FormLabel htmlFor={user.id} className="font-normal">
-                            {user.firstName} {user.lastName}
-                          </FormLabel>
-                        </FormItem>
-                      );
-                    }}
-                  />
-                ))}
+                <div className="space-y-2">
+                  {filteredUsers.map((user) => (
+                    <FormField
+                      key={user.id}
+                      control={form.control}
+                      name="users"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={user.id}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                id={user.id}
+                                checked={field.value?.includes(String(user.id))}
+                                onCheckedChange={(checked) => {
+                                  const userId = String(user.id);
+                                  return checked
+                                    ? field.onChange([...field.value, userId])
+                                    : field.onChange(
+                                        field.value?.filter(
+                                          (value) => value !== userId
+                                        )
+                                      );
+                                }}
+                              />
+                            </FormControl>
+                            <Label htmlFor={user.id} className="font-normal">
+                              {user.firstName} {user.lastName}
+                            </Label>
+                          </FormItem>
+                        );
+                      }}
+                    />
+                  ))}
+                </div>
               </ScrollArea>
               <FormMessage />
             </FormItem>
           )}
         />
-        <Button type="submit">{t("general.submit")}</Button>
+        <Button type="submit" className="bg-white text-black">{t("general.submit")}</Button>
       </form>
     </Form>
   );

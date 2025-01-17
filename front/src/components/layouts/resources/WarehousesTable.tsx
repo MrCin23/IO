@@ -1,5 +1,6 @@
 import { Warehouse } from "@/types";
 import { useTranslation } from "react-i18next";
+import MapView from "@/components/mapComponent/MapView.tsx";
 
 const WarehousesTable = ({ warehouses }: { warehouses: Warehouse[] }) => {
     const { t } = useTranslation();
@@ -35,6 +36,12 @@ const WarehousesTable = ({ warehouses }: { warehouses: Warehouse[] }) => {
                 )}
                 </tbody>
             </table>
+            <div className="w-full max-w-md mt-8 mx-auto">
+                <MapView
+                    pointType="WAREHOUSE"
+                    canShowPoints={true}
+                />
+            </div>
         </div>
     );
 };
