@@ -11,6 +11,7 @@ import pl.lodz.p.ias.io.mapy.model.PointType;
 import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
 import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 
 import java.util.List;
 import java.util.Optional;
@@ -31,9 +32,9 @@ public class MapService implements IMapService {
         List<MapPoint> volunteers = getPointsByType(PointType.VOLUNTEER);
         for(MapPoint volunteer : volunteers) {
             double dist = point.checkDistance(volunteer);
-            if(dist < 10) {
+            if(dist < 10 && point.getType() == PointType.VICTIM) {
                 notificationService.notify("New victim within " + dist + "km needs your help! Please check: " +
-                        point.getCoordinates().lat + " " + point.getCoordinates().lng, NotificationType.INFORMATION);
+                        point.getCoordinates().lat + " " + point.getCoordinates().lng, NotificationType.INFORMATION, new Role("VOLUNTEER"));
             }
         }
         return point;
@@ -65,7 +66,7 @@ public class MapService implements IMapService {
                     double dist = point1.checkDistance(volunteer);
                     if(dist < 10) {
                         notificationService.notify("Victim at: " +
-                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION);
+                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, new Role("VOLUNTEER"));
                     }
                 }
             }
@@ -87,7 +88,7 @@ public class MapService implements IMapService {
                                 point1.getCoordinates().lat + " " + point1.getCoordinates().lng, NotificationType.INFORMATION);
                     } else if (dist < 10) {
                         notificationService.notify("Victim at: " +
-                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION);
+                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, new Role("VOLUNTEER"));
                     }
                 }
             }
