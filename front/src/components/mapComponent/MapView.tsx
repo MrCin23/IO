@@ -54,6 +54,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
     const [points, setPoints] = useState<Point[]>([]);
     const { t } = useTranslation();
     const [newPoint, setNewPoint] = useState<Point | null>(null);
+    const [editPoint, setEditPoint] = useState<Point | null>(null);
     const [formData, setFormData] = useState({
         title: "",
         description: "",
@@ -112,16 +113,39 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
         }
     };
 
-    const handleEdit = async (id: number | undefined) => {
+    // const handleEdit = async (id: number | undefined) => {
+    //
+    //
+    //     try {
+    //         await api.put(`map/status/${id}/${status}`);
+    //         await fetchPoints();
+    //         alert(t("maps.pointStateChanged"));
+    //     } catch (error) {
+    //         console.error(t("maps.error.readPoint"), error);
+    //     }
+    // };
 
+    const handleEdit = (point: Point) => {
+        setEditPoint(point);
+        setFormData({ title: point.title, description: point.description });
+    };
 
+    const saveEdit = async (point: Point) => {
         try {
-            await api.put(`map/status/${id}/${status}`);
-            await fetchPoints();
-            alert(t("maps.pointStateChanged"));
+            await api.put(`map/${point.pointID}`, {
+                title: formData.title,
+                description: formData.description,
+            });
+            alert(t("maps.pointUpdated"));
+            setEditPoint(null);
+            fetchPoints();
         } catch (error) {
-            console.error(t("maps.error.readPoint"), error);
+            console.error(t("maps.error.savePoint"), error);
         }
+    };
+
+    const cancelEdit = () => {
+        setEditPoint(null);
     };
 
     const savePoint = async () => {
@@ -167,54 +191,60 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         position={[point.coordinates.lat, point.coordinates.lng]}
                         icon={point.active ? defaultIcon : greyIcon}
                     >
+                        {/*<Popup>*/}
+                        {/*    <div>*/}
+                        {/*        <strong>{point.title}</strong>*/}
+                        {/*        <p>{point.description}</p>*/}
+                        {/*    </div>*/}
+                        {/*    <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>*/}
+                        {/*    <button*/}
+                        {/*        onClick={() => handleArchive(point.pointID, !point.active)}>{t("maps.switchStatus")}</button>*/}
+                        {/*    <button onClick={() => handleEdit(point.pointID)}>{t("maps.editPoint")}</button>*/}
+                        {/*</Popup>*/}
                         <Popup>
-                            {/*{editPoint && canAddPoints && !externalForm && (*/}
-                            {/*    <div style={{padding: "10px", background: "#282828", marginTop: "10px"}}>*/}
-                            {/*        <h3>{t("maps.addPoint")}</h3>*/}
-                            {/*        <form*/}
-                            {/*            onSubmit={(e) => {*/}
-                            {/*                e.preventDefault();*/}
-                            {/*                savePoint();*/}
-                            {/*            }}*/}
-                            {/*        >*/}
-                            {/*            <div>*/}
-                            {/*                <label>{t("maps.title")}</label>*/}
-                            {/*                <input*/}
-                            {/*                    type="text"*/}
-                            {/*                    value={formData.title}*/}
-                            {/*                    onChange={(e) => setFormData({...formData, title: e.target.value})}*/}
-                            {/*                    required*/}
-                            {/*                />*/}
-                            {/*            </div>*/}
-                            {/*            <div>*/}
-                            {/*                <label>{t("maps.description")}</label>*/}
-                            {/*                <textarea*/}
-                            {/*                    value={formData.description}*/}
-                            {/*                    onChange={(e) =>*/}
-                            {/*                        setFormData({...formData, description: e.target.value})*/}
-                            {/*                    }*/}
-                            {/*                    required*/}
-                            {/*                ></textarea>*/}
-                            {/*            </div>*/}
-                            {/*            <button type="submit">{t("maps.savePoint")}</button>*/}
-                            {/*        </form>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            {/*{!editPoint && canAddPoints && !externalForm && (*/}
-                            {/*    <div>*/}
-                            {/*        <strong>{point.title}</strong>*/}
-                            {/*        <p>{point.description}</p>*/}
-                            {/*    </div>*/}
-                            {/*)}*/}
-                            <div>
-                                <strong>{point.title}</strong>
-                                <p>{point.description}</p>
-                            </div>
-                            {/*<button onClick={}>{t("maps.editPoint")}</button>*/}
-                            <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>
-                            <button
-                                onClick={() => handleArchive(point.pointID, !point.active)}>{t("maps.switchStatus")}</button>
-                            <button onClick={() => handleEdit(point.pointID)}>{t("maps.deletePoint")}</button>
+                            {editPoint?.pointID === point.pointID ? (
+                                <>
+                                    <div>
+                                        <label>{t("maps.title")}</label>
+                                        <input
+                                            type="text"
+                                            value={formData.title}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    title: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+                                    <div>
+                                        <label>{t("maps.description")}</label>
+                                        <textarea
+                                            value={formData.description}
+                                            onChange={(e) =>
+                                                setFormData({
+                                                    ...formData,
+                                                    description: e.target.value,
+                                                })
+                                            }
+                                        ></textarea>
+                                    </div>
+                                    <button onClick={() => saveEdit(editPoint!)}>{t("maps.savePoint")}</button>
+                                    <button onClick={cancelEdit}>{t("maps.cancelEdit")}</button>
+                                </>
+                            ) : (
+                                <>
+                                <div>
+                                        <strong>{point.title}</strong>
+                                        <p>{point.description}</p>
+                                    </div>
+                                    <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>
+                                    <button onClick={() => handleArchive(point.pointID, !point.active)}>
+                                        {t("maps.switchStatus")}
+                                    </button>
+                                    <button onClick={() => handleEdit(point)}>{t("maps.editPoint")}</button>
+                                </>
+                            )}
                         </Popup>
                     </Marker>
                 ))}
