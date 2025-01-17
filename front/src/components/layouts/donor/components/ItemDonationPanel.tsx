@@ -37,7 +37,7 @@ const ItemDonationPanel: React.FC<ItemDonationPanelProps> = ({
             setNeeds(formattedNeeds);
         } catch (error) {
             console.error(error);
-            alert(t("errorFetchingGoals"));
+            alert(t("donor.errorFetchingGoals"));
         }
     };
 

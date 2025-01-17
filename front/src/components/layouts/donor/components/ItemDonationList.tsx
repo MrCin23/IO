@@ -61,8 +61,8 @@ function ItemDonationList() {
 
     return (
         <div className="donation-list-container">
-            <h2>{t("itemDonationsList")}</h2>
-            {isLoading && <p>{t("loading")}</p>}
+            <h2>{t("donor.itemDonationsList")}</h2>
+            {isLoading && <p>{t("donor.loading")}</p>}
             {!isLoading && itemDonations.length === 0 && <p>{t("donor.noItemDonations")}</p>}
             {!isLoading && itemDonations.length > 0 && (
                 <div className="donation-list-wrapper">
