@@ -41,7 +41,7 @@ const LoginPage = () => {
             navigate("/");
         } catch (err) {
             if (err instanceof AxiosError && err.response && err.response.data == "Wrong credentials") {
-                const errorMessage = err.response.data || t("auth.loginErrorCred");
+                const errorMessage = t("auth.loginErrorCred");
                 setError(errorMessage);
             } else if (err instanceof AxiosError && err.response && err.response.data == "User is not active") {
                 const errorMessage = err.response.data || t("auth.loginErrorActive");
