@@ -19,6 +19,7 @@ import VictimPage from '../pages/VictimPage';
 import VolunteerGroupList from "@/components/layouts/volunteer/components/VolunteerGroupList.tsx";
 import VolunteerList from "@/components/layouts/volunteer/components/VolunteerList.tsx";
 import volunteerInfoPage from "@/components/layouts/volunteer/components/volunteerInfoPage.tsx";
+import {Pom} from "@/pages/mapExamples/Pom.tsx";
 
 /** Tutaj dodajemy komponenty które będą zawierać strony.
  * Jeśli coś występuje w więce niż jednym widoku należy dodać to do każdego w którym występuje, z odpowiednim pathname
@@ -171,6 +172,10 @@ export const volunteerRoutes: RouteType[] = [
     {
         path: Pathnames.volunteer.resources,
         Component: Resources,
+    },
+    {
+        path: Pathnames.volunteer.mapPage,
+        Component: Pom,
     }
 ]
 

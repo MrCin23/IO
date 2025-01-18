@@ -7,7 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 @Getter
 @Setter
@@ -28,6 +28,9 @@ public class MapPoint implements IMapPoint {
     @NotNull
     @Enumerated(EnumType.STRING)
     private PointType type;
+    @OneToOne
+    @JoinColumn(name = "point_owner_id")
+    private Account pointOwner;
 
     public MapPoint(LatLng coordinates, String title, String description, PointType type) {
         this.coordinates = coordinates;
@@ -35,6 +38,7 @@ public class MapPoint implements IMapPoint {
         this.description = description;
         this.active = true;
         this.type = type;
+        this.pointOwner = null;
     }
 
     public double checkDistance(MapPoint volunteer) {

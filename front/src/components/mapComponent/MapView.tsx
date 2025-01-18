@@ -6,6 +6,7 @@ import L from "leaflet";
 import api from "../../api/Axios.tsx"
 import {useTranslation} from "react-i18next";
 import "./maps.css"
+import {Account} from "@/models/uwierzytelnianie/Account.tsx";
 
 const defaultIcon = L.icon({
     iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
@@ -28,6 +29,7 @@ interface Point {
     description: string;
     type: string;
     active: boolean;
+    pointOwner?: Account;
 }
 
 interface MapViewProps {
@@ -36,6 +38,7 @@ interface MapViewProps {
     canShowPoints?: boolean;
     externalForm?: boolean;
     setCoordinates?: (coordinates: { lat: number; lng: number }) => void;
+    pointOwner?: Account;
 }
 
 /**
@@ -52,7 +55,7 @@ interface MapViewProps {
  * @param setCoordinates opcjonalny - jeśli externalForm ustawione jest na true, zezwala na korzystanie z koordynatów poza <MapView>. Patrz: https://github.com/MrCin23/IO/blob/1b64a3034b4e450451923b48bda0d765f4a1d94e/front/src/pages/ExternalFormPage.tsx
  * @constructor
  */
-const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false, externalForm = false, setCoordinates }) => {
+const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false, externalForm = false, setCoordinates, pointOwner = null }) => {
     const [points, setPoints] = useState<Point[]>([]);
     const { t } = useTranslation();
     const [newPoint, setNewPoint] = useState<Point | null>(null);
@@ -168,6 +171,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 description: formData.description,
                 type: pointType,
                 active: true,
+                pointOwner: pointOwner
             });
             alert(t("maps.pointSaved"));
             setNewPoint(null);

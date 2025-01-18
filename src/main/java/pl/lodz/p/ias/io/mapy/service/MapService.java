@@ -12,8 +12,10 @@ import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
 import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
+import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @AllArgsConstructor
@@ -24,17 +26,25 @@ public class MapService implements IMapService {
     @Autowired
     INotificationService notificationService;
 
+    @Autowired
+    AccountRepository accountRepository;
+
     private MapPointRepository mapPointRepository;
 
     @Override
     public MapPoint addPoint(MapPoint point) {
         mapPointRepository.save(point);
-        List<MapPoint> volunteers = getPointsByType(PointType.VOLUNTEER);
-        for(MapPoint volunteer : volunteers) {
-            double dist = point.checkDistance(volunteer);
-            if(dist < 10 && point.getType() == PointType.VICTIM) {
-                notificationService.notify("New victim within " + dist + "km needs your help! Please check: " +
-                        point.getCoordinates().lat + " " + point.getCoordinates().lng, NotificationType.INFORMATION, new Role("VOLUNTEER"));
+        Role role = new Role("WOLONTARIUSZ");
+        List<MapPoint> volunteers_points = getPointsByType(PointType.VOLUNTEER);
+        for (MapPoint mapPoint : volunteers_points) {
+            if(mapPoint.getPointOwner() != null && Objects.equals(mapPoint.getPointOwner().getRole().getRoleName(), role.getRoleName())) {
+                for(MapPoint volunteer_point : volunteers_points) {
+                    double dist = point.checkDistance(volunteer_point);
+                    if(dist < 10 && point.getType() == PointType.VICTIM) {
+                        notificationService.notify("New victim within " + dist + "km needs your help! Please check: " +
+                                point.getCoordinates().lat + " " + point.getCoordinates().lng, NotificationType.INFORMATION, volunteer_point.getPointOwner());
+                    }
+                }
             }
         }
         return point;
@@ -57,16 +67,19 @@ public class MapService implements IMapService {
 
     @Override
     public void removePoint(long id) {
-        Optional<MapPoint> point = mapPointRepository.findById(id);
-        if(point.isPresent()) {
-            MapPoint point1 = point.get();
-            if(point1.getType() == PointType.VICTIM) {
-                List<MapPoint> volunteers = getPointsByType(PointType.VOLUNTEER);
-                for(MapPoint volunteer : volunteers) {
-                    double dist = point1.checkDistance(volunteer);
-                    if(dist < 10) {
-                        notificationService.notify("Victim at: " +
-                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, new Role("VOLUNTEER"));
+        Optional<MapPoint> point_opt = mapPointRepository.findById(id);
+        if(point_opt.isPresent()) {
+            MapPoint point = point_opt.get();
+            Role role = new Role("VOLUNTEER");
+            List<MapPoint> volunteers_points = getPointsByType(PointType.VOLUNTEER);
+            for (MapPoint mapPoint : volunteers_points) {
+                if(mapPoint.getPointOwner() != null && Objects.equals(mapPoint.getPointOwner().getRole().getRoleName(), role.getRoleName())) {
+                    for(MapPoint volunteer_point : volunteers_points) {
+                        double dist = point.checkDistance(volunteer_point);
+                        if(dist < 10 && point.getType() == PointType.VICTIM) {
+                            notificationService.notify("Victim at: " +
+                                    point.getCoordinates().lat + " " + point.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, volunteer_point.getPointOwner());
+                        }
                     }
                 }
             }
@@ -76,19 +89,22 @@ public class MapService implements IMapService {
 
     @Override
     public void changeStatus(long id, boolean status) {
-        Optional<MapPoint> point = mapPointRepository.findById(id);
-        if(point.isPresent()) {
-            MapPoint point1 = point.get();
-            if(point1.getType() == PointType.VICTIM) {
-                List<MapPoint> volunteers = getPointsByType(PointType.VOLUNTEER);
-                for(MapPoint volunteer : volunteers) {
-                    double dist = point1.checkDistance(volunteer);
-                    if(dist < 10 && status) {
-                        notificationService.notify("New victim within " + dist + "km needs your help! Please check: " +
-                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng, NotificationType.INFORMATION);
-                    } else if (dist < 10) {
-                        notificationService.notify("Victim at: " +
-                                point1.getCoordinates().lat + " " + point1.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, new Role("VOLUNTEER"));
+        Optional<MapPoint> point_opt = mapPointRepository.findById(id);
+        if(point_opt.isPresent()) {
+            MapPoint point = point_opt.get();
+            Role role = new Role("VOLUNTEER");
+            List<MapPoint> volunteers_points = getPointsByType(PointType.VOLUNTEER);
+            for (MapPoint mapPoint : volunteers_points) {
+                if(mapPoint.getPointOwner() != null && Objects.equals(mapPoint.getPointOwner().getRole().getRoleName(), role.getRoleName())) {
+                    for(MapPoint volunteer_point : volunteers_points) {
+                        double dist = point.checkDistance(volunteer_point);
+                        if(dist < 10 && point.getType() == PointType.VICTIM && status) {
+                            notificationService.notify("New victim within " + dist + "km needs your help! Please check: " +
+                                    point.getCoordinates().lat + " " + point.getCoordinates().lng, NotificationType.INFORMATION, volunteer_point.getPointOwner());
+                        } else if(dist < 10 && point.getType() == PointType.VICTIM) {
+                            notificationService.notify("Victim at: " +
+                                    point.getCoordinates().lat + " " + point.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, volunteer_point.getPointOwner());
+                        }
                     }
                 }
             }
