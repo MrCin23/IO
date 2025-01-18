@@ -148,12 +148,13 @@ function VolunteerGroupList() {
                 <div key={group.id} className="volunteer-group-list">
                     <h3 className="group-name-header">
                         {group.name}
-                        <button
-                            onClick={() => handleEditGroup(group.id, group.members)}
-                            className="edit-group-button"
-                        >
-                            {t("volunteer.edit")}
-                        </button>
+                        <div>
+                            <button
+                                onClick={() => handleEditGroup(group.id, group.members)}
+                            >
+                                {t("volunteer.edit")}
+                            </button>
+                        </div>
                     </h3>
                     <table>
                         <thead>
