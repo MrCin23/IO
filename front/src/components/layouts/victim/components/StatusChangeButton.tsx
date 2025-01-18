@@ -68,9 +68,27 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                 }
             );
 
+            const getRes =  await axios.get(
+                `http://localhost:8080/api/${needType}-needs/${needId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            ); //Podbranie lokacji zgłoszenia
+
+            await axios.put(
+                `http://localhost:8080/api/map/status/${getRes.data.mapPointId}/false`,
+                {},
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }//Archiwizacja danej lokacji
+            );
+
             if (response.status === 200) {
                 onStatusChange();
+
             }
+
+
         } catch (error) {
             console.error('Error updating status:', error);
         }
