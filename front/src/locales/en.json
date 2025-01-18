@@ -172,11 +172,12 @@
     "description": "Description:",
     "title": "Title:",
     "addPoint": "Add point",
-    "pointStateChanged": "Point achived/reactivated!",
+    "pointStateChanged": "Point archived/reactivated!",
     "deletePoint": "Delete",
     "switchStatus": "Switch status",
     "editPoint": "Edit",
     "cancelEdit": "Cancel",
+    "pointUpdated": "Point updated!",
     "error": {
       "savePoint": "Error while saving point:",
       "readPoint": "Error while reading point:",

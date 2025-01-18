@@ -85,7 +85,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                     onClick={() => handleStatusChange("CANCELLED")}
                     className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
                 >
-                    {t('buttonStatusLabels.CANCELLED')}
+                    {t('victim.buttonStatusLabels.CANCELLED')}
                 </button>
             )}
         </div>
@@ -98,7 +98,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                         onClick={() => handleStatusChange(newStatus)}
                         className={`px-3 py-1 text-white rounded text-sm ${statusColors[newStatus]}`}
                     >
-                        {t(`buttonStatusLabels.${newStatus}`)}
+                        {t(`victim.buttonStatusLabels.${newStatus}`)}
                     </button>
                 )
             ))}
@@ -108,7 +108,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                     onClick={() => handleStatusChange("CANCELLED")}
                     className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
                 >
-                    {t('buttonStatusLabels.CANCELLED')}
+                    {t('victim.buttonStatusLabels.CANCELLED')}
                 </button>
             )}
         </div>

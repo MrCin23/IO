@@ -177,6 +177,7 @@
     "switchStatus": "Zmień status",
     "editPoint": "Edytuj",
     "cancelEdit": "Anuluj",
+    "pointUpdated": "Punkt zaktualizowany!",
     "error": {
       "savePoint": "Błąd podczas zapisywania punktu:",
       "readPoint": "Błąd podczas pobierania punktów mapy:",
