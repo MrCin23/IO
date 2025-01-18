@@ -145,7 +145,8 @@
     "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
     "resourceId": "ID Zasobu",
     "enterResourceType": "Podaj typ zasobu",
-    "resourceSuccess": "Pomyślnie dodano zasób"
+    "resourceSuccess": "Pomyślnie dodano zasób",
+    "resourceUpdate": "Pomyślnie zaktualizowano zasób"
   },
 
   "notifications": {

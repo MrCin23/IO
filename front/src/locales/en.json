@@ -144,7 +144,8 @@
     "warehouseError": "An unexpected error occurred. Please try again.",
     "resourceId": "Resource ID",
     "enterResourceType": "Enter resource type",
-    "resourceSuccess": "Resource added successfully"
+    "resourceSuccess": "Resource added successfully",
+    "resourceUpdate": "Resource updated successfully"
   },
 
   "notifications": {

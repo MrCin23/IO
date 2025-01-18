@@ -48,6 +48,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 alert(t("resources.lowResourceWarning"));
             }
 
+            const message = encodeURIComponent(t("resources.resourceUpdate"));
             await api.put(`/resources/${selectedResourceId}`, {
                 resourceId: resourceToUpdate.resourceId,
                 resourceName: resourceToUpdate.resourceName,
@@ -55,9 +56,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 resourceQuantity: selectedQuantity,
                 resourceStatus: statusMap[selectedStatus as "Zaakceptowany" | "Oczekujący" | "Odrzucony"],
                 warehouseId: resourceToUpdate.warehouseId,
+            }, {
+                headers: {
+                    "message": message,
+                }
             });
 
-            alert(t("resources.resourceUpdatedSuccess"));
             window.location.reload();
         } catch (error) {
             console.error(t("resourceUpdateFailed"), error);

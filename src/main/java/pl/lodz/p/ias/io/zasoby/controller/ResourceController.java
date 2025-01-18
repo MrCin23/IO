@@ -48,7 +48,10 @@ public class ResourceController {
     @PreAuthorize("hasAnyRole('PRZEDSTAWICIEL_WŁADZ', 'ORGANIZACJA_POMOCOWA')")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateResource(@PathVariable Long id, @RequestBody ResourceDTO resourceDTO) {
+    public void updateResource(@PathVariable Long id, @RequestBody ResourceDTO resourceDTO,
+                               @RequestHeader(value = "message") String message) {
+        message = URLDecoder.decode(message, StandardCharsets.UTF_8);
+        notificationService.notify(message, NotificationType.INFORMATION);
         resourceService.updateResource(id, resourceDTO);
     }
 
