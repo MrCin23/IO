@@ -277,7 +277,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 <MapClickHandler />
             </MapContainer>
             {newPoint && canAddPoints && !externalForm && (
-                <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
+                <div style={{ padding: "10px", background: "wheat", marginTop: "10px" }}>
                     <h3>{t("maps.addPoint")}</h3>
                     <form
                         onSubmit={(e) => {

@@ -280,6 +280,7 @@
     "enterFirstName": "Wprowadź imię",
     "enterLastName": "Wprowadź nazwisko",
     "cancel": "Anuluj",
-    "profileUpdatedSuccessfully": "Profil zaktualizowany pomyślnie!"
+    "profileUpdatedSuccessfully": "Profil zaktualizowany pomyślnie!",
+    "setPosition": "Zaznacz swoją lokalizację"
   }
 }

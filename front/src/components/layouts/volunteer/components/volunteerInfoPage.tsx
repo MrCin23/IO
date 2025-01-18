@@ -18,6 +18,7 @@ const volunteerInfoPage = () => {
         const fetchUser = async () => {
             try {
                 const response = await axios.get(`/auth/me`);
+                console.log(response.data)
                 setUser(response.data);
             } catch (err) {
                 console.error('Błąd podczas pobierania danych użytkownika:', err);

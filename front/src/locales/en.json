@@ -281,6 +281,7 @@
     "enterFirstName": "Enter First Name",
     "enterLastName": "Enter Last Name",
     "cancel": "Cancel",
-    "profileUpdatedSuccessfully": "Profile updated successfully!"
+    "profileUpdatedSuccessfully": "Profile updated successfully!",
+    "setPosition": "Set your current localization"
   }
 }
