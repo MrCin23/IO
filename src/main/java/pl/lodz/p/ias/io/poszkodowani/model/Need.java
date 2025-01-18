@@ -26,7 +26,7 @@ public abstract class Need {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "need_seq")
     @SequenceGenerator(name = "need_seq", sequenceName = "need_sequence", allocationSize = 1)
     @EqualsAndHashCode.Include
-    @Column(name = "id") // Explicit column name
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne

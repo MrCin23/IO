@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.ManualNeedRepository;
+import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 
 import java.util.*;
 
@@ -12,7 +14,15 @@ import java.util.*;
 public class ManualNeedService {
 
     private final ManualNeedRepository manualNeedRepository;
-    
+
+    private final INotificationService notificationService;
+
+    @Autowired
+    public ManualNeedService(ManualNeedRepository manualNeedRepository, INotificationService notificationService) {
+        this.manualNeedRepository = manualNeedRepository;
+        this.notificationService = notificationService;
+    }
+
     private static final Map<Need.Status, Set<Need.Status>> ALLOWED_TRANSITIONS = new HashMap<>();
     
     static {
@@ -28,20 +38,18 @@ public class ManualNeedService {
             .contains(target);
     }
 
-    @Autowired
-    public ManualNeedService(ManualNeedRepository manualNeedRepository) {
-        this.manualNeedRepository = manualNeedRepository;
-    }
-
     public ManualNeed createManualNeed(ManualNeed manualNeed) {
-        // TODO: logika odpowiedzialana za sprawdzenie czy użytkownik oraz punkt na mapie istnieje
 
         manualNeed.setCreationDate(new Date());
         manualNeed.setPriority(1);
         manualNeed.setStatus(Need.Status.PENDING);
         manualNeed.setVolunteers(0);
 
-        return manualNeedRepository.save(manualNeed);
+        ManualNeed savedManualNeed = manualNeedRepository.save(manualNeed);
+
+        notificationService.notify("New manual need with id " + savedManualNeed.getId() + " has been created successfully", NotificationType.INFORMATION, savedManualNeed.getUser());
+
+        return savedManualNeed;
     }
 
     public Optional<ManualNeed> getManualNeedById(Long id) {
@@ -64,8 +72,8 @@ public class ManualNeedService {
             if (canTransition(currentStatus, newStatus)) {
                 manualNeed.setStatus(newStatus);
                 manualNeedRepository.save(manualNeed);
+                notificationService.notify("Status of manual need with id " + manualNeed.getId() + " has been changed to " + newStatus, NotificationType.INFORMATION, manualNeed.getUser());
             } else {
-                // You can throw an exception or handle the invalid transition as you see fit
                 throw new IllegalStateException(
                         String.format("Cannot transition from %s to %s", currentStatus, newStatus)
                 );

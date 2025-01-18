@@ -8,11 +8,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.mapy.model.MapPoint;
 import pl.lodz.p.ias.io.mapy.service.MapService;
-import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequest;
 import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.mapper.MaterialNeedMapper;
-import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
@@ -82,6 +80,4 @@ public class MaterialNeedController {
                 .map(value -> ResponseEntity.ok(materialNeedMapper.toMaterialNeedResponse(value)))
                 .orElse(ResponseEntity.notFound().build());
     }
-
-
 }

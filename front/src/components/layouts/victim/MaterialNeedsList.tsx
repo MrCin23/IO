@@ -77,7 +77,7 @@ export const MaterialNeedsList: React.FC = () => {
                         <p className="mb-1"><strong>{t('victim.itemCategory')}:</strong> {need.itemCategory}</p>
                         <p className="mb-1"><strong>{t('victim.creationDate')}:</strong> {formattedCreationDate}</p>
                         <p className="mb-1"><strong>{t('victim.expirationDate')}:</strong> {formattedExpirationDate}</p>
-                        <p className="mb-1"><strong>{t('victim.status')}:</strong> {t(`statusLabels.${need.status}`)}</p>
+                        <p className="mb-1"><strong>{t('victim.status')}:</strong> {t(`victim.statusLabels.${need.status}`)}</p>
                         <StatusChangeButton
                             needId={need.id}
                             currentStatus={need.status}

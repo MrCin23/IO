@@ -214,6 +214,7 @@
     "loading": "Ładowanie",
 
     "id": "ID",
+    "description": "Opis",
     "creationDate": "Data utworzenia",
     "expirationDate": "Data ważności",
     "collected": "Zebrano",

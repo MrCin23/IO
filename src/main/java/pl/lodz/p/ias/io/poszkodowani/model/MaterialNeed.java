@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @Entity
 @Table(name = "material_need")
-@SuperBuilder // Lombok annotation for hierarchical builders
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class MaterialNeed extends Need {

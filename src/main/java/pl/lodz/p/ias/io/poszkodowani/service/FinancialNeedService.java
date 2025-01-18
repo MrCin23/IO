@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.FinancialNeedRepository;
+import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 
 import java.util.*;
 
@@ -12,6 +14,14 @@ import java.util.*;
 public class FinancialNeedService {
 
     private final FinancialNeedRepository financialNeedRepository;
+
+    private final INotificationService notificationService;
+
+    @Autowired
+    public FinancialNeedService(FinancialNeedRepository financialNeedRepository, INotificationService notificationService) {
+        this.financialNeedRepository = financialNeedRepository;
+        this.notificationService = notificationService;
+    }
 
     private static final Map<Need.Status, Set<Need.Status>> ALLOWED_TRANSITIONS = new HashMap<>();
 
@@ -28,20 +38,17 @@ public class FinancialNeedService {
                 .contains(target);
     }
 
-    @Autowired
-    public FinancialNeedService(FinancialNeedRepository financialNeedRepository) {
-        this.financialNeedRepository = financialNeedRepository;
-    }
-
     public FinancialNeed createFinancialNeed(FinancialNeed financialNeed) {
-        // TODO: logika odpowiedzialana za sprawdzenie czy użytkownik oraz punkt na mapie istnieje
-
         financialNeed.setCreationDate(new Date());
         financialNeed.setPriority(1);
         financialNeed.setStatus(Need.Status.PENDING);
         financialNeed.setCollectionStatus(0);
 
-        return financialNeedRepository.save(financialNeed);
+        FinancialNeed savedFinancialNeed = financialNeedRepository.save(financialNeed);
+
+        notificationService.notify("New financial need with id " + savedFinancialNeed.getId() + " has been created successfully", NotificationType.INFORMATION, savedFinancialNeed.getUser());
+
+        return savedFinancialNeed;
     }
 
     public Optional<FinancialNeed> getFinancialNeedById(Long id) {
@@ -58,12 +65,12 @@ public class FinancialNeedService {
         optionalFinancialNeed.ifPresent(financialNeed -> {
             Need.Status currentStatus = financialNeed.getStatus();
 
-            // Check if the transition is allowed
             if (canTransition(currentStatus, newStatus)) {
                 financialNeed.setStatus(newStatus);
                 financialNeedRepository.save(financialNeed);
+
+                notificationService.notify("Status of financial need with id " + financialNeed.getId() + " has been changed to " + newStatus, NotificationType.INFORMATION, financialNeed.getUser());
             } else {
-                // You can throw an exception or handle the invalid transition as you see fit
                 throw new IllegalStateException(
                     String.format("Cannot transition from %s to %s", currentStatus, newStatus)
                 );
@@ -93,6 +100,9 @@ public class FinancialNeedService {
             }
 
             financialNeedRepository.save(financialNeed);
+
+            notificationService.notify("Financial need with id " + financialNeed.getId() + " has received " + supportAmount + " PLN of support", NotificationType.INFORMATION, financialNeed.getUser());
+
         } else {
             throw new NoSuchElementException("FinancialNeed with id " + id + " not found");
         }

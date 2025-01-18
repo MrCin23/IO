@@ -214,6 +214,7 @@
     "loading": "Loading",
 
     "id": "ID",
+    "description": "Description",
     "creationDate": "Creation date",
     "expirationDate": "Expiration date",
     "collected": "Collected",
