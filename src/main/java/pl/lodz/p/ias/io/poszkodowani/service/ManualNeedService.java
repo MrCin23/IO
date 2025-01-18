@@ -11,7 +11,7 @@ import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import java.util.*;
 
 @Service
-public class ManualNeedService {
+public class ManualNeedService implements INeedService<ManualNeed> {
 
     private final ManualNeedRepository manualNeedRepository;
 
@@ -38,7 +38,7 @@ public class ManualNeedService {
             .contains(target);
     }
 
-    public ManualNeed createManualNeed(ManualNeed manualNeed) {
+    public ManualNeed createNeed(ManualNeed manualNeed) {
 
         manualNeed.setCreationDate(new Date());
         manualNeed.setPriority(1);
@@ -56,11 +56,11 @@ public class ManualNeedService {
         return manualNeedRepository.findById(id);
     }
 
-    public List<ManualNeed> getAllManualNeeds() {
+    public List<ManualNeed> getAllNeeds() {
         return manualNeedRepository.findAll();
     }
 
-    public List<ManualNeed> getManualNeedsByUserId(Long userId) {
+    public List<ManualNeed> getNeedsByUserId(Long userId) {
         return manualNeedRepository.findByUserId(userId);
     }
 

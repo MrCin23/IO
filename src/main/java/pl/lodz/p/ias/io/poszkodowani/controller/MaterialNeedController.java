@@ -47,7 +47,7 @@ public class MaterialNeedController {
         MapPoint mapPoint = mapService.getPoint(dto.getMapPointId());
         materialNeed.setUser(user);
         materialNeed.setMapPoint(mapPoint);
-        MaterialNeed savedMaterialNeed = materialNeedService.createMaterialNeed(materialNeed);
+        MaterialNeed savedMaterialNeed = materialNeedService.createNeed(materialNeed);
         MaterialNeedResponse responseDTO = materialNeedMapper.toMaterialNeedResponse(savedMaterialNeed);
         return ResponseEntity.ok(responseDTO);
     }
@@ -61,14 +61,14 @@ public class MaterialNeedController {
 
     @GetMapping
     public ResponseEntity<List<MaterialNeedResponse>> getAllMaterialNeeds() {
-        List<MaterialNeed> materialNeeds = materialNeedService.getAllMaterialNeeds();
+        List<MaterialNeed> materialNeeds = materialNeedService.getAllNeeds();
         List<MaterialNeedResponse> responseDTOs = materialNeedMapper.toMaterialNeedResponseList(materialNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<MaterialNeedResponse>> getMaterialNeedsByUserId(@PathVariable Long userId) {
-        List<MaterialNeed> materialNeeds = materialNeedService.getMaterialNeedsByUserId(userId);
+        List<MaterialNeed> materialNeeds = materialNeedService.getNeedsByUserId(userId);
         List<MaterialNeedResponse> responseDTOs = materialNeedMapper.toMaterialNeedResponseList(materialNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
