@@ -23,6 +23,10 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
 
     const handleUpdate = async () => {
         if (!selectedResourceId || !selectedStatus || selectedQuantity === null) return;
+        if (selectedQuantity < 0) {
+            alert(t("resources.negativeQuantityError"));
+            return;
+        }
 
         const validStatuses = ["ACCEPTED", "PENDING", "REJECTED"];
         if (!validStatuses.includes(selectedStatus)) {

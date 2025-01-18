@@ -145,7 +145,8 @@
     "resourceId": "Resource ID",
     "enterResourceType": "Enter resource type",
     "resourceSuccess": "Resource added successfully",
-    "resourceUpdate": "Resource updated successfully"
+    "resourceUpdate": "Resource updated successfully",
+    "negativeQuantityError": "An invalid value was entered"
   },
 
   "notifications": {

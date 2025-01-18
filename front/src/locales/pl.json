@@ -146,7 +146,8 @@
     "resourceId": "ID Zasobu",
     "enterResourceType": "Podaj typ zasobu",
     "resourceSuccess": "Pomyślnie dodano zasób",
-    "resourceUpdate": "Pomyślnie zaktualizowano zasób"
+    "resourceUpdate": "Pomyślnie zaktualizowano zasób",
+    "negativeQuantityError": "Wprowadzono niepoprawną wartość"
   },
 
   "notifications": {
