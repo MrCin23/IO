@@ -1,0 +1,118 @@
+/* General styling for the page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+.edit-profile-form {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: 20px auto;
+}
+
+.edit-profile-form h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #444;
+}
+
+.edit-profile-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.edit-profile-form label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.edit-profile-form input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    color: #333;
+}
+
+.edit-profile-form input:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+}
+
+.edit-profile-form button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.save-profile-button {
+    background-color: #28a745;
+    color: #fff;
+}
+
+.save-profile-button:hover {
+    background-color: #218838;
+}
+
+.cancel-edit-button {
+    background-color: #dc3545;
+    color: #fff;
+    margin-left: 10px;
+}
+
+.cancel-edit-button:hover {
+    background-color: #c82333;
+}
+
+.edit-group-button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: block;
+    margin: 20px auto;
+}
+
+.edit-group-button:hover {
+    background-color: #0056b3;
+}
+
+/* General layout adjustments for responsiveness */
+@media (max-width: 768px) {
+    .edit-profile-form {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .edit-profile-form h3 {
+        font-size: 1.25rem;
+    }
+
+    .edit-profile-form button {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+
+    .edit-group-button {
+        font-size: 0.9rem;
+        padding: 8px 10px;
+    }
+}

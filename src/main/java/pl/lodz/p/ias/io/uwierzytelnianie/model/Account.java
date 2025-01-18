@@ -23,9 +23,11 @@ public class Account extends AbstractEntity {
     private String passwordHash;
 
     @Getter
+    @Setter
     private String firstName;
 
     @Getter
+    @Setter
     private String lastName;
 
     @Getter

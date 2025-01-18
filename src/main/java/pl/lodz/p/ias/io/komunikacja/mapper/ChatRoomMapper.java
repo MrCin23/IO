@@ -14,12 +14,21 @@ public class ChatRoomMapper {
         dto.setUsers(chatRoom.getUsers().stream()
                 .map(Account::getId)
                 .collect(Collectors.toList()));
+        dto.setName(chatRoom.getName());
         return dto;
     }
 
-    public static ChatRoom toEntity(List<Account> users) {
+    public static ChatRoom toEntity(List<Account> users, String chatRoomName) {
         ChatRoom chatRoom = new ChatRoom();
         chatRoom.setUsers(users);
+        chatRoom.setName(chatRoomName);
+        return chatRoom;
+    }
+
+    public static ChatRoom toEntity(ChatRoomDTO chatRoomDTO) {
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.setId(chatRoomDTO.getId());
+        chatRoom.setName(chatRoomDTO.getName());
         return chatRoom;
     }
 

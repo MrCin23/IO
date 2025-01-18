@@ -1,6 +1,7 @@
 package pl.lodz.p.ias.io.uwierzytelnianie.config;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import pl.lodz.p.ias.io.uwierzytelnianie.enums.UserRole;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -10,6 +11,7 @@ import pl.lodz.p.ias.io.uwierzytelnianie.repositories.RoleRepository;
 import pl.lodz.p.ias.io.uwierzytelnianie.services.AuthenticationService;
 
 @Component
+@Order(2)
 public class DataInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;

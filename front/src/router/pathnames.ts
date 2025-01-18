@@ -6,27 +6,48 @@ export const Pathnames = {
     default: {
         homePage: '/',
         loginPage: '/login',
-        registerPage: '/register',
+        registerPage: '/register'
     },
     aid_organization: {
         homePage: '/organization',
         accountPage: '/organization/account',
+        resources: '/organization/resources',
+        warehouses: '/organization/warehouses',
+        createWarehouse: '/organization/warehouses/create',
+        createResource: '/organization/resources/create',
     },
     authority_representative: {
         homePage: '/authority',
         accountPage: '/authority/account',
         accountsListPage: '/authority/accounts/list',
+        resources: '/authority/resources',
+        warehouses: '/authority/warehouses',
+        createWarehouse: '/authority/warehouses/create',
+        createResource: '/authority/resources/create',
     },
     donor: {
         homePage: '/donor',
+        financialDonations: '/financial-donations',
+        itemDonations: '/item-donations',
         accountPage: '/donor/account',
+        accountsListPage: '/donor/accounts/list',
+        createResource: '/donor/resources/create'
     },
     victim: {
         homePage: '/victim',
         accountPage: '/victim/account',
+        resources: '/victim/resources'
     },
     volunteer: {
         homePage: '/volunteer',
+        volunteers: '/volunteers',
+        groups: '/volunteer/groups',
         accountPage: '/volunteer/account',
+        resources: '/volunteer/resources',
+        mapPage: '/volunteer/map'
+    },
+    chat: {
+        homePage: '/chat'
+
     }
 }

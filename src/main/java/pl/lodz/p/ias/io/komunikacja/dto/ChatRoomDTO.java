@@ -14,4 +14,5 @@ import java.util.List;
 public class ChatRoomDTO {
     private Long id;
     private List<Long> users;
+    private String name;
 }
