@@ -55,8 +55,6 @@ public class AuthenticationService {
         } catch (DataIntegrityViolationException e) {
             if (e.getMessage().contains("account_username_key")) {
                 throw new ConflictException("Username already exists!");
-            } else if (e.getMessage().contains("account_email_key")) {
-                throw new ConflictException("Email already exists!");
             } else {
                 throw new ConflictException("A conflict occurred during registration!");
             }

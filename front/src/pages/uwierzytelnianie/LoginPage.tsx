@@ -4,6 +4,7 @@ import Cookies from 'js-cookie';
 import { AxiosError } from 'axios';
 import axios from '../../api/Axios';
 import { useAccount } from '../../contexts/uwierzytelnianie/AccountContext';
+import {useTranslation} from "react-i18next";
 
 const LoginPage = () => {
     const [credentials, setCredentials] = useState({ username: '', password: '' });
@@ -11,6 +12,7 @@ const LoginPage = () => {
     const { account, login } = useAccount();
     const [passwordVisible, setPasswordVisible] = useState(false);
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     useEffect(() => {
         if (account) {
@@ -38,11 +40,14 @@ const LoginPage = () => {
 
             navigate("/");
         } catch (err) {
-            if (err instanceof AxiosError && err.response) {
-                const errorMessage = err.response.data || 'Logowanie nie powiodło się.';
+            if (err instanceof AxiosError && err.response && err.response.data == "Wrong credentials") {
+                const errorMessage = err.response.data || t("auth.loginErrorCred");
+                setError(errorMessage);
+            } else if (err instanceof AxiosError && err.response && err.response.data == "User is not active") {
+                const errorMessage = err.response.data || t("auth.loginErrorActive");
                 setError(errorMessage);
             } else {
-                setError("Logowanie nie powiodło się.");
+                setError(t("auth.loginError"));
             }
         }
     };
@@ -50,9 +55,9 @@ const LoginPage = () => {
     return (
         <div className="container mt-5">
             <div className="row justify-content-center">
-                <div className="col-md-6 col-lg-4">
+                <div className="col-md-8">
                     <form onSubmit={handleLogin} className="p-4 border rounded shadow-sm">
-                        <h3 className="text-center mb-4">Logowanie</h3>
+                        <h3 className="text-center mb-4">{t("auth.loginTitle")}</h3>
 
                         {error && (
                             <div className="alert alert-danger" role="alert">
@@ -64,7 +69,7 @@ const LoginPage = () => {
                             <input
                                 type="text"
                                 className="form-control"
-                                placeholder="Nazwa użytkownika"
+                                placeholder={t("auth.username")}
                                 value={credentials.username}
                                 onChange={(e) => setCredentials({ ...credentials, username: e.target.value })}
                                 required
@@ -74,7 +79,7 @@ const LoginPage = () => {
                             <input
                                 type={passwordVisible ? "text" : "password"}
                                 className="form-control"
-                                placeholder="Hasło"
+                                placeholder={t("auth.password")}
                                 value={credentials.password}
                                 onChange={(e) => setCredentials({ ...credentials, password: e.target.value })}
                                 required
@@ -88,7 +93,7 @@ const LoginPage = () => {
                                 <i className={passwordVisible ? "bi bi-eye-slash" : "bi bi-eye"}></i>
                             </button>
                         </div>
-                        <button type="submit" className="btn btn-primary w-100">Zaloguj się</button>
+                        <button type="submit" className="btn btn-primary w-100">{t("auth.login")}</button>
                     </form>
                 </div>
             </div>
