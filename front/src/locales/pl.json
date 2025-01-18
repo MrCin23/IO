@@ -135,15 +135,17 @@
     "locationRequired": "Lokalizacja jest wymagana",
     "enterLocation": "Zaznacz lokalizacje magazynu",
     "addWarehouse": "Dodaj magazyn",
-    "blablaWarehouse": "Podaj nazwę magazynu oraz lokalizację, aby utworzyć magazyn.",
-    "blablaResource": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu.",
+    "warehouseInfo": "Podaj nazwę magazynu oraz lokalizację, aby utworzyć magazyn.",
+    "resourceInfo": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu.",
     "delete": "Usuń",
     "confirmDeleteResource": "Potwierdź usunięcie zasobu",
     "resourceDeletedSuccess": "Pomyślnie usunięto zasób",
     "warehouseSuccess": "Pomyślnie dodano magazyn",
     "warehouseFailed": "Nie udało się utworzyć magazynu. Spróbuj ponownie.",
     "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
-    "resourceId": "ID Zasobu"
+    "resourceId": "ID Zasobu",
+    "enterResourceType": "Podaj typ zasobu",
+    "resourceSuccess": "Pomyślnie dodano zasób"
   },
 
   "notifications": {
@@ -175,6 +177,7 @@
     "switchStatus": "Zmień status",
     "editPoint": "Edytuj",
     "cancelEdit": "Anuluj",
+    "pointUpdated": "Punkt zaktualizowany!",
     "error": {
       "savePoint": "Błąd podczas zapisywania punktu:",
       "readPoint": "Błąd podczas pobierania punktów mapy:",

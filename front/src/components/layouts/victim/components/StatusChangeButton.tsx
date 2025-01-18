@@ -68,9 +68,27 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                 }
             );
 
+            const getRes =  await axios.get(
+                `http://localhost:8080/api/${needType}-needs/${needId}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            ); //Podbranie lokacji zgłoszenia
+
+            await axios.put(
+                `http://localhost:8080/api/map/status/${getRes.data.mapPointId}/false`,
+                {},
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }//Archiwizacja danej lokacji
+            );
+
             if (response.status === 200) {
                 onStatusChange();
+
             }
+
+
         } catch (error) {
             console.error('Error updating status:', error);
         }
@@ -85,7 +103,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                     onClick={() => handleStatusChange("CANCELLED")}
                     className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
                 >
-                    {t('buttonStatusLabels.CANCELLED')}
+                    {t('victim.buttonStatusLabels.CANCELLED')}
                 </button>
             )}
         </div>
@@ -98,7 +116,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                         onClick={() => handleStatusChange(newStatus)}
                         className={`px-3 py-1 text-white rounded text-sm ${statusColors[newStatus]}`}
                     >
-                        {t(`buttonStatusLabels.${newStatus}`)}
+                        {t(`victim.buttonStatusLabels.${newStatus}`)}
                     </button>
                 )
             ))}
@@ -108,7 +126,7 @@ export const StatusChangeButton: React.FC<StatusChangeButtonProps> = ({
                     onClick={() => handleStatusChange("CANCELLED")}
                     className="px-3 py-1 text-white rounded text-sm bg-red-500 hover:bg-red-600"
                 >
-                    {t('buttonStatusLabels.CANCELLED')}
+                    {t('victim.buttonStatusLabels.CANCELLED')}
                 </button>
             )}
         </div>

@@ -9,7 +9,7 @@ export const CreateResource = () => {
           <div className="text-center mb-6">
             <h1 className="text-2xl font-semibold">{t("resources.createResource")}</h1>
             <p className="text-sm text-gray-600">
-              {t("resources.blablaResource")}
+              {t("resources.resourceInfo")}
             </p>
           </div>
           <div className="mb-6">

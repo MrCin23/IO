@@ -39,16 +39,6 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
             "REJECTED": "REJECTED"
         };
 
-        const typeMap: { [key in string]: string } = {
-            "Jedzenie": "Food",
-            "Zabawki": "Toys",
-            "Przedmioty": "Items",
-            "Food": "Food",
-            "Toys": "Toys",
-            "Items": "Items"
-        };
-
-
         const resourceToUpdate = resources.find((resource) => resource.resourceId === selectedResourceId);
 
         if (!resourceToUpdate) return;
@@ -61,7 +51,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
             await api.put(`/resources/${selectedResourceId}`, {
                 resourceId: resourceToUpdate.resourceId,
                 resourceName: resourceToUpdate.resourceName,
-                resourceType: typeMap[resourceToUpdate.resourceType as "Jedzenie" | "Zabawki" | "Przedmioty"],
+                resourceType: resourceToUpdate.resourceType,
                 resourceQuantity: selectedQuantity,
                 resourceStatus: statusMap[selectedStatus as "Zaakceptowany" | "Oczekujący" | "Odrzucony"],
                 warehouseId: resourceToUpdate.warehouseId,
@@ -79,8 +69,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
         if (!window.confirm(t("resources.confirmDeleteResource"))) return;
 
         try {
-            await api.delete(`/resources/${resourceId}`);
-            alert(t("resources.resourceDeletedSuccess"));
+            const message = encodeURIComponent(t("resources.resourceDeletedSuccess"));
+            await api.delete(`/resources/${resourceId}`, {
+                headers: {
+                    "message": message,
+                }
+            });
             window.location.reload();
         } catch (error) {
             console.error(error);
@@ -118,7 +112,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                         >
                             <td className="px-4 py-2">{resource.resourceId}</td>
                             <td className="px-4 py-2">{resource.resourceName}</td>
-                            <td className="px-4 py-2">{t(`resources.${resource.resourceType.toLowerCase()}`)}</td>
+                            <td className="px-4 py-2">{resource.resourceType}</td>
                             <td className="px-4 py-2">{resource.resourceQuantity}</td>
                             <td className="px-4 py-2">
                                 {t(`resources.status${resource.resourceStatus.charAt(0).toUpperCase() + resource.resourceStatus.slice(1).toLowerCase()}`)}

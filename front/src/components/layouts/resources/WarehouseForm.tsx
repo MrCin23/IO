@@ -55,10 +55,15 @@ const WarehouseForm: React.FC<WarehouseFormProps> = ({ coordinates }) => {
             if(pointRes.status === 201) {
                 values.mapPoint = pointRes.data;
             }
-            const response = await api.post("/warehouses", values);
+
+            const message = encodeURIComponent(t("resources.warehouseSuccess"));
+            const response = await api.post("/warehouses", values, {
+                headers: {
+                    "message": message,
+                }
+            });
 
             if (response.status === 201) {
-                alert(t("resources.warehouseSuccess"));
                 form.reset();
 
                 if (location.pathname.includes('/organization/warehouses/create')) {
