@@ -4,6 +4,8 @@ import { BrowserRouter as Router } from 'react-router-dom'
 import { RoutesComponent } from "./router";
 import { AccountProvider } from './contexts/uwierzytelnianie/AccountContext';
 import AlertOverlay from './components/powiadomienia/alert-overlay';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
 
 export const App = () => (
     // TODO jeśli mamy jakiś komponent który musi być dostępny w całej aplikacji i być "niezmiennym", czyli np sesja użytkownika lub alerty, należy opakować nimi znacznik <Router>
