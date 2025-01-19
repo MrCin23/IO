@@ -14,13 +14,13 @@ import pl.lodz.p.ias.io.mapy.service.MapService;
 public class MapController {
     private MapService mapService;
 
-    @GetMapping
-    public ResponseEntity<Object> getMapPoints() {
+    @PostMapping
+    public ResponseEntity<Object> addMapPoint(@RequestBody MapPoint mapPoint) {
         try {
-            return ResponseEntity.status(HttpStatus.OK).body(mapService.getPoints());
+            return ResponseEntity.status(HttpStatus.CREATED).body(mapService.addPoint(mapPoint));
         }
         catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Points not found");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Map Point not found");
         }
     }
 
@@ -34,6 +34,17 @@ public class MapController {
         }
     }
 
+    @GetMapping
+    public ResponseEntity<Object> getMapPoints() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.getPoints());
+        }
+        catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Map Points not found");
+        }
+    }
+
+
     @GetMapping("/type/{type}")
     public ResponseEntity<Object> getMapPoints(@PathVariable("type") PointType pointType) {
         try {
@@ -44,15 +55,6 @@ public class MapController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Object> addMapPoint(@RequestBody MapPoint mapPoint) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(mapService.addPoint(mapPoint));
-        }
-        catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Map Point not found");
-        }
-    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Object> deleteMapPoint(@PathVariable("id") long id) {
@@ -65,8 +67,8 @@ public class MapController {
         }
     }
 
-    @PutMapping("status/{id}")
-    public ResponseEntity<Object> updateMapPoint(@PathVariable("id") long id, @RequestBody boolean status) {
+    @PutMapping("status/{id}/{status}")
+    public ResponseEntity<Object> updateMapPoint(@PathVariable("id") long id, @PathVariable("status") boolean status) {
         try {
             mapService.changeStatus(id, status);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
@@ -76,4 +78,21 @@ public class MapController {
         }
     }
 
+    @GetMapping("archival")
+    public ResponseEntity<Object> getArchival() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.findByActive(false));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No archival points found");
+        }
+    }
+
+    @GetMapping("active")
+    public ResponseEntity<Object> getActive() {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(mapService.findByActive(true));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No active points found");
+        }
+    }
 }

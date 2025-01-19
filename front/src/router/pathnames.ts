@@ -6,26 +6,46 @@ export const Pathnames = {
     default: {
         homePage: '/',
         loginPage: '/login',
-        registerPage: '/register',
-        pomPage: '/pom', //todo do wywalenia
-        externalForm: '/form'//todo do wywalenia
+        registerPage: '/register'
     },
     aid_organization: {
         homePage: '/organization',
+        accountPage: '/organization/account',
+        resources: '/organization/resources',
+        warehouses: '/organization/warehouses',
+        createWarehouse: '/organization/warehouses/create',
+        createResource: '/organization/resources/create',
     },
     authority_representative: {
-        homePage: '/authority'
+        homePage: '/authority',
+        accountPage: '/authority/account',
+        accountsListPage: '/authority/accounts/list',
+        resources: '/authority/resources',
+        warehouses: '/authority/warehouses',
+        createWarehouse: '/authority/warehouses/create',
+        createResource: '/authority/resources/create',
     },
     donor: {
         homePage: '/donor',
+        financialDonations: '/financial-donations',
+        itemDonations: '/item-donations',
         accountPage: '/donor/account',
         accountsListPage: '/donor/accounts/list',
+        createResource: '/donor/resources/create'
     },
     victim: {
-        homePage: '/victim'
+        homePage: '/victim',
+        accountPage: '/victim/account',
+        resources: '/victim/resources'
     },
     volunteer: {
-        homePage: '/volunteer'
+        homePage: '/volunteer',
+        accountPage: '/volunteer/account',
+        resources: '/volunteer/resources'
+    },
+    chat: {
+        homePage: '/chat'
+
     },
     report: {
         homePage: '/report'

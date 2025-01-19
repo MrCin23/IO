@@ -2,6 +2,7 @@ import { AppBar, Button, Container, Toolbar } from '@mui/material'
 import { ReactNode } from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
+import i18n from "../../../i18n.ts";
 
 interface LayoutProps {
     children: ReactNode
@@ -28,17 +29,15 @@ export const DefaultLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate(Pathnames.default.registerPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Register
                     </Button>
-                    <Button onClick={() => navigate(Pathnames.default.pomPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Pom
-                    </Button>
-                    {/*//todo do wywalenia*/}
-                    <Button onClick={() => navigate(Pathnames.default.externalForm)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Form
-                    </Button>
                     <Button onClick={() => navigate(Pathnames.report.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
                         Report
                     </Button>
-                    {/*//todo do wywalenia*/}
+                    <Button onClick={() => changeLanguage('en')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {i18n.t('english')}
+                    </Button>
+                    <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        {i18n.t('polish')}
+                    </Button>
                 </Toolbar>
             </AppBar>
             <Container sx={{ p: 2 }}>

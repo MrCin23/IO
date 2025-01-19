@@ -3,6 +3,7 @@ package pl.lodz.p.ias.io.mapy.service;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import pl.lodz.p.ias.io.mapy.model.MapPoint;
 import pl.lodz.p.ias.io.mapy.model.PointType;
 import pl.lodz.p.ias.io.mapy.repository.MapPointRepository;
@@ -11,6 +12,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Transactional
 public class MapService implements IMapService {
 
     private MapPointRepository mapPointRepository;
@@ -20,11 +22,6 @@ public class MapService implements IMapService {
         mapPointRepository.save(point);
         return point;
     }
-
-//    @Override
-//    public MapPoint getPoint(double x, double y) {
-//        throw new UnsupportedOperationException("Not implemented yet");
-//    }
 
     @Override
     public MapPoint getPoint(long id) {
@@ -48,6 +45,12 @@ public class MapService implements IMapService {
 
     @Override
     public void changeStatus(long id, boolean status) {
-//        mapPointRepository.changeStatus(mapPointRepository.findById(id), status);
+        mapPointRepository.updateActiveByPointID(id, status);
+    }
+
+
+    @Override
+    public List<MapPoint> findByActive(boolean active) {
+        return mapPointRepository.findByActive(active);
     }
 }

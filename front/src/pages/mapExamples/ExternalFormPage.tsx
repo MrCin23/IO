@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import MapView from "../../components/mapComponent/MapView.tsx";
 import axios from "axios";
+import { useTranslation } from 'react-i18next';
 
 /**
  * Klasa przykładowa pokazująca użycie map z zewnętrznym formularzem. Może to zezwolić na dodanie obiektu MapPoint podczas np. tworzenia użytkownika
@@ -12,6 +13,9 @@ import axios from "axios";
 export const ExternalFormPage = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
+    const { t } = useTranslation();
+
+
     const [coordinates, setCoordinates] = useState<{ lat: number; lng: number } | null>(null);
 
     useEffect(() => {
@@ -24,7 +28,7 @@ export const ExternalFormPage = () => {
         e.preventDefault();
         if (coordinates && title && description) {
             if (!title || !description || !coordinates) {
-                alert("Wypełnij wszystkie pola!");
+                alert(t("maps.fillEveryField"));
                 return;
             }
             try {
@@ -36,12 +40,12 @@ export const ExternalFormPage = () => {
                     type: "VOLUNTEER",
                     active: true,
                 });
-                alert("Punkt zapisany!");
+                alert(t("maps.pointSaved"));
                 setCoordinates(null);
                 setTitle("");
                 setDescription("");
             } catch (error) {
-                console.error("Błąd podczas zapisywania punktu:", error);
+                console.error(t("maps.error.savePoint"), error);
             }
         }
     };
@@ -49,10 +53,10 @@ export const ExternalFormPage = () => {
     return (
         <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
             <div style={{ width: "45%" }}>
-                <h2>Dodaj punkt</h2>
+                <h2>{t("maps.addPoint")}</h2>
                 <form onSubmit={handleSavePoint}>
                     <div>
-                        <label>Tytuł:</label>
+                        <label>{t("maps.title")}</label>
                         <input
                             type="text"
                             value={title}
@@ -61,14 +65,14 @@ export const ExternalFormPage = () => {
                         />
                     </div>
                     <div>
-                        <label>Opis:</label>
+                        <label>{t("maps.description")}</label>
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
                             required
                         ></textarea>
                     </div>
-                    <button type="submit">Zapisz punkt</button>
+                    <button type="submit">{t("maps.savePoint")}</button>
                 </form>
             </div>
 
@@ -77,7 +81,7 @@ export const ExternalFormPage = () => {
                     pointType="VOLUNTEER"
                     canAddPoints={true}
                     externalForm={true}
-                    canShowPoints={false}
+                    canShowPoints={true}
                     setCoordinates={setCoordinates}
                 />
 

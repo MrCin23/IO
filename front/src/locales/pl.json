@@ -1,0 +1,229 @@
+{
+  "group_chat": {
+    "create_chat": "Stwórz nowy czat",
+    "dialog_title": "Podaj nazwę czatu",
+    "dialog_description": "Ta akcja nie może być cofnięta. Nie będziesz mógł tego zmienić później."
+  },
+  "messages": {
+    "loading": "Ładowanie wiadomości...",
+    "connected_status": "Podłączony",
+    "disconnected_status": "Rozłączony"
+  },
+  "chat": {
+    "no_chat_selected": "Brak wybranego czatu"
+  },
+  "create_chat_form": {
+    "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",
+    "form_chat_label": "Nazwa czatu",
+    "form_users_description": "Wybierz użytkowników, których chcesz dodać do czatu",
+    "form_users_input_placeholder": "Filtruj użytkowników..."
+  },
+  "send_message_form": {
+    "form_message_input_placeholder": "Wpisz wiadomość"
+  },
+  "update_chat_form": {
+    "form_users_error_message": "Musisz wybrać przynajmniej jednego użytkownika.",
+    "form_chat_label": "Nazwa czatu",
+    "form_users_description": "Wybierz użytkowników do aktualizacji czatu.",
+    "form dialog decsription": "Podaj nazwę czatu"
+  },
+  "general": {
+    "submit": "Wyślij",
+    "update": "Aktualizuj",
+    "account": "Moje konto",
+    "account_list": "Lista kont"
+  },
+  "donor" : {
+    "header": "Potrzebujący czekają na twoją pomoc",
+    "motivation_message": "Wspierając SKPH pomagasz ubogim rodzinom, seniorom, chorym i osobom dotkniętym klęską żywiołową.",
+    "financialDonation": "Darowizna finansowa",
+    "itemDonation": "Darowizna rzeczowa",
+    "name": "Przedmiot",
+    "description": "Opis",
+    "category": "Kategoria",
+    "resourceQuantity": "Ilość",
+    "selectCategory": "Wybierz kategorię ...",
+    "categoryClothing": "Odzież",
+    "categoryHousehold": "Dom",
+    "categoryFood": "Żywność",
+    "categoryToys": "Zabawki",
+    "categoryBooks": "Książki",
+    "selectAmount": "Wybieram kwotę wpłaty:",
+    "selectCurrency": "Wybierz walutę:",
+    "otherAmount": "Inna",
+    "selectGoal": "Wybieram cel wpłaty:",
+    "goalPlaceholder": "Wybierz cel...",
+    "goalOption1": "Pomoc seniorom",
+    "goalOption2": "Pomoc dla powodzian",
+    "proceed": "Przechodzę dalej",
+    "footer": "Wpłata darowizny jest dobrowolna. Wszystkie prawa zastrzeżone.",
+    "invalidAmount": "Proszę wpisać poprawną kwotę (liczba dodatnia).",
+    "alertDonationProceed":"Dziękujemy! Wybrano",
+    "alertAmount": "Kwota",
+    "alertItem": "Dar",
+    "alertGoal": "Cel",
+    "errorFetchingGoals": "Błąd pobierania potrzeb.",
+    "donationError": "Błąd podczas wysyłania darowizny.",
+    "showItemDonations": "Wyświetl darowizny rzeczowe",
+    "showFinancialDonations": "Wyświetl darowizny finansowe",
+    "myAccount": "Moje Konto",
+    "logOut": "Wyloguj",
+    "donate": "Przekaż darowiznę",
+    "home": "Strona główna",
+    "confirmationFailedAlert": "Nie udało się wygenerować potwierdzenia. Spróbuj ponownie później.",
+    "itemDonationsList": "Lista darowizn rzeczowych",
+    "financialDonationsList": "Lista darowizn finansowych",
+    "loading": "Ładowanie danych...",
+    "noItemDonations": "Brak darowizn rzeczowych",
+    "noFinancialDonations": "Brak darowizn finansowych",
+    "listGoal": "Cel",
+    "listDate": "Data",
+    "listItem": "Przedmiot",
+    "listDescription": "Opis",
+    "listQuantity": "Ilość",
+    "listCategory": "Kategoria",
+    "listStatus": "Status",
+    "listConfirmation": "Potwierdzenie",
+    "listAmount": "Kwota",
+    "listCurrency": "Waluta",
+    "generateConfirmation": "Wygeneruj potwierdzenie"
+
+  },
+  "resources": {
+    "addResource": "Dodaj zasób",
+    "resourceName": "Nazwa zasobu",
+    "resourceType": "Typ zasobu",
+    "selectResourceType": "Wybierz typ zasobu",
+    "food": "Jedzenie",
+    "toys": "Zabawki",
+    "items": "Przedmioty",
+    "quantity": "Ilość",
+    "warehouse": "Magazyn",
+    "warehouseId": "ID magazynu",
+    "warehouseName": "Nazwa magazynu",
+    "warehouseLocation": "Lokalizacja",
+    "noWarehousesFound": "Nie znaleziono magazynów.",
+    "home": "Strona główna",
+    "warehousesList": "Lista magazynów",
+    "resourcesList": "Lista zasobów",
+    "createWarehouse": "Utwórz magazyn",
+    "createResource": "Utwórz zasób",
+    "enterResourceName": "Podaj nazwę zasobu",
+    "resourceNameRequired": "Nazwa zasobu jest wymagana",
+    "enterQuantity": "Podaj ilość",
+    "quantityRequired": "Ilość jest wymagana",
+    "status": "Status",
+    "action": "Akcja",
+    "edit": "Edytuj",
+    "statusPending": "Oczekujący",
+    "statusAccepted": "Zaakceptowany",
+    "statusRejected": "Odrzucony",
+    "update": "Aktualizuj",
+    "lowResourceWarning": "Ostrzeżenie: Niska ilość zasobów!",
+    "resourceUpdatedSuccess": "Zasób został zaktualizowany.",
+    "resourceUpdateFailed": "Nie udało się zaktualizować zasobu.",
+    "unexpectedErrorOccurred": "Wystąpił nieoczekiwany błąd.",
+    "invalidStatusSelected": "Wybrano nieprawidłowy status.",
+    "warehouseNameRequired": "Nazwa magazynu jest wymagana",
+    "enterWarehouseName": "Podaj nazwę magazynu",
+    "location": "Lokalizacja",
+    "locationRequired": "Lokalizacja jest wymagana",
+    "enterLocation": "Zaznacz lokalizacje magazynu",
+    "addWarehouse": "Dodaj magazyn",
+    "blablaWarehouse": "Podaj nazwę magazynu oraz lokalizację, aby utworzyć magazyn.",
+    "blablaResource": "Podaj nazwę zasobu, typ, ilość oraz magazyn, aby dodać zasób do systemu.",
+    "delete": "Usuń",
+    "confirmDeleteResource": "Potwierdź usunięcie zasobu",
+    "resourceDeletedSuccess": "Pomyślnie usunięto zasób",
+    "warehouseSuccess": "Pomyślnie dodano magazyn",
+    "warehouseFailed": "Nie udało się utworzyć magazynu. Spróbuj ponownie.",
+    "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
+    "resourceId": "ID Zasobu"
+  },
+  "notifications": {
+    "dialog_title": "Powiadomienia"
+  },
+
+  "announcements": {
+    "dialog_title": "Ogłoszenia",
+    "announcement_type_labels": {
+      "WARNING": "Ostrzeżenie",
+      "INFORMATION": "Informacja"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Tytuł",
+    "message":"Treść",
+    "type":"Typ ogłoszenia"
+  },
+  "maps": {
+    "fillEveryField": "Wypełnij wszystkie pola!",
+    "pointSaved": "Punkt zapisany!",
+    "savePoint": "Zapisz punkt",
+    "description": "Opis:",
+    "title": "Tytuł:",
+    "addPoint": "Dodaj punkt",
+    "pointStateChanged": "Punkt zarchiwizowano/przywrócono!",
+    "deletePoint": "Usuń",
+    "switchStatus": "Zmień status",
+    "editPoint": "Edytuj",
+    "error": {
+      "savePoint": "Błąd podczas zapisywania punktu:",
+      "readPoint": "Błąd podczas pobierania punktów mapy:",
+      "noDescription": "Błąd"
+    }
+  },
+  "victim": {
+    "financialNeeds": "Potrzeby finansowe",
+    "manualNeeds": "Potrzeby manualne",
+    "materialNeeds": "Potrzeby materialne",
+    "addNeed": "Dodaj potrzebę",
+    "english": "Angielski",
+    "polish": "Polski",
+
+    "noFinancialNeeds": "Brak potrzeb finansowych",
+    "noManualNeeds": "Brak potrzeb manualnych",
+    "noMaterialNeeds": "Brak potrzeb materialnych",
+
+    "materialNeed": "Potrzeba materialna",
+    "manualNeed": "Wsparcie fizyczne",
+    "financialNeed": "Wsparcie finansowe",
+
+    "expirationDateError": "Data zakończenia nie może być wcześniejsza niż data rozpoczęcia",
+    "logginError": "Musisz być zalogowany, aby dodać potrzebę",
+    "mapError": "Podaj punkt na mapie!",
+
+    "formDescription": "Opis",
+    "formExpirationDate": "Data ważności",
+    "formItemCategory": "Kategoria",
+    "formMaxVolunteers": "Maksymalna liczba wolontariuszy",
+    "formCollectionGoal": "Cel zbiórki",
+    "formSubmitButton": "Zatwierdź",
+
+    "loading": "Ładowanie",
+
+    "id": "ID",
+    "creationDate": "Data utworzenia",
+    "expirationDate": "Data ważności",
+    "collected": "Zebrano",
+    "status": "Status",
+
+    "volunteers": "Wolontariusze",
+
+    "itemCategory": "Kategoria",
+
+    "statusLabels": {
+      "CANCELLED": "Anulowane",
+      "PENDING": "Oczekujące",
+      "IN_PROGRESS": "W trakcie",
+      "COMPLETED": "Zakończone"
+    },
+
+    "buttonStatusLabels": {
+      "CANCELLED": "Anuluj",
+      "IN_PROGRESS": "Oznacz jako w trakcie",
+      "COMPLETED": "Oznacz jako zakończone"
+    }
+  }
+}

@@ -3,8 +3,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from "react-leaf
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import axios from "axios";
+import {useTranslation} from "react-i18next";
 
-// Ikona markera
 const defaultIcon = L.icon({
     iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
     iconSize: [25, 41],
@@ -12,10 +12,19 @@ const defaultIcon = L.icon({
     popupAnchor: [1, -34],
 });
 
+const greyIcon = new L.Icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-grey.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+});
+
 interface Point {
+    pointID: number | undefined;
     coordinates: { lat: number; lng: number };
     title: string;
     description: string;
+    active: boolean;
 }
 
 interface MapViewProps {
@@ -42,7 +51,7 @@ interface MapViewProps {
  */
 const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canShowPoints = false, externalForm = false, setCoordinates }) => {
     const [points, setPoints] = useState<Point[]>([]);
-
+    const { t } = useTranslation();
     const [newPoint, setNewPoint] = useState<Point | null>(null);
     const [formData, setFormData] = useState({
         title: "",
@@ -51,12 +60,14 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
 
     const MapClickHandler = () => {
         useMapEvents({
-            click: (e) => {
+            click: (e: { latlng: { lat: number; lng: number; }; }) => {
                 if (canAddPoints) {
                     setNewPoint({
+                        pointID: undefined,
                         coordinates: { lat: e.latlng.lat, lng: e.latlng.lng },
                         title: "",
                         description: "",
+                        active: true
                     });
 
                     if (externalForm && setCoordinates) {
@@ -73,13 +84,48 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             const response = await axios.get(`api/map/type/${pointType}`);
             setPoints(response.data);
         } catch (error) {
-            console.error("Błąd podczas pobierania punktów mapy:", error);
+            console.error(t("maps.error.noDescription"), error);
+        }
+    };
+
+    const handleDelete = async (id: number | undefined) => {
+        try {
+            console.log(id);
+            await axios.delete(`api/map/${id}`);
+            setPoints((prev) =>
+                prev.filter((point) => point.pointID !== id)
+            );
+            alert(t("maps.pointDeleted"));
+        } catch (error) {
+            console.error(t("maps.error.readPoint"), error)
+        }
+    }
+
+    const handleArchive = async (id: number | undefined, status: boolean) => {
+        try {
+            await axios.put(`api/map/status/${id}/${status}`);
+            await fetchPoints();
+            alert(t("maps.pointStateChanged"));
+        } catch (error) {
+            console.error(t("maps.error.readPoint"), error);
+        }
+    };
+
+    const handleEdit = async (id: number | undefined) => {
+
+
+        try {
+            await axios.put(`api/map/status/${id}/${status}`);
+            await fetchPoints();
+            alert(t("maps.pointStateChanged"));
+        } catch (error) {
+            console.error(t("maps.error.readPoint"), error);
         }
     };
 
     const savePoint = async () => {
         if (!formData.title || !formData.description || !newPoint) {
-            alert("Wypełnij wszystkie pola!");
+            alert(t("maps.fillEveryField"));
             return;
         }
         try {
@@ -90,12 +136,12 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                 type: pointType,
                 active: true,
             });
-            alert("Punkt zapisany!");
+            alert(t("maps.pointSaved"));
             setNewPoint(null);
             setFormData({ title: "", description: "" });
             fetchPoints();
         } catch (error) {
-            console.error("Błąd podczas zapisywania punktu:", error);
+            console.error(t("maps.error.savePoint"), error);
         }
     };
 
@@ -118,11 +164,56 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                     <Marker
                         key={index}
                         position={[point.coordinates.lat, point.coordinates.lng]}
-                        icon={defaultIcon}
+                        icon={point.active ? defaultIcon : greyIcon}
                     >
                         <Popup>
-                            <strong>{point.title}</strong>
-                            <p>{point.description}</p>
+                            {/*{editPoint && canAddPoints && !externalForm && (*/}
+                            {/*    <div style={{padding: "10px", background: "#282828", marginTop: "10px"}}>*/}
+                            {/*        <h3>{t("maps.addPoint")}</h3>*/}
+                            {/*        <form*/}
+                            {/*            onSubmit={(e) => {*/}
+                            {/*                e.preventDefault();*/}
+                            {/*                savePoint();*/}
+                            {/*            }}*/}
+                            {/*        >*/}
+                            {/*            <div>*/}
+                            {/*                <label>{t("maps.title")}</label>*/}
+                            {/*                <input*/}
+                            {/*                    type="text"*/}
+                            {/*                    value={formData.title}*/}
+                            {/*                    onChange={(e) => setFormData({...formData, title: e.target.value})}*/}
+                            {/*                    required*/}
+                            {/*                />*/}
+                            {/*            </div>*/}
+                            {/*            <div>*/}
+                            {/*                <label>{t("maps.description")}</label>*/}
+                            {/*                <textarea*/}
+                            {/*                    value={formData.description}*/}
+                            {/*                    onChange={(e) =>*/}
+                            {/*                        setFormData({...formData, description: e.target.value})*/}
+                            {/*                    }*/}
+                            {/*                    required*/}
+                            {/*                ></textarea>*/}
+                            {/*            </div>*/}
+                            {/*            <button type="submit">{t("maps.savePoint")}</button>*/}
+                            {/*        </form>*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
+                            {/*{!editPoint && canAddPoints && !externalForm && (*/}
+                            {/*    <div>*/}
+                            {/*        <strong>{point.title}</strong>*/}
+                            {/*        <p>{point.description}</p>*/}
+                            {/*    </div>*/}
+                            {/*)}*/}
+                            <div>
+                                <strong>{point.title}</strong>
+                                <p>{point.description}</p>
+                            </div>
+                            {/*<button onClick={}>{t("maps.editPoint")}</button>*/}
+                            <button onClick={() => handleDelete(point.pointID)}>{t("maps.deletePoint")}</button>
+                            <button
+                                onClick={() => handleArchive(point.pointID, !point.active)}>{t("maps.switchStatus")}</button>
+                            <button onClick={() => handleEdit(point.pointID)}>{t("maps.deletePoint")}</button>
                         </Popup>
                     </Marker>
                 ))}
@@ -132,8 +223,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         icon={defaultIcon}
                     >
                         <Popup>
-                            <strong>Nowy punkt</strong>
-                            <p>Dodaj szczegóły poniżej</p>
+                            <strong>{t("maps.addPoint")}</strong>
                         </Popup>
                     </Marker>
                 )}
@@ -141,7 +231,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
             </MapContainer>
             {newPoint && canAddPoints && !externalForm && (
                 <div style={{ padding: "10px", background: "#282828", marginTop: "10px" }}>
-                    <h3>Dodaj nowy punkt</h3>
+                    <h3>{t("maps.addPoint")}</h3>
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
@@ -149,7 +239,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                         }}
                     >
                         <div>
-                            <label>Tytuł:</label>
+                            <label>{t("maps.title")}</label>
                             <input
                                 type="text"
                                 value={formData.title}
@@ -158,7 +248,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                             />
                         </div>
                         <div>
-                            <label>Opis:</label>
+                            <label>{t("maps.description")}</label>
                             <textarea
                                 value={formData.description}
                                 onChange={(e) =>
@@ -167,7 +257,7 @@ const MapView: React.FC<MapViewProps> = ({ pointType, canAddPoints = false, canS
                                 required
                             ></textarea>
                         </div>
-                        <button type="submit">Zapisz</button>
+                        <button type="submit">{t("maps.savePoint")}</button>
                     </form>
                 </div>
             )}

@@ -1,0 +1,230 @@
+{
+  "group_chat": {
+    "create_chat": "Create a new Chat",
+    "dialog_title": "Please provide a chat name",
+    "dialog_description": "This action cannot be undone. You won't be able to change that later."
+  },
+  "messages": {
+    "loading": "Loading messages...",
+    "connected_status": "Connected",
+    "disconnected_status": "Disconnected"
+  },
+  "chat": {
+    "no_chat_selected": "No chat selected"
+  },
+  "create_chat_form": {
+    "form_users_error_message": "You have to select at least one user.",
+    "form_chat_label": "Chat name",
+    "form_users_description": "Select users to add to the chat",
+    "form_users_input_placeholder": "Filter users..."
+  },
+  "send_message_form": {
+    "form_message_input_placeholder": "Type a message"
+  },
+  "update_chat_form": {
+    "form_users_error_message": "You have to select at least one user.",
+    "form_chat_label": "Chat name",
+    "form_users_description": "Select users to update the chat.",
+    "form dialog decsription": "Please provide a chat name"
+  },
+  "general": {
+    "submit": "Submit",
+    "update": "Update",
+    "account": "My account",
+    "account_list": "Account list"
+  },
+  "donor" : {
+    "header": "Those in need await your help",
+    "motivation_message": "By supporting SKPH, you help impoverished families, seniors, the sick, and those affected by natural disasters.",
+    "financialDonation": "Financial Donation",
+    "itemDonation": "Item Donation",
+    "name": "Item",
+    "description": "Description",
+    "category": "Category",
+    "resourceQuantity": "Quantity",
+    "selectCategory": "Select category ...",
+    "categoryClothing": "Clothing",
+    "categoryHousehold": "Household",
+    "categoryFood": "Food",
+    "categoryToys": "Toys",
+    "categoryBooks": "Books",
+    "selectAmount": "Select an amount:",
+    "selectCurrency": "Select currency:",
+    "otherAmount": "Other",
+    "selectGoal": "Select a goal:",
+    "goalPlaceholder": "Choose a goal...",
+    "goalOption1": "Help for seniors",
+    "goalOption2": "Help for flood victims",
+    "proceed": "Proceed",
+    "footer": "The donation is voluntary. All rights reserved.",
+    "invalidAmount": "Please enter a valid amount (positive number).",
+    "alertDonationProceed":"Thank you! You chose",
+    "alertAmount": "Amount",
+    "alertItem": "Donation item",
+    "alertGoal": "Goal",
+    "errorFetchingGoals": "Error fetching needs.",
+    "donationError": "Error sending donation.",
+    "showItemDonations": "Show item donations",
+    "showFinancialDonations": "Show financial donations",
+    "myAccount": "My Account",
+    "logOut": "Logout",
+    "donate": "Donate",
+    "home": "Home",
+    "confirmationFailedAlert": "Unable to generate confirmation. Try again later.",
+    "itemDonationsList": "Item donations list",
+    "financialDonationsList": "Financial donations list",
+    "loading": "Loading...",
+    "noItemDonations": "No item donations",
+    "noFinancialDonations": "No financial donations",
+    "listGoal": "Goal",
+    "listDate": "Date",
+    "listItem": "Item",
+    "listDescription": "Description",
+    "listQuantity": "Quantity",
+    "listCategory": "Category",
+    "listStatus": "Status",
+    "listConfirmation": "Confirmation",
+    "listAmount": "Amount",
+    "listCurrency": "Currency",
+    "generateConfirmation": "Generate confirmation"
+  },
+  "resources": {
+    "addResource": "Add Resource",
+    "resourceName": "Resource Name",
+    "resourceType": "Resource Type",
+    "selectResourceType": "Select resource type",
+    "food": "Food",
+    "toys": "Toys",
+    "items": "Items",
+    "quantity": "Quantity",
+    "warehouse": "Warehouse",
+    "warehouseName": "Warehouse name",
+    "warehouseLocation": "Location",
+    "noWarehousesFound": "No warehouses found.",
+    "warehouseId": "Warehouse ID",
+    "home": "Home",
+    "warehousesList": "Warehouses List",
+    "resourcesList": "Resources List",
+    "createWarehouse": "Create Warehouse",
+    "createResource": "Create Resource",
+    "enterResourceName": "Enter resource name",
+    "resourceNameRequired": "Resource name is required",
+    "enterQuantity": "Enter quantity",
+    "quantityRequired": "Quantity is required",
+    "status": "Status",
+    "action": "Action",
+    "edit": "Edit",
+    "statusPending": "Pending",
+    "statusAccepted": "Accepted",
+    "statusRejected": "Rejected",
+    "update": "Update",
+    "lowResourceWarning": "Warning: Low resource quantity!",
+    "resourceUpdatedSuccess": "Resource updated successfully.",
+    "resourceUpdateFailed": "Failed to update resource.",
+    "unexpectedErrorOccurred": "An unexpected error occurred.",
+    "invalidStatusSelected": "Invalid status selected.",
+    "warehouseNameRequired": "Warehouse name is required",
+    "enterWarehouseName": "Enter warehouse name",
+    "location": "Location",
+    "locationRequired": "Location is required",
+    "enterLocation": "Mark warehouse location",
+    "addWarehouse": "Add Warehouse",
+    "blablaWarehouse": "Enter the warehouse name and location to add a new warehouse to the system.",
+    "blablaResource": "Enter the resource name, type, quantity, and warehouse to add a new resource to the system.",
+    "delete": "Delete",
+    "confirmDeleteResource": "Confirm delete resource",
+    "resourceDeletedSuccess": "Resource delete success",
+    "warehouseSuccess": "Warehouse added successfully",
+    "warehouseFailed": "Failed to add warehouse. Please try again.",
+    "warehouseError": "An unexpected error occurred. Please try again.",
+    "resourceId": "Resource ID"
+  },
+
+  "notifications": {
+    "dialog_title": "Notifications",
+    "message":"Your message"
+  },
+
+  "announcements": {
+    "dialog_title": "Announcements",
+    "announcement_type_labels": {
+      "WARNING": "Warning",
+      "INFORMATION": "Information"
+    }
+  },
+
+  "create_announcement_form":{
+    "title":"Title",
+    "message":"Your message",
+    "type":"Announcement type"
+  },
+  "maps": {
+    "fillEveryField": "Fill every field!",
+    "pointSaved": "Point saved!",
+    "savePoint": "Save point",
+    "description": "Description:",
+    "title": "Title:",
+    "addPoint": "Add point",
+    "pointStateChanged": "Point achived/reactivated!",
+    "deletePoint": "Delete",
+    "switchStatus": "Switch status",
+    "editPoint": "Edit",
+    "error": {
+      "savePoint": "Error while saving point:",
+      "readPoint": "Error while reading point:",
+      "noDescription": "Error"
+    }
+  },
+  "victim": {
+    "financialNeeds": "Financial needs",
+    "manualNeeds": "Manual needs",
+    "materialNeeds": "Material needs",
+    "addNeed": "Add need",
+    "english": "English",
+    "polish": "Polish",
+
+    "noFinancialNeeds": "No financial needs found",
+    "noManualNeeds": "No manual needs found",
+    "noMaterialNeeds": "No material needs found",
+
+    "materialNeed": "Material need",
+    "manualNeed": "Manual need",
+    "financialNeed": "Financial need",
+
+    "expirationDateError": "End date cannot be earlier than start date",
+    "logginError": "You must be logged in to add a need",
+    "mapError": "Provide a point on the map!",
+
+    "formDescription": "Description",
+    "formExpirationDate": "Expiration Date",
+    "formItemCategory": "Category",
+    "formMaxVolunteers": "Maximum number of volunteers",
+    "formCollectionGoal": "Collection goal",
+    "formSubmitButton": "Submit",
+
+    "loading": "Loading",
+
+    "id": "ID",
+    "creationDate": "Creation date",
+    "expirationDate": "Expiration date",
+    "collected": "Collected",
+    "status": "Status",
+
+    "volunteers": "Volunteers",
+
+    "itemCategory": "Item category",
+
+    "statusLabels": {
+      "CANCELLED": "Cancelled",
+      "PENDING": "Pending",
+      "IN_PROGRESS": "In Progress",
+      "COMPLETED": "Completed"
+    },
+
+    "buttonStatusLabels": {
+      "CANCELLED": "Cancel",
+      "IN_PROGRESS": "Mark as in progress",
+      "COMPLETED": "Mark as complete"
+    }
+  }
+}

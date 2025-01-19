@@ -39,13 +39,13 @@ export default function AddNeedForm() {
 
     const token = Cookies.get('jwt');
     if (!token) {
-      alert(t('logginError'));
+      alert(t('victim.logginError'));
       return;
     }
 
     try {
       if (!coordinates) {
-        alert(t('mapError'));
+        alert(t('victim.mapError'));
         return;
       }
 
@@ -61,7 +61,7 @@ export default function AddNeedForm() {
       };
 
       if (requestData.expirationDate < new Date().toISOString().split('T')[0]) {
-        alert(t('expirationDateError'));
+        alert(t('victim.expirationDateError'));
         return;
       }
 
@@ -128,9 +128,9 @@ export default function AddNeedForm() {
       }
     } catch (error) {
       console.error('Failed to submit need:', error);
-      const err = error as any;
+      const err = error as any; //fixme naprawic any!!!
       if (err.response && err.response.data && err.response.data.errors) {
-        const errorMessage = err.response.data.errors.map((obj: any) => obj.defaultMessage).join(', ');
+        const errorMessage = err.response.data.errors.map((obj: any) => obj.defaultMessage).join(', '); //fixme naprawic any!!!
         alert(`Błąd: ${errorMessage}`);
       } else {
         alert('Błąd podczas zapisywania potrzeby');
@@ -168,7 +168,7 @@ export default function AddNeedForm() {
 
       <TextField
         name="description"
-        label={t('formDescription')}
+        label={t('victim.formDescription')}
         fullWidth
         margin="normal"
         value={formData.description}
@@ -179,7 +179,7 @@ export default function AddNeedForm() {
       />
       <TextField
         name="expirationDate"
-        label={t('formExpirationDate')}
+        label={t('victim.formExpirationDate')}
         type="date"
         InputLabelProps={{ shrink: true }}
         fullWidth
@@ -192,7 +192,7 @@ export default function AddNeedForm() {
 
       {needType === 'material-needs' && (
         <FormControl fullWidth margin="normal" className="text-left">
-          <InputLabel id="item-category-label" className='bg-gray-100'>{t('formItemCategory')}</InputLabel>
+          <InputLabel id="item-category-label" className='bg-gray-100'>{t('victim.formItemCategory')}</InputLabel>
           <Select
             labelId="item-category-label"
             name="itemCategory"
@@ -212,7 +212,7 @@ export default function AddNeedForm() {
       {needType === 'manual-needs' && (
         <TextField
           name="maxVolunteers"
-          label={t('formMaxVolunteers')}
+          label={t('victim.formMaxVolunteers')}
           type="number"
           fullWidth
           margin="normal"
@@ -225,7 +225,7 @@ export default function AddNeedForm() {
       {needType === 'financial-needs' && (
         <TextField
           name="collectionGoal"
-          label={t('formCollectionGoal')}
+          label={t('victim.formCollectionGoal')}
           type="number"
           fullWidth
           margin="normal"
@@ -236,7 +236,7 @@ export default function AddNeedForm() {
       )}
 
       <Button type="submit" variant="contained" color="primary" fullWidth>
-        {t('formSubmitButton')}
+        {t('victim.formSubmitButton')}
       </Button>
     </form>
   );
