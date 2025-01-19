@@ -34,14 +34,14 @@ public class SummaryReportController {
     @PostMapping("/generate")
     public ResponseEntity<GeneratedReport> generateReport() {
         return ResponseEntity.ok(summaryReportService.generateReport
-                (financialNeedService.getAllFinancialNeeds().size(), manualNeedService.getAllManualNeeds().size(), materialNeedService.getAllMaterialNeeds().size()));
+                (financialNeedService.getAllNeeds().size(), manualNeedService.getAllNeeds().size(), materialNeedService.getAllNeeds().size()));
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'PRZEDSTAWICIEL_WŁADZ')")
     @PostMapping("/generate-pdf")
     public ResponseEntity<byte[]> generateReportPdf() {
         byte[] pdfData = summaryReportService.generateReportPdf
-                (financialNeedService.getAllFinancialNeeds().size(), manualNeedService.getAllManualNeeds().size(), materialNeedService.getAllMaterialNeeds().size());
+                (financialNeedService.getAllNeeds().size(), manualNeedService.getAllNeeds().size(), materialNeedService.getAllNeeds().size());
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
