@@ -6,7 +6,11 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.poszkodowani.model.FinancialNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
+import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.service.FinancialNeedService;
+import pl.lodz.p.ias.io.poszkodowani.service.INeedService;
 import pl.lodz.p.ias.io.poszkodowani.service.ManualNeedService;
 import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
 import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
@@ -16,11 +20,10 @@ import pl.lodz.p.ias.io.raportowanie.service.SummaryReportService;
 @RestController
 @RequestMapping("/api/summary-report")
 public class SummaryReportController {
-    // TODO: interfejsy
     private final SummaryReportService summaryReportService;
-    private final FinancialNeedService financialNeedService;
-    private final ManualNeedService manualNeedService;
-    private final MaterialNeedService materialNeedService;
+    private final INeedService<FinancialNeed> financialNeedService;
+    private final INeedService<ManualNeed> manualNeedService;
+    private final INeedService<MaterialNeed> materialNeedService;
 
     @Autowired
     public SummaryReportController(SummaryReportService summaryReportService, FinancialNeedService financialNeedService, ManualNeedService manualNeedService, MaterialNeedService materialNeedService) {
