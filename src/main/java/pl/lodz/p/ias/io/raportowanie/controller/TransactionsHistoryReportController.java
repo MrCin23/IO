@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import pl.lodz.p.ias.io.darczyncy.services.interfaces.IFinancialDonationService;
 import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 import pl.lodz.p.ias.io.raportowanie.service.TransactionsHistoryReportService;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
@@ -23,16 +24,19 @@ import java.util.Set;
 @RequestMapping("/api/transaction-history-report")
 public class TransactionsHistoryReportController {
     private final TransactionsHistoryReportService transactionsHistoryReportService;
+    private final IFinancialDonationService financialDonationService;
 
     @Autowired
-    public TransactionsHistoryReportController(TransactionsHistoryReportService transactionsHistoryReportService) {
+    public TransactionsHistoryReportController(TransactionsHistoryReportService transactionsHistoryReportService, IFinancialDonationService financialDonationService) {
         this.transactionsHistoryReportService = transactionsHistoryReportService;
+        this.financialDonationService = financialDonationService;
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'DARCZYŃCA')")
     @PostMapping("/generate")
     public ResponseEntity<GeneratedReport> generateReport(@RequestParam Timestamp startDate, @RequestParam Timestamp endDate) {
-        return ResponseEntity.ok(transactionsHistoryReportService.generateReport(startDate, endDate));
+
+        return ResponseEntity.ok(transactionsHistoryReportService.generateReport(startDate, endDate, financialDonationService.findAllForCurrentUser()));
     }
 
     @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'DARCZYŃCA')")
@@ -66,7 +70,7 @@ public class TransactionsHistoryReportController {
             endTimestamp = new Timestamp(System.currentTimeMillis()); // Ustaw bieżącą datę
         }
 
-        byte[] pdfData = transactionsHistoryReportService.generateReportPdf(startTimestamp, endTimestamp);
+        byte[] pdfData = transactionsHistoryReportService.generateReportPdf(startTimestamp, endTimestamp, financialDonationService.findAllForCurrentUser());
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)

@@ -1,4 +1,4 @@
-import { Container } from '@mui/material'
+import {Button, Container} from '@mui/material'
 import {ReactNode, useEffect} from 'react'
 import { Pathnames } from '../../../router/pathnames'
 import { useNavigate } from 'react-router-dom'
@@ -48,6 +48,9 @@ export const DonorLayout = ({ children }: LayoutProps) => {
                 </button>
                 <button className="menu-button" onClick={() => navigate(Pathnames.donor.itemDonations)}>
                     {t("donor.showItemDonations")}
+                </button>
+                <button className="menu-button" onClick={() => navigate(Pathnames.report.homePage)}>
+                    Report
                 </button>
                 <button className="menu-button" onClick={() => navigate(Pathnames.donor.accountPage)}>
                     {t("donor.myAccount")}
