@@ -29,6 +29,7 @@
     "i18next": "^24.2.1",
     "i18next-browser-languagedetector": "^8.0.2",
     "js-cookie": "^3.0.5",
+    "jwt-decode": "^4.0.0",
     "leaflet": "^1.9.4",
     "lucide-react": "^0.471.0",
     "postcss": "^8.5.1",

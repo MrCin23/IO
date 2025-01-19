@@ -1,33 +1,40 @@
 package pl.lodz.p.ias.io.raportowanie.model.type;
 
-import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
+import lombok.Getter;
 
-import java.sql.Timestamp;
-import java.util.Set;
-
-public class ModularReport extends GeneralReport {
-
+public class ModularReport extends Report {
+    @Getter
     private int moduleId;
-    private String content;
-    private Timestamp startTime;
-    private Timestamp endTime;
-    private Set<String> fields;
 
-    public ModularReport(Long userId, int moduleId, Timestamp startTime, Timestamp endTime, Set<String> fields) {
-        super(userId);
-        this.moduleId = moduleId;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.fields = fields;
+    private enum Module {
+        RESOURCES(1),
+        WAREHOUSES(2),
+        PRODUCTS(3),
+        ROLES(4),
+        VOLUNTEER_GROUPS(5);
+
+        private final int id;
+
+        Module(int id) {
+            this.id = id;
+        }
+
+        public static Module getById(int id) {
+            for (Module module : values()) {
+                if (module.getId() == id) {
+                    return module;
+                }
+            }
+            throw new IllegalArgumentException("No module with id " + id);
+        }
+
+        public int getId() {
+            return id;
+        }
     }
 
-    @Override
-    public GeneratedReport generate() {
-        //kod odpowiedzialny za pobieranie z bazy danych imienia i nazwiska użytkownika o userId
-
-        //kod odpowiedzialny za generowanie teści raportu w oparciu o baze danych
-        content = "Raport modularny" + "\n" + "Ilosc akcji: 10";
-
-        return new GeneratedReport(getUserId(), "Jan", "Kowalskii", content);
+    public ModularReport(Long userId, int moduleId) {
+        super(userId);
+        this.moduleId = moduleId;
     }
 }
