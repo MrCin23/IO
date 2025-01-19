@@ -117,11 +117,7 @@ const UpdateChatForm = ({
       onOpenChange={(isOpen) => setIsDialogOpen(isOpen)}
     >
       <DialogTrigger asChild>
-        <Settings
-          color="white"
-          size={48}
-          className="mr-4 mt-20 cursor-pointer"
-        />
+        <Settings size={48} className="mr-4 mt-20 cursor-pointer" />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -180,6 +176,7 @@ const UpdateChatForm = ({
                                 >
                                   <FormControl>
                                     <Checkbox
+                                      className="p-0"
                                       id={user.id}
                                       checked={field.value?.includes(
                                         String(user.id)
@@ -201,7 +198,7 @@ const UpdateChatForm = ({
                                   </FormControl>
                                   <Label
                                     htmlFor={user.id}
-                                    className="font-normal text-white"
+                                    className="font-normal"
                                   >
                                     {user.firstName} {user.lastName}
                                   </Label>

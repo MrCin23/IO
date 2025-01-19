@@ -10,21 +10,21 @@ const Chat = () => {
   document.getElementById("root")!.style.padding = "0";
   document.getElementById("root")!.style.margin = "0";
 
-  const {t} = useTranslation();
-  
+  const { t } = useTranslation();
+
   const [selectedChat, setSelectedChat] = useState<string | null>(null);
   const [chats, setChats] = useState<ChatDB[]>([]);
 
   const { account } = useAccount();
 
   const chatName =
-    chats.find((chat) => chat.id === selectedChat)?.name || t('chat.no_chat_selected');
+    chats.find((chat) => chat.id === selectedChat)?.name ||
+    t("chat.no_chat_selected");
 
   useEffect(() => {
     const fetchChats = async () => {
       try {
         if (account === null) {
-          console.error("Account is null");
           return;
         }
 
@@ -57,7 +57,8 @@ const Chat = () => {
         userId={account?.id}
         username={account?.username}
       />
-      {selectedChat !== null ? (
+      {selectedChat !== null &&
+      account?.role.roleName === "PRZEDSTAWICIEL_WŁADZ" ? (
         <UpdateChatForm
           chatId={selectedChat}
           chats={chats}

@@ -54,7 +54,8 @@ const Messages = ({ selectedChat, userId, username, chatName }: any) => {
           </ScrollArea>
         )}
       </div>
-      {chatName !== "No chat selected" && (
+      {chatName !== "No chat selected" &&
+        chatName !== "Brak wybranego czatu" && (
         <SendMessageForm
           sendMessage={sendMessage}
           username={username}
