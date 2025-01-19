@@ -10,7 +10,6 @@ import lombok.Setter;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -18,16 +17,22 @@ public class MapPoint implements IMapPoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long pointID;
+    @Setter
     @NotNull
     private LatLng coordinates;
+    @Setter
     @NotNull
     private String title;
+    @Setter
     private String description;
+    @Setter
     @NotNull
     private boolean active;
+    @Setter
     @NotNull
     @Enumerated(EnumType.STRING)
     private PointType type;
+    @Setter
     @OneToOne
     @JoinColumn(name = "point_owner_id")
     private Account pointOwner;
@@ -41,10 +46,10 @@ public class MapPoint implements IMapPoint {
         this.pointOwner = null;
     }
 
-    public double checkDistance(MapPoint volunteer) {
+    public double checkDistance(MapPoint mapPoint) {
         final int EARTH_RADIUS_KM = 6371;
-        double lat1 = Math.toRadians(volunteer.getCoordinates().lat);
-        double lon1 = Math.toRadians(volunteer.getCoordinates().lng);
+        double lat1 = Math.toRadians(mapPoint.getCoordinates().lat);
+        double lon1 = Math.toRadians(mapPoint.getCoordinates().lng);
         double lat2 = Math.toRadians(this.getCoordinates().lat);
         double lon2 = Math.toRadians(this.getCoordinates().lng);
         double diffLat = lat2 - lat1;
