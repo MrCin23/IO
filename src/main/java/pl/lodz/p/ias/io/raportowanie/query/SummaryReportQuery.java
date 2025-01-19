@@ -6,16 +6,14 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.HashSet;
 import java.util.Properties;
-import java.util.Set;
 
-public class GeneralReportQuery {
+public class SummaryReportQuery {
     private String url;
     private String user;
     private String password;
 
-    public GeneralReportQuery() {
+    public SummaryReportQuery() {
         String propertiesFile = "src/main/resources/application.properties";
         String name = null;
         String lastName = null;
@@ -32,105 +30,113 @@ public class GeneralReportQuery {
         password = properties.getProperty("spring.datasource.password");
     }
 
-    public Set<String> nameSurnameQuery(Long userId) {
-
-        String query = "SELECT first_name, last_name FROM account WHERE id = ?";
-        Set<String> set = new HashSet<String>();
-//        String query2 = "SELECT count(*) FROM users";
+    public String resourcesQuery() {
+        String query = "SELECT resource_name, resource_type, resource_quantity FROM resource";
+        String result = "[Resource name, resource type, resource quantity]\n";
 
         // Połączenie z bazą danych
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
 
-            // Ustawienie parametru ID w zapytaniu SQL
-            pstmt.setLong(1, userId);
+            // Wykonanie zapytania
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    result += rs.getString("resource_name") + ", " + rs.getString("resource_type") + ", " + rs.getInt("resource_quantity") + "\n";
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    public String warehousesQuery() {
+        String query = "SELECT warehouse_name, location FROM warehouse";
+        String result = "[Warehouse name, location]\n";
+
+        // Połączenie z bazą danych
+        try (Connection conn = DriverManager.getConnection(url, user, password);
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
 
             // Wykonanie zapytania
             try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    // Pobranie wyniku z kolumny "name"
-                    set.add(rs.getString("first_name"));
-                    set.add(rs.getString("last_name"));
-                } else {
-                    System.out.println("User with ID " + userId + " not found.");
+                while (rs.next()) {
+                    result += rs.getString("warehouse_name") + ", " + rs.getString("location") + "\n";
                 }
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return set;
+
+        return result;
     }
 
-    public int countUsers() {
-        String query = "SELECT count(*) FROM account";
-        int count = 0;
+    public String productsQuery() {
+        String query = "SELECT product_symbol, description, price FROM product";
+        String result = "[Product symbol, description, price]\n";
+
+        // Połączenie z bazą danych
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Wykonanie zapytania
             try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    count = rs.getInt(1);
-                } else {
-                    System.out.println("No users found.");
+                while (rs.next()) {
+                    result += rs.getString("product_symbol") + ", " + rs.getString("description") + ", " + rs.getDouble("price") + "\n";
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return count;
+
+        return result;
     }
 
-    public int countFinancialNeeds() {
-        String query = "SELECT count(*) FROM financial_need";
-        int count = 0;
+    public String rolesQuery() {
+        String query = "SELECT id, role_name FROM role";
+        String result = "[ID, role name]\n";
+
+        // Połączenie z bazą danych
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Wykonanie zapytania
             try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    count = rs.getInt(1);
-                } else {
-                    System.out.println("No financial needs found.");
+                while (rs.next()) {
+                    result += rs.getInt("id") + ", " + rs.getString("role_name") + "\n";
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return count;
+
+        return result;
     }
 
-    public int countManualNeeds() {
-        String query = "SELECT count(*) FROM manual_need";
-        int count = 0;
-        try (Connection conn = DriverManager.getConnection(url, user, password);
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    count = rs.getInt(1);
-                } else {
-                    System.out.println("No manual needs found.");
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return count;
-    }
+    public String volunteerGroupsQuery() {
+        String query = "SELECT id, name FROM volunteer_group";
+        String result = "[ID, name]\n";
 
-    public int countMaterialNeeds() {
-        String query = "SELECT count(*) FROM material_need";
-        int count = 0;
+        // Połączenie z bazą danych
         try (Connection conn = DriverManager.getConnection(url, user, password);
              PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            // Wykonanie zapytania
             try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    count = rs.getInt(1);
-                } else {
-                    System.out.println("No material needs found.");
+                while (rs.next()) {
+                    result += rs.getInt("id") + ", " + rs.getString("name") + "\n";
                 }
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return count;
+
+        return result;
     }
 }

@@ -51,6 +51,6 @@
   "listConfirmation": "Potwierdzenie",
   "listAmount": "Kwota",
   "listCurrency": "Waluta",
-  "generateConfirmation": "Wygeneruj potwierdzenie"
-
+  "generateConfirmation": "Wygeneruj potwierdzenie",
+  "report":  "Raport"
 }

@@ -1,40 +1,14 @@
 import { Button, Box, Typography, TextField } from '@mui/material';
 import {useState} from 'react';
+import { jwtDecode } from "jwt-decode";
 import React from 'react';
-// import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 import Cookies from "js-cookie";
-// import axios from "axios";
 import {useTranslation} from "react-i18next";
 
 export const TransactionHistory = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    // const [user, setUser] = useState<Account | null>(null);
     const { t } = useTranslation();
-    // useEffect(() => {
-    //     const fetchUser = async () => {
-    //         const token = Cookies.get('jwt');
-    //         if (!token) {
-    //             throw new Error('Brak tokenu JWT');
-    //         }
-    //
-    //         const response = await axios.get(`http://localhost:8080/api/auth/me`, {
-    //             headers: {
-    //                 Authorization: `Bearer ${token}`
-    //             }
-    //         });
-    //         setUser(response.data);
-    //     };
-    //     fetchUser();
-    // }, []);
-    //let userId: number;
-
-    // if (user) {
-    //     userId = +user.id;
-    // } else {
-    //     userId = 0;
-    // }
-
 
     // Funkcja do obsługi zmiany daty
     const handleDateChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, setDate: React.Dispatch<React.SetStateAction<string>>) => {
@@ -44,16 +18,18 @@ export const TransactionHistory = () => {
     // Funkcja do wysłania formularza
     const handleSubmit = async () => {
         const params = new URLSearchParams();
-        //params.append('userId', userId.toString());
         if (startDate) params.append('startTime', new Date(startDate).toISOString());
         if (endDate) params.append('endTime', new Date(endDate).toISOString());
         const token = Cookies.get('jwt');
         if (!token) {
-            throw new Error('Brak tokenu JWT');
+            throw new Error(t('jwtMissing'));
         }
 
+        const decoded = jwtDecode(token);
+
         try {
-            const response = await fetch('http://localhost:8080/api/transaction-history-report/generate-pdf?' + params.toString(), {
+            const response = await fetch(
+                (decoded.role == 'ROLE_DARCZYŃCA' ? 'http://localhost:8080/api/transaction-history-report/generate-pdf?' : 'http://localhost:8080/api/transaction-history-report/generate-pdf/all?') + params.toString(), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

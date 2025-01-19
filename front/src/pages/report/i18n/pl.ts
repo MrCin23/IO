@@ -41,6 +41,13 @@ const pl = {
 
     errorReport: "Wystąpił błąd podczas generowania raportu.",
 
+    jwtMissing: "Brak tokenu JWT",
+
+    Resources: 'Zasoby',
+    Warehouses: 'Magazyny',
+    Products: 'Produkty',
+    Roles: 'Role',
+    VolunteerGroups: 'Grupy wolontariuszy',
 }
 
 export default pl;

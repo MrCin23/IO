@@ -51,5 +51,6 @@
   "listConfirmation": "Confirmation",
   "listAmount": "Amount",
   "listCurrency": "Currency",
-  "generateConfirmation": "Generate confirmation"
+  "generateConfirmation": "Generate confirmation",
+  "report":  "Report"
 }

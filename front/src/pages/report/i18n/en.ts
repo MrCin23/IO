@@ -40,6 +40,13 @@ const en = {
 
     errorReport: "An error occurred while generating the report.",
 
+    jwtMissing: "Missing JWT token",
+
+    Resources: 'Resources',
+    Warehouses: 'Warehouses',
+    Products: 'Products',
+    Roles: 'Roles',
+    VolunteerGroups: 'Volunteer Groups',
 }
 
 export default en;

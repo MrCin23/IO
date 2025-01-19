@@ -32,12 +32,12 @@ public class TransactionsHistoryReportService {
         Account currentUser = accountRepository.findByUsername(auth.getName());
 
         TransactionsHistoryReport report = new TransactionsHistoryReport(currentUser.getId(), startTime, endTime);
+
         return generatedReportRepository.save
                 (ReportGenerator.generateTransactionHistoryReport
                         (currentUser.getFirstName(), currentUser.getLastName(), report, allForCurrentUser));
     }
 
-    // nwm czy to jest git
     public byte[] generateReportPdf(Timestamp startTime, Timestamp endTime, List<FinancialDonation> allForCurrentUser) {
         //kod odpowiedzialny za pobranie aktualnego uzytkownika
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

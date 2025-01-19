@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Button, Box } from '@mui/material';
-import axios from 'axios';
+import { jwtDecode } from "jwt-decode";
 import { Empty } from './Empty';
-import { General } from './General';
-import { Action } from './Action';
-import { ActionHistory } from './ActionHistory';
 import { Modular } from './Modular';
 import { Summary } from './Summary';
 import { TransactionHistory } from './TransactionHistory';
@@ -23,12 +20,6 @@ export const HomeReportPage = () => {
         switch (activeTab) {
             case 'EmptyContent':
                 return <Empty />;
-            case 'GeneralContent':
-                return <General />;
-            case 'ActionContent':
-                return <Action />;
-            case 'ActionHistoryContent':
-                return <ActionHistory />;
             case 'ModularContent':
                 return <Modular />;
             case 'SummaryContent':
@@ -45,34 +36,23 @@ export const HomeReportPage = () => {
             const token = Cookies.get('jwt');
             if (!token) {
                 navigate('/');
-                throw new Error('Brak tokenu JWT');
+                throw new Error(t('jwtMissing'));
             }
 
-            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            const userData = response.data;
+            const decoded = jwtDecode(token);
 
             // Ustaw widoczność przycisków w zależności od roli użytkownika
-            const role = userData.role.roleName; // Odczytaj nazwę roli
+            const role = decoded.role; // Odczytaj nazwę roli
             let buttons: string[];
             switch (role) {
-                case 'PRZEDSTAWICIEL_WŁADZ':
-                    buttons = ['General', 'Summary', 'Action', 'Modular'];
+                case 'ROLE_PRZEDSTAWICIEL_WŁADZ':
+                    buttons = ['Summary', 'Modular'];
                     break;
-                case 'ORGANIZACJA_POMOCOWA':
-                    buttons = ['General', 'Summary', 'Action', 'Modular', 'TransactionHistory'];
+                case 'ROLE_ORGANIZACJA_POMOCOWA':
+                    buttons = ['Summary', 'Modular', 'TransactionHistory'];
                     break;
-                case 'WOLONTARIUSZ':
-                    buttons = ['ActionHistory'];
-                    break;
-                case 'DARCZYŃCA':
+                case 'ROLE_DARCZYŃCA':
                     buttons = ['TransactionHistory'];
-                    break;
-                case 'POSZKODOWANY':
-                    buttons = [];
                     break;
                 default:
                     buttons = [];
@@ -98,30 +78,6 @@ export const HomeReportPage = () => {
                     top: 72,
                 }}
             >
-                {visibleButtons.includes('General') && (
-                    <Button
-                        variant="contained"
-                        onClick={() => setActiveTab('GeneralContent')}
-                    >
-                        {t('general')}
-                    </Button>
-                )}
-                {visibleButtons.includes('Action') && (
-                    <Button
-                        variant="contained"
-                        onClick={() => setActiveTab('ActionContent')}
-                    >
-                        {t('action')}
-                    </Button>
-                )}
-                {visibleButtons.includes('ActionHistory') && (
-                    <Button
-                        variant="contained"
-                        onClick={() => setActiveTab('ActionHistoryContent')}
-                    >
-                        {t('actionHistory')}
-                    </Button>
-                )}
                 {visibleButtons.includes('Modular') && (
                     <Button
                         variant="contained"
