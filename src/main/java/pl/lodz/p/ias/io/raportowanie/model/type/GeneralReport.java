@@ -18,7 +18,6 @@ public class GeneralReport extends Report {
         return content;
     }
 
-    @Override
     public GeneratedReport generate() {
 
         GeneralReportQuery grq = new GeneralReportQuery();
@@ -31,6 +30,7 @@ public class GeneralReport extends Report {
         + "  - Manualnych: " + grq.countManualNeeds() + "\n"
         + "  - Materialnych: " + grq.countMaterialNeeds() + "\n";
 
-        return new GeneratedReport(getUserId(), content);
+        //return new GeneratedReport(getUserId(), content);
+        return null;
     }
 }

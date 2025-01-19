@@ -4,10 +4,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 import pl.lodz.p.ias.io.raportowanie.service.TransactionsHistoryReportService;
+import pl.lodz.p.ias.io.uwierzytelnianie.model.Account;
 
+import java.security.Principal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -25,14 +29,15 @@ public class TransactionsHistoryReportController {
         this.transactionsHistoryReportService = transactionsHistoryReportService;
     }
 
+    @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'DARCZYŃCA')")
     @PostMapping("/generate")
-    public ResponseEntity<GeneratedReport> generateReport(@RequestParam Long userId, @RequestParam Timestamp startDate, @RequestParam Timestamp endDate) {
-        return ResponseEntity.ok(transactionsHistoryReportService.generateReport(userId, startDate, endDate));
+    public ResponseEntity<GeneratedReport> generateReport(@RequestParam Timestamp startDate, @RequestParam Timestamp endDate) {
+        return ResponseEntity.ok(transactionsHistoryReportService.generateReport(startDate, endDate));
     }
 
+    @PreAuthorize("hasAnyRole('ORGANIZACJA_POMOCOWA', 'DARCZYŃCA')")
     @PostMapping("/generate-pdf")
-    public ResponseEntity<byte[]> generateReportPdf(@RequestParam Long userId, @RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime) {
-
+    public ResponseEntity<byte[]> generateReportPdf(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 
         // Konwersja startTime i endTime na Timestamp
@@ -61,23 +66,11 @@ public class TransactionsHistoryReportController {
             endTimestamp = new Timestamp(System.currentTimeMillis()); // Ustaw bieżącą datę
         }
 
-        byte[] pdfData = transactionsHistoryReportService.generateReportPdf(userId, startTimestamp, endTimestamp);
+        byte[] pdfData = transactionsHistoryReportService.generateReportPdf(startTimestamp, endTimestamp);
 
         return ResponseEntity.ok()
                 .contentType(MediaType.APPLICATION_PDF)
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"transaction-history-report.pdf\"")
                 .body(pdfData);
-    }
-
-    @GetMapping("/{reportId}")
-    public ResponseEntity<GeneratedReport> getReport(@PathVariable Long reportId) {
-        return transactionsHistoryReportService.getReport(reportId)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping
-    public ResponseEntity<List<GeneratedReport>> getAllReports() {
-        return ResponseEntity.ok(transactionsHistoryReportService.getAllReports());
     }
 }

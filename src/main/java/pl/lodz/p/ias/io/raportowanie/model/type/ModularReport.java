@@ -55,7 +55,6 @@ public class ModularReport extends GeneralReport {
         this.fields = fields;
     }
 
-    @Override
     public GeneratedReport generate() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         GeneralReportQuery grq = new GeneralReportQuery();
@@ -64,7 +63,7 @@ public class ModularReport extends GeneralReport {
         String endDate = dateFormat.format(endTime);
 
         Module module = Module.getById(moduleId);
-        switch (moduleId) {
+        /*switch (moduleId) {
             case 1:
                 content = "Raport modularny dla modulu " + module + "\n"
                         + "Wygenerowany dla danych z przedzialu:\n"
@@ -102,6 +101,7 @@ public class ModularReport extends GeneralReport {
                 return new GeneratedReport(getUserId(), content);
             default:
                 throw new IllegalArgumentException("No module with id " + moduleId);
-        }
+        }*/
+        return null;
     }
 }

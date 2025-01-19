@@ -27,8 +27,6 @@ public class GeneratedReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
-    @Column(name = "user_id")
-    private Long userId;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "user_surname")
@@ -38,19 +36,9 @@ public class GeneratedReport {
     @Column(name = "data_table")
     private String table;
 
-    public GeneratedReport(Long userId, String table) {
-        this.userId = userId;
-        GeneralReportQuery grq = new GeneralReportQuery();
-        Set<String> result = grq.nameSurnameQuery(userId);
-        Iterator<String> iterator = result.iterator();
-        if (!result.isEmpty()) {
-            this.userName = iterator.next();
-            this.userSurname = iterator.next();
-        }
-        else {
-            this.userName = "Unknown";
-            this.userSurname = "Unknown";
-        }
+    public GeneratedReport(String userName, String userSurname, String table) {
+        this.userName = userName;
+        this.userSurname = userSurname;
         this.generationTime = new Timestamp(System.currentTimeMillis());
         this.table = table;
     }

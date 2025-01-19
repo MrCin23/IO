@@ -1,39 +1,39 @@
 import { Button, Box, Typography, TextField } from '@mui/material';
-import {useEffect, useState} from 'react';
+import {useState} from 'react';
 import React from 'react';
-import {Account} from "../../models/uwierzytelnianie/Account.tsx";
+// import {Account} from "../../models/uwierzytelnianie/Account.tsx";
 import Cookies from "js-cookie";
-import axios from "axios";
+// import axios from "axios";
 import {useTranslation} from "react-i18next";
 
 export const TransactionHistory = () => {
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
-    const [user, setUser] = useState<Account | null>(null);
+    // const [user, setUser] = useState<Account | null>(null);
     const { t } = useTranslation();
-    useEffect(() => {
-        const fetchUser = async () => {
-            const token = Cookies.get('jwt');
-            if (!token) {
-                throw new Error('Brak tokenu JWT');
-            }
+    // useEffect(() => {
+    //     const fetchUser = async () => {
+    //         const token = Cookies.get('jwt');
+    //         if (!token) {
+    //             throw new Error('Brak tokenu JWT');
+    //         }
+    //
+    //         const response = await axios.get(`http://localhost:8080/api/auth/me`, {
+    //             headers: {
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         });
+    //         setUser(response.data);
+    //     };
+    //     fetchUser();
+    // }, []);
+    //let userId: number;
 
-            const response = await axios.get(`http://localhost:8080/api/auth/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            setUser(response.data);
-        };
-        fetchUser();
-    }, []);
-    let userId: number;
-
-    if (user) {
-        userId = +user.id;
-    } else {
-        userId = 0;
-    }
+    // if (user) {
+    //     userId = +user.id;
+    // } else {
+    //     userId = 0;
+    // }
 
 
     // Funkcja do obsługi zmiany daty
@@ -44,15 +44,20 @@ export const TransactionHistory = () => {
     // Funkcja do wysłania formularza
     const handleSubmit = async () => {
         const params = new URLSearchParams();
-        params.append('userId', userId.toString());
+        //params.append('userId', userId.toString());
         if (startDate) params.append('startTime', new Date(startDate).toISOString());
         if (endDate) params.append('endTime', new Date(endDate).toISOString());
+        const token = Cookies.get('jwt');
+        if (!token) {
+            throw new Error('Brak tokenu JWT');
+        }
 
         try {
             const response = await fetch('http://localhost:8080/api/transaction-history-report/generate-pdf?' + params.toString(), {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    Authorization: `Bearer ${token}`, // Dodanie tokenu JWT do nagłówków
                 }
             });
 

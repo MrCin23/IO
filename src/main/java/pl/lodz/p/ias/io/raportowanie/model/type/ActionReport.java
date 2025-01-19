@@ -12,13 +12,14 @@ public class ActionReport extends GeneralReport {
         super(userId);
     }
 
-    @Override
+
     public GeneratedReport generate() {
         //kod odpowiedzialny za pobieranie z bazy danych imienia i nazwiska użytkownika o userId
 
         //kod odpowiedzialny za generowanie teści raportu w oparciu o baze danych
         content = "Raport akcji" + "\n" + "Ilosc akcji: 10";
 
-        return new GeneratedReport(getUserId(), content);
+        //return new GeneratedReport(getUserId(), content);
+        return null;
     }
 }

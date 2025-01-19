@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.raportowanie.model.entity.GeneratedReport;
 import pl.lodz.p.ias.io.raportowanie.service.ActionsHistoryReportService;
@@ -21,11 +22,13 @@ public class ActionsHistoryReportController {
         this.actionsHistoryReportService = actionsHistoryReportService;
     }
 
+    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @PostMapping("/generate")
     public ResponseEntity<GeneratedReport> generateReport(@RequestParam Long userId) {
         return ResponseEntity.ok(actionsHistoryReportService.generateReport(userId));
     }
 
+    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @PostMapping("/generate-pdf")
     public ResponseEntity<byte[]> generateReportPdf(@RequestParam Long userId) {
         byte[] pdfData = actionsHistoryReportService.generateReportPdf(userId);
@@ -36,6 +39,7 @@ public class ActionsHistoryReportController {
                 .body(pdfData);
     }
 
+    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping("/{reportId}")
     public ResponseEntity<GeneratedReport> getReport(@PathVariable Long reportId) {
         return actionsHistoryReportService.getReport(reportId)
@@ -43,6 +47,7 @@ public class ActionsHistoryReportController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @PreAuthorize("hasAnyRole('WOLONTARIUSZ')")
     @GetMapping
     public ResponseEntity<List<GeneratedReport>> getAllReports() {
         return ResponseEntity.ok(actionsHistoryReportService.getAllReports());
