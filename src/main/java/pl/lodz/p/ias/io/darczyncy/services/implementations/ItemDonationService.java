@@ -86,6 +86,9 @@ public class ItemDonationService implements IItemDonationService {
         }
 
         List<Warehouse> warehouses = warehouseRepository.findAll();
+        if (warehouses.isEmpty()) {
+            throw new DonationBaseException("No warehouse found");
+        }
         Random rand = new Random();
         Warehouse selectedWarehouse = warehouses.get(rand.nextInt(warehouses.size()));
 
@@ -109,7 +112,6 @@ public class ItemDonationService implements IItemDonationService {
         }
 
         message = message.formatted(dto.name(), need.getDescription());
-
         notificationService.notify(message, NotificationType.INFORMATION);
         return itemDonationRepository.save(itemDonation);
     }
