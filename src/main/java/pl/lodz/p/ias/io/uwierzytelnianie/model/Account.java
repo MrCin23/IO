@@ -13,10 +13,6 @@ public class Account extends AbstractEntity {
     @Column(unique = true)
     private String username;
 
-    /*@Getter
-    @Column(unique = true)
-    private String email;*/
-
     @Getter
     @Setter
     @JsonIgnore
