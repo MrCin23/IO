@@ -13,6 +13,9 @@ import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
 import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import pl.lodz.p.ias.io.uwierzytelnianie.model.Role;
 import pl.lodz.p.ias.io.uwierzytelnianie.repositories.AccountRepository;
+import pl.lodz.p.ias.io.zasoby.model.Warehouse;
+import pl.lodz.p.ias.io.zasoby.repository.WarehouseRepository;
+import pl.lodz.p.ias.io.zasoby.service.WarehouseService;
 
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +28,9 @@ public class MapService implements IMapService {
 
     @Autowired
     INotificationService notificationService;
+
+    @Autowired
+    WarehouseRepository warehouseRepository;
 
     private MapPointRepository mapPointRepository;
 
@@ -65,15 +71,24 @@ public class MapService implements IMapService {
     @Override
     public void removePoint(long id) {
         Optional<MapPoint> point_opt = mapPointRepository.findById(id);
-        if(point_opt.isPresent()) {
+        if(point_opt.isEmpty()) {
+            throw new RuntimeException("No point found with id " + id);
+        }
+        if(point_opt.get().getType() == PointType.WAREHOUSE) {
+            Optional<Warehouse> warehouse_opt = warehouseRepository.findByMapPoint(point_opt.get());
+            if(warehouse_opt.isEmpty()) {
+                throw new RuntimeException("No warehouse foundwith id " + id);
+            }
+            warehouseRepository.delete(warehouse_opt.get());
+        } else {
             MapPoint point = point_opt.get();
             Role role = new Role("VOLUNTEER");
             List<MapPoint> volunteers_points = getPointsByType(PointType.VOLUNTEER);
             for (MapPoint mapPoint : volunteers_points) {
-                if(mapPoint.getPointOwner() != null && Objects.equals(mapPoint.getPointOwner().getRole().getRoleName(), role.getRoleName())) {
-                    for(MapPoint volunteer_point : volunteers_points) {
+                if (mapPoint.getPointOwner() != null && Objects.equals(mapPoint.getPointOwner().getRole().getRoleName(), role.getRoleName())) {
+                    for (MapPoint volunteer_point : volunteers_points) {
                         double dist = point.checkDistance(volunteer_point);
-                        if(dist < 10 && point.getType() == PointType.VICTIM) {
+                        if (dist < 10 && point.getType() == PointType.VICTIM) {
                             notificationService.notify("Victim at: " +
                                     point.getCoordinates().lat + " " + point.getCoordinates().lng + " no longer needs help!", NotificationType.INFORMATION, volunteer_point.getPointOwner());
                         }
