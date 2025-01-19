@@ -8,11 +8,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import pl.lodz.p.ias.io.mapy.model.MapPoint;
 import pl.lodz.p.ias.io.mapy.service.MapService;
-import pl.lodz.p.ias.io.poszkodowani.dto.manualneed.ManualNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedCreateRequest;
 import pl.lodz.p.ias.io.poszkodowani.dto.materialneed.MaterialNeedResponse;
 import pl.lodz.p.ias.io.poszkodowani.mapper.MaterialNeedMapper;
-import pl.lodz.p.ias.io.poszkodowani.model.ManualNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.service.MaterialNeedService;
@@ -49,7 +47,7 @@ public class MaterialNeedController {
         MapPoint mapPoint = mapService.getPoint(dto.getMapPointId());
         materialNeed.setUser(user);
         materialNeed.setMapPoint(mapPoint);
-        MaterialNeed savedMaterialNeed = materialNeedService.createMaterialNeed(materialNeed);
+        MaterialNeed savedMaterialNeed = materialNeedService.createNeed(materialNeed);
         MaterialNeedResponse responseDTO = materialNeedMapper.toMaterialNeedResponse(savedMaterialNeed);
         return ResponseEntity.ok(responseDTO);
     }
@@ -63,14 +61,14 @@ public class MaterialNeedController {
 
     @GetMapping
     public ResponseEntity<List<MaterialNeedResponse>> getAllMaterialNeeds() {
-        List<MaterialNeed> materialNeeds = materialNeedService.getAllMaterialNeeds();
+        List<MaterialNeed> materialNeeds = materialNeedService.getAllNeeds();
         List<MaterialNeedResponse> responseDTOs = materialNeedMapper.toMaterialNeedResponseList(materialNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<MaterialNeedResponse>> getMaterialNeedsByUserId(@PathVariable Long userId) {
-        List<MaterialNeed> materialNeeds = materialNeedService.getMaterialNeedsByUserId(userId);
+        List<MaterialNeed> materialNeeds = materialNeedService.getNeedsByUserId(userId);
         List<MaterialNeedResponse> responseDTOs = materialNeedMapper.toMaterialNeedResponseList(materialNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
@@ -82,6 +80,4 @@ public class MaterialNeedController {
                 .map(value -> ResponseEntity.ok(materialNeedMapper.toMaterialNeedResponse(value)))
                 .orElse(ResponseEntity.notFound().build());
     }
-
-
 }

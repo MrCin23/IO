@@ -49,14 +49,6 @@ export const VolunteerLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => changeLanguage('pl')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {i18n.t('polish')}
                     </Button>
-
-
-                    <Button onClick={() => navigate(Pathnames.volunteer.mapPage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Mapy DO ZROBIENIA
-                    </Button>
-
-
-
                 </Toolbar>
             </AppBar>
             <Container sx={{ p: 2 }}>

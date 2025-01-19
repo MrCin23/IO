@@ -5,13 +5,23 @@ import org.springframework.stereotype.Service;
 import pl.lodz.p.ias.io.poszkodowani.model.MaterialNeed;
 import pl.lodz.p.ias.io.poszkodowani.model.Need;
 import pl.lodz.p.ias.io.poszkodowani.repository.MaterialNeedRepository;
+import pl.lodz.p.ias.io.powiadomienia.Interfaces.INotificationService;
+import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 
 import java.util.*;
 
 @Service
-public class MaterialNeedService {
+public class MaterialNeedService implements INeedService<MaterialNeed> {
 
     private final MaterialNeedRepository materialNeedRepository;
+
+    private final INotificationService notificationService;
+
+    @Autowired
+    public MaterialNeedService(MaterialNeedRepository materialNeedRepository, INotificationService notificationService) {
+        this.materialNeedRepository = materialNeedRepository;
+        this.notificationService = notificationService;
+    }
 
     private static final Map<Need.Status, Set<Need.Status>> ALLOWED_TRANSITIONS = new HashMap<>();
 
@@ -28,16 +38,14 @@ public class MaterialNeedService {
             .contains(target);
     }
 
-    @Autowired
-    public MaterialNeedService(MaterialNeedRepository materialNeedRepository) {
-        this.materialNeedRepository = materialNeedRepository;
-    }
-
-    public MaterialNeed createMaterialNeed(MaterialNeed materialNeed) {
-        // TODO: logika odpowiedzialana za sprawdzenie czy użytkownik oraz punkt na mapie istnieje
+    public MaterialNeed createNeed(MaterialNeed materialNeed) {
         materialNeed.setCreationDate(new Date());
         materialNeed.setPriority(1);
         materialNeed.setStatus(Need.Status.PENDING);
+
+        MaterialNeed savedMaterialNeed = materialNeedRepository.save(materialNeed);
+
+        notificationService.notify("New material need with id " + savedMaterialNeed.getId() + " has been created successfully", NotificationType.INFORMATION, savedMaterialNeed.getUser());
 
         return materialNeedRepository.save(materialNeed);
     }
@@ -46,11 +54,11 @@ public class MaterialNeedService {
         return materialNeedRepository.findById(id);
     }
 
-    public List<MaterialNeed> getAllMaterialNeeds() {
+    public List<MaterialNeed> getAllNeeds() {
         return materialNeedRepository.findAll();
     }
 
-    public List<MaterialNeed> getMaterialNeedsByUserId(Long userId) {
+    public List<MaterialNeed> getNeedsByUserId(Long userId) {
         return materialNeedRepository.findByUserId(userId);
     }
 
@@ -60,12 +68,11 @@ public class MaterialNeedService {
         optionalMaterialNeed.ifPresent(materialNeed -> {
             Need.Status currentStatus = materialNeed.getStatus();
 
-            // Check if the transition is allowed
             if (canTransition(currentStatus, newStatus)) {
                 materialNeed.setStatus(newStatus);
                 materialNeedRepository.save(materialNeed);
+                notificationService.notify("Status of material need with id " + materialNeed.getId() + " has been changed to " + newStatus, NotificationType.INFORMATION, materialNeed.getUser());
             } else {
-                // You can throw an exception or handle the invalid transition as you see fit
                 throw new IllegalStateException(
                     String.format("Cannot transition from %s to %s", currentStatus, newStatus)
                 );
@@ -82,6 +89,7 @@ public class MaterialNeedService {
             MaterialNeed materialNeed = optionalMaterialNeed.get();
             materialNeed.setStatus(Need.Status.COMPLETED);
             materialNeedRepository.save(materialNeed);
+            notificationService.notify("Material need with id " + materialNeed.getId() + " has been completed", NotificationType.INFORMATION, materialNeed.getUser());
         } else {
             throw new NoSuchElementException("MaterialNeed with id " + id + " not found");
         }

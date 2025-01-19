@@ -61,7 +61,7 @@ function VolunteerGroupList() {
             .then((response) => setNotGroupMembers(response.data))
             .catch((error) => console.error("Failed to fetch groups:", error));
         // setNotGroupMembers(others);
-        console.log(notMembers)
+        // console.log(notMembers)
         setIsPopupVisible(true);
     };
 
@@ -84,7 +84,7 @@ function VolunteerGroupList() {
             setNotGroupMembers((prev) => [...prev, volunteer]);
             setGroupMembers((prev) => prev.filter((member) => member.id !== volunteer.id));
         }
-        console.log(removeGroupMembers)
+        // console.log(removeGroupMembers)
     };
 
     // Save the updated group
@@ -96,10 +96,13 @@ function VolunteerGroupList() {
             const removeMembersGroup = {
                 members: removeGroupMembers.map((member) => member.id),
             };
-            console.log(groupMembers)
+            console.log("added");
+            console.log(updatedGroup);
+            console.log("removed")
             console.log(removeMembersGroup)
-            await axios.post(`/volunteerGroups/${editingGroupId}/addMembers`, updatedGroup);
-
+            if (updatedGroup.members.length != 0) {
+                await axios.post(`/volunteerGroups/${editingGroupId}/addMembers`, updatedGroup);
+            }
             await axios.post(`/volunteerGroups/${editingGroupId}/removeMembers`, removeMembersGroup);
 
             axios

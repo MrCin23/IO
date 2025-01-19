@@ -31,20 +31,4 @@ public class FinancialNeedCreateRequest {
 
     @Min(value = 1, message = "Collection goal must be at least 1")
     private double collectionGoal;
-
-    //    @Min(value = 0, message = "Collection status must be non-negative")
-//    private double collectionStatus;
-
-    // Logic implemented in service
-    //    @PastOrPresent(message = "Creation date cannot be in the future")
-    //    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    //    private Date creationDate;
-    //
-
-    //
-    //    @Size(max = 50, message = "Status cannot exceed 50 characters")
-    //    private String status;
-    //
-    //    @Min(value = 1, message = "Priority must be at least 1")
-    //    private int priority;
 }

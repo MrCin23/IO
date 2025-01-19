@@ -160,9 +160,9 @@ export default function AddNeedForm() {
           onChange={handleNeedTypeChange}
           className="flex flex-col"
         >
-          <FormControlLabel value="material-needs" control={<Radio />} label={t("materialNeed")} />
-          <FormControlLabel value="manual-needs" control={<Radio />} label={t("manualNeed")} />
-          <FormControlLabel value="financial-needs" control={<Radio />} label={t("financialNeed")} />
+          <FormControlLabel value="material-needs" control={<Radio />} label={t("victim.materialNeed")} />
+          <FormControlLabel value="manual-needs" control={<Radio />} label={t("victim.manualNeed")} />
+          <FormControlLabel value="financial-needs" control={<Radio />} label={t("victim.financialNeed")} />
         </RadioGroup>
       </FormControl>
 

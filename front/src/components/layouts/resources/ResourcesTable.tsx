@@ -23,6 +23,10 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
 
     const handleUpdate = async () => {
         if (!selectedResourceId || !selectedStatus || selectedQuantity === null) return;
+        if (selectedQuantity < 0) {
+            alert(t("resources.negativeQuantityError"));
+            return;
+        }
 
         const validStatuses = ["ACCEPTED", "PENDING", "REJECTED"];
         if (!validStatuses.includes(selectedStatus)) {
@@ -48,6 +52,7 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 alert(t("resources.lowResourceWarning"));
             }
 
+            const message = encodeURIComponent(t("resources.resourceUpdate"));
             await api.put(`/resources/${selectedResourceId}`, {
                 resourceId: resourceToUpdate.resourceId,
                 resourceName: resourceToUpdate.resourceName,
@@ -55,9 +60,12 @@ export const ResourcesTable = ({ resources }: { resources: Resource[] }) => {
                 resourceQuantity: selectedQuantity,
                 resourceStatus: statusMap[selectedStatus as "Zaakceptowany" | "Oczekujący" | "Odrzucony"],
                 warehouseId: resourceToUpdate.warehouseId,
+            }, {
+                headers: {
+                    "message": message,
+                }
             });
 
-            alert(t("resources.resourceUpdatedSuccess"));
             window.location.reload();
         } catch (error) {
             console.error(t("resourceUpdateFailed"), error);

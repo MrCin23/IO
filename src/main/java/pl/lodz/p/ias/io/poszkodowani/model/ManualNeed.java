@@ -8,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
 @Entity
-@SuperBuilder // Lombok annotation for hierarchical builders
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "manual_need")
