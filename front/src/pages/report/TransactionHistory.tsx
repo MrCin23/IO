@@ -22,7 +22,7 @@ export const TransactionHistory = () => {
         if (endDate) params.append('endTime', new Date(endDate).toISOString());
         const token = Cookies.get('jwt');
         if (!token) {
-            throw new Error(t('jwtMissing'));
+            throw new Error(t('report.jwtMissing'));
         }
 
         const decoded = jwtDecode(token);
@@ -46,18 +46,18 @@ export const TransactionHistory = () => {
                 link.click();
                 window.URL.revokeObjectURL(url);
             } else {
-                alert(t('errorReport'));
+                alert(t('report.errorReport'));
             }
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert(t('errorReport'));
+            alert(t('report.errorReport'));
         }
     };
 
     return (
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2, width: '800px', height: '600px'}}>
             <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
-                {t('transactionHistoryTitle')}
+                {t('report.transactionHistoryTitle')}
             </Typography>
 
             {/* Formularz dat */}
@@ -74,7 +74,7 @@ export const TransactionHistory = () => {
             />
 
             <TextField
-                label={t('transactionHistoryFormEnd')}
+                label={t('report.transactionHistoryFormEnd')}
                 type="datetime-local"
                 value={endDate}
                 onChange={(e) => handleDateChange(e, setEndDate)}
@@ -87,7 +87,7 @@ export const TransactionHistory = () => {
 
             {/* Przycisk generowania raportu */}
             <Button variant="contained" color="primary" onClick={handleSubmit}>
-                {t('transactionHistoryButton')}
+                {t('report.transactionHistoryButton')}
             </Button>
         </Box>
     );

@@ -1,1 +1,1 @@
-export const Empty = () => <div></div>
+export const Empty = () => <div style={{ width: '800px', height: '600px'}}> </div>

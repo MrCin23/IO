@@ -72,10 +72,9 @@ export const HomeReportPage = () => {
                     justifyContent: 'center',
                     gap: 2,
                     mt: 0,
-                    position: 'fixed',
+                    position: 'relative',
                     width: '100%',
-                    left: '0',
-                    top: 72,
+                    left: '0'
                 }}
             >
                 {visibleButtons.includes('Modular') && (
@@ -83,7 +82,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('ModularContent')}
                     >
-                        {t('modular')}
+                        {t('report.modular')}
                     </Button>
                 )}
                 {visibleButtons.includes('Summary') && (
@@ -91,7 +90,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('SummaryContent')}
                     >
-                        {t('summary')}
+                        {t('report.summary')}
                     </Button>
                 )}
                 {visibleButtons.includes('TransactionHistory') && (
@@ -99,7 +98,7 @@ export const HomeReportPage = () => {
                         variant="contained"
                         onClick={() => setActiveTab('TransactionHistoryContent')}
                     >
-                        {t('transactionHistory')}
+                        {t('report.transactionHistory')}
                     </Button>
                 )}
             </Box>

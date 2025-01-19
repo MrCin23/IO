@@ -11,11 +11,11 @@ export const Modular = () => {
     // Załaduj dostępne moduły, gdy komponent się załaduje
     useEffect(() => {
         setModules([
-            { id: '1', name: t('Resources') },
-            { id: '2', name: t('Warehouses') },
-            { id: '3', name: t('Products') },
-            { id: '4', name: t('Roles') },
-            { id: '5', name: t('VolunteerGroups') },
+            { id: '1', name: t('report.Resources') },
+            { id: '2', name: t('report.Warehouses') },
+            { id: '3', name: t('report.Products') },
+            { id: '4', name: t('report.Roles') },
+            { id: '5', name: t('report.VolunteerGroups') },
         ]);
     }, []);
 
@@ -32,7 +32,7 @@ export const Modular = () => {
         params.append('moduleId', moduleId);
         const token = Cookies.get('jwt');
         if (!token) {
-            throw new Error(t('jwtMissing'));
+            throw new Error(t('report.jwtMissing'));
         }
 
         try {
@@ -63,18 +63,18 @@ export const Modular = () => {
 
 
     return (
-        <Box sx={{ p: 2, color: 'white' }}>
+        <Box sx={{ p: 2, color: 'white', width: '800px', height: '600px'}}>
             <Typography variant="h6" gutterBottom sx={{ color: 'white' }}>
-                {t('modularTitle')}
+                {t('report.modularTitle')}
             </Typography>
 
             {/* Formularz */}
             <FormControl fullWidth sx={{ mb: 2, borderColor: 'white', borderWidth: 1, color: 'white' }}>
-                <InputLabel sx={{ color: 'white' }}>{t('modularFormModule')}</InputLabel>
+                <InputLabel sx={{ color: 'white' }}>{t('report.modularFormModule')}</InputLabel>
                 <Select
                     value={moduleId}
                     onChange={handleModuleChange}
-                    label={t('modularFormModule')}
+                    label={t('report.modularFormModule')}
                     sx={{
                         '& .MuiSelect-icon': {
                             color: 'white',
@@ -99,7 +99,7 @@ export const Modular = () => {
             </FormControl>
 
             <Button variant="contained" color="primary" onClick={handleSubmit}>
-                {t('modularButton')}
+                {t('report.modularButton')}
             </Button>
         </Box>
     );

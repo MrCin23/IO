@@ -11,7 +11,7 @@ export const Summary = () => {
             // Pobranie tokenu JWT z ciasteczek
             const token = Cookies.get('jwt');
             if (!token) {
-                throw new Error(t('jwtMissing'));
+                throw new Error(t('report.jwtMissing'));
             }
 
             // Wysłanie żądania POST z axios
@@ -37,15 +37,15 @@ export const Summary = () => {
             window.URL.revokeObjectURL(url); // Zwolnienie zasobów URL
         } catch (error) {
             console.error('Błąd podczas generowania raportu:', error);
-            alert(t('errorReport'));
+            alert(t('report.errorReport'));
         }
     };
 
     return (
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 2, width: '800px', height: '600px' }}>
             {/* Opis raportu */}
             <Typography variant="h6" gutterBottom>
-                {t('summaryTitle')}
+                {t('report.summaryTitle')}
             </Typography>
 
             {/* Przycisk generowania raportu */}
@@ -55,7 +55,7 @@ export const Summary = () => {
                 onClick={() => handleGenerateReport()}
                 sx={{ mt: 2 }}
             >
-                {t('summaryButton')}
+                {t('report.summaryButton')}
             </Button>
         </Box>
     );
