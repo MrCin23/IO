@@ -70,7 +70,7 @@ const CreateChatForm = ({
 
   const onSubmit = async (data: z.infer<typeof formSchema>) => {
     const requestBody = {
-      users: data.users,
+      users: [...new Set([...data.users, account?.id.toString()])],
       name: data.chatName,
     };
     const response = await fetch("/api/chatrooms/create", {
@@ -141,6 +141,7 @@ const CreateChatForm = ({
                             <FormControl>
                               <Checkbox
                                 id={user.id}
+                                className="p-0"
                                 checked={field.value?.includes(String(user.id))}
                                 onCheckedChange={(checked) => {
                                   const userId = String(user.id);
@@ -168,7 +169,7 @@ const CreateChatForm = ({
             </FormItem>
           )}
         />
-        <Button type="submit" className="bg-white text-black">{t("general.submit")}</Button>
+        <Button type="submit" className="">{t("general.submit")}</Button>
       </form>
     </Form>
   );
