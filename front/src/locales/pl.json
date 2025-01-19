@@ -91,7 +91,8 @@
     "listConfirmation": "Potwierdzenie",
     "listAmount": "Kwota",
     "listCurrency": "Waluta",
-    "generateConfirmation": "Wygeneruj potwierdzenie"
+    "generateConfirmation": "Wygeneruj potwierdzenie",
+    "report": "Raport"
 
   },
   "resources": {
@@ -145,9 +146,10 @@
     "warehouseError": "Nieoczekiwany błąd. Spróbuj ponownie.",
     "resourceId": "ID Zasobu",
     "enterResourceType": "Podaj typ zasobu",
-    "resourceSuccess": "Pomyślnie dodano zasób"
+    "resourceSuccess": "Pomyślnie dodano zasób",
+    "resourceUpdate": "Pomyślnie zaktualizowano zasób",
+    "negativeQuantityError": "Wprowadzono niepoprawną wartość"
   },
-
   "notifications": {
     "dialog_title": "Powiadomienia"
   },
@@ -282,5 +284,101 @@
     "cancel": "Anuluj",
     "profileUpdatedSuccessfully": "Profil zaktualizowany pomyślnie!",
     "setPosition": "Zaznacz swoją lokalizację"
-  }
+  },
+
+  "auth" : {
+    "loginTitle": "Logowanie",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "login":"Zaloguj się",
+    "loginError":"Logowanie nie powiodło się",
+    "loginErrorCred":"Nieprawidłowa nazwa użytkownika lub hasło",
+    "loginErrorActive":"To konto jest nieaktywne",
+    "firstName":"Imię",
+    "lastName":"Nazwisko",
+    "chooseRole":"Wybierz rolę",
+    "registerTitle":"Rejestracja",
+    "register":"Zarejestruj się",
+    "roles": {
+      "donor": "Darczyńca",
+      "victim": "Poszkodowany",
+      "volunteer": "Wolontariusz",
+      "organization": "Organizacja pomocowa",
+      "authority": "Przedstawiciel władz"
+    },
+    "registerError": "Rejestracja nie powiodła się",
+    "registerUsernameUnique": "Ta nazwa użytkownika jest już zajęta",
+    "registerSuccess": "Twoje konto zostało założone. Teraz możesz się na nie zalogować.",
+    "accountNotFound": "Nie znaleziono danego konta",
+    "accList": "Lista użytkowników",
+    "all": "Wszyscy",
+    "filterUsername": "Filtruj po nazwie użytkownika",
+    "lastLogon": "Ostatnie zalogowanie",
+    "role": "Rola",
+    "status": "Status",
+    "changeRole": "Zmień rolę",
+    "activation": "Aktywacja",
+    "noLastLogon": "Brak",
+    "active": "Aktywny",
+    "deactive": "Nieaktywny",
+    "activeAct": "Aktywuj",
+    "deactiveAct": "Dezaktywuj",
+    "fetchUserError": "Nie udało się załadować danych użytkownika",
+    "passwordChangeSuccess": "Hasło zostało zmienione pomyślnie",
+    "passwordChangeError": "Nie udało się zmienić hasła",
+    "userInfo": "Szczegóły użytkownika",
+    "changePassword": "Zmień hasło",
+    "newPassword": "Nowe hasło",
+    "newPasswordHint": "Wprowadź nowe hasło"
+  },
+    "report": {
+      "polish": "Polski",
+      "english": "Angielski",
+      "general": "Ogólny",
+      "action": "Akcje",
+      "actionHistory": "Historia akcji",
+      "modular": "Modularny",
+      "summary": "Podsumowanie",
+      "transactionHistory": "Historia transakcji",
+
+      "generalTitle": "Generowanie raportu ogólnego",
+      "generalDescription": "Kliknięcie przycisku poniżej wywoła proces generowania raportu ogólnego w formacie PDF.",
+      "generalButton": "Generuj raport",
+
+      "actionTitle": "Generowanie raportu akcji",
+      "actionDescription": "Kliknięcie przycisku poniżej wywoła proces generowania raportu akcji w formacie PDF.",
+      "actionButton": "Generuj raport akcji",
+
+      "modularTitle": "Generowanie raportu modularnego",
+      "modularFormModule": "Moduł",
+      "modularFormStart": "Data początkowa",
+      "modularFormEnd": "Data końcowa",
+      "modularFormFields": "Wybierz pola",
+      "modularButton": "Generuj raport modularny",
+
+      "summaryTitle": "Generowanie raportu podsumowującego",
+      "summaryFormStart": "Data początkowa",
+      "summaryFormEnd": "Data końcowa",
+      "summaryFormFields": "Wybierz pola",
+      "summaryButton": "Generuj raport podsumowujący",
+
+      "transactionHistoryTitle": "Generowanie raportu historii transakcji",
+      "transactionHistoryFormStart": "Data początkowa",
+      "transactionHistoryFormEnd": "Data końcowa",
+      "transactionHistoryButton": "Generuj raport historii transakcji",
+
+      "actionHistoryTitle": "Generowanie raportu historii akcji",
+      "actionHistoryDescription": "Kliknięcie przycisku poniżej wywoła proces generowania raportu historii akcji w formacie PDF.",
+      "actionHistoryButton": "Generuj raport historii akcji",
+
+      "errorReport": "Wystąpił błąd podczas generowania raportu.",
+
+      "jwtMissing": "Brak tokenu JWT",
+
+      "Resources": "Zasoby",
+      "Warehouses": "Magazyny",
+      "Products": "Produkty",
+      "Roles": "Role",
+      "VolunteerGroups": "Grupy wolontariuszy"
+    }
 }

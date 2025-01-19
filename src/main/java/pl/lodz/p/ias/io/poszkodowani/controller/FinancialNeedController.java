@@ -47,7 +47,7 @@ public class FinancialNeedController {
         MapPoint mapPoint = mapService.getPoint(dto.getMapPointId());
         financialNeed.setUser(user);
         financialNeed.setMapPoint(mapPoint);
-        FinancialNeed savedFinancialNeed = financialNeedService.createFinancialNeed(financialNeed);
+        FinancialNeed savedFinancialNeed = financialNeedService.createNeed(financialNeed);
         FinancialNeedResponse responseDTO = financialNeedMapper.toFinancialNeedResponse(savedFinancialNeed);
         return ResponseEntity.ok(responseDTO);
     }
@@ -62,14 +62,14 @@ public class FinancialNeedController {
 
     @GetMapping
     public ResponseEntity<List<FinancialNeedResponse>> getAllFinancialNeeds() {
-        List<FinancialNeed> financialNeeds = financialNeedService.getAllFinancialNeeds();
+        List<FinancialNeed> financialNeeds = financialNeedService.getAllNeeds();
         List<FinancialNeedResponse> responseDTOs = financialNeedMapper.toFinancialNeedResponseList(financialNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<FinancialNeedResponse>> getMaterialNeedsByUserId(@PathVariable Long userId) {
-        List<FinancialNeed> financialNeeds = financialNeedService.getFinancialNeedByUserId(userId);
+        List<FinancialNeed> financialNeeds = financialNeedService.getNeedsByUserId(userId);
         List<FinancialNeedResponse> responseDTOs = financialNeedMapper.toFinancialNeedResponseList(financialNeeds);
         return ResponseEntity.ok(responseDTOs);
     }

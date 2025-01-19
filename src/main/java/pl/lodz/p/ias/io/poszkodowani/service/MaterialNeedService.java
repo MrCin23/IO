@@ -11,7 +11,7 @@ import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import java.util.*;
 
 @Service
-public class MaterialNeedService {
+public class MaterialNeedService implements INeedService<MaterialNeed> {
 
     private final MaterialNeedRepository materialNeedRepository;
 
@@ -38,7 +38,7 @@ public class MaterialNeedService {
             .contains(target);
     }
 
-    public MaterialNeed createMaterialNeed(MaterialNeed materialNeed) {
+    public MaterialNeed createNeed(MaterialNeed materialNeed) {
         materialNeed.setCreationDate(new Date());
         materialNeed.setPriority(1);
         materialNeed.setStatus(Need.Status.PENDING);
@@ -54,11 +54,11 @@ public class MaterialNeedService {
         return materialNeedRepository.findById(id);
     }
 
-    public List<MaterialNeed> getAllMaterialNeeds() {
+    public List<MaterialNeed> getAllNeeds() {
         return materialNeedRepository.findAll();
     }
 
-    public List<MaterialNeed> getMaterialNeedsByUserId(Long userId) {
+    public List<MaterialNeed> getNeedsByUserId(Long userId) {
         return materialNeedRepository.findByUserId(userId);
     }
 

@@ -7,7 +7,7 @@ import pl.lodz.p.ias.io.komunikacja.repository.MessageRepository;
 import java.util.List;
 
 @Service
-public class MessageService {
+public class MessageService implements IMessageService {
     private final MessageRepository messageRepository;
 
     public MessageService(MessageRepository messageRepository) {

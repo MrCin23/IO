@@ -2,8 +2,7 @@ import {Route, Routes, Navigate} from 'react-router-dom'
 import {
     defaultRoutes,
     aid_organizationRoutes,
-    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes,
-    chatRoutes
+    authority_representativeRoutes, donorRoutes, victimRoutes, volunteerRoutes, reportRoutes, chatRoutes
 } from './routes.ts'
 import {DefaultLayout} from "../components/layouts/default";
 import {AidOrganizationLayout} from "../components/layouts/aid_organization";
@@ -11,6 +10,7 @@ import {AuthorityRepresentativeLayout} from "../components/layouts/autority_repr
 import {DonorLayout} from "../components/layouts/donor/DonorLayout.tsx";
 import {VictimLayout} from "../components/layouts/victim";
 import {VolunteerLayout} from "../components/layouts/volunteer";
+import {ReportLayout} from "../components/layouts/report";
 import { useAccount } from '../contexts/uwierzytelnianie/AccountContext.tsx';
 import PrivateRoute from '../components/PrivateRoute.tsx';
 import { Pathnames } from './pathnames.ts';
@@ -56,7 +56,7 @@ export const RoutesComponent = () => {
                         path={path}
                         element={
                             <PrivateRoute allowedRoles={['ORGANIZACJA_POMOCOWA']}>
-                                 <AidOrganizationLayout>
+                                <AidOrganizationLayout>
                                     <Component />
                                 </AidOrganizationLayout>
                             </PrivateRoute>
@@ -84,7 +84,7 @@ export const RoutesComponent = () => {
                         path={path}
                         element={
                             <PrivateRoute allowedRoles={['DARCZYŃCA']}>
-                                 <DonorLayout>
+                                <DonorLayout>
                                     <Component />
                                 </DonorLayout>
                             </PrivateRoute>
@@ -98,7 +98,7 @@ export const RoutesComponent = () => {
                         path={path}
                         element={
                             <PrivateRoute allowedRoles={['POSZKODOWANY']}>
-                                 <VictimLayout>
+                                <VictimLayout>
                                     <Component />
                                 </VictimLayout>
                             </PrivateRoute>
@@ -112,7 +112,7 @@ export const RoutesComponent = () => {
                         path={path}
                         element={
                             <PrivateRoute allowedRoles={['WOLONTARIUSZ']}>
-                                 <VolunteerLayout>
+                                <VolunteerLayout>
                                     <Component />
                                 </VolunteerLayout>
                             </PrivateRoute>
@@ -127,7 +127,7 @@ export const RoutesComponent = () => {
     return (
         <Routes>
             {renderRoutes()}
-             <Route
+            <Route
                 path="*"
                 element={
                     account ? (
@@ -137,7 +137,7 @@ export const RoutesComponent = () => {
                     )
                 }
                 />
-            
+
             {authority_representativeRoutes.map(({path, Component}) => (
                 <Route key={path} path={path} element={
                     <AuthorityRepresentativeLayout>
@@ -167,6 +167,14 @@ export const RoutesComponent = () => {
                     <VolunteerLayout>
                         <Component />
                     </VolunteerLayout>
+                }
+                />
+            ))}
+            {reportRoutes.map(({path, Component}) => (
+                <Route key={path} path={path} element={
+                    <ReportLayout>
+                        <Component />
+                    </ReportLayout>
                 }
                 />
             ))}

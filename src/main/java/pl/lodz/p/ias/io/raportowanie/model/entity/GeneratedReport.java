@@ -7,7 +7,9 @@ import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
+import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.pdmodel.font.PDType0Font;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,8 +26,6 @@ public class GeneratedReport {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportId;
-    @Column(name = "user_id")
-    private Long userId;
     @Column(name = "user_name")
     private String userName;
     @Column(name = "user_surname")
@@ -35,8 +35,7 @@ public class GeneratedReport {
     @Column(name = "data_table")
     private String table;
 
-    public GeneratedReport(Long userId, String userName, String userSurname, String table) {
-        this.userId = userId;
+    public GeneratedReport(String userName, String userSurname, String table) {
         this.userName = userName;
         this.userSurname = userSurname;
         this.generationTime = new Timestamp(System.currentTimeMillis());
@@ -59,7 +58,8 @@ public class GeneratedReport {
             float pageHeight = PDRectangle.A4.getHeight();
             float yPosition = pageHeight - margin;
 
-            PDType1Font font = PDType1Font.COURIER;
+            // Load the font into the PDF
+            PDType0Font font = PDType0Font.load(document, GeneratedReport.class.getResourceAsStream("/static/pdf/fonts/Roboto-Regular.ttf"));
             int fontSize = 11;
 
             PDPageContentStream contentStream = new PDPageContentStream(document, page);
@@ -104,10 +104,6 @@ public class GeneratedReport {
         }
     }
 
-    public String toHtml() {
-        return "<p>" + makeContent() + "</p>"; // TODO: implement
-    }
-
     private String makeContent() {
         StringBuilder content = new StringBuilder();
         String fullName = userName + " " + userSurname;
@@ -140,7 +136,7 @@ public class GeneratedReport {
         return content.toString();
     }
 
-    private List<String> wrapText(String text, PDType1Font font, float fontSize, float maxWidth) throws IOException {
+    private List<String> wrapText(String text, PDFont font, float fontSize, float maxWidth) throws IOException {
         List<String> lines = new ArrayList<>();
         String[] words = text.split(" ");
         StringBuilder line = new StringBuilder();

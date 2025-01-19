@@ -11,7 +11,7 @@ import pl.lodz.p.ias.io.powiadomienia.notification.NotificationType;
 import java.util.*;
 
 @Service
-public class FinancialNeedService {
+public class FinancialNeedService implements INeedService<FinancialNeed> {
 
     private final FinancialNeedRepository financialNeedRepository;
 
@@ -38,7 +38,7 @@ public class FinancialNeedService {
                 .contains(target);
     }
 
-    public FinancialNeed createFinancialNeed(FinancialNeed financialNeed) {
+    public FinancialNeed createNeed(FinancialNeed financialNeed) {
         financialNeed.setCreationDate(new Date());
         financialNeed.setPriority(1);
         financialNeed.setStatus(Need.Status.PENDING);
@@ -55,7 +55,7 @@ public class FinancialNeedService {
         return financialNeedRepository.findById(id);
     }
 
-    public List<FinancialNeed> getAllFinancialNeeds() {
+    public List<FinancialNeed> getAllNeeds() {
         return financialNeedRepository.findAll();
     }
 
@@ -80,7 +80,7 @@ public class FinancialNeedService {
         return optionalFinancialNeed;
     }
 
-    public List<FinancialNeed> getFinancialNeedByUserId(Long userId) {
+    public List<FinancialNeed> getNeedsByUserId(Long userId) {
         return financialNeedRepository.findByUserId(userId);
     }
 

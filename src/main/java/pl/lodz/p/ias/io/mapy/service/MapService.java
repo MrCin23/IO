@@ -26,9 +26,6 @@ public class MapService implements IMapService {
     @Autowired
     INotificationService notificationService;
 
-    @Autowired
-    AccountRepository accountRepository;
-
     private MapPointRepository mapPointRepository;
 
     @Override

@@ -44,6 +44,9 @@ export const AidOrganizationLayout = ({ children }: LayoutProps) => {
                     <Button onClick={() => navigate('/chat')} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("chat.chat")}
                     </Button>
+                    <Button onClick={() => navigate(Pathnames.report.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
+                        Report
+                    </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("general.logout")}
                     </Button>

@@ -2,6 +2,7 @@ import { Pathnames } from './pathnames'
 
 
 import {HomePage} from "../pages/HomePage";
+import {HomeReportPage} from "../pages/report/HomeReportPage";
 import Resources from "../pages/Resources";
 import Warehouses from "../pages/Warehouses";
 import {CreateWarehouse} from "../pages/CreateWarehouse";
@@ -222,5 +223,12 @@ export const chatRoutes: RouteType[] = [
     {
         path: Pathnames.chat.homePage,
         Component: Chat,
+    }
+]
+
+export const reportRoutes: RouteType[] = [
+    {
+        path: Pathnames.report.homePage,
+        Component: HomeReportPage,
     }
 ]

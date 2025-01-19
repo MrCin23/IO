@@ -49,5 +49,8 @@ export const Pathnames = {
     chat: {
         homePage: '/chat'
 
+    },
+    report: {
+        homePage: '/report'
     }
 }

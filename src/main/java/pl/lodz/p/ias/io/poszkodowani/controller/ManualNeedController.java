@@ -47,7 +47,7 @@ public class ManualNeedController {
         MapPoint mapPoint = mapService.getPoint(dto.getMapPointId());
         manualNeed.setUser(user);
         manualNeed.setMapPoint(mapPoint);
-        ManualNeed savedManualNeed = manualNeedService.createManualNeed(manualNeed);
+        ManualNeed savedManualNeed = manualNeedService.createNeed(manualNeed);
         ManualNeedResponse responseDTO = manualNeedMapper.toManualNeedResponse(savedManualNeed);
         return ResponseEntity.ok(responseDTO);
     }
@@ -61,14 +61,14 @@ public class ManualNeedController {
 
     @GetMapping
     public ResponseEntity<List<ManualNeedResponse>> getAllManualNeeds() {
-        List<ManualNeed> manualNeeds = manualNeedService.getAllManualNeeds();
+        List<ManualNeed> manualNeeds = manualNeedService.getAllNeeds();
         List<ManualNeedResponse> responseDTOs = manualNeedMapper.toManualNeedResponseList(manualNeeds);
         return ResponseEntity.ok(responseDTOs);
     }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ManualNeedResponse>> getManualNeedsByUserId(@PathVariable Long userId) {
-        List<ManualNeed> manualNeeds = manualNeedService.getManualNeedsByUserId(userId);
+        List<ManualNeed> manualNeeds = manualNeedService.getNeedsByUserId(userId);
         List<ManualNeedResponse> responseDTOs = manualNeedMapper.toManualNeedResponseList(manualNeeds);
         return ResponseEntity.ok(responseDTOs);
     }

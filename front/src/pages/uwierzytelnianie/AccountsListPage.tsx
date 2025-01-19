@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import axios from '../../api/Axios';
 import { Account } from '../../models/uwierzytelnianie/Account';
+import {useTranslation} from "react-i18next";
 
 const AccountsListPage = () => {
     const [users, setUsers] = useState<Account[]>([]);
     const [filter, setFilter] = useState('');
     const [roleFilter, setRoleFilter] = useState('ALL');
+    const { t } = useTranslation();
 
     useEffect(() => {
         axios.get('/auth').then((response) => setUsers(response.data));
@@ -50,9 +52,28 @@ const AccountsListPage = () => {
         }
     };
 
+    const roles = [
+        {
+            name: 'DARCZYŃCA',
+            t: t("auth.roles.donor")
+        }, {
+            name: 'POSZKODOWANY',
+            t: t("auth.roles.victim")
+        }, {
+            name: 'WOLONTARIUSZ',
+            t: t("auth.roles.volunteer")
+        }, {
+            name: 'ORGANIZACJA_POMOCOWA',
+            t: t("auth.roles.organization")
+        }, {
+            name: 'PRZEDSTAWICIEL_WŁADZ',
+            t: t("auth.roles.authority")
+        }
+    ];
+
     return (
         <div className="container my-5">
-            <h2>Lista użytkowników</h2>
+            <h2>{t("auth.accList")}</h2>
 
             <div className="mb-3">
                 <select
@@ -60,19 +81,17 @@ const AccountsListPage = () => {
                     value={roleFilter}
                     onChange={(e) => setRoleFilter(e.target.value)}
                 >
-                    <option value="ALL">WSZYSTKIE</option>
-                    <option value="DARCZYŃCA">DARCZYŃCA</option>
-                    <option value="POSZKODOWANY">POSZKODOWANY</option>
-                    <option value="ORGANIZACJA_POMOCOWA">ORGANIZACJA_POMOCOWA</option>
-                    <option value="WOLONTARIUSZ">WOLONTARIUSZ</option>
-                    <option value="PRZEDSTAWICIEL_WŁADZ">PRZEDSTAWICIEL_WŁADZ</option>
+                    <option value="ALL">{t("auth.all")}</option>
+                    {roles.map((role) => (
+                        <option key={role.name} value={role.name}>{role.t}</option>
+                    ))}
                 </select>
             </div>
 
             <input
                 type="text"
                 className="form-control mb-3"
-                placeholder="Filtruj po nazwie użytkownika"
+                placeholder={t("auth.filterUsername")}
                 value={filter}
                 onChange={(e) => setFilter(e.target.value)}
             />
@@ -80,16 +99,17 @@ const AccountsListPage = () => {
             <div className="table-responsive">
                 <table className="table table-striped table-hover table-bordered">
                     <thead className='table-dark text-center'>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nazwa użytkownika</th>
-                        <th>Imię</th>
-                        <th>Nazwisko</th>
-                        <th>Ostatnie zalogowanie</th>
-                        <th>Rola</th>
-                        <th>Status</th>
-                        <th>Akcje</th>
-                    </tr>
+                        <tr>
+                            <th>ID</th>
+                            <th>{t("auth.username")}</th>
+                            <th>{t("auth.firstName")}</th>
+                            <th>{t("auth.lastName")}</th>
+                            <th>{t("auth.lastLogon")}</th>
+                            <th>{t("auth.role")}</th>
+                            <th>{t("auth.status")}</th>
+                            <th>{t("auth.changeRole")}</th>
+                            <th>{t("auth.activation")}</th>
+                        </tr>
                     </thead>
                     <tbody>
                     {users
@@ -103,15 +123,15 @@ const AccountsListPage = () => {
                             <td>{user.username}</td>
                             <td>{user.firstName}</td>
                             <td>{user.lastName}</td>
-                            <td>{user.role.roleName}</td>
-                            <td>{user.active ? 'Aktywny' : 'Nieaktywny'}</td>
+                            <td>{user.lastLogin ? new Date(user.lastLogin).toLocaleString() : t("auth.noLastLogon")}</td>
+                            <td>{roles.find(r => r.name === user.role.roleName)?.t}</td>
+                            <td>{user.active ? t("auth.active") : t("auth.deactive")}</td>
                             <td>
-                                <select defaultValue={user.role.roleName} id={`role-select-${user.id}`}>
-                                        <option value="DARCZYŃCA">DARCZYŃCA</option>
-                                        <option value="POSZKODOWANY">POSZKODOWANY</option>
-                                        <option value="ORGANIZACJA_POMOCOWA">ORGANIZACJA_POMOCOWA</option>
-                                        <option value="WOLONTARIUSZ">WOLONTARIUSZ</option>
-                                        <option value="PRZEDSTAWICIEL_WŁADZ">PRZEDSTAWICIEL_WŁADZ</option>
+                                <div className="d-flex align-items-center">
+                                    <select defaultValue={user.role.roleName} id={`role-select-${user.id}`}>
+                                        {roles.map((role) => (
+                                            <option key={role.name} value={role.name}>{role.t}</option>
+                                        ))}
                                     </select>
                                     <button
                                         className="btn btn-sm btn-primary ms-2"
@@ -123,23 +143,25 @@ const AccountsListPage = () => {
                                             }
                                         }}
                                     >
-                                        Zmień rolę
-                                </button>
+                                        {t("auth.changeRole")}
+                                    </button>
+                                </div>
+                            </td>
+                            <td>
                                 <div className="d-flex align-items-center">
-                                    {user.active ? 'Aktywny' : 'Nieaktywny'}
                                     <button
                                         className="btn btn-sm btn-success ms-2"
                                         disabled={user.active}
                                         onClick={() => handleActivate(user.id)}
                                     >
-                                        Aktywuj
+                                        {t("auth.activeAct")}
                                     </button>
                                     <button
                                         className="btn btn-sm btn-danger me-2"
                                         disabled={!user.active}
                                         onClick={() => handleDeactivate(user.id)}
                                     >
-                                        Dezaktywuj
+                                        {t("auth.deactiveAct")}
                                     </button>
                                 </div>
                             </td>
