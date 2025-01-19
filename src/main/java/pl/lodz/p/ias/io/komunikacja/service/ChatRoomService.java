@@ -8,7 +8,7 @@ import pl.lodz.p.ias.io.komunikacja.repository.ChatRoomRepository;
 import java.util.List;
 
 @Service
-public class ChatRoomService {
+public class ChatRoomService implements IChatRoomService {
     private final ChatRoomRepository chatRoomRepository;
 
     public ChatRoomService(ChatRoomRepository chatRoomRepository) {
