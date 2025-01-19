@@ -241,6 +241,7 @@
     }
   },
   "report": {
+    "report": "Report",
     "polish": "Polish",
     "english": "English",
     "general": "General",

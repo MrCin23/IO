@@ -49,7 +49,7 @@ export const AuthorityRepresentativeLayout = ({ children }: LayoutProps) => {
                         {t("chat.chat")}
                     </Button>
                     <Button onClick={() => navigate(Pathnames.report.homePage)} sx={{ my: 2, mx: 2, color: 'white' }}>
-                        Report
+                        {t("report.report")}
                     </Button>
                     <Button onClick={() => { logout(); navigate('/')}} sx={{ my: 2, mx: 2, color: 'white' }}>
                         {t("general.logout")}
