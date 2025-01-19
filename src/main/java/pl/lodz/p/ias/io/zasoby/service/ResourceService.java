@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class ResourceService {
+public class ResourceService implements IResource {
     private final ResourceRepository resourceRepository;
     private final ResourceConverter converter = new ResourceConverter();
 
@@ -40,7 +40,6 @@ public class ResourceService {
                 .collect(Collectors.toList());
     }
 
-//    @Transactional
     public void updateResource(Long id, @Valid ResourceDTO resourceDTO) {
         Resource resource = resourceRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Resource with id " + id + " not found"));

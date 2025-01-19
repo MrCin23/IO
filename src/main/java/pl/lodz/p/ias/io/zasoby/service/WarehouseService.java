@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
-public class WarehouseService {
+public class WarehouseService implements IWarehouse{
     private final WarehouseRepository warehouseRepository;
     private final WarehouseConverter warehouseConverter = new WarehouseConverter();
     private MapPointRepository mapPointRepository;
